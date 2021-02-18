@@ -34,10 +34,11 @@ Parameter estimation is done at an individual or hierarchical level using `PySta
    simulations/simulateDDM
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Examples:
 
    notebooks/DDM_fitting
+   notebooks/DDM_hierarchical_fitting
    notebooks/load_from_saved
 
 Indices and tables

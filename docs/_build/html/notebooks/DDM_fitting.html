@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Import the grouped data &mdash; rlssm 0.1.dev documentation</title>
+  <title>Fit the DDM on individual data &mdash; rlssm 0.1.dev documentation</title>
   
 
   
@@ -36,7 +36,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="load_from_saved.html" />
+    <link rel="next" title="Fit the DDM on hierarchical data" href="DDM_hierarchical_fitting.html" />
     <link rel="prev" title="Simulate data from the diffusion decision model" href="../simulations/simulateDDM.html" /> 
 </head>
 
@@ -98,22 +98,26 @@
 </ul>
 <p class="caption"><span class="caption-text">Examples:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Import the grouped data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#Initialise-the-model">Initialise the model</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#Fit">Fit</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Fit the DDM on individual data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Import-the-data">Import the data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Initialise-the-model">Initialise the model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Fit">Fit</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#get-Rhat">get Rhat</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#get-wAIC">get wAIC</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#Posteriors">Posteriors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Posterior-predictives">Posterior predictives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#get-Rhat">get Rhat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#get-wAIC">get wAIC</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Posteriors">Posteriors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Posterior-predictives">Posterior predictives</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#Ungrouped">Ungrouped</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#Grouped">Grouped</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#Get-last-values-for-eventual-further-sampling">Get last values for eventual further sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Ungrouped">Ungrouped</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Grouped">Grouped</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Get-last-values-for-eventual-further-sampling">Get last values for eventual further sampling</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="DDM_hierarchical_fitting.html">Fit the DDM on hierarchical data</a></li>
 </ul>
 
             
@@ -159,7 +163,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Import the grouped data</li>
+      <li>Fit the DDM on individual data</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -448,6 +452,8 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
+<div class="section" id="Fit-the-DDM-on-individual-data">
+<h1>Fit the DDM on individual data<a class="headerlink" href="#Fit-the-DDM-on-individual-data" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -468,8 +474,8 @@ div.rendered_html tbody tr:hover {
   import pandas.util.testing as tm
 </pre></div></div>
 </div>
-<div class="section" id="Import-the-grouped-data">
-<h1>Import the grouped data<a class="headerlink" href="#Import-the-grouped-data" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Import-the-data">
+<h2>Import the data<a class="headerlink" href="#Import-the-data" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
@@ -603,7 +609,7 @@ INFO:numexpr.utils:NumExpr defaulting to 4 threads.
 </div>
 </div>
 <div class="section" id="Initialise-the-model">
-<h1>Initialise the model<a class="headerlink" href="#Initialise-the-model" title="Permalink to this headline">¶</a></h1>
+<h2>Initialise the model<a class="headerlink" href="#Initialise-the-model" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
@@ -658,7 +664,7 @@ False
 </pre></div></div>
 </div>
 <div class="section" id="Fit">
-<h2>Fit<a class="headerlink" href="#Fit" title="Permalink to this headline">¶</a></h2>
+<h3>Fit<a class="headerlink" href="#Fit" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
@@ -721,7 +727,7 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="section" id="get-Rhat">
-<h1>get Rhat<a class="headerlink" href="#get-Rhat" title="Permalink to this headline">¶</a></h1>
+<h2>get Rhat<a class="headerlink" href="#get-Rhat" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
@@ -852,7 +858,7 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="section" id="get-wAIC">
-<h1>get wAIC<a class="headerlink" href="#get-wAIC" title="Permalink to this headline">¶</a></h1>
+<h2>get wAIC<a class="headerlink" href="#get-wAIC" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
@@ -875,7 +881,7 @@ E-BFMI indicated no pathological behavior
 </pre></div></div>
 </div>
 <div class="section" id="Posteriors">
-<h2>Posteriors<a class="headerlink" href="#Posteriors" title="Permalink to this headline">¶</a></h2>
+<h3>Posteriors<a class="headerlink" href="#Posteriors" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
@@ -1094,16 +1100,16 @@ OrderedDict([(&#39;drift_t&#39;,
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_DDM_fitting_19_0.png" src="../_images/notebooks_DDM_fitting_19_0.png" />
+<img alt="../_images/notebooks_DDM_fitting_20_0.png" src="../_images/notebooks_DDM_fitting_20_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="Posterior-predictives">
-<h2>Posterior predictives<a class="headerlink" href="#Posterior-predictives" title="Permalink to this headline">¶</a></h2>
+<h3>Posterior predictives<a class="headerlink" href="#Posterior-predictives" title="Permalink to this headline">¶</a></h3>
 </div>
 </div>
 <div class="section" id="Ungrouped">
-<h1>Ungrouped<a class="headerlink" href="#Ungrouped" title="Permalink to this headline">¶</a></h1>
+<h2>Ungrouped<a class="headerlink" href="#Ungrouped" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
@@ -1723,7 +1729,7 @@ OrderedDict([(&#39;drift_t&#39;,
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_DDM_fitting_24_0.png" src="../_images/notebooks_DDM_fitting_24_0.png" />
+<img alt="../_images/notebooks_DDM_fitting_25_0.png" src="../_images/notebooks_DDM_fitting_25_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
@@ -1739,12 +1745,12 @@ OrderedDict([(&#39;drift_t&#39;,
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_DDM_fitting_25_0.png" src="../_images/notebooks_DDM_fitting_25_0.png" />
+<img alt="../_images/notebooks_DDM_fitting_26_0.png" src="../_images/notebooks_DDM_fitting_26_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="Grouped">
-<h1>Grouped<a class="headerlink" href="#Grouped" title="Permalink to this headline">¶</a></h1>
+<h2>Grouped<a class="headerlink" href="#Grouped" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
@@ -2334,7 +2340,7 @@ OrderedDict([(&#39;drift_t&#39;,
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_DDM_fitting_32_0.png" src="../_images/notebooks_DDM_fitting_32_0.png" />
+<img alt="../_images/notebooks_DDM_fitting_33_0.png" src="../_images/notebooks_DDM_fitting_33_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
@@ -2354,11 +2360,11 @@ OrderedDict([(&#39;drift_t&#39;,
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_DDM_fitting_33_0.png" src="../_images/notebooks_DDM_fitting_33_0.png" />
+<img alt="../_images/notebooks_DDM_fitting_34_0.png" src="../_images/notebooks_DDM_fitting_34_0.png" />
 </div>
 </div>
 <div class="section" id="Get-last-values-for-eventual-further-sampling">
-<h2>Get last values for eventual further sampling<a class="headerlink" href="#Get-last-values-for-eventual-further-sampling" title="Permalink to this headline">¶</a></h2>
+<h3>Get last values for eventual further sampling<a class="headerlink" href="#Get-last-values-for-eventual-further-sampling" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
@@ -2434,6 +2440,7 @@ OrderedDict([(&#39;drift_t&#39;,
 </div>
 </div>
 </div>
+</div>
 
 
            </div>
@@ -2443,7 +2450,7 @@ OrderedDict([(&#39;drift_t&#39;,
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="load_from_saved.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="DDM_hierarchical_fitting.html" class="btn btn-neutral float-right" title="Fit the DDM on hierarchical data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../simulations/simulateDDM.html" class="btn btn-neutral float-left" title="Simulate data from the diffusion decision model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
