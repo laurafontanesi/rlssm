@@ -1,0 +1,271 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installing rlssm &mdash; rlssm 0.1.dev documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="References" href="references.html" />
+    <link rel="prev" title="Welcome to rlssm’s documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> rlssm
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting started:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installing rlssm</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conda-environment-suggested">Conda environment (suggested)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cite.html">Cite</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How to:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="models/define_model.html">Define and fit a model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/inspect_simpleRL.html">Inspect a RL model fitted only on choices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/inspect_SSM_DDM.html">Inspect a DDM or a RLDDM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/inspect_SSM_race.html">Inspect a race model or a RL-race model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulations/simulateDDM.html">Simulate data from the diffusion decision model</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">rlssm</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Installing rlssm</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/installation.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installing-rlssm">
+<h1>Installing rlssm<a class="headerlink" href="#installing-rlssm" title="Permalink to this headline">¶</a></h1>
+<p>For now, you can simply install the rlssm package using <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></code>, after downloading or cloning rlssm from <a class="reference external" href="https://github.com/laurafontanesi/rlssm">GitHub</a>.</p>
+<p>Make sure you have the dependecies installed first.</p>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>pystan=2.19</p></li>
+<li><p>pandas</p></li>
+<li><p>scipy</p></li>
+<li><p>seaborn</p></li>
+</ul>
+</div>
+<div class="section" id="conda-environment-suggested">
+<h2>Conda environment (suggested)<a class="headerlink" href="#conda-environment-suggested" title="Permalink to this headline">¶</a></h2>
+<p>If you have Andaconda or miniconda installed and you would like to create a separate environment for the rlssm package, do the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">--</span><span class="n">name</span> <span class="n">rlssmenv</span> <span class="n">python</span><span class="o">=</span><span class="mi">3</span> <span class="n">pandas</span> <span class="n">scipy</span> <span class="n">seaborn</span> <span class="n">pystan</span><span class="o">=</span><span class="mf">2.19</span>
+<span class="n">conda</span> <span class="n">activate</span> <span class="n">rlssmenv</span>
+<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+</pre></div>
+</div>
+<p>Check if the compiler is working:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">test</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>On MacOS, if you encounter a compilation error, you can try the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">n</span> <span class="n">rlssmenv</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.7</span> <span class="n">pandas</span> <span class="n">cython</span> <span class="n">seaborn</span> <span class="n">scipy</span>
+<span class="n">conda</span> <span class="n">activate</span> <span class="n">rlssmenv</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">clang_osx</span><span class="o">-</span><span class="mi">64</span> <span class="n">clangxx_osx</span><span class="o">-</span><span class="mi">64</span> <span class="o">-</span><span class="n">c</span> <span class="n">anaconda</span>
+<span class="n">conda</span> <span class="n">info</span>
+</pre></div>
+</div>
+<p>Copy the “active env location”:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="n">ACTIVE_ENV_LOCATION</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">clang</span> <span class="o">|</span> <span class="n">grep</span> <span class="o">-</span><span class="n">i</span> <span class="s1">&#39;apple&#39;</span>
+</pre></div>
+</div>
+<p>Copy the two clang and modify the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">CC</span><span class="o">=</span><span class="n">x86_64</span><span class="o">-</span><span class="n">apple</span><span class="o">-</span><span class="n">darwin13</span><span class="o">.</span><span class="mf">4.0</span><span class="o">-</span><span class="n">clang</span>
+<span class="n">export</span> <span class="n">CXX</span><span class="o">=</span><span class="n">x86_64</span><span class="o">-</span><span class="n">apple</span><span class="o">-</span><span class="n">darwin13</span><span class="o">.</span><span class="mf">4.0</span><span class="o">-</span><span class="n">clang</span><span class="o">++</span>
+</pre></div>
+</div>
+<p>Now you can install pystan:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">pystan</span><span class="o">=</span><span class="mf">2.19</span>
+</pre></div>
+</div>
+<p>And finally install the rlssm package and test again whether the compiler works:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+<span class="n">python</span> <span class="n">test</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>If you want to try out also the notebooks:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">jupyterlab</span>
+</pre></div>
+</div>
+<p>If you are experiencing other issues with the compiler, check the <a class="reference external" href="https://pystan.readthedocs.io/en/latest/">pystan documentation</a>.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="references.html" class="btn btn-neutral float-right" title="References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to rlssm’s documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Laura Fontanesi
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
