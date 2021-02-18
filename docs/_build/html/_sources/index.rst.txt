@@ -33,6 +33,13 @@ Parameter estimation is done at an individual or hierarchical level using `PySta
    models/inspect_SSM_race
    simulations/simulateDDM
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Examples:
+
+   notebooks/DDM_fitting
+   notebooks/load_from_saved
+
 Indices and tables
 ==================
 

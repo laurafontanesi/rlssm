@@ -1,0 +1,2273 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Simulate some data: &mdash; rlssm 0.1.dev documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> rlssm
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installing rlssm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cite.html">Cite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Development team &amp; Contacts</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How to:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/define_model.html">Define and fit a model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/inspect_simpleRL.html">Inspect a RL model fitted only on choices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/inspect_SSM_DDM.html">Inspect a DDM or a RLDDM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/inspect_SSM_race.html">Inspect a race model or a RL-race model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../simulations/simulateDDM.html">Simulate data from the diffusion decision model</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="DDM_fitting.html">Import the grouped data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DDM_fitting.html#Initialise-the-model">Initialise the model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DDM_fitting.html#get-Rhat">get Rhat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DDM_fitting.html#get-wAIC">get wAIC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DDM_fitting.html#Ungrouped">Ungrouped</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DDM_fitting.html#Grouped">Grouped</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">rlssm</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Simulate some data:</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/notebooks/DDM_starting-point-bias_hierarchical_fitting.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">rlssm</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Simulate-some-data:">
+<h1>Simulate some data:<a class="headerlink" href="#Simulate-some-data:" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">rlssm.random</span> <span class="kn">import</span> <span class="n">simulate_hierDDM</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">simulate_hierDDM</span><span class="p">(</span><span class="n">n_trials</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+                        <span class="n">n_participants</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+                        <span class="n">gen_mu_drift</span><span class="o">=.</span><span class="mi">6</span><span class="p">,</span> <span class="n">gen_sd_drift</span><span class="o">=.</span><span class="mi">3</span><span class="p">,</span>
+                        <span class="n">gen_mu_threshold</span><span class="o">=.</span><span class="mi">5</span><span class="p">,</span> <span class="n">gen_sd_threshold</span><span class="o">=.</span><span class="mi">1</span><span class="p">,</span>
+                        <span class="n">gen_mu_ndt</span><span class="o">=-</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">gen_sd_ndt</span><span class="o">=.</span><span class="mi">05</span><span class="p">,</span>
+                        <span class="n">gen_mu_rel_sp</span><span class="o">=.</span><span class="mi">1</span><span class="p">,</span> <span class="n">gen_sd_rel_sp</span><span class="o">=.</span><span class="mi">05</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>participant</th>
+      <th>drift</th>
+      <th>threshold</th>
+      <th>ndt</th>
+      <th>rel_sp</th>
+      <th>rt</th>
+      <th>accuracy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>1</td>
+      <td>1.118135</td>
+      <td>1.831037</td>
+      <td>0.282418</td>
+      <td>0.536375</td>
+      <td>1.187418</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>1</td>
+      <td>1.118135</td>
+      <td>1.831037</td>
+      <td>0.282418</td>
+      <td>0.536375</td>
+      <td>0.611418</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>1</td>
+      <td>1.118135</td>
+      <td>1.831037</td>
+      <td>0.282418</td>
+      <td>0.536375</td>
+      <td>1.210418</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>1</td>
+      <td>1.118135</td>
+      <td>1.831037</td>
+      <td>0.282418</td>
+      <td>0.536375</td>
+      <td>0.871418</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>1</td>
+      <td>1.118135</td>
+      <td>1.831037</td>
+      <td>0.282418</td>
+      <td>0.536375</td>
+      <td>0.523418</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">col</span><span class="p">])</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15]),
+ array([1.11813458, 0.61507279, 0.27873029, 0.58491441, 0.65865569,
+        0.7780653 , 0.59851054, 0.74868412, 0.47395169, 0.56042587,
+        0.65745842, 0.41235654, 0.92741967, 0.50767428, 0.77209005]),
+ array([1.83103666, 1.78412451, 1.58859874, 1.56235746, 1.68504194,
+        1.54048471, 1.60760806, 1.85738632, 1.54679613, 1.78830684,
+        1.31753708, 1.55090857, 1.85205929, 1.78609924, 1.65029658]),
+ array([0.28241755, 0.28342902, 0.31028303, 0.28993987, 0.33325792,
+        0.32920996, 0.30596186, 0.28590442, 0.29795662, 0.30529265,
+        0.3012264 , 0.3134359 , 0.29304776, 0.29522881, 0.28692252]),
+ array([0.53637539, 0.56278571, 0.54909696, 0.55185371, 0.54733162,
+        0.539732  , 0.52180344, 0.51710173, 0.53696768, 0.54172473,
+        0.53630971, 0.52981145, 0.51022293, 0.54843534, 0.52830621])]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;participant&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">()[[</span><span class="s1">&#39;rt&#39;</span><span class="p">,</span> <span class="s1">&#39;accuracy&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="8" halign="left">rt</th>
+      <th colspan="8" halign="left">accuracy</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+    <tr>
+      <th>participant</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>200.0</td>
+      <td>0.942138</td>
+      <td>0.645042</td>
+      <td>0.351418</td>
+      <td>0.521418</td>
+      <td>0.747418</td>
+      <td>1.115418</td>
+      <td>5.528418</td>
+      <td>200.0</td>
+      <td>0.905</td>
+      <td>0.293951</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>200.0</td>
+      <td>0.974534</td>
+      <td>0.536600</td>
+      <td>0.343429</td>
+      <td>0.604929</td>
+      <td>0.799929</td>
+      <td>1.220179</td>
+      <td>3.585429</td>
+      <td>200.0</td>
+      <td>0.785</td>
+      <td>0.411853</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>200.0</td>
+      <td>0.985268</td>
+      <td>0.499462</td>
+      <td>0.397283</td>
+      <td>0.584533</td>
+      <td>0.853783</td>
+      <td>1.262783</td>
+      <td>3.114283</td>
+      <td>200.0</td>
+      <td>0.640</td>
+      <td>0.481205</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>200.0</td>
+      <td>0.869085</td>
+      <td>0.446803</td>
+      <td>0.335940</td>
+      <td>0.561940</td>
+      <td>0.735940</td>
+      <td>1.054940</td>
+      <td>3.088940</td>
+      <td>200.0</td>
+      <td>0.760</td>
+      <td>0.428155</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>200.0</td>
+      <td>0.948708</td>
+      <td>0.545327</td>
+      <td>0.403258</td>
+      <td>0.589758</td>
+      <td>0.796258</td>
+      <td>1.130508</td>
+      <td>4.379258</td>
+      <td>200.0</td>
+      <td>0.765</td>
+      <td>0.425063</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>200.0</td>
+      <td>0.871055</td>
+      <td>0.486609</td>
+      <td>0.374210</td>
+      <td>0.551710</td>
+      <td>0.724210</td>
+      <td>1.017710</td>
+      <td>3.221210</td>
+      <td>200.0</td>
+      <td>0.810</td>
+      <td>0.393285</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>200.0</td>
+      <td>0.897872</td>
+      <td>0.450482</td>
+      <td>0.381962</td>
+      <td>0.552962</td>
+      <td>0.768962</td>
+      <td>1.122462</td>
+      <td>2.638962</td>
+      <td>200.0</td>
+      <td>0.700</td>
+      <td>0.459408</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>200.0</td>
+      <td>1.081504</td>
+      <td>0.743623</td>
+      <td>0.388904</td>
+      <td>0.606404</td>
+      <td>0.848904</td>
+      <td>1.307404</td>
+      <td>5.482904</td>
+      <td>200.0</td>
+      <td>0.840</td>
+      <td>0.367526</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>200.0</td>
+      <td>0.822577</td>
+      <td>0.399378</td>
+      <td>0.355957</td>
+      <td>0.533957</td>
+      <td>0.712957</td>
+      <td>0.958207</td>
+      <td>2.443957</td>
+      <td>200.0</td>
+      <td>0.720</td>
+      <td>0.450126</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>200.0</td>
+      <td>0.996133</td>
+      <td>0.536923</td>
+      <td>0.386293</td>
+      <td>0.593043</td>
+      <td>0.831793</td>
+      <td>1.182543</td>
+      <td>3.255293</td>
+      <td>200.0</td>
+      <td>0.805</td>
+      <td>0.397195</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>200.0</td>
+      <td>0.694166</td>
+      <td>0.326427</td>
+      <td>0.329226</td>
+      <td>0.459726</td>
+      <td>0.600226</td>
+      <td>0.803726</td>
+      <td>2.732226</td>
+      <td>200.0</td>
+      <td>0.755</td>
+      <td>0.431166</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>200.0</td>
+      <td>0.911831</td>
+      <td>0.530493</td>
+      <td>0.395436</td>
+      <td>0.560186</td>
+      <td>0.740936</td>
+      <td>1.062936</td>
+      <td>3.348436</td>
+      <td>200.0</td>
+      <td>0.690</td>
+      <td>0.463654</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>200.0</td>
+      <td>0.994263</td>
+      <td>0.575117</td>
+      <td>0.368048</td>
+      <td>0.590798</td>
+      <td>0.767548</td>
+      <td>1.238298</td>
+      <td>3.379048</td>
+      <td>200.0</td>
+      <td>0.860</td>
+      <td>0.347858</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>200.0</td>
+      <td>1.017074</td>
+      <td>0.653200</td>
+      <td>0.377229</td>
+      <td>0.610729</td>
+      <td>0.839229</td>
+      <td>1.198229</td>
+      <td>6.166229</td>
+      <td>200.0</td>
+      <td>0.675</td>
+      <td>0.469550</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>200.0</td>
+      <td>0.930403</td>
+      <td>0.560120</td>
+      <td>0.360923</td>
+      <td>0.530673</td>
+      <td>0.775423</td>
+      <td>1.066673</td>
+      <td>4.227923</td>
+      <td>200.0</td>
+      <td>0.790</td>
+      <td>0.408330</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Initialise-the-model:">
+<h1>Initialise the model:<a class="headerlink" href="#Initialise-the-model:" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">DDModel</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">starting_point_bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Using cached StanModel
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span><span class="o">.</span><span class="n">family</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">model_label</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">hierarchical_levels</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&#39;DDM&#39;, &#39;hierDDM_bias&#39;, 2)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span><span class="o">.</span><span class="n">starting_point_bias</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
+</div>
+<div class="section" id="Fit">
+<h2>Fit<a class="headerlink" href="#Fit" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># sampling parameters</span>
+<span class="n">n_iter</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">n_chains</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">n_thin</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># bayesian model</span>
+<span class="n">drift_priors</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;mu_mu&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;sd_mu&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;mu_sd&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd_sd&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="n">threshold_priors</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;mu_mu&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd_mu&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;mu_sd&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd_sd&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="n">ndt_priors</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;mu_mu&#39;</span><span class="p">:</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="s1">&#39;sd_mu&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;mu_sd&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd_sd&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">1</span><span class="p">}</span>
+<span class="n">rel_sp_priors</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;mu_mu&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd_mu&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;mu_sd&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd_sd&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">8</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model_fit</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">drift_priors</span><span class="o">=</span><span class="n">drift_priors</span><span class="p">,</span>
+    <span class="n">threshold_priors</span><span class="o">=</span><span class="n">threshold_priors</span><span class="p">,</span>
+    <span class="n">ndt_priors</span><span class="o">=</span><span class="n">ndt_priors</span><span class="p">,</span>
+    <span class="n">rel_sp_priors</span><span class="o">=</span><span class="n">rel_sp_priors</span><span class="p">,</span>
+    <span class="n">thin</span> <span class="o">=</span> <span class="n">n_thin</span><span class="p">,</span>
+    <span class="nb">iter</span> <span class="o">=</span> <span class="n">n_iter</span><span class="p">,</span>
+    <span class="n">chains</span> <span class="o">=</span> <span class="n">n_chains</span><span class="p">,</span>
+    <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+WARNING:pystan:Maximum (flat) parameter count (1000) exceeded: skipping diagnostic tests for n_eff and Rhat.
+To run all diagnostics call pystan.check_hmc_diagnostics(fit)
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="get-Rhat">
+<h1>get Rhat<a class="headerlink" href="#get-Rhat" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">Rhat</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">check_convergence</span><span class="p">()</span>
+
+<span class="n">Rhat</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Rhat</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>count</td>
+      <td>68.000000</td>
+    </tr>
+    <tr>
+      <td>mean</td>
+      <td>1.000394</td>
+    </tr>
+    <tr>
+      <td>std</td>
+      <td>0.003054</td>
+    </tr>
+    <tr>
+      <td>min</td>
+      <td>0.998063</td>
+    </tr>
+    <tr>
+      <td>25%</td>
+      <td>0.998652</td>
+    </tr>
+    <tr>
+      <td>50%</td>
+      <td>0.999570</td>
+    </tr>
+    <tr>
+      <td>75%</td>
+      <td>1.000565</td>
+    </tr>
+    <tr>
+      <td>max</td>
+      <td>1.019638</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">Rhat</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Rhat</th>
+      <th>variable</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0.999550</td>
+      <td>mu_drift</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>1.003750</td>
+      <td>mu_threshold</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>1.001498</td>
+      <td>mu_ndt</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>1.001665</td>
+      <td>mu_rel_sp</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>0.999297</td>
+      <td>sd_drift</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="calculate-wAIC">
+<h1>calculate wAIC<a class="headerlink" href="#calculate-wAIC" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">wAIC</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">calculate_wAIC</span><span class="p">()</span>
+<span class="n">wAIC</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;lppd&#39;: -2754.696916216073,
+ &#39;p_waic&#39;: 39.81922282716228,
+ &#39;waic&#39;: 5589.032278086471,
+ &#39;waic_se&#39;: 126.17527809608059}
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Check-divergences">
+<h1>Check divergences<a class="headerlink" href="#Check-divergences" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">check_divergencies</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0 of 1000 iterations saturated the maximum tree depth of 10 (0.0%)
+E-BFMI indicated no pathological behavior
+0.0 of 1000 iterations ended with a divergence (0.0%)
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Get-posteriors">
+<h1>Get posteriors<a class="headerlink" href="#Get-posteriors" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">samples</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">get_posteriors</span><span class="p">(</span><span class="n">pars</span><span class="o">=</span><span class="n">model_fit</span><span class="o">.</span><span class="n">parameters_names</span><span class="p">,</span> <span class="n">permuted</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">diagnostics</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">samples</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>chain</th>
+      <th>draw</th>
+      <th>warmup</th>
+      <th>permutation</th>
+      <th>chain_permutation</th>
+      <th>permutation_order</th>
+      <th>chain_permutation_order</th>
+      <th>mu_drift</th>
+      <th>mu_ndt</th>
+      <th>mu_rel_sp</th>
+      <th>...</th>
+      <th>z_threshold[15]</th>
+      <th>z_threshold[1]</th>
+      <th>z_threshold[2]</th>
+      <th>z_threshold[3]</th>
+      <th>z_threshold[4]</th>
+      <th>z_threshold[5]</th>
+      <th>z_threshold[6]</th>
+      <th>z_threshold[7]</th>
+      <th>z_threshold[8]</th>
+      <th>z_threshold[9]</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>42</td>
+      <td>0</td>
+      <td>42</td>
+      <td>0</td>
+      <td>35</td>
+      <td>35</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.778500</td>
+      <td>-1.208244</td>
+      <td>0.099943</td>
+      <td>...</td>
+      <td>-0.222342</td>
+      <td>0.459331</td>
+      <td>-0.154115</td>
+      <td>-0.544408</td>
+      <td>-0.326142</td>
+      <td>0.174637</td>
+      <td>-0.894735</td>
+      <td>-0.613277</td>
+      <td>1.192250</td>
+      <td>-1.130124</td>
+    </tr>
+    <tr>
+      <td>81</td>
+      <td>0</td>
+      <td>81</td>
+      <td>0</td>
+      <td>309</td>
+      <td>309</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0.583903</td>
+      <td>-1.191001</td>
+      <td>0.079313</td>
+      <td>...</td>
+      <td>0.529395</td>
+      <td>0.986472</td>
+      <td>0.772178</td>
+      <td>0.833858</td>
+      <td>0.277749</td>
+      <td>0.336479</td>
+      <td>0.629124</td>
+      <td>-0.225183</td>
+      <td>1.449412</td>
+      <td>0.112719</td>
+    </tr>
+    <tr>
+      <td>373</td>
+      <td>0</td>
+      <td>373</td>
+      <td>0</td>
+      <td>322</td>
+      <td>322</td>
+      <td>2</td>
+      <td>2</td>
+      <td>0.655854</td>
+      <td>-1.221609</td>
+      <td>0.120577</td>
+      <td>...</td>
+      <td>-0.111832</td>
+      <td>0.748921</td>
+      <td>0.061015</td>
+      <td>0.526851</td>
+      <td>-0.099908</td>
+      <td>-0.269081</td>
+      <td>-0.293023</td>
+      <td>-0.654886</td>
+      <td>1.083094</td>
+      <td>-0.589730</td>
+    </tr>
+    <tr>
+      <td>259</td>
+      <td>0</td>
+      <td>259</td>
+      <td>0</td>
+      <td>180</td>
+      <td>180</td>
+      <td>3</td>
+      <td>3</td>
+      <td>0.577780</td>
+      <td>-1.205289</td>
+      <td>0.090497</td>
+      <td>...</td>
+      <td>-0.611343</td>
+      <td>0.959456</td>
+      <td>0.877657</td>
+      <td>-0.040838</td>
+      <td>-0.225687</td>
+      <td>-0.364912</td>
+      <td>-0.070495</td>
+      <td>-0.888718</td>
+      <td>1.513694</td>
+      <td>-2.054287</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>0</td>
+      <td>6</td>
+      <td>0</td>
+      <td>167</td>
+      <td>167</td>
+      <td>4</td>
+      <td>4</td>
+      <td>0.577421</td>
+      <td>-1.253391</td>
+      <td>0.084494</td>
+      <td>...</td>
+      <td>-0.349974</td>
+      <td>1.013964</td>
+      <td>0.092265</td>
+      <td>-0.523925</td>
+      <td>-0.638523</td>
+      <td>-0.933867</td>
+      <td>-0.977428</td>
+      <td>-1.174921</td>
+      <td>0.662513</td>
+      <td>-1.192410</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 75 columns</p>
+</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">context</span> <span class="o">=</span> <span class="s2">&quot;talk&quot;</span><span class="p">,</span>
+        <span class="n">style</span> <span class="o">=</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span>
+        <span class="n">palette</span> <span class="o">=</span> <span class="s2">&quot;husl&quot;</span><span class="p">,</span>
+        <span class="n">rc</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">:(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">8</span><span class="p">)})</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;participant&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">()[[</span><span class="s1">&#39;drift&#39;</span><span class="p">,</span> <span class="s1">&#39;threshold&#39;</span><span class="p">,</span> <span class="s1">&#39;ndt&#39;</span><span class="p">,</span> <span class="s1">&#39;rel_sp&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+drift        0.646143
+threshold    1.663243
+ndt          0.300901
+rel_sp       0.537191
+dtype: float64
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">plot_posteriors</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">show_intervals</span><span class="o">=</span><span class="s1">&#39;HDI&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;drift&#39;</span><span class="p">,</span> <span class="s1">&#39;threshold&#39;</span><span class="p">,</span> <span class="s1">&#39;ndt&#39;</span><span class="p">,</span> <span class="s1">&#39;rel_sp&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;seaborn.axisgrid.FacetGrid at 0x125616fd0&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_DDM_starting-point-bias_hierarchical_fitting_26_1.png" src="../_images/notebooks_DDM_starting-point-bias_hierarchical_fitting_26_1.png" />
+</div>
+</div>
+<div class="section" id="Posterior-predictives">
+<h2>Posterior predictives<a class="headerlink" href="#Posterior-predictives" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>participant</th>
+      <th>drift</th>
+      <th>threshold</th>
+      <th>ndt</th>
+      <th>rel_sp</th>
+      <th>rt</th>
+      <th>accuracy</th>
+      <th>accuracy_neg</th>
+      <th>accuracy_flipped</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>1</td>
+      <td>0.545788</td>
+      <td>1.885035</td>
+      <td>0.312768</td>
+      <td>0.758863</td>
+      <td>1.017768</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>-0.0</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>1</td>
+      <td>0.545788</td>
+      <td>1.885035</td>
+      <td>0.312768</td>
+      <td>0.758863</td>
+      <td>1.261768</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>-0.0</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>1</td>
+      <td>0.545788</td>
+      <td>1.885035</td>
+      <td>0.312768</td>
+      <td>0.758863</td>
+      <td>0.563768</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>-0.0</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>1</td>
+      <td>0.545788</td>
+      <td>1.885035</td>
+      <td>0.312768</td>
+      <td>0.758863</td>
+      <td>0.344768</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>-0.0</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>1</td>
+      <td>0.545788</td>
+      <td>1.885035</td>
+      <td>0.312768</td>
+      <td>0.758863</td>
+      <td>0.385768</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>-0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Ungrouped-posterior-predictives:">
+<h1>Ungrouped posterior predictives:<a class="headerlink" href="#Ungrouped-posterior-predictives:" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pp_rt</span><span class="p">,</span> <span class="n">pp_acc</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">get_posterior_predictives</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pp_rt</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rt_1</th>
+      <th>rt_2</th>
+      <th>rt_3</th>
+      <th>rt_4</th>
+      <th>rt_5</th>
+      <th>rt_6</th>
+      <th>rt_7</th>
+      <th>rt_8</th>
+      <th>rt_9</th>
+      <th>rt_10</th>
+      <th>...</th>
+      <th>rt_2991</th>
+      <th>rt_2992</th>
+      <th>rt_2993</th>
+      <th>rt_2994</th>
+      <th>rt_2995</th>
+      <th>rt_2996</th>
+      <th>rt_2997</th>
+      <th>rt_2998</th>
+      <th>rt_2999</th>
+      <th>rt_3000</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0.415706</td>
+      <td>0.945706</td>
+      <td>0.335706</td>
+      <td>1.331706</td>
+      <td>0.889706</td>
+      <td>0.708706</td>
+      <td>1.759706</td>
+      <td>1.711706</td>
+      <td>0.717706</td>
+      <td>0.403706</td>
+      <td>...</td>
+      <td>0.406497</td>
+      <td>2.405497</td>
+      <td>1.472497</td>
+      <td>2.027497</td>
+      <td>0.385497</td>
+      <td>1.358497</td>
+      <td>0.433497</td>
+      <td>0.595497</td>
+      <td>1.065497</td>
+      <td>0.565497</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0.966403</td>
+      <td>1.376403</td>
+      <td>0.481403</td>
+      <td>0.418403</td>
+      <td>0.380403</td>
+      <td>0.796403</td>
+      <td>0.589403</td>
+      <td>0.698403</td>
+      <td>0.496403</td>
+      <td>1.417403</td>
+      <td>...</td>
+      <td>0.395456</td>
+      <td>0.771456</td>
+      <td>1.021456</td>
+      <td>2.040456</td>
+      <td>0.414456</td>
+      <td>0.380456</td>
+      <td>1.258456</td>
+      <td>0.575456</td>
+      <td>1.229456</td>
+      <td>0.864456</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>0.990421</td>
+      <td>0.585421</td>
+      <td>0.498421</td>
+      <td>0.844421</td>
+      <td>0.359421</td>
+      <td>0.411421</td>
+      <td>2.331421</td>
+      <td>0.419421</td>
+      <td>0.626421</td>
+      <td>0.579421</td>
+      <td>...</td>
+      <td>0.723178</td>
+      <td>0.468178</td>
+      <td>0.529178</td>
+      <td>1.017178</td>
+      <td>0.663178</td>
+      <td>1.007178</td>
+      <td>1.969178</td>
+      <td>1.349178</td>
+      <td>1.746178</td>
+      <td>1.416178</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>0.744824</td>
+      <td>0.539824</td>
+      <td>1.609824</td>
+      <td>0.403824</td>
+      <td>0.366824</td>
+      <td>1.060824</td>
+      <td>0.631824</td>
+      <td>0.757824</td>
+      <td>0.415824</td>
+      <td>0.372824</td>
+      <td>...</td>
+      <td>0.418360</td>
+      <td>0.603360</td>
+      <td>0.609360</td>
+      <td>0.840360</td>
+      <td>1.839360</td>
+      <td>0.552360</td>
+      <td>0.845360</td>
+      <td>0.378360</td>
+      <td>1.158360</td>
+      <td>0.402360</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>2.165901</td>
+      <td>0.437901</td>
+      <td>0.413901</td>
+      <td>0.454901</td>
+      <td>1.489901</td>
+      <td>0.943901</td>
+      <td>0.839901</td>
+      <td>0.722901</td>
+      <td>2.760901</td>
+      <td>0.390901</td>
+      <td>...</td>
+      <td>0.646457</td>
+      <td>0.559457</td>
+      <td>0.353457</td>
+      <td>0.902457</td>
+      <td>2.095457</td>
+      <td>0.766457</td>
+      <td>0.579457</td>
+      <td>0.534457</td>
+      <td>0.803457</td>
+      <td>0.906457</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 3000 columns</p>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pp_acc</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>accuracy_1</th>
+      <th>accuracy_2</th>
+      <th>accuracy_3</th>
+      <th>accuracy_4</th>
+      <th>accuracy_5</th>
+      <th>accuracy_6</th>
+      <th>accuracy_7</th>
+      <th>accuracy_8</th>
+      <th>accuracy_9</th>
+      <th>accuracy_10</th>
+      <th>...</th>
+      <th>accuracy_2991</th>
+      <th>accuracy_2992</th>
+      <th>accuracy_2993</th>
+      <th>accuracy_2994</th>
+      <th>accuracy_2995</th>
+      <th>accuracy_2996</th>
+      <th>accuracy_2997</th>
+      <th>accuracy_2998</th>
+      <th>accuracy_2999</th>
+      <th>accuracy_3000</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 3000 columns</p>
+</div></div>
+</div>
+</div>
+<div class="section" id="Grouped-posterior-predictives:">
+<h1>Grouped posterior predictives:<a class="headerlink" href="#Grouped-posterior-predictives:" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pp_grouped</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">get_mean_posterior_predictives</span><span class="p">(</span><span class="n">grouping_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;participant&#39;</span><span class="p">],</span>
+                                                      <span class="n">n_posterior_predictives</span><span class="o">=</span><span class="n">n_iter</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pp_grouped</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>participant</th>
+      <th>mean_acc</th>
+      <th>mean_rt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>1</td>
+      <td>0.960</td>
+      <td>0.768696</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>1</td>
+      <td>0.930</td>
+      <td>0.807583</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>1</td>
+      <td>0.965</td>
+      <td>0.738236</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>1</td>
+      <td>0.940</td>
+      <td>0.690219</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>1</td>
+      <td>0.925</td>
+      <td>0.811246</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Plot-grouped-posterior-predictives:">
+<h1>Plot grouped posterior predictives:<a class="headerlink" href="#Plot-grouped-posterior-predictives:" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">plot_mean_grouped_posterior_predictives</span><span class="p">(</span><span class="n">grouping_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;participant&#39;</span><span class="p">],</span>
+                                                  <span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+                                                  <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span>
+                                                  <span class="n">palette</span><span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s1">&#39;husl&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_DDM_starting-point-bias_hierarchical_fitting_37_0.png" src="../_images/notebooks_DDM_starting-point-bias_hierarchical_fitting_37_0.png" />
+</div>
+</div>
+<div class="section" id="Get-starting-values-for-further-sampling">
+<h2>Get starting values for further sampling<a class="headerlink" href="#Get-starting-values-for-further-sampling" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sv</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">get_starting_values</span><span class="p">()</span>
+<span class="n">sv</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>chain</th>
+      <th>draw</th>
+      <th>warmup</th>
+      <th>mu_drift</th>
+      <th>mu_ndt</th>
+      <th>mu_rel_sp</th>
+      <th>mu_threshold</th>
+      <th>sd_drift</th>
+      <th>sd_ndt</th>
+      <th>sd_rel_sp</th>
+      <th>...</th>
+      <th>z_threshold[15]</th>
+      <th>z_threshold[1]</th>
+      <th>z_threshold[2]</th>
+      <th>z_threshold[3]</th>
+      <th>z_threshold[4]</th>
+      <th>z_threshold[5]</th>
+      <th>z_threshold[6]</th>
+      <th>z_threshold[7]</th>
+      <th>z_threshold[8]</th>
+      <th>z_threshold[9]</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>499</td>
+      <td>0</td>
+      <td>499</td>
+      <td>0</td>
+      <td>0.572329</td>
+      <td>-1.221181</td>
+      <td>0.615349</td>
+      <td>0.516522</td>
+      <td>0.285368</td>
+      <td>0.053340</td>
+      <td>0.101462</td>
+      <td>...</td>
+      <td>1.427868</td>
+      <td>0.968305</td>
+      <td>-0.334602</td>
+      <td>0.264981</td>
+      <td>-0.524881</td>
+      <td>0.109488</td>
+      <td>-1.577422</td>
+      <td>1.424606</td>
+      <td>-0.688145</td>
+      <td>-0.522077</td>
+    </tr>
+    <tr>
+      <td>999</td>
+      <td>1</td>
+      <td>499</td>
+      <td>0</td>
+      <td>0.618527</td>
+      <td>-1.187764</td>
+      <td>0.632204</td>
+      <td>0.610982</td>
+      <td>0.297963</td>
+      <td>0.061672</td>
+      <td>0.137836</td>
+      <td>...</td>
+      <td>0.617832</td>
+      <td>0.559112</td>
+      <td>-1.643756</td>
+      <td>-0.495273</td>
+      <td>-0.951872</td>
+      <td>-0.584221</td>
+      <td>-1.604622</td>
+      <td>0.361930</td>
+      <td>-1.217370</td>
+      <td>-1.253965</td>
+    </tr>
+  </tbody>
+</table>
+<p>2 rows × 71 columns</p>
+</div></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Laura Fontanesi
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
