@@ -36,7 +36,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Fit the DDM on individual data" href="notebooks/DDM_fitting.html" />
+    <link rel="next" title="How to load a ModelResults object" href="notebooks/load_from_saved.html" />
     <link rel="prev" title="References" href="references.html" /> 
 </head>
 
@@ -87,19 +87,26 @@
 <li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Credits</a></li>
 </ul>
+<p class="caption"><span class="caption-text">How to:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/load_from_saved.html">How to load a ModelResults object</a></li>
+</ul>
 <p class="caption"><span class="caption-text">Examples:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="notebooks/DDM_fitting.html">Fit the DDM on individual data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="notebooks/DDM_hierarchical_fitting.html">Fit the DDM on hierarchical data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notebooks/load_from_saved.html">How to load a ModelResults object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/DDM_starting-point-bias_fitting.html">Parameter recovery of the DDM with starting point bias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/DDM_starting-point-bias_hierarchical_fitting.html">Parameter recovery of the hierarchical DDM with starting point bias</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API Reference:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="models/define_model.html">Define and fit a model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="models/inspect_simpleRL.html">Inspect a RL model fitted only on choices</a></li>
-<li class="toctree-l1"><a class="reference internal" href="models/inspect_SSM_DDM.html">Inspect a DDM or a RLDDM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="models/inspect_SSM_race.html">Inspect a race model or a RL-race model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="simulations/simulateDDM.html">Simulate data from the diffusion decision model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/model_classes.html">Model classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/modelresult_RL.html">ModelResults class for RL models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/modelresult_DDM.html">ModelResults class for DDMs (or RLDDMs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/modelresult_race.html">ModelResults class for race (or RL+race) models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulations/simulateDDM.html">Simulate data with the DDM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulations/simulaterace.html">Simulate data with race models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulations/simulateRL.html">Simulate data with RL models, RLDDMs, and RL+race models</a></li>
 </ul>
 
             
@@ -203,7 +210,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="notebooks/DDM_fitting.html" class="btn btn-neutral float-right" title="Fit the DDM on individual data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="notebooks/load_from_saved.html" class="btn btn-neutral float-right" title="How to load a ModelResults object" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="references.html" class="btn btn-neutral float-left" title="References" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

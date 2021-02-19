@@ -36,7 +36,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="How to load a ModelResults object" href="load_from_saved.html" />
+    <link rel="next" title="Parameter recovery of the DDM with starting point bias" href="DDM_starting-point-bias_fitting.html" />
     <link rel="prev" title="Fit the DDM on individual data" href="DDM_fitting.html" /> 
 </head>
 
@@ -83,18 +83,13 @@
             
               <p class="caption"><span class="caption-text">Getting started:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installing rlssm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cite.html">Cite</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../authors.html">Development team &amp; Contacts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
 </ul>
 <p class="caption"><span class="caption-text">How to:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../models/define_model.html">Define and fit a model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../models/inspect_simpleRL.html">Inspect a RL model fitted only on choices</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../models/inspect_SSM_DDM.html">Inspect a DDM or a RLDDM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../models/inspect_SSM_race.html">Inspect a race model or a RL-race model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../simulations/simulateDDM.html">Simulate data from the diffusion decision model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="load_from_saved.html">How to load a ModelResults object</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples:</span></p>
 <ul class="current">
@@ -115,7 +110,18 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="load_from_saved.html">How to load a ModelResults object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DDM_starting-point-bias_fitting.html">Parameter recovery of the DDM with starting point bias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DDM_starting-point-bias_hierarchical_fitting.html">Parameter recovery of the hierarchical DDM with starting point bias</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/model_classes.html">Model classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/modelresult_RL.html">ModelResults class for RL models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/modelresult_DDM.html">ModelResults class for DDMs (or RLDDMs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/modelresult_race.html">ModelResults class for race (or RL+race) models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../simulations/simulateDDM.html">Simulate data with the DDM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../simulations/simulaterace.html">Simulate data with race models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../simulations/simulateRL.html">Simulate data with RL models, RLDDMs, and RL+race models</a></li>
 </ul>
 
             
@@ -466,7 +472,7 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="Import-the-data">
 <h2>Import the data<a class="headerlink" href="#Import-the-data" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -475,14 +481,12 @@ div.rendered_html tbody tr:hover {
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-<span class="n">data</span><span class="p">[</span><span class="s1">&#39;block_label&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-
 <span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -520,67 +524,67 @@ div.rendered_html tbody tr:hover {
     <tr>
       <th>0</th>
       <td>1</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>43.0</td>
-      <td>39.0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>43</td>
+      <td>39</td>
       <td>2</td>
       <td>1</td>
-      <td>1.0</td>
+      <td>1</td>
       <td>1.244082</td>
-      <td>0.0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1</td>
-      <td>1.0</td>
-      <td>2.0</td>
-      <td>60.0</td>
-      <td>50.0</td>
+      <td>1</td>
+      <td>2</td>
+      <td>60</td>
+      <td>50</td>
       <td>4</td>
       <td>3</td>
-      <td>1.0</td>
+      <td>1</td>
       <td>1.101821</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>2</th>
       <td>1</td>
-      <td>1.0</td>
-      <td>3.0</td>
-      <td>44.0</td>
-      <td>36.0</td>
+      <td>1</td>
+      <td>3</td>
+      <td>44</td>
+      <td>36</td>
       <td>4</td>
       <td>2</td>
-      <td>2.0</td>
+      <td>2</td>
       <td>1.029923</td>
-      <td>0.0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>3</th>
       <td>1</td>
-      <td>1.0</td>
-      <td>4.0</td>
-      <td>55.0</td>
-      <td>55.0</td>
+      <td>1</td>
+      <td>4</td>
+      <td>55</td>
+      <td>55</td>
       <td>4</td>
       <td>3</td>
-      <td>2.5</td>
+      <td>2</td>
       <td>1.368007</td>
-      <td>0.0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>4</th>
       <td>1</td>
-      <td>1.0</td>
-      <td>5.0</td>
-      <td>52.0</td>
-      <td>49.0</td>
+      <td>1</td>
+      <td>5</td>
+      <td>52</td>
+      <td>49</td>
       <td>4</td>
       <td>3</td>
-      <td>3.5</td>
+      <td>3</td>
       <td>1.039329</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -606,42 +610,6 @@ div.rendered_html tbody tr:hover {
 INFO:pystan:COMPILING THE C++ CODE FOR MODEL anon_model_e51a7e834f83bc3d1e730098b573fd71 NOW.
 </pre></div></div>
 </div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model</span><span class="o">.</span><span class="n">family</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">model_label</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">hierarchical_levels</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-(&#39;DDM&#39;, &#39;hierDDM&#39;, 2)
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model</span><span class="o">.</span><span class="n">starting_point_bias</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-False
-</pre></div></div>
-</div>
 </div>
 <div class="section" id="Fit">
 <h2>Fit<a class="headerlink" href="#Fit" title="Permalink to this headline">¶</a></h2>
@@ -655,7 +623,7 @@ False
 <span class="n">n_chains</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="n">n_thin</span> <span class="o">=</span> <span class="mi">1</span>
 
-<span class="c1"># bayesian model</span>
+<span class="c1"># bayesian model, change default priors:</span>
 <span class="n">drift_priors</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;mu_mu&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;sd_mu&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;mu_sd&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd_sd&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
 <span class="n">threshold_priors</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;mu_mu&#39;</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;sd_mu&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;mu_sd&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd_sd&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
 <span class="n">ndt_priors</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;mu_mu&#39;</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;sd_mu&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;mu_sd&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd_sd&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
@@ -700,8 +668,10 @@ n_eff / iter looks reasonable for all parameters
 E-BFMI indicated no pathological behavior
 </pre></div></div>
 </div>
+<div class="section" id="get-Rhat">
+<h3>get Rhat<a class="headerlink" href="#get-Rhat" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -710,7 +680,7 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -767,74 +737,6 @@ E-BFMI indicated no pathological behavior
     <tr>
       <th>max</th>
       <td>1.008218</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
-</div>
-<div class="section" id="get-Rhat">
-<h3>get Rhat<a class="headerlink" href="#get-Rhat" title="Permalink to this headline">¶</a></h3>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">rhat</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>rhat</th>
-      <th>variable</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1.002509</td>
-      <td>mu_drift</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1.001339</td>
-      <td>mu_threshold</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>1.002303</td>
-      <td>mu_ndt</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1.000422</td>
-      <td>sd_drift</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>1.002649</td>
-      <td>sd_threshold</td>
     </tr>
   </tbody>
 </table>
@@ -1147,7 +1049,7 @@ E-BFMI indicated no pathological behavior
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_DDM_hierarchical_fitting_19_0.png" src="../_images/notebooks_DDM_hierarchical_fitting_19_0.png" />
+<img alt="../_images/notebooks_DDM_hierarchical_fitting_16_0.png" src="../_images/notebooks_DDM_hierarchical_fitting_16_0.png" />
 </div>
 </div>
 </div>
@@ -1414,7 +1316,7 @@ E-BFMI indicated no pathological behavior
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_DDM_hierarchical_fitting_23_0.png" src="../_images/notebooks_DDM_hierarchical_fitting_23_0.png" />
+<img alt="../_images/notebooks_DDM_hierarchical_fitting_20_0.png" src="../_images/notebooks_DDM_hierarchical_fitting_20_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
@@ -1430,7 +1332,7 @@ E-BFMI indicated no pathological behavior
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_DDM_hierarchical_fitting_24_0.png" src="../_images/notebooks_DDM_hierarchical_fitting_24_0.png" />
+<img alt="../_images/notebooks_DDM_hierarchical_fitting_21_0.png" src="../_images/notebooks_DDM_hierarchical_fitting_21_0.png" />
 </div>
 </div>
 </div>
@@ -1450,7 +1352,8 @@ E-BFMI indicated no pathological behavior
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;choice_pair&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;AB&#39;</span>
+<span></span><span class="c1"># Define new grouping variables, in this case, for the different choice pairs, but any grouping var can do</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;choice_pair&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;AB&#39;</span>
 <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">data</span><span class="o">.</span><span class="n">cor_option</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">inc_option</span> <span class="o">==</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;choice_pair&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;AC&#39;</span>
 <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">data</span><span class="o">.</span><span class="n">cor_option</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">inc_option</span> <span class="o">==</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;choice_pair&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;BD&#39;</span>
 <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">data</span><span class="o">.</span><span class="n">cor_option</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">inc_option</span> <span class="o">==</span> <span class="mi">3</span><span class="p">),</span> <span class="s1">&#39;choice_pair&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;CD&#39;</span>
@@ -1458,150 +1361,6 @@ E-BFMI indicated no pathological behavior
 <span class="n">data</span><span class="p">[</span><span class="s1">&#39;block_bins&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">trial_block</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
 </pre></div>
 </div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>index</th>
-      <th>participant</th>
-      <th>block_label</th>
-      <th>trial_block</th>
-      <th>f_cor</th>
-      <th>f_inc</th>
-      <th>cor_option</th>
-      <th>inc_option</th>
-      <th>times_seen</th>
-      <th>rt</th>
-      <th>accuracy</th>
-      <th>accuracy_neg</th>
-      <th>accuracy_flipped</th>
-      <th>choice_pair</th>
-      <th>block_bins</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0</td>
-      <td>1</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>43.0</td>
-      <td>39.0</td>
-      <td>2</td>
-      <td>1</td>
-      <td>1.0</td>
-      <td>1.244082</td>
-      <td>0.0</td>
-      <td>-1</td>
-      <td>1.0</td>
-      <td>AB</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1</td>
-      <td>1</td>
-      <td>1.0</td>
-      <td>2.0</td>
-      <td>60.0</td>
-      <td>50.0</td>
-      <td>4</td>
-      <td>3</td>
-      <td>1.0</td>
-      <td>1.101821</td>
-      <td>1.0</td>
-      <td>1</td>
-      <td>-0.0</td>
-      <td>CD</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2</td>
-      <td>1</td>
-      <td>1.0</td>
-      <td>3.0</td>
-      <td>44.0</td>
-      <td>36.0</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2.0</td>
-      <td>1.029923</td>
-      <td>0.0</td>
-      <td>-1</td>
-      <td>1.0</td>
-      <td>BD</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>3</td>
-      <td>1</td>
-      <td>1.0</td>
-      <td>4.0</td>
-      <td>55.0</td>
-      <td>55.0</td>
-      <td>4</td>
-      <td>3</td>
-      <td>2.5</td>
-      <td>1.368007</td>
-      <td>0.0</td>
-      <td>-1</td>
-      <td>1.0</td>
-      <td>CD</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>4</td>
-      <td>1</td>
-      <td>1.0</td>
-      <td>5.0</td>
-      <td>52.0</td>
-      <td>49.0</td>
-      <td>4</td>
-      <td>3</td>
-      <td>3.5</td>
-      <td>1.039329</td>
-      <td>1.0</td>
-      <td>1</td>
-      <td>-0.0</td>
-      <td>CD</td>
-      <td>1</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
@@ -2025,7 +1784,7 @@ E-BFMI indicated no pathological behavior
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_DDM_hierarchical_fitting_31_0.png" src="../_images/notebooks_DDM_hierarchical_fitting_31_0.png" />
+<img alt="../_images/notebooks_DDM_hierarchical_fitting_27_0.png" src="../_images/notebooks_DDM_hierarchical_fitting_27_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
@@ -2044,7 +1803,7 @@ E-BFMI indicated no pathological behavior
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_DDM_hierarchical_fitting_32_0.png" src="../_images/notebooks_DDM_hierarchical_fitting_32_0.png" />
+<img alt="../_images/notebooks_DDM_hierarchical_fitting_28_0.png" src="../_images/notebooks_DDM_hierarchical_fitting_28_0.png" />
 </div>
 </div>
 </div>
@@ -2059,7 +1818,7 @@ E-BFMI indicated no pathological behavior
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="load_from_saved.html" class="btn btn-neutral float-right" title="How to load a ModelResults object" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="DDM_starting-point-bias_fitting.html" class="btn btn-neutral float-right" title="Parameter recovery of the DDM with starting point bias" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="DDM_fitting.html" class="btn btn-neutral float-left" title="Fit the DDM on individual data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
