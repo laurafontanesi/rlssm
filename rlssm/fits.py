@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from rlssm import plotting
 from .utils import list_individual_variables
 from .stan_utility import check_all_diagnostics
-from .random import random_ddm, random_rdm_2alternatives
+from .random import random_ddm, random_rdm_2A
 
 class FittedModel(object):
     def __init__(self,

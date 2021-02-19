@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from rlssm import plotting
 from .utils import list_individual_variables
 from .stan_utility import check_all_diagnostics
-from .random import random_rdm_2alternatives, random_rdm_nalternatives, random_lba_2alternatives
+from .random import random_rdm_2A, random_rdm_nA, random_lba_2A
 from .fits import FittedModel, ModelResults
 
 class raceFittedModel_2A(FittedModel):
@@ -126,13 +126,13 @@ class raceModelResults_2A(ModelResults):
             tau_t = self.trial_samples['tau_t'][:n_posterior_predictives, :]
             drift_cor_t = self.trial_samples['drift_cor_t'][:n_posterior_predictives, :]
             drift_inc_t = self.trial_samples['drift_inc_t'][:n_posterior_predictives, :]
-            pp_rt, pp_acc = random_lba_2alternatives(k_t, A_t, tau_t, drift_cor_t, drift_inc_t, **kwargs)
+            pp_rt, pp_acc = random_lba_2A(k_t, A_t, tau_t, drift_cor_t, drift_inc_t, **kwargs)
         else:
             drift_cor_t = self.trial_samples['drift_cor_t'][:n_posterior_predictives, :]
             drift_inc_t = self.trial_samples['drift_inc_t'][:n_posterior_predictives, :]
             threshold_t = self.trial_samples['threshold_t'][:n_posterior_predictives, :]
             ndt_t = self.trial_samples['ndt_t'][:n_posterior_predictives, :]
-            pp_rt, pp_acc = random_rdm_2alternatives(drift_cor_t, drift_inc_t, threshold_t, ndt_t, **kwargs)
+            pp_rt, pp_acc = random_rdm_2A(drift_cor_t, drift_inc_t, threshold_t, ndt_t, **kwargs)
 
         return pp_rt, pp_acc
 

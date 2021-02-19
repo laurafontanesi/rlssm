@@ -3,142 +3,7 @@ import pandas as pd
 from scipy import stats
 import random
 
-def rdm_trial(I, threshold, non_decision_time, noise_constant=1, dt=0.001, max_rt=10):
-    n_choice = len(I)
-    x = np.zeros(n_choice)
-    stop_race = False
-    rt = 0
-
-    while not stop_race:
-        for i in range(n_choice):
-            x[i] += np.random.normal(I[i]*dt, noise_constant*(dt**(1/2)), 1)[0]
-        rt += dt
-        not_reached = np.sum(x<threshold)
-        if not_reached == n_choice:
-            stop_race = False
-            if rt > max_rt:
-                x = np.zeros(n_choice)
-                rt = 0
-        elif not_reached == n_choice - 1:
-            stop_race = True
-        else:
-            stop_race = False
-            x = np.zeros(n_choice)
-            rt = 0
-
-    return rt+non_decision_time, np.where(x>=threshold)[0][0] + 1
-
-def random_rdm_nalternatives(drift, threshold, ndt, noise_constant=1, dt=0.001, max_rt=10):
-    shape = ndt.shape
-    n_options = drift.shape[1]
-    choice = np.empty(shape)*np.nan
-    rt = np.empty(shape)*np.nan
-
-    max_tsteps = max_rt/dt
-
-    x = np.zeros(drift.shape)
-    tstep = 0
-    ongoing = np.array(np.ones(drift.shape), dtype=bool)
-    ended = np.array(np.ones(drift.shape), dtype=bool)
-
-    stop_race = False
-
-    while np.sum(ongoing) > 0 and tstep < max_tsteps:
-        x[ongoing] += np.random.normal(drift[ongoing]*dt,
-                                           noise_constant*np.sqrt(dt),
-                                           np.sum(ongoing))
-        tstep += 1
-
-        for i in range(n_options):
-            ended[:, i, :]= (x[:, i, :] >= threshold)
-
-        # store results and filter out ended trials
-        for i in range(n_options):
-            if np.sum(ended[:, i, :]) > 0:
-                choice[np.logical_and(ended[:, i, :], ongoing[:, i, :])] = i + 1
-                rt[np.logical_and(ended[:, i, :], ongoing[:, i, :])] = dt*tstep + ndt[np.logical_and(ended[:, i, :], ongoing[:, i, :])]
-                ongoing[:, i, :][ended[:, i, :]] = False
-
-    return rt, choice
-
-def random_rdm_2alternatives(cor_drift, inc_drift, threshold, ndt, noise_constant=1, dt=0.001, max_rt=10):
-    shape = cor_drift.shape
-    acc = np.empty(shape)*np.nan
-    rt = np.empty(shape)*np.nan
-
-    max_tsteps = max_rt/dt
-
-    x_cor = np.zeros(shape)
-    x_inc = np.zeros(shape)
-
-    tstep = 0
-    ongoing = np.array(np.ones(shape), dtype=bool)
-
-    stop_race = False
-
-    while np.sum(ongoing) > 0 and tstep < max_tsteps:
-        x_cor[ongoing] += np.random.normal(cor_drift[ongoing]*dt,
-                                           noise_constant*np.sqrt(dt),
-                                           np.sum(ongoing))
-        x_inc[ongoing] += np.random.normal(inc_drift[ongoing]*dt,
-                                           noise_constant*np.sqrt(dt),
-                                           np.sum(ongoing))
-        tstep += 1
-        ended_correct = (x_cor >= threshold)
-        ended_incorrect = (x_inc >= threshold)
-
-        # store results and filter out ended trials
-        if np.sum(ended_correct) > 0:
-            acc[np.logical_and(ended_correct, ongoing)] = 1
-            rt[np.logical_and(ended_correct, ongoing)] = dt*tstep + ndt[np.logical_and(ended_correct, ongoing)]
-            ongoing[ended_correct] = False
-
-        if np.sum(ended_incorrect) > 0:
-            acc[np.logical_and(ended_incorrect, ongoing)] = 0
-            rt[np.logical_and(ended_incorrect, ongoing)] = dt*tstep + ndt[np.logical_and(ended_incorrect, ongoing)]
-            ongoing[ended_incorrect] = False
-    return rt, acc
-
-def random_lba_2alternatives(k, A, tau, cor_drift, inc_drift):
-    shape = cor_drift.shape
-    acc = np.empty(shape)*np.nan
-    rt = np.empty(shape)*np.nan
-
-    b = k + A
-    one_pose = True
-    v_cor = np.random.normal(cor_drift, np.ones(cor_drift.shape))
-    v_inc = np.random.normal(inc_drift, np.ones(inc_drift.shape))
-
-    while one_pose:
-        ind = np.logical_and(v_cor < 0, v_inc < 0)
-        v_cor[ind] = np.random.normal(cor_drift[ind], np.ones(cor_drift[ind].shape))
-        v_inc[ind] = np.random.normal(inc_drift[ind], np.ones(inc_drift[ind].shape))
-        one_pose = np.sum(ind)>0
-
-    start_cor = np.random.uniform(np.zeros(A.shape), A)
-    start_inc = np.random.uniform(np.zeros(A.shape), A)
-
-    ttf_cor = (b-start_cor)/v_cor
-    ttf_inc = (b-start_inc)/v_inc
-
-    ind = np.logical_and(ttf_cor <= ttf_inc, 0 < ttf_cor)
-    acc[ind] = 1
-    rt[ind] = ttf_cor[ind] + tau[ind]
-
-    ind = np.logical_and(ttf_inc < 0, 0 < ttf_cor)
-    acc[ind] = 1
-    rt[ind] = ttf_cor[ind] + tau[ind]
-
-    ind = np.logical_and(ttf_inc < ttf_cor, 0 < ttf_inc)
-    acc[ind] = 0
-    rt [ind] = ttf_inc[ind] + tau[ind]
-
-    ind = np.logical_and(ttf_cor < 0, 0 < ttf_inc)
-    acc[ind] = 0
-    rt [ind] = ttf_inc[ind] + tau[ind]
-
-    return rt, acc
-
+## pure DDM
 def random_ddm(drift, threshold, ndt, rel_sp=.5, noise_constant=1, dt=0.001, max_rt=10):
     """Simulates behavior (rt and accuracy) according to the diffusion decision model.
 
@@ -691,6 +556,7 @@ def simulate_hier_ddm(n_trials, n_participants,
 
     return data.set_index(['participant', 'trial'])
 
+# pure RL
 def generate_task_design_fontanesi(n_trials_block,
                                    n_blocks,
                                    n_participants,
@@ -792,7 +658,7 @@ def generate_task_design_fontanesi(n_trials_block,
 
     return task_design
 
-def _simulate_delta_rule_2alternatives(task_design,
+def _simulate_delta_rule_2A(task_design,
                                        alpha,
                                        initial_value_learning,
                                        alpha_pos=None,
@@ -894,15 +760,12 @@ def _simulate_delta_rule_2alternatives(task_design,
 
     return pd.DataFrame({'Q_cor':Q_cor, 'Q_inc':Q_inc})
 
-def _soft_max_2alternatives(row):
+def _soft_max_2A(row):
     nom = np.exp(row.Q_cor*row.sensitivity)
     denom = np.sum([nom + np.exp(row.Q_inc*row.sensitivity)])
     return nom/denom
 
-def simulate_rl_nalternatives():
-    pass
-
-def simulate_rl_2alternatives(task_design,
+def simulate_rl_2A(task_design,
                               gen_alpha,
                               gen_sensitivity,
                               initial_value_learning=0):
@@ -961,7 +824,7 @@ def simulate_rl_2alternatives(task_design,
 
     if (type(gen_alpha) == float) | (type(gen_alpha) == int):
         data['alpha'] = gen_alpha
-        data = pd.concat([data, _simulate_delta_rule_2alternatives(task_design=task_design,
+        data = pd.concat([data, _simulate_delta_rule_2A(task_design=task_design,
                                                                    alpha=gen_alpha,
                                                                    initial_value_learning=initial_value_learning)],
                          axis=1)
@@ -970,7 +833,7 @@ def simulate_rl_2alternatives(task_design,
         if len(gen_alpha) == 2:
             data['alpha_pos'] = gen_alpha[0]
             data['alpha_neg'] = gen_alpha[1]
-            data = pd.concat([data, _simulate_delta_rule_2alternatives(task_design=task_design,
+            data = pd.concat([data, _simulate_delta_rule_2A(task_design=task_design,
                                                                        alpha=None,
                                                                        initial_value_learning=initial_value_learning,
                                                                        alpha_pos=gen_alpha[0],
@@ -985,14 +848,13 @@ def simulate_rl_2alternatives(task_design,
         raise TypeError("The gen_alpha should be either a list or a float/int.")
 
     data['sensitivity'] = gen_sensitivity
-    data['p_cor'] = data.apply(_soft_max_2alternatives, axis=1)
+    data['p_cor'] = data.apply(_soft_max_2A, axis=1)
     data['accuracy'] = stats.bernoulli.rvs(data['p_cor'].values) # simulate choices
 
     data = data.set_index(['participant', 'block_label', 'trial_block'])
     return data
 
-
-def simulate_hier_rl_2alternatives(task_design,
+def simulate_hier_rl_2A(task_design,
                                    gen_mu_alpha, gen_sd_alpha,
                                    gen_mu_sensitivity, gen_sd_sensitivity,
                                    initial_value_learning=0):
@@ -1068,7 +930,7 @@ def simulate_hier_rl_2alternatives(task_design,
     participants = pd.unique(data["participant"])
     n_participants = len(participants)
     if n_participants < 2:
-        raise ValueError("You only have one participant. Use simulate_rl_2alternatives instead.")
+        raise ValueError("You only have one participant. Use simulate_rl_2A instead.")
 
     if type(gen_mu_alpha) != type(gen_sd_alpha):
         raise TypeError("gen_mu_alpha and gen_sd_alpha should be of the same type.")
@@ -1079,7 +941,7 @@ def simulate_hier_rl_2alternatives(task_design,
                                    index = participants)
         data = pd.concat([data.set_index('participant'), parameters], axis=1, ignore_index=False).reset_index().rename(columns={'index': 'participant'})
 
-        data = pd.concat([data, _simulate_delta_rule_2alternatives(task_design=task_design,
+        data = pd.concat([data, _simulate_delta_rule_2A(task_design=task_design,
                                                                    alpha=parameters.alpha.values,
                                                                    initial_value_learning=initial_value_learning)],
                          axis=1)
@@ -1093,7 +955,7 @@ def simulate_hier_rl_2alternatives(task_design,
                                        'sensitivity': np.log(1 + np.exp(np.random.normal(gen_mu_sensitivity, gen_sd_sensitivity, n_participants)))},
                                        index = participants)
             data = pd.concat([data.set_index('participant'), parameters], axis=1, ignore_index=False).reset_index().rename(columns={'index': 'participant'})
-            data = pd.concat([data, _simulate_delta_rule_2alternatives(task_design=task_design,
+            data = pd.concat([data, _simulate_delta_rule_2A(task_design=task_design,
                                                                        alpha=None,
                                                                        initial_value_learning=initial_value_learning,
                                                                        alpha_pos=parameters.alpha_pos.values,
@@ -1107,64 +969,14 @@ def simulate_hier_rl_2alternatives(task_design,
     else:
         raise TypeError("The gen_alpha should be either a list or a float/int.")
 
-    data['p_cor'] = data.apply(_soft_max_2alternatives, axis=1)
+    data['p_cor'] = data.apply(_soft_max_2A, axis=1)
     data['accuracy'] = stats.bernoulli.rvs(data['p_cor'].values) # simulate choices
 
     data = data.set_index(['participant', 'block_label', 'trial_block'])
     return data
 
-def simulate_rlrdm_2alternatives(task_design,
-                                 gen_alpha,
-                                 gen_drift_scaling,
-                                 gen_threshold,
-                                 gen_ndt,
-                                 initial_value_learning=0,
-                                 **kwargs):
-    data = task_design.copy()
-
-    if (type(gen_alpha) == float) | (type(gen_alpha) == int):
-        data['alpha'] = gen_alpha
-        data = pd.concat([data, _simulate_delta_rule_2alternatives(task_design=task_design,
-                                                                   alpha=gen_alpha,
-                                                                   initial_value_learning=initial_value_learning)],
-                         axis=1)
-
-    elif type(gen_alpha) is list:
-        if len(gen_alpha) == 2:
-            data['alpha_pos'] = gen_alpha[0]
-            data['alpha_neg'] = gen_alpha[1]
-            data = pd.concat([data, _simulate_delta_rule_2alternatives(task_design=task_design,
-                                                                       alpha=None,
-                                                                       initial_value_learning=initial_value_learning,
-                                                                       alpha_pos=gen_alpha[0],
-                                                                       alpha_neg=gen_alpha[1])],
-                             axis=1)
-
-        elif len(gen_alpha) == 3:
-            pass # implement here Stefano's learning rule
-        else:
-            raise ValueError("The gen_alpha list should be of either length 2 or 3.")
-    else:
-        raise TypeError("The gen_alpha should be either a list or a float/int.")
-
-    data['drift_scaling'] = gen_drift_scaling
-    data['threshold'] = gen_threshold
-    data['ndt'] = gen_ndt
-    data['cor_drift'] = gen_drift_scaling*(data['Q_cor'])
-    data['inc_drift'] = gen_drift_scaling*(data['Q_inc'])
-
-    # simulate responses
-    rt, acc = random_rdm_2alternatives(data['cor_drift'],
-                                       data['cor_drift'],
-                                       data['threshold'],
-                                       data['ndt'], **kwargs)
-    data['rt'] = rt
-    data['accuracy'] = acc
-
-    data = data.set_index(['participant', 'block_label', 'trial_block'])
-    return data
-
-def simulate_rlddm_2alternatives(task_design,
+# RL + DDM
+def simulate_rlddm_2A(task_design,
                                  gen_alpha,
                                  gen_drift_scaling,
                                  gen_threshold,
@@ -1240,7 +1052,7 @@ def simulate_rlddm_2alternatives(task_design,
 
     if (type(gen_alpha) == float) | (type(gen_alpha) == int):
         data['alpha'] = gen_alpha
-        data = pd.concat([data, _simulate_delta_rule_2alternatives(task_design=task_design,
+        data = pd.concat([data, _simulate_delta_rule_2A(task_design=task_design,
                                                                    alpha=gen_alpha,
                                                                    initial_value_learning=initial_value_learning)],
                          axis=1)
@@ -1249,7 +1061,7 @@ def simulate_rlddm_2alternatives(task_design,
         if len(gen_alpha) == 2:
             data['alpha_pos'] = gen_alpha[0]
             data['alpha_neg'] = gen_alpha[1]
-            data = pd.concat([data, _simulate_delta_rule_2alternatives(task_design=task_design,
+            data = pd.concat([data, _simulate_delta_rule_2A(task_design=task_design,
                                                                        alpha=None,
                                                                        initial_value_learning=initial_value_learning,
                                                                        alpha_pos=gen_alpha[0],
@@ -1276,7 +1088,7 @@ def simulate_rlddm_2alternatives(task_design,
     data = data.set_index(['participant', 'block_label', 'trial_block'])
     return data
 
-def simulate_hier_rlddm_2alternatives(task_design,
+def simulate_hier_rlddm_2A(task_design,
                                       gen_mu_alpha, gen_sd_alpha,
                                       gen_mu_drift_scaling, gen_sd_drift_scaling,
                                       gen_mu_threshold, gen_sd_threshold,
@@ -1383,7 +1195,7 @@ def simulate_hier_rlddm_2alternatives(task_design,
     participants = pd.unique(data["participant"])
     n_participants = len(participants)
     if n_participants < 2:
-        raise ValueError("You only have one participant. Use simulate_rl_2alternatives instead.")
+        raise ValueError("You only have one participant. Use simulate_rl_2A instead.")
 
     if type(gen_mu_alpha) != type(gen_sd_alpha):
         raise TypeError("gen_mu_alpha and gen_sd_alpha should be of the same type.")
@@ -1395,7 +1207,7 @@ def simulate_hier_rlddm_2alternatives(task_design,
                                    'ndt': np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants)))},
                                    index = participants)
         data = pd.concat([data.set_index('participant'), parameters], axis=1, ignore_index=False).reset_index().rename(columns={'index': 'participant'})
-        data = pd.concat([data, _simulate_delta_rule_2alternatives(task_design,
+        data = pd.concat([data, _simulate_delta_rule_2A(task_design,
                                                                    parameters.alpha.values,
                                                                    initial_value_learning)],
                          axis=1)
@@ -1411,7 +1223,7 @@ def simulate_hier_rlddm_2alternatives(task_design,
                                        'ndt': np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants)))},
                                        index = participants)
             data = pd.concat([data.set_index('participant'), parameters], axis=1, ignore_index=False).reset_index().rename(columns={'index': 'participant'})
-            data = pd.concat([data, _simulate_delta_rule_2alternatives(task_design=task_design,
+            data = pd.concat([data, _simulate_delta_rule_2A(task_design=task_design,
                                                                        alpha=None,
                                                                        initial_value_learning=initial_value_learning,
                                                                        alpha_pos=parameters.alpha_pos.values,
@@ -1434,3 +1246,192 @@ def simulate_hier_rlddm_2alternatives(task_design,
 
     data = data.set_index(['participant', 'block_label', 'trial_block'])
     return data
+
+# PURE RDM
+def rdm_trial(I, threshold, non_decision_time, noise_constant=1, dt=0.001, max_rt=10):
+    n_choice = len(I)
+    x = np.zeros(n_choice)
+    stop_race = False
+    rt = 0
+
+    while not stop_race:
+        for i in range(n_choice):
+            x[i] += np.random.normal(I[i]*dt, noise_constant*(dt**(1/2)), 1)[0]
+        rt += dt
+        not_reached = np.sum(x<threshold)
+        if not_reached == n_choice:
+            stop_race = False
+            if rt > max_rt:
+                x = np.zeros(n_choice)
+                rt = 0
+        elif not_reached == n_choice - 1:
+            stop_race = True
+        else:
+            stop_race = False
+            x = np.zeros(n_choice)
+            rt = 0
+
+    return rt+non_decision_time, np.where(x>=threshold)[0][0] + 1
+
+def random_rdm_nA(drift, threshold, ndt, noise_constant=1, dt=0.001, max_rt=10):
+    shape = ndt.shape
+    n_options = drift.shape[1]
+    choice = np.empty(shape)*np.nan
+    rt = np.empty(shape)*np.nan
+
+    max_tsteps = max_rt/dt
+
+    x = np.zeros(drift.shape)
+    tstep = 0
+    ongoing = np.array(np.ones(drift.shape), dtype=bool)
+    ended = np.array(np.ones(drift.shape), dtype=bool)
+
+    stop_race = False
+
+    while np.sum(ongoing) > 0 and tstep < max_tsteps:
+        x[ongoing] += np.random.normal(drift[ongoing]*dt,
+                                           noise_constant*np.sqrt(dt),
+                                           np.sum(ongoing))
+        tstep += 1
+
+        for i in range(n_options):
+            ended[:, i, :]= (x[:, i, :] >= threshold)
+
+        # store results and filter out ended trials
+        for i in range(n_options):
+            if np.sum(ended[:, i, :]) > 0:
+                choice[np.logical_and(ended[:, i, :], ongoing[:, i, :])] = i + 1
+                rt[np.logical_and(ended[:, i, :], ongoing[:, i, :])] = dt*tstep + ndt[np.logical_and(ended[:, i, :], ongoing[:, i, :])]
+                ongoing[:, i, :][ended[:, i, :]] = False
+
+    return rt, choice
+
+def random_rdm_2A(cor_drift, inc_drift, threshold, ndt, noise_constant=1, dt=0.001, max_rt=10):
+    shape = cor_drift.shape
+    acc = np.empty(shape)*np.nan
+    rt = np.empty(shape)*np.nan
+
+    max_tsteps = max_rt/dt
+
+    x_cor = np.zeros(shape)
+    x_inc = np.zeros(shape)
+
+    tstep = 0
+    ongoing = np.array(np.ones(shape), dtype=bool)
+
+    stop_race = False
+
+    while np.sum(ongoing) > 0 and tstep < max_tsteps:
+        x_cor[ongoing] += np.random.normal(cor_drift[ongoing]*dt,
+                                           noise_constant*np.sqrt(dt),
+                                           np.sum(ongoing))
+        x_inc[ongoing] += np.random.normal(inc_drift[ongoing]*dt,
+                                           noise_constant*np.sqrt(dt),
+                                           np.sum(ongoing))
+        tstep += 1
+        ended_correct = (x_cor >= threshold)
+        ended_incorrect = (x_inc >= threshold)
+
+        # store results and filter out ended trials
+        if np.sum(ended_correct) > 0:
+            acc[np.logical_and(ended_correct, ongoing)] = 1
+            rt[np.logical_and(ended_correct, ongoing)] = dt*tstep + ndt[np.logical_and(ended_correct, ongoing)]
+            ongoing[ended_correct] = False
+
+        if np.sum(ended_incorrect) > 0:
+            acc[np.logical_and(ended_incorrect, ongoing)] = 0
+            rt[np.logical_and(ended_incorrect, ongoing)] = dt*tstep + ndt[np.logical_and(ended_incorrect, ongoing)]
+            ongoing[ended_incorrect] = False
+    return rt, acc
+
+def simulate_rlrdm_2A(task_design,
+                                 gen_alpha,
+                                 gen_drift_scaling,
+                                 gen_threshold,
+                                 gen_ndt,
+                                 initial_value_learning=0,
+                                 **kwargs):
+    data = task_design.copy()
+
+    if (type(gen_alpha) == float) | (type(gen_alpha) == int):
+        data['alpha'] = gen_alpha
+        data = pd.concat([data, _simulate_delta_rule_2A(task_design=task_design,
+                                                                   alpha=gen_alpha,
+                                                                   initial_value_learning=initial_value_learning)],
+                         axis=1)
+
+    elif type(gen_alpha) is list:
+        if len(gen_alpha) == 2:
+            data['alpha_pos'] = gen_alpha[0]
+            data['alpha_neg'] = gen_alpha[1]
+            data = pd.concat([data, _simulate_delta_rule_2A(task_design=task_design,
+                                                                       alpha=None,
+                                                                       initial_value_learning=initial_value_learning,
+                                                                       alpha_pos=gen_alpha[0],
+                                                                       alpha_neg=gen_alpha[1])],
+                             axis=1)
+
+        elif len(gen_alpha) == 3:
+            pass # implement here Stefano's learning rule
+        else:
+            raise ValueError("The gen_alpha list should be of either length 2 or 3.")
+    else:
+        raise TypeError("The gen_alpha should be either a list or a float/int.")
+
+    data['drift_scaling'] = gen_drift_scaling
+    data['threshold'] = gen_threshold
+    data['ndt'] = gen_ndt
+    data['cor_drift'] = gen_drift_scaling*(data['Q_cor'])
+    data['inc_drift'] = gen_drift_scaling*(data['Q_inc'])
+
+    # simulate responses
+    rt, acc = random_rdm_2A(data['cor_drift'],
+                                       data['cor_drift'],
+                                       data['threshold'],
+                                       data['ndt'], **kwargs)
+    data['rt'] = rt
+    data['accuracy'] = acc
+
+    data = data.set_index(['participant', 'block_label', 'trial_block'])
+    return data
+
+# PURE LBA
+def random_lba_2A(k, A, tau, cor_drift, inc_drift):
+    shape = cor_drift.shape
+    acc = np.empty(shape)*np.nan
+    rt = np.empty(shape)*np.nan
+
+    b = k + A
+    one_pose = True
+    v_cor = np.random.normal(cor_drift, np.ones(cor_drift.shape))
+    v_inc = np.random.normal(inc_drift, np.ones(inc_drift.shape))
+
+    while one_pose:
+        ind = np.logical_and(v_cor < 0, v_inc < 0)
+        v_cor[ind] = np.random.normal(cor_drift[ind], np.ones(cor_drift[ind].shape))
+        v_inc[ind] = np.random.normal(inc_drift[ind], np.ones(inc_drift[ind].shape))
+        one_pose = np.sum(ind)>0
+
+    start_cor = np.random.uniform(np.zeros(A.shape), A)
+    start_inc = np.random.uniform(np.zeros(A.shape), A)
+
+    ttf_cor = (b-start_cor)/v_cor
+    ttf_inc = (b-start_inc)/v_inc
+
+    ind = np.logical_and(ttf_cor <= ttf_inc, 0 < ttf_cor)
+    acc[ind] = 1
+    rt[ind] = ttf_cor[ind] + tau[ind]
+
+    ind = np.logical_and(ttf_inc < 0, 0 < ttf_cor)
+    acc[ind] = 1
+    rt[ind] = ttf_cor[ind] + tau[ind]
+
+    ind = np.logical_and(ttf_inc < ttf_cor, 0 < ttf_inc)
+    acc[ind] = 0
+    rt [ind] = ttf_inc[ind] + tau[ind]
+
+    ind = np.logical_and(ttf_cor < 0, 0 < ttf_inc)
+    acc[ind] = 0
+    rt [ind] = ttf_inc[ind] + tau[ind]
+
+    return rt, acc
