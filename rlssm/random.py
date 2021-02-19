@@ -72,8 +72,10 @@ def random_ddm(drift, threshold, ndt, rel_sp=.5, noise_constant=1, dt=0.001, max
 
     shape = drift.shape
 
-    acc = np.empty(shape)*np.nan
-    rt = np.empty(shape)*np.nan
+    acc = np.empty(shape)
+    acc[:] = np.nan
+    rt = np.empty(shape)
+    rt[:] = np.nan
     rel_sp = np.ones(shape)*rel_sp
     max_tsteps = max_rt/dt
 
@@ -1276,8 +1278,10 @@ def rdm_trial(I, threshold, non_decision_time, noise_constant=1, dt=0.001, max_r
 def random_rdm_nA(drift, threshold, ndt, noise_constant=1, dt=0.001, max_rt=10):
     shape = ndt.shape
     n_options = drift.shape[1]
-    choice = np.empty(shape)*np.nan
-    rt = np.empty(shape)*np.nan
+    choice = np.empty(shape)
+    choice[:] = np.nan
+    rt = np.empty(shape)
+    rt[:] = np.nan
 
     max_tsteps = max_rt/dt
 
@@ -1308,8 +1312,10 @@ def random_rdm_nA(drift, threshold, ndt, noise_constant=1, dt=0.001, max_rt=10):
 
 def random_rdm_2A(cor_drift, inc_drift, threshold, ndt, noise_constant=1, dt=0.001, max_rt=10):
     shape = cor_drift.shape
-    acc = np.empty(shape)*np.nan
-    rt = np.empty(shape)*np.nan
+    acc = np.empty(shape)
+    rt = np.empty(shape)
+    acc[:] = np.nan
+    rt[:] = np.nan
 
     max_tsteps = max_rt/dt
 
@@ -1398,8 +1404,10 @@ def simulate_rlrdm_2A(task_design,
 # PURE LBA
 def random_lba_2A(k, A, tau, cor_drift, inc_drift):
     shape = cor_drift.shape
-    acc = np.empty(shape)*np.nan
-    rt = np.empty(shape)*np.nan
+    acc = np.empty(shape)
+    rt = np.empty(shape)
+    acc[:] = np.nan
+    rt[:] = np.nan
 
     b = k + A
     one_pose = True
