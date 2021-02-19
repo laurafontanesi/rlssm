@@ -36,7 +36,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Installing rlssm" href="installation.html" /> 
+    <link rel="next" title="Installation" href="installation.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -82,23 +82,25 @@
             
               <p class="caption"><span class="caption-text">Getting started:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installing rlssm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cite.html">Cite</a></li>
-<li class="toctree-l1"><a class="reference internal" href="authors.html">Development team &amp; Contacts</a></li>
-</ul>
-<p class="caption"><span class="caption-text">How to:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="models/define_model.html">Define and fit a model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="models/inspect_simpleRL.html">Inspect a RL model fitted only on choices</a></li>
-<li class="toctree-l1"><a class="reference internal" href="models/inspect_SSM_DDM.html">Inspect a DDM or a RLDDM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="models/inspect_SSM_race.html">Inspect a race model or a RL-race model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="simulations/simulateDDM.html">Simulate data from the diffusion decision model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="notebooks/DDM_fitting.html">Fit the DDM on individual data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="notebooks/DDM_hierarchical_fitting.html">Fit the DDM on hierarchical data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/load_from_saved.html">How to load a ModelResults object</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="models/model_classes.html">Model classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/modelresult_RL.html">ModelResults class for RL models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/modelresult_DDM.html">ModelResults class for DDMs (or RLDDMs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/modelresult_race.html">ModelResults class for race (or RL+race) models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulations/simulateDDM.html">Simulate data with the DDM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulations/simulaterace.html">Simulate data with race models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulations/simulateRL.html">Simulate data with RL models, RLDDMs, and RL+race models</a></li>
 </ul>
 
             
@@ -195,49 +197,13 @@
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Getting started:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installing rlssm</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#dependencies">Dependencies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#conda-environment-suggested">Conda environment (suggested)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cite.html">Cite</a></li>
-<li class="toctree-l1"><a class="reference internal" href="authors.html">Development team &amp; Contacts</a></li>
-</ul>
-</div>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">How to:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="models/define_model.html">Define and fit a model</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="models/define_model.html#reinforcement-learning-models-for-2-alternatives">Reinforcement learning models (for 2 alternatives)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models/define_model.html#diffusion-decision-models">Diffusion decision models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models/define_model.html#reinforcement-learning-diffusion-decision-models">Reinforcement learning diffusion decision models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models/define_model.html#race-models-for-2-alternatives">Race models (for 2 alternatives)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models/define_model.html#reinforcement-learning-race-models-for-2-alternatives">Reinforcement learning race models (for 2 alternatives)</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="models/inspect_simpleRL.html">Inspect a RL model fitted only on choices</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="models/inspect_simpleRL.html#reinforcement-learning-models">Reinforcement learning models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models/inspect_simpleRL.html#all-models">All models</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="models/inspect_SSM_DDM.html">Inspect a DDM or a RLDDM</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="models/inspect_SSM_DDM.html#diffusion-decision-models">Diffusion decision models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models/inspect_SSM_DDM.html#reinforcement-learning-diffusion-decision-models">Reinforcement learning diffusion decision models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models/inspect_SSM_DDM.html#all-models">All models</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="models/inspect_SSM_race.html">Inspect a race model or a RL-race model</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="models/inspect_SSM_race.html#race-diffusion-models-rdm-lba-ardm-and-alba">Race diffusion models (RDM, LBA, ARDM, and ALBA)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models/inspect_SSM_race.html#reinforcement-learning-race-diffusion-models-rlrdm-rllba-rlardm-and-rlalba">Reinforcement learning race diffusion models (RLRDM, RLLBA, RLARDM, and RLALBA)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models/inspect_SSM_race.html#all-models">All models</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="simulations/simulateDDM.html">Simulate data from the diffusion decision model</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="simulations/simulateDDM.html#in-pandas">In pandas</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simulations/simulateDDM.html#in-numpy">In numpy</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
@@ -245,15 +211,26 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="notebooks/DDM_fitting.html">Fit the DDM on individual data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="notebooks/DDM_hierarchical_fitting.html">Fit the DDM on hierarchical data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/load_from_saved.html">How to load a ModelResults object</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">API Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="models/model_classes.html">Model classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/modelresult_RL.html">ModelResults class for RL models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/modelresult_DDM.html">ModelResults class for DDMs (or RLDDMs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/modelresult_race.html">ModelResults class for race (or RL+race) models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulations/simulateDDM.html">Simulate data with the DDM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulations/simulaterace.html">Simulate data with race models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulations/simulateRL.html">Simulate data with RL models, RLDDMs, and RL+race models</a></li>
 </ul>
 </div>
 </div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="index">
+<h1>Index<a class="headerlink" href="#index" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
 </div>
 
@@ -265,7 +242,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="installation.html" class="btn btn-neutral float-right" title="Installing rlssm" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>

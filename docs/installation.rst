@@ -1,5 +1,5 @@
-Installing rlssm 
-================
+Installation 
+============
 
 For now, you can simply install the rlssm package using ``python setup.py install``, after downloading or cloning rlssm from `GitHub`_.
 
@@ -19,42 +19,35 @@ Conda environment (suggested)
 
 If you have Andaconda or miniconda installed and you would like to create a separate environment for the rlssm package, do the following::
 
-	conda create --name rlssmenv python=3 pandas scipy seaborn pystan=2.19
-	conda activate rlssmenv
+	conda create --n stanenv python=3 pandas scipy seaborn pystan=2.19
+	conda activate stanenv
 	python setup.py install
 
 Check if the compiler is working::
 
-	python test.py
+	python tests/test_compiler.py
 
 On MacOS, if you encounter a compilation error, you can try the following::
 
-	conda create -n rlssmenv python=3.7 pandas cython seaborn scipy
-	conda activate rlssmenv
+	conda create -n stanenv python=3.7 pandas cython seaborn scipy
+	conda activate stanenv
 	conda install clang_osx-64 clangxx_osx-64 -c anaconda
 	conda info
 
-Copy the "active env location"::
+Copy the "active env location" and substitute into::
 
 	ls ACTIVE_ENV_LOCATION/bin/ | grep clang | grep -i 'apple'
 
-Copy the two clang and modify the following::
+Copy the two clangs and modify the following::
 
 	export CC=x86_64-apple-darwin13.4.0-clang
 	export CXX=x86_64-apple-darwin13.4.0-clang++
 
-Now you can install pystan::
+Install pystan and rlssm and test again whether the compiler works::
 
 	conda install -c conda-forge pystan=2.19
-
-And finally install the rlssm package and test again whether the compiler works::
-
 	python setup.py install
-	python test.py
-
-If you want to try out also the notebooks::
-
-	conda install -c conda-forge jupyterlab
+	python tests/test_compiler.py
 
 If you are experiencing other issues with the compiler, check the `pystan documentation`_.
 

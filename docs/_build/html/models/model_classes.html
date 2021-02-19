@@ -1,0 +1,2088 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Model classes &mdash; rlssm 0.1.dev documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ModelResults classes (simple RL models)" href="modelresult_RL.html" />
+    <link rel="prev" title="How to load a ModelResults object" href="../notebooks/load_from_saved.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> rlssm
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/DDM_fitting.html">Fit the DDM on individual data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/DDM_hierarchical_fitting.html">Fit the DDM on hierarchical data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/load_from_saved.html">How to load a ModelResults object</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Model classes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#reinforcement-learning-models-for-2-alternatives">Reinforcement learning models (for 2 alternatives)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#diffusion-decision-models">Diffusion decision models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reinforcement-learning-diffusion-decision-models">Reinforcement learning diffusion decision models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#race-models-for-2-alternatives">Race models (for 2 alternatives)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reinforcement-learning-race-models-for-2-alternatives">Reinforcement learning race models (for 2 alternatives)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modelresult_RL.html">ModelResults classes (simple RL models)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modelresult_DDM.html">ModelResults classes (DDM and RLDDM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../simulations/simulateDDM.html">Simulate data from the diffusion decision model</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">rlssm</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Model classes</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/models/model_classes.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="model-classes">
+<h1>Model classes<a class="headerlink" href="#model-classes" title="Permalink to this headline">¶</a></h1>
+<p>These classes can be used to define different available models.
+Curretly, 5 classes of models are implemented in <cite>rlssm</cite>:</p>
+<ol class="arabic simple">
+<li><p>simple reinforcement learning models: <a class="reference internal" href="#rlmodel-2a"><span class="std std-ref">RLModel_2A</span></a></p></li>
+<li><p>diffusion decision models: <a class="reference internal" href="#ddmodel"><span class="std std-ref">DDModel</span></a></p></li>
+<li><p>reinforcement learning diffusion decision models: <a class="reference internal" href="#rlddmodel"><span class="std std-ref">RLDDModel</span></a></p></li>
+<li><p>race models: <a class="reference internal" href="#rdmodel-2a"><span class="std std-ref">RDModel_2A</span></a>, <a class="reference internal" href="#lbamodel-2a"><span class="std std-ref">LBAModel_2A</span></a>, <a class="reference internal" href="#ardmodel-2a"><span class="std std-ref">ARDModel_2A</span></a>, <a class="reference internal" href="#albamodel-2a"><span class="std std-ref">ALBAModel_2A</span></a></p></li>
+<li><p>reinforcement learning race models: <a class="reference internal" href="#rlrdmodel-2a"><span class="std std-ref">RLRDModel_2A</span></a>, <a class="reference internal" href="#rllbamodel-2a"><span class="std std-ref">RLLBAModel_2A</span></a>, <a class="reference internal" href="#rlardmodel-2a"><span class="std std-ref">RLARDModel_2A</span></a>, <a class="reference internal" href="#rlalbamodel-2a"><span class="std std-ref">RLALBAModel_2A</span></a></p></li>
+</ol>
+<p>All classes have a hierarchical and non-hierarchical version, and come with additional cognitive mechanisms that can be added or excluded.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>At the moment, all model classes are meant for decisions between 2 alternatives.</p>
+</div>
+<div class="section" id="reinforcement-learning-models-for-2-alternatives">
+<h2>Reinforcement learning models (for 2 alternatives)<a class="headerlink" href="#reinforcement-learning-models-for-2-alternatives" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="rlmodel-2a"></span><dl class="py class">
+<dt id="rlssm.RLModel_2A">
+<em class="property">class </em><code class="sig-prename descclassname">rlssm.</code><code class="sig-name descname">RLModel_2A</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hierarchical_levels</span></em>, <em class="sig-param"><span class="n">increasing_sensitivity</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">separate_learning_rates</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLModel_2A" title="Permalink to this definition">¶</a></dt>
+<dd><p>RLModel_2A allows to specify a reinforcement learning model.</p>
+<p>When initializing the model, you should specify whether the model is hierarchical or not.
+Additionally, you can specify the mechanisms that you wish to include or exclude.</p>
+<p>The underlying stan model will be compiled if no previously compiled model is found.
+After initializing the model, it can be fitted to a particular dataset using pystan.</p>
+<dl class="py method">
+<dt id="rlssm.RLModel_2A.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hierarchical_levels</span></em>, <em class="sig-param"><span class="n">increasing_sensitivity</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">separate_learning_rates</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLModel_2A.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a RLModel_2A object.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This model is restricted to two options per trial (coded as correct and incorrect).
+However, more than two options can be presented in the same learning session.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hierarchical_levels</strong> (<em>int</em>) – Set to 1 for individual data and to 2 for grouped data.</p></li>
+<li><p><strong>increasing_sensitivity</strong> (<em>bool</em><em>, </em><em>default False</em>) – By default, sensitivity is fixed throughout learning.
+If set to True, sensitivity increases throughout learning.
+In particular, it increases as a power function of the n times an option has been seen
+(as in Yechiam &amp; Busemeyer, 2005).</p></li>
+<li><p><strong>separate_learning_rates</strong> (<em>bool</em><em>, </em><em>default False</em>) – By default, there is only one learning rate.
+If set to True, separate learning rates are estimated
+for positive and negative prediction errors.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="rlssm.RLModel_2A.model_label">
+<code class="sig-name descname">model_label</code><a class="headerlink" href="#rlssm.RLModel_2A.model_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>The label of the fully specified model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RLModel_2A.n_parameters_individual">
+<code class="sig-name descname">n_parameters_individual</code><a class="headerlink" href="#rlssm.RLModel_2A.n_parameters_individual" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of individual parameters of the fully specified model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RLModel_2A.n_parameters_trial">
+<code class="sig-name descname">n_parameters_trial</code><a class="headerlink" href="#rlssm.RLModel_2A.n_parameters_trial" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of parameters that are estimated at a trial level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RLModel_2A.stan_model_path">
+<code class="sig-name descname">stan_model_path</code><a class="headerlink" href="#rlssm.RLModel_2A.stan_model_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The location of the stan model code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RLModel_2A.compiled_model">
+<code class="sig-name descname">compiled_model</code><a class="headerlink" href="#rlssm.RLModel_2A.compiled_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>The compiled stan model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>pystan.StanModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt id="rlssm.RLModel_2A.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">K</span></em>, <em class="sig-param"><span class="n">initial_value_learning</span></em>, <em class="sig-param"><span class="n">alpha_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">sensitivity_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">consistency_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">scaling_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">alpha_pos_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">alpha_neg_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">include_rhat</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">include_waic</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">include_last_values</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">pointwise_waic</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">print_diagnostics</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLModel_2A.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fits the specified reinforcement learning model to data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>DataFrame</em>) – <p>A pandas DataFrame containing data observations.</p>
+<p>Columns should include (it’s OK if some of them are column indexes too):</p>
+<ul>
+<li><p><em>trial_block</em>, the number of trial in a learning session.
+Should be integers starting from 1.</p></li>
+<li><p><em>f_cor</em>, the output from the correct option in the presented pair
+(the option with higher outcome on average).</p></li>
+<li><p><em>f_inc</em>, the output from the incorrect option in the presented pair
+(the option with lower outcome on average).</p></li>
+<li><p><em>cor_option</em>, the number identifying the correct option in the presented pair
+(the option with higher outcome on average).</p></li>
+<li><p><em>inc_option</em>, the number identifying the incorrect option in the presented pair
+(the option with lower outcome on average).</p></li>
+<li><p><em>block_label</em>, the number identifying the learning session.
+Should be integers starting from 1.
+Set to 1 in case there is only one learning session.</p></li>
+<li><p><em>accuracy</em>, 0 if the incorrect option was chosen,
+1 if the correct option was chosen.</p></li>
+</ul>
+<p>If the model is hierarchical, also include:</p>
+<ul>
+<li><p><em>participant</em>, the participant number. Should be integers starting from 1.</p></li>
+</ul>
+<p>If increasing_sensitivity is True, also include:</p>
+<ul>
+<li><p><em>times_seen</em>, average number of times the presented options
+have been seen in a learning session.</p></li>
+</ul>
+</p></li>
+<li><p><strong>K</strong> (<em>int</em>) – Number of options per learning session.</p></li>
+<li><p><strong>initial_value_learning</strong> (<em>float</em>) – The assumed value expectation in the first learning session.
+The learning value in the following learning sessions is set to
+the average learned value in the previous learning session.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>res</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>rlssm.fits.RLModelResults</p>
+</dd>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>alpha_priors</strong> (<em>dict, optional</em>) – Priors for the learning rate parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.
+Default is {‘mu’:0, ‘sd’:1} for non-hierarchical, and
+{‘mu_mu’:0, ‘sd_mu’:1, ‘mu_sd’:0, ‘sd_sd’:.1} for hierarchical models.</p></li>
+<li><p><strong>sensitivity_priors</strong> (<em>dict, optional</em>) – Priors for the sensitivity parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>consistency_priors</strong> (<em>dict, optional</em>) – Priors for the consistency parameter
+(only meaningful if increasing_sensitivity is True).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>scaling_priors</strong> (<em>dict, optional</em>) – Priors for the scaling parameter (only meaningful if increasing_sensitivity is True).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>alpha_pos_priors</strong> (<em>dict, optional</em>) – Priors for the learning rate for the positive PE
+(only meaningful if separate_learning_rates is True).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>alpha_neg_priors</strong> (<em>dict, optional</em>) – Priors for the learning rate for the negative PE
+(only meaningful if separate_learning_rates is True).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>include_rhat</strong> (<em>bool, default True</em>) – Whether to calculate the Gelman-Rubin convergence diagnostic r hat
+(Gelman &amp; Rubin, 1992).</p></li>
+<li><p><strong>include_waic</strong> (<em>bool, default True</em>) – Whether to calculate the widely applicable information criterion
+(WAIC; Watanabe, 2013).</p></li>
+<li><p><strong>pointwise_waic</strong> (<em>bool, default False</em>) – Whether to also inclue the pointwise WAIC.
+Only relevant if include_waic is True.</p></li>
+<li><p><strong>include_last_values</strong> (<em>bool, default True</em>) – Whether to extract the last values for each chain.</p></li>
+<li><p><strong>print_diagnostics</strong> (<em>bool, default True</em>) – Whether to print mcmc diagnostics after fitting.
+It is advised to leave it to True and always check, on top of the r hat.</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to pystan.StanModel.sampling().</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="diffusion-decision-models">
+<h2>Diffusion decision models<a class="headerlink" href="#diffusion-decision-models" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="ddmodel"></span><dl class="py class">
+<dt id="rlssm.DDModel">
+<em class="property">class </em><code class="sig-prename descclassname">rlssm.</code><code class="sig-name descname">DDModel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hierarchical_levels</span></em>, <em class="sig-param"><span class="n">starting_point_bias</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">drift_variability</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">starting_point_variability</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">drift_starting_point_correlation</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">drift_starting_point_beta_correlation</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">drift_starting_point_regression</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.DDModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>DDModel allows to specify a diffusion decision model.</p>
+<p>When initializing the model, you should specify whether the model is hierarchical or not.
+Additionally, you can specify the mechanisms that you wish to include or exclude.</p>
+<p>The underlying stan model will be compiled if no previously compiled model is found.
+After initializing the model, it can be fitted to a particular dataset using pystan.</p>
+<dl class="py method">
+<dt id="rlssm.DDModel.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hierarchical_levels</span></em>, <em class="sig-param"><span class="n">starting_point_bias</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">drift_variability</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">starting_point_variability</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">drift_starting_point_correlation</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">drift_starting_point_beta_correlation</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">drift_starting_point_regression</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.DDModel.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a DDModel object.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This model is restricted to two options per trial (coded as correct and incorrect).</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hierarchical_levels</strong> (<em>int</em>) – Set to 1 for individual data and to 2 for grouped data.</p></li>
+<li><p><strong>starting_point_bias</strong> (<em>bool</em><em>, </em><em>default False</em>) – By default, there is no starting point bias.
+If set to True, the starting point bias is estimated.</p></li>
+<li><p><strong>drift_variability</strong> (<em>bool</em><em>, </em><em>default False</em>) – By default, there is no drift-rate variability across trials.
+If set to True, the standard deviation of the drift-rate across trials is estimated.</p></li>
+<li><p><strong>starting_point_variability</strong> (<em>bool</em><em>, </em><em>default False</em>) – By default, there is no starting point bias variability across trials.
+If set to True, the standard deviation of the starting point bias across trials
+is estimated.</p></li>
+<li><p><strong>drift_starting_point_correlation</strong> (<em>bool</em><em>, </em><em>default False</em>) – By default, the correlation between these 2 parameters is not estimated.
+If set to True, the 2 parameters are assumed to come
+from a multinormal distribution.
+Only relevant when drift_variability and starting_point_variability are True.</p></li>
+<li><p><strong>drift_starting_point_beta_correlation</strong> (<em>bool</em><em>, </em><em>default False</em>) – <p>If True, trial-by-trial drift-rate, rel_sp and an external
+variable beta are assumed to come from a multinormal distribution.</p>
+<blockquote>
+<div><p>Only relevant when drift_variability and starting_point_variability are True.</p>
+</div></blockquote>
+</p></li>
+<li><p><strong>drift_starting_point_regression</strong> (<em>bool</em><em>, </em><em>default False</em>) – If True, two regression coefficients are estimated, for trial drift
+and relative starting point, and an external variable beta.
+Only relevant when drift_variability and starting_point_variability are True.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="rlssm.DDModel.model_label">
+<code class="sig-name descname">model_label</code><a class="headerlink" href="#rlssm.DDModel.model_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>The label of the fully specified model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.DDModel.n_parameters_individual">
+<code class="sig-name descname">n_parameters_individual</code><a class="headerlink" href="#rlssm.DDModel.n_parameters_individual" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of individual parameters of the fully specified model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.DDModel.n_parameters_trial">
+<code class="sig-name descname">n_parameters_trial</code><a class="headerlink" href="#rlssm.DDModel.n_parameters_trial" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of parameters that are estimated at a trial level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.DDModel.stan_model_path">
+<code class="sig-name descname">stan_model_path</code><a class="headerlink" href="#rlssm.DDModel.stan_model_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The location of the stan model code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.DDModel.compiled_model">
+<code class="sig-name descname">compiled_model</code><a class="headerlink" href="#rlssm.DDModel.compiled_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>The compiled stan model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>pystan.StanModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt id="rlssm.DDModel.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">drift_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">threshold_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ndt_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">rel_sp_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">starting_point</span><span class="o">=</span><span class="default_value">0.5</span></em>, <em class="sig-param"><span class="n">drift_trialmu_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">drift_trialsd_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">rel_sp_trialmu_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">rel_sp_trialsd_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">corr_matrix_prior</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">beta_trialmu_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">beta_trialsd_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">regression_coefficients_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">include_rhat</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">include_waic</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">include_last_values</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">pointwise_waic</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">print_diagnostics</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.DDModel.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fits the specified diffusion decision model to data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>DataFrame</em>) – <p>A pandas DataFrame containing data observations.</p>
+<p>Columns should include:</p>
+<ul class="simple">
+<li><p><em>rt</em>, response times in seconds.</p></li>
+<li><p><em>accuracy</em>, 0 if the incorrect option was chosen,
+1 if the correct option was chosen.</p></li>
+</ul>
+<p>If the model is hierarchical, also include:</p>
+<ul class="simple">
+<li><p><em>participant</em>, the participant number.
+Should be integers starting from 1.</p></li>
+</ul>
+<p>When either drift_starting_point_correlation, drift_starting_point_beta_correlation,
+or drift_starting_point_regression are True, also include:</p>
+<ul class="simple">
+<li><p><em>beta</em>, the external variable to correlate/regress to drift and rel_sp.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>res</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>rlssm.fits.DDModelResults</p>
+</dd>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>starting_point</strong> (<em>float, default .5</em>) – The relative starting point of the diffusion process.
+By default there is no bias, so the starting point is .5.
+Should be between 0 and 1.</p></li>
+<li><p><strong>drift_priors</strong> (<em>dict, optional</em>) – Priors for the drift-rate parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>threshold_priors</strong> (<em>dict, optional</em>) – Priors for the threshold parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>ndt_priors</strong> (<em>dict, optional</em>) – Priors for the non decision time parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>rel_sp_priors</strong> (<em>dict, optional</em>) – Priors for the relative starting point parameter
+(only meaningful if starting_point_bias is True).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>drift_trialmu_priors</strong> (<em>dict, optional</em>) – Priors for the mean drift-rate across trials
+(only meaningful if drift_variability is True).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>drift_trialsd_priors</strong> (<em>dict, optional</em>) – Priors for the standard deviation of the drift-rate across trials
+(only meaningful if drift_variability is True).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>rel_sp_trialmu_priors</strong> (<em>dict, optional</em>) – Priors for the standard deviation of the relative starting point across trials
+(only meaningful if starting_point_variability is True).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>rel_sp_trialsd_priors</strong> (<em>dict, optional</em>) – Priors for the standard deviation of the relative starting point across trials
+(only meaningful if starting_point_variability is True).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>corr_matrix_prior</strong> (<em>float, default to 1</em>) – Prior for the eta parameter of the LKJ prior of the correlation matrix
+(only meaningful if drift_starting_point_correlation is True).</p></li>
+<li><p><strong>beta_trialmu_priors</strong> (<em>dict, optional</em>) – Priors for the mean beta across trials
+(only meaningful if drift_starting_point_beta_correlation is True).
+Mean and standard deviation of the prior distr.</p></li>
+<li><p><strong>beta_trialsd_priors</strong> (<em>dict, optional</em>) – Priors for the standard deviation of the beta across trials
+(only meaningful if drift_starting_point_beta_correlation is True).
+Mean and standard deviation of the prior distr.</p></li>
+<li><p><strong>regression_coefficients_priors</strong> (<em>dict, optional</em>) – Priors for the regression coefficients
+(only relevant if drift_starting_point_regression is True).
+Mean and standard deviation of the prior distr.</p></li>
+<li><p><strong>include_rhat</strong> (<em>bool, default True</em>) – Whether to calculate the Gelman-Rubin convergence diagnostic r hat
+(Gelman &amp; Rubin, 1992).</p></li>
+<li><p><strong>include_waic</strong> (<em>bool, default True</em>) – Whether to calculate the widely applicable information criterion
+(WAIC; Watanabe, 2013).</p></li>
+<li><p><strong>pointwise_waic</strong> (<em>bool, default False</em>) – Whether to also inclue the pointwise WAIC.
+Only relevant if include_waic is True.</p></li>
+<li><p><strong>include_last_values</strong> (<em>bool, default True</em>) – Whether to extract the last values for each chain.</p></li>
+<li><p><strong>print_diagnostics</strong> (<em>bool, default True</em>) – Whether to print mcmc diagnostics after fitting.
+It is advised to leave it to True and always check, on top of the r hat.</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to pystan.StanModel.sampling().</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="reinforcement-learning-diffusion-decision-models">
+<h2>Reinforcement learning diffusion decision models<a class="headerlink" href="#reinforcement-learning-diffusion-decision-models" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="rlddmodel"></span><dl class="py class">
+<dt id="rlssm.RLDDModel">
+<em class="property">class </em><code class="sig-prename descclassname">rlssm.</code><code class="sig-name descname">RLDDModel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hierarchical_levels</span></em>, <em class="sig-param"><span class="n">nonlinear_mapping</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">separate_learning_rates</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">threshold_modulation</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLDDModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>RLDDModel allows to specify a combination of reinforcement learning
+and diffusion decision models.</p>
+<p>When initializing the model, you should specify whether the model is hierarchical or not.
+Additionally, you can specify the mechanisms that you wish to include or exclude.</p>
+<p>The underlying stan model will be compiled if no previously compiled model is found.
+After initializing the model, it can be fitted to a particular dataset using pystan.</p>
+<dl class="py method">
+<dt id="rlssm.RLDDModel.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hierarchical_levels</span></em>, <em class="sig-param"><span class="n">nonlinear_mapping</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">separate_learning_rates</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">threshold_modulation</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLDDModel.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a RLDDModel object.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This model is restricted to two options per trial (coded as correct and incorrect).
+However, more than two options can be presented in the same learning session.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hierarchical_levels</strong> (<em>int</em>) – Set to 1 for individual data and to 2 for grouped data.</p></li>
+<li><p><strong>nonlinear_mapping</strong> (<em>bool</em><em>, </em><em>default False</em>) – By default, the mapping between value differences and drift-rate is linear.
+If set to True, a non-linear mapping function is estimated.</p></li>
+<li><p><strong>separate_learning_rates</strong> (<em>bool</em><em>, </em><em>default False</em>) – By default, there is only one learning rate.
+If set to True, separate learning rates are estimated
+for positive and negative prediction errors.</p></li>
+<li><p><strong>threshold_modulation</strong> (<em>bool</em><em>, </em><em>default False</em>) – By default, the threshold is independent on the presented options.
+If set to True, the threshold can decrease or increase
+depending on the average value of the presented options.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="rlssm.RLDDModel.model_label">
+<code class="sig-name descname">model_label</code><a class="headerlink" href="#rlssm.RLDDModel.model_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>The label of the fully specified model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RLDDModel.n_parameters_individual">
+<code class="sig-name descname">n_parameters_individual</code><a class="headerlink" href="#rlssm.RLDDModel.n_parameters_individual" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of individual parameters of the fully specified model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RLDDModel.n_parameters_trial">
+<code class="sig-name descname">n_parameters_trial</code><a class="headerlink" href="#rlssm.RLDDModel.n_parameters_trial" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of parameters that are estimated at a trial level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RLDDModel.stan_model_path">
+<code class="sig-name descname">stan_model_path</code><a class="headerlink" href="#rlssm.RLDDModel.stan_model_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The location of the stan model code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RLDDModel.compiled_model">
+<code class="sig-name descname">compiled_model</code><a class="headerlink" href="#rlssm.RLDDModel.compiled_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>The compiled stan model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>pystan.StanModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt id="rlssm.RLDDModel.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">K</span></em>, <em class="sig-param"><span class="n">initial_value_learning</span></em>, <em class="sig-param"><span class="n">alpha_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">drift_scaling_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">threshold_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ndt_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">drift_asymptote_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">threshold_modulation_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">alpha_pos_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">alpha_neg_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">include_rhat</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">include_waic</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">pointwise_waic</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">include_last_values</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">print_diagnostics</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLDDModel.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fits the specified reinforcement learning diffusion decision model to data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>DataFrame</em>) – <p>A pandas DataFrame containing data observations.</p>
+<p>Columns should include (it’s OK if some of them are column indexes too):</p>
+<ul>
+<li><p><em>trial_block</em>, the number of trial in a learning session.
+Should be integers starting from 1.</p></li>
+<li><p><em>f_cor</em>, the output from the correct option in the presented pair
+(the option with higher outcome on average).</p></li>
+<li><p><em>f_inc</em>, the output from the incorrect option in the presented pair
+(the option with lower outcome on average).</p></li>
+<li><p><em>cor_option</em>, the number identifying the correct option in the presented pair
+(the option with higher outcome on average).</p></li>
+<li><p><em>inc_option</em>, the number identifying the incorrect option in the presented pair
+(the option with lower outcome on average).</p></li>
+<li><p><em>block_label</em>, the number identifying the learning session.
+Should be integers starting from 1.
+Set to 1 in case there is only one learning session.</p></li>
+<li><p><em>rt</em>, response times in seconds.</p></li>
+<li><p><em>accuracy</em>, 0 if the incorrect option was chosen,
+1 if the correct option was chosen.</p></li>
+</ul>
+<p>If the model is hierarchical, also include:</p>
+<ul>
+<li><p><em>participant</em>, the participant number.
+Should be integers starting from 1.</p></li>
+</ul>
+</p></li>
+<li><p><strong>K</strong> (<em>int</em>) – Number of options per learning session.</p></li>
+<li><p><strong>initial_value_learning</strong> (<em>float</em>) – The assumed value expectation in the first learning session.
+The learning value in the following learning sessions is set to
+the average learned value in the previous learning session.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>res</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>rlssm.fits.DDModelResults</p>
+</dd>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>alpha_priors</strong> (<em>dict, optional</em>) – Priors for the learning rate parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>drift_scaling_priors</strong> (<em>dict, optional</em>) – Priors for the drift scaling parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>threshold_priors</strong> (<em>dict, optional</em>) – Priors for the threshold parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>ndt_priors</strong> (<em>dict, optional</em>) – Priors for the non decision time parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>drift_asymptote_priors</strong> (<em>dict, optional</em>) – Priors for the drift-rate asymptote (only meaningful if nonlinear_mapping is True).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>threshold_modulation_priors</strong> (<em>dict, optional</em>) – Priors for the threshold coefficient (only meaningful if threshold_modulation is True).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>alpha_pos_priors</strong> (<em>dict, optional</em>) – Priors for the learning rate for the positive PE
+(only meaningful if separate_learning_rates is True).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>alpha_neg_priors</strong> (<em>dict, optional</em>) – Priors for the learning rate for the negative PE
+(only meaningful if separate_learning_rates is True).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>include_rhat</strong> (<em>bool, default True</em>) – Whether to calculate the Gelman-Rubin convergence diagnostic r hat
+(Gelman &amp; Rubin, 1992).</p></li>
+<li><p><strong>include_waic</strong> (<em>bool, default True</em>) – Whether to calculate the widely applicable information criterion
+(WAIC; Watanabe, 2013).</p></li>
+<li><p><strong>pointwise_waic</strong> (<em>bool, default False</em>) – Whether to also inclue the pointwise WAIC.
+Only relevant if include_waic is True.</p></li>
+<li><p><strong>include_last_values</strong> (<em>bool, default True</em>) – Whether to extract the last values for each chain.</p></li>
+<li><p><strong>print_diagnostics</strong> (<em>bool, default True</em>) – Whether to print mcmc diagnostics after fitting.
+It is advised to leave it to True and always check, on top of the r hat.</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to pystan.StanModel.sampling().</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="race-models-for-2-alternatives">
+<h2>Race models (for 2 alternatives)<a class="headerlink" href="#race-models-for-2-alternatives" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="rdmodel-2a"></span><dl class="py class">
+<dt id="rlssm.RDModel_2A">
+<em class="property">class </em><code class="sig-prename descclassname">rlssm.</code><code class="sig-name descname">RDModel_2A</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hierarchical_levels</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RDModel_2A" title="Permalink to this definition">¶</a></dt>
+<dd><p>RDModel_2A allows to specify a race diffusion model for 2 alternatives.</p>
+<p>When initializing the model, you should specify whether the model is hierarchical or not.</p>
+<p>The underlying stan model will be compiled if no previously compiled model is found.
+After initializing the model, it can be fitted to a particular dataset using pystan.</p>
+<dl class="py method">
+<dt id="rlssm.RDModel_2A.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hierarchical_levels</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RDModel_2A.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a RDModel_2A object.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This model is restricted to two options per trial (coded as correct and incorrect).</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>hierarchical_levels</strong> (<em>int</em>) – Set to 1 for individual data and to 2 for grouped data.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="rlssm.RDModel_2A.model_label">
+<code class="sig-name descname">model_label</code><a class="headerlink" href="#rlssm.RDModel_2A.model_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>The label of the fully specified model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RDModel_2A.n_parameters_individual">
+<code class="sig-name descname">n_parameters_individual</code><a class="headerlink" href="#rlssm.RDModel_2A.n_parameters_individual" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of individual parameters of the fully specified model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RDModel_2A.n_parameters_trial">
+<code class="sig-name descname">n_parameters_trial</code><a class="headerlink" href="#rlssm.RDModel_2A.n_parameters_trial" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of parameters that are estimated at a trial level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RDModel_2A.stan_model_path">
+<code class="sig-name descname">stan_model_path</code><a class="headerlink" href="#rlssm.RDModel_2A.stan_model_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The location of the stan model code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RDModel_2A.compiled_model">
+<code class="sig-name descname">compiled_model</code><a class="headerlink" href="#rlssm.RDModel_2A.compiled_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>The compiled stan model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>pystan.StanModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt id="rlssm.RDModel_2A.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">threshold_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ndt_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">drift_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">include_rhat</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">include_waic</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">pointwise_waic</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">include_last_values</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">print_diagnostics</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RDModel_2A.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fits the specified diffusion decision model to data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>DataFrame</em>) – <p>A pandas DataFrame containing data observations.</p>
+<p>Columns should include:</p>
+<ul class="simple">
+<li><p><em>rt</em>, response times in seconds.</p></li>
+<li><p><em>accuracy</em>, 0 if the incorrect option was chosen,
+1 if the correct option was chosen.</p></li>
+</ul>
+<p>If the model is hierarchical, also include:</p>
+<ul class="simple">
+<li><p><em>participant</em>, the participant number.
+Should be integers starting from 1.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>res</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>rlssm.fits.DDModelResults</p>
+</dd>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>starting_point</strong> (<em>float, default .5</em>) – The relative starting point of the diffusion process.
+By default there is no bias, so the starting point is .5.
+Should be between 0 and 1.</p></li>
+<li><p><strong>threshold_priors</strong> (<em>dict, optional</em>) – Priors for the threshold parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>ndt_priors</strong> (<em>dict, optional</em>) – Priors for the non decision time parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>drift_priors</strong> (<em>dict, optional</em>) – Priors for the drift-rate parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>include_rhat</strong> (<em>bool, default True</em>) – Whether to calculate the Gelman-Rubin convergence diagnostic r hat
+(Gelman &amp; Rubin, 1992).</p></li>
+<li><p><strong>include_waic</strong> (<em>bool, default True</em>) – Whether to calculate the widely applicable information criterion
+(WAIC; Watanabe, 2013).</p></li>
+<li><p><strong>pointwise_waic</strong> (<em>bool, default False</em>) – Whether to also inclue the pointwise WAIC.
+Only relevant if include_waic is True.</p></li>
+<li><p><strong>include_last_values</strong> (<em>bool, default True</em>) – Whether to extract the last values for each chain.</p></li>
+<li><p><strong>print_diagnostics</strong> (<em>bool, default True</em>) – Whether to print mcmc diagnostics after fitting.
+It is advised to leave it to True and always check, on top of the r hat.</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to pystan.StanModel.sampling().</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="lbamodel-2a"></span><dl class="py class">
+<dt id="rlssm.LBAModel_2A">
+<em class="property">class </em><code class="sig-prename descclassname">rlssm.</code><code class="sig-name descname">LBAModel_2A</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hierarchical_levels</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.LBAModel_2A" title="Permalink to this definition">¶</a></dt>
+<dd><p>LBAModel_2A allows to specify a linear ballistic accumulator model for 2 alternatives.</p>
+<p>When initializing the model, you should specify whether the model is hierarchical or not.</p>
+<p>The underlying stan model will be compiled if no previously compiled model is found.
+After initializing the model, it can be fitted to a particular dataset using pystan.</p>
+<dl class="py method">
+<dt id="rlssm.LBAModel_2A.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hierarchical_levels</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.LBAModel_2A.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a LBAModel_2A object.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This model is restricted to two options per trial (coded as correct and incorrect).</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>hierarchical_levels</strong> (<em>int</em>) – Set to 1 for individual data and to 2 for grouped data.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="rlssm.LBAModel_2A.model_label">
+<code class="sig-name descname">model_label</code><a class="headerlink" href="#rlssm.LBAModel_2A.model_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>The label of the fully specified model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.LBAModel_2A.n_parameters_individual">
+<code class="sig-name descname">n_parameters_individual</code><a class="headerlink" href="#rlssm.LBAModel_2A.n_parameters_individual" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of individual parameters of the fully specified model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.LBAModel_2A.n_parameters_trial">
+<code class="sig-name descname">n_parameters_trial</code><a class="headerlink" href="#rlssm.LBAModel_2A.n_parameters_trial" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of parameters that are estimated at a trial level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.LBAModel_2A.stan_model_path">
+<code class="sig-name descname">stan_model_path</code><a class="headerlink" href="#rlssm.LBAModel_2A.stan_model_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The location of the stan model code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.LBAModel_2A.compiled_model">
+<code class="sig-name descname">compiled_model</code><a class="headerlink" href="#rlssm.LBAModel_2A.compiled_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>The compiled stan model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>pystan.StanModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt id="rlssm.LBAModel_2A.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">k_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">A_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tau_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">drift_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">include_rhat</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">include_waic</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">pointwise_waic</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">include_last_values</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">print_diagnostics</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.LBAModel_2A.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fits the specified diffusion decision model to data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>DataFrame</em>) – <p>A pandas DataFrame containing data observations.</p>
+<p>Columns should include:</p>
+<ul class="simple">
+<li><p><em>rt</em>, response times in seconds.</p></li>
+<li><p><em>accuracy</em>, 0 if the incorrect option was chosen,
+1 if the correct option was chosen.</p></li>
+</ul>
+<p>If the model is hierarchical, also include:</p>
+<ul class="simple">
+<li><p><em>participant</em>, the participant number.
+Should be integers starting from 1.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>res</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>rlssm.fits.DDModelResults</p>
+</dd>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>starting_point</strong> (<em>float, default .5</em>) – The relative starting point of the diffusion process.
+By default there is no bias, so the starting point is .5.
+Should be between 0 and 1.</p></li>
+<li><p><strong>k_priors</strong> (<em>dict, optional</em>) – Priors for the k parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>A_priors</strong> (<em>dict, optional</em>) – Priors for the A parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>tau_priors</strong> (<em>dict, optional</em>) – Priors for the non decision time parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>drift_priors</strong> (<em>dict, optional</em>) – Priors for the drift-rate parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>include_rhat</strong> (<em>bool, default True</em>) – Whether to calculate the Gelman-Rubin convergence diagnostic r hat
+(Gelman &amp; Rubin, 1992).</p></li>
+<li><p><strong>include_waic</strong> (<em>bool, default True</em>) – Whether to calculate the widely applicable information criterion
+(WAIC; Watanabe, 2013).</p></li>
+<li><p><strong>pointwise_waic</strong> (<em>bool, default False</em>) – Whether to also inclue the pointwise WAIC.
+Only relevant if include_waic is True.</p></li>
+<li><p><strong>include_last_values</strong> (<em>bool, default True</em>) – Whether to extract the last values for each chain.</p></li>
+<li><p><strong>print_diagnostics</strong> (<em>bool, default True</em>) – Whether to print mcmc diagnostics after fitting.
+It is advised to leave it to True and always check, on top of the r hat.</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to pystan.StanModel.sampling().</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="ardmodel-2a"></span><dl class="py class">
+<dt id="rlssm.ARDModel_2A">
+<em class="property">class </em><code class="sig-prename descclassname">rlssm.</code><code class="sig-name descname">ARDModel_2A</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hierarchical_levels</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.ARDModel_2A" title="Permalink to this definition">¶</a></dt>
+<dd><p>ARDModel_2A allows to specify a advantage race diffusion model for 2 alternatives.</p>
+<p>When initializing the model, you should specify whether the model is hierarchical or not.</p>
+<p>The underlying stan model will be compiled if no previously compiled model is found.
+After initializing the model, it can be fitted to a particular dataset using pystan.</p>
+<dl class="py method">
+<dt id="rlssm.ARDModel_2A.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hierarchical_levels</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.ARDModel_2A.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a ARDModel_2A object.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This model is restricted to two options per trial (coded as correct and incorrect).</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>hierarchical_levels</strong> (<em>int</em>) – Set to 1 for individual data and to 2 for grouped data.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="rlssm.ARDModel_2A.model_label">
+<code class="sig-name descname">model_label</code><a class="headerlink" href="#rlssm.ARDModel_2A.model_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>The label of the fully specified model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.ARDModel_2A.n_parameters_individual">
+<code class="sig-name descname">n_parameters_individual</code><a class="headerlink" href="#rlssm.ARDModel_2A.n_parameters_individual" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of individual parameters of the fully specified model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.ARDModel_2A.n_parameters_trial">
+<code class="sig-name descname">n_parameters_trial</code><a class="headerlink" href="#rlssm.ARDModel_2A.n_parameters_trial" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of parameters that are estimated at a trial level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.ARDModel_2A.stan_model_path">
+<code class="sig-name descname">stan_model_path</code><a class="headerlink" href="#rlssm.ARDModel_2A.stan_model_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The location of the stan model code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.ARDModel_2A.compiled_model">
+<code class="sig-name descname">compiled_model</code><a class="headerlink" href="#rlssm.ARDModel_2A.compiled_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>The compiled stan model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>pystan.StanModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt id="rlssm.ARDModel_2A.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">threshold_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ndt_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">v0_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ws_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">wd_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">include_rhat</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">include_waic</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">pointwise_waic</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">include_last_values</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">print_diagnostics</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.ARDModel_2A.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fits the specified diffusion decision model to data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>DataFrame</em>) – <p>A pandas DataFrame containing data observations.</p>
+<p>Columns should include:</p>
+<ul class="simple">
+<li><p><em>rt</em>, response times in seconds.</p></li>
+<li><p><em>accuracy</em>, 0 if the incorrect option was chosen,
+1 if the correct option was chosen.</p></li>
+</ul>
+<p>If the model is hierarchical, also include:</p>
+<ul class="simple">
+<li><p><em>participant</em>, the participant number.
+Should be integers starting from 1.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>res</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>rlssm.fits.DDModelResults</p>
+</dd>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>starting_point</strong> (<em>float, default .5</em>) – The relative starting point of the diffusion process.
+By default there is no bias, so the starting point is .5.
+Should be between 0 and 1.</p></li>
+<li><p><strong>threshold_priors</strong> (<em>dict, optional</em>) – Priors for the threshold parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>ndt_priors</strong> (<em>dict, optional</em>) – Priors for the non decision time parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>v0_priors</strong> (<em>dict, optional</em>) – Priors for the v0 parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>ws_priors</strong> (<em>dict, optional</em>) – Priors for the ws parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>wd_priors</strong> (<em>dict, optional</em>) – Priors for the wd parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>include_rhat</strong> (<em>bool, default True</em>) – Whether to calculate the Gelman-Rubin convergence diagnostic r hat
+(Gelman &amp; Rubin, 1992).</p></li>
+<li><p><strong>include_waic</strong> (<em>bool, default True</em>) – Whether to calculate the widely applicable information criterion
+(WAIC; Watanabe, 2013).</p></li>
+<li><p><strong>pointwise_waic</strong> (<em>bool, default False</em>) – Whether to also inclue the pointwise WAIC.
+Only relevant if include_waic is True.</p></li>
+<li><p><strong>include_last_values</strong> (<em>bool, default True</em>) – Whether to extract the last values for each chain.</p></li>
+<li><p><strong>print_diagnostics</strong> (<em>bool, default True</em>) – Whether to print mcmc diagnostics after fitting.
+It is advised to leave it to True and always check, on top of the r hat.</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to pystan.StanModel.sampling().</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="albamodel-2a"></span><dl class="py class">
+<dt id="rlssm.ALBAModel_2A">
+<em class="property">class </em><code class="sig-prename descclassname">rlssm.</code><code class="sig-name descname">ALBAModel_2A</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hierarchical_levels</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.ALBAModel_2A" title="Permalink to this definition">¶</a></dt>
+<dd><p>ALBAModel_2A allows to specify a advantage linear ballistic accumulator model for 2 alternatives.</p>
+<p>When initializing the model, you should specify whether the model is hierarchical or not.</p>
+<p>The underlying stan model will be compiled if no previously compiled model is found.
+After initializing the model, it can be fitted to a particular dataset using pystan.</p>
+<dl class="py method">
+<dt id="rlssm.ALBAModel_2A.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hierarchical_levels</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.ALBAModel_2A.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a ALBAModel_2A object.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This model is restricted to two options per trial (coded as correct and incorrect).</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>hierarchical_levels</strong> (<em>int</em>) – Set to 1 for individual data and to 2 for grouped data.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="rlssm.ALBAModel_2A.model_label">
+<code class="sig-name descname">model_label</code><a class="headerlink" href="#rlssm.ALBAModel_2A.model_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>The label of the fully specified model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.ALBAModel_2A.n_parameters_individual">
+<code class="sig-name descname">n_parameters_individual</code><a class="headerlink" href="#rlssm.ALBAModel_2A.n_parameters_individual" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of individual parameters of the fully specified model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.ALBAModel_2A.n_parameters_trial">
+<code class="sig-name descname">n_parameters_trial</code><a class="headerlink" href="#rlssm.ALBAModel_2A.n_parameters_trial" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of parameters that are estimated at a trial level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.ALBAModel_2A.stan_model_path">
+<code class="sig-name descname">stan_model_path</code><a class="headerlink" href="#rlssm.ALBAModel_2A.stan_model_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The location of the stan model code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.ALBAModel_2A.compiled_model">
+<code class="sig-name descname">compiled_model</code><a class="headerlink" href="#rlssm.ALBAModel_2A.compiled_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>The compiled stan model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>pystan.StanModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt id="rlssm.ALBAModel_2A.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">k_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">A_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tau_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">v0_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ws_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">wd_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">include_rhat</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">include_waic</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">pointwise_waic</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">include_last_values</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">print_diagnostics</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.ALBAModel_2A.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fits the specified diffusion decision model to data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>DataFrame</em>) – <p>A pandas DataFrame containing data observations.</p>
+<p>Columns should include:</p>
+<ul class="simple">
+<li><p><em>rt</em>, response times in seconds.</p></li>
+<li><p><em>accuracy</em>, 0 if the incorrect option was chosen,
+1 if the correct option was chosen.</p></li>
+</ul>
+<p>If the model is hierarchical, also include:</p>
+<ul class="simple">
+<li><p><em>participant</em>, the participant number.
+Should be integers starting from 1.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>res</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>rlssm.fits.DDModelResults</p>
+</dd>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>starting_point</strong> (<em>float, default .5</em>) – The relative starting point of the diffusion process.
+By default there is no bias, so the starting point is .5.
+Should be between 0 and 1.</p></li>
+<li><p><strong>k_priors</strong> (<em>dict, optional</em>) – Priors for the k parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>A_priors</strong> (<em>dict, optional</em>) – Priors for the A parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>tau_priors</strong> (<em>dict, optional</em>) – Priors for the non decision time parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>v0_priors</strong> (<em>dict, optional</em>) – Priors for the v0 parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>ws_priors</strong> (<em>dict, optional</em>) – Priors for the ws parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>wd_priors</strong> (<em>dict, optional</em>) – Priors for the wd parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>include_rhat</strong> (<em>bool, default True</em>) – Whether to calculate the Gelman-Rubin convergence diagnostic r hat
+(Gelman &amp; Rubin, 1992).</p></li>
+<li><p><strong>include_waic</strong> (<em>bool, default True</em>) – Whether to calculate the widely applicable information criterion
+(WAIC; Watanabe, 2013).</p></li>
+<li><p><strong>pointwise_waic</strong> (<em>bool, default False</em>) – Whether to also inclue the pointwise WAIC.
+Only relevant if include_waic is True.</p></li>
+<li><p><strong>include_last_values</strong> (<em>bool, default True</em>) – Whether to extract the last values for each chain.</p></li>
+<li><p><strong>print_diagnostics</strong> (<em>bool, default True</em>) – Whether to print mcmc diagnostics after fitting.
+It is advised to leave it to True and always check, on top of the r hat.</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to pystan.StanModel.sampling().</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="reinforcement-learning-race-models-for-2-alternatives">
+<h2>Reinforcement learning race models (for 2 alternatives)<a class="headerlink" href="#reinforcement-learning-race-models-for-2-alternatives" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="rlrdmodel-2a"></span><dl class="py class">
+<dt id="rlssm.RLRDModel_2A">
+<em class="property">class </em><code class="sig-prename descclassname">rlssm.</code><code class="sig-name descname">RLRDModel_2A</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hierarchical_levels</span></em>, <em class="sig-param"><span class="n">separate_learning_rates</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">nonlinear_mapping</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLRDModel_2A" title="Permalink to this definition">¶</a></dt>
+<dd><p>RLRDModel_2A allows to specify a combination of reinforcement learning
+and race diffusion decision models.</p>
+<p>When initializing the model, you should specify whether the model is hierarchical or not.
+Additionally, you can specify the mechanisms that you wish to include or exclude.</p>
+<p>The underlying stan model will be compiled if no previously compiled model is found.
+After initializing the model, it can be fitted to a particular dataset using pystan.</p>
+<dl class="py method">
+<dt id="rlssm.RLRDModel_2A.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hierarchical_levels</span></em>, <em class="sig-param"><span class="n">separate_learning_rates</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">nonlinear_mapping</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLRDModel_2A.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a RLRDModel_2A object.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This model is restricted to two options per trial (coded as correct and incorrect).
+However, more than two options can be presented in the same learning session.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hierarchical_levels</strong> (<em>int</em>) – Set to 1 for individual data and to 2 for grouped data.</p></li>
+<li><p><strong>separate_learning_rates</strong> (<em>bool</em><em>, </em><em>default False</em>) – By default, there is only one learning rate.
+If set to True, separate learning rates are estimated
+for positive and negative prediction errors.</p></li>
+<li><p><strong>nonlinear_mapping</strong> (<em>bool</em><em>, </em><em>default False</em>) – By default, the mapping between value differences and drift-rate is linear.
+If set to True, a non-linear mapping function is estimated.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="rlssm.RLRDModel_2A.model_label">
+<code class="sig-name descname">model_label</code><a class="headerlink" href="#rlssm.RLRDModel_2A.model_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>The label of the fully specified model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RLRDModel_2A.n_parameters_individual">
+<code class="sig-name descname">n_parameters_individual</code><a class="headerlink" href="#rlssm.RLRDModel_2A.n_parameters_individual" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of individual parameters of the fully specified model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RLRDModel_2A.n_parameters_trial">
+<code class="sig-name descname">n_parameters_trial</code><a class="headerlink" href="#rlssm.RLRDModel_2A.n_parameters_trial" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of parameters that are estimated at a trial level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RLRDModel_2A.stan_model_path">
+<code class="sig-name descname">stan_model_path</code><a class="headerlink" href="#rlssm.RLRDModel_2A.stan_model_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The location of the stan model code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RLRDModel_2A.compiled_model">
+<code class="sig-name descname">compiled_model</code><a class="headerlink" href="#rlssm.RLRDModel_2A.compiled_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>The compiled stan model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>pystan.StanModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt id="rlssm.RLRDModel_2A.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">K</span></em>, <em class="sig-param"><span class="n">initial_value_learning</span></em>, <em class="sig-param"><span class="n">alpha_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">drift_scaling_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">threshold_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ndt_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">utility_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">alpha_pos_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">alpha_neg_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">include_rhat</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">include_waic</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">pointwise_waic</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">include_last_values</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">print_diagnostics</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLRDModel_2A.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fits the specified reinforcement learning diffusion decision model to data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>DataFrame</em>) – <p>A pandas DataFrame containing data observations.</p>
+<p>Columns should include (it’s OK if some of them are column indexes too):</p>
+<ul>
+<li><p><em>trial_block</em>, the number of trial in a learning session.
+Should be integers starting from 1.</p></li>
+<li><p><em>f_cor</em>, the output from the correct option in the presented pair
+(the option with higher outcome on average).</p></li>
+<li><p><em>f_inc</em>, the output from the incorrect option in the presented pair
+(the option with lower outcome on average).</p></li>
+<li><p><em>cor_option</em>, the number identifying the correct option in the presented pair
+(the option with higher outcome on average).</p></li>
+<li><p><em>inc_option</em>, the number identifying the incorrect option in the presented pair
+(the option with lower outcome on average).</p></li>
+<li><p><em>block_label</em>, the number identifying the learning session.
+Should be integers starting from 1.
+Set to 1 in case there is only one learning session.</p></li>
+<li><p><em>rt</em>, response times in seconds.</p></li>
+<li><p><em>accuracy</em>, 0 if the incorrect option was chosen,
+1 if the correct option was chosen.</p></li>
+</ul>
+<p>If the model is hierarchical, also include:</p>
+<ul>
+<li><p><em>participant</em>, the participant number.
+Should be integers starting from 1.</p></li>
+</ul>
+</p></li>
+<li><p><strong>K</strong> (<em>int</em>) – Number of options per learning session.</p></li>
+<li><p><strong>initial_value_learning</strong> (<em>float</em>) – The assumed value expectation in the first learning session.
+The learning value in the following learning sessions is set to
+the average learned value in the previous learning session.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>res</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>rlssm.fits.DDModelResults</p>
+</dd>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>alpha_priors</strong> (<em>dict, optional</em>) – Priors for the learning rate parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>drift_scaling_priors</strong> (<em>dict, optional</em>) – Priors for the drift scaling parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>threshold_priors</strong> (<em>dict, optional</em>) – Priors for the threshold parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>ndt_priors</strong> (<em>dict, optional</em>) – Priors for the non decision time parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>utility_priors</strong> (<em>dict, optional</em>) – Priors for the utility time parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>alpha_pos_priors</strong> (<em>dict, optional</em>) – Priors for the learning rate for the positive PE
+(only meaningful if separate_learning_rates is True).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>alpha_neg_priors</strong> (<em>dict, optional</em>) – Priors for the learning rate for the negative PE
+(only meaningful if separate_learning_rates is True).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>include_rhat</strong> (<em>bool, default True</em>) – Whether to calculate the Gelman-Rubin convergence diagnostic r hat
+(Gelman &amp; Rubin, 1992).</p></li>
+<li><p><strong>include_waic</strong> (<em>bool, default True</em>) – Whether to calculate the widely applicable information criterion
+(WAIC; Watanabe, 2013).</p></li>
+<li><p><strong>pointwise_waic</strong> (<em>bool, default False</em>) – Whether to also inclue the pointwise WAIC.
+Only relevant if include_waic is True.</p></li>
+<li><p><strong>include_last_values</strong> (<em>bool, default True</em>) – Whether to extract the last values for each chain.</p></li>
+<li><p><strong>print_diagnostics</strong> (<em>bool, default True</em>) – Whether to print mcmc diagnostics after fitting.
+It is advised to leave it to True and always check, on top of the r hat.</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to pystan.StanModel.sampling().</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="rllbamodel-2a"></span><dl class="py class">
+<dt id="rlssm.RLLBAModel_2A">
+<em class="property">class </em><code class="sig-prename descclassname">rlssm.</code><code class="sig-name descname">RLLBAModel_2A</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hierarchical_levels</span></em>, <em class="sig-param"><span class="n">separate_learning_rates</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">nonlinear_mapping</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLLBAModel_2A" title="Permalink to this definition">¶</a></dt>
+<dd><p>RLLBAModel_2A allows to specify a combination of reinforcement learning
+and linear ballistic accumulator models.</p>
+<p>When initializing the model, you should specify whether the model is hierarchical or not.
+Additionally, you can specify the mechanisms that you wish to include or exclude.</p>
+<p>The underlying stan model will be compiled if no previously compiled model is found.
+After initializing the model, it can be fitted to a particular dataset using pystan.</p>
+<dl class="py method">
+<dt id="rlssm.RLLBAModel_2A.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hierarchical_levels</span></em>, <em class="sig-param"><span class="n">separate_learning_rates</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">nonlinear_mapping</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLLBAModel_2A.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a RLLBAModel_2A object.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This model is restricted to two options per trial (coded as correct and incorrect).
+However, more than two options can be presented in the same learning session.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hierarchical_levels</strong> (<em>int</em>) – Set to 1 for individual data and to 2 for grouped data.</p></li>
+<li><p><strong>separate_learning_rates</strong> (<em>bool</em><em>, </em><em>default False</em>) – By default, there is only one learning rate.
+If set to True, separate learning rates are estimated
+for positive and negative prediction errors.</p></li>
+<li><p><strong>nonlinear_mapping</strong> (<em>bool</em><em>, </em><em>default False</em>) – By default, the mapping between value differences and drift-rate is linear.
+If set to True, a non-linear mapping function is estimated.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="rlssm.RLLBAModel_2A.model_label">
+<code class="sig-name descname">model_label</code><a class="headerlink" href="#rlssm.RLLBAModel_2A.model_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>The label of the fully specified model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RLLBAModel_2A.n_parameters_individual">
+<code class="sig-name descname">n_parameters_individual</code><a class="headerlink" href="#rlssm.RLLBAModel_2A.n_parameters_individual" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of individual parameters of the fully specified model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RLLBAModel_2A.n_parameters_trial">
+<code class="sig-name descname">n_parameters_trial</code><a class="headerlink" href="#rlssm.RLLBAModel_2A.n_parameters_trial" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of parameters that are estimated at a trial level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RLLBAModel_2A.stan_model_path">
+<code class="sig-name descname">stan_model_path</code><a class="headerlink" href="#rlssm.RLLBAModel_2A.stan_model_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The location of the stan model code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RLLBAModel_2A.compiled_model">
+<code class="sig-name descname">compiled_model</code><a class="headerlink" href="#rlssm.RLLBAModel_2A.compiled_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>The compiled stan model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>pystan.StanModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt id="rlssm.RLLBAModel_2A.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">K</span></em>, <em class="sig-param"><span class="n">initial_value_learning</span></em>, <em class="sig-param"><span class="n">k_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">A_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tau_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">utility_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">alpha_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">drift_scaling_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">alpha_pos_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">alpha_neg_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">include_rhat</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">include_waic</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">pointwise_waic</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">include_last_values</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">print_diagnostics</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLLBAModel_2A.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fits the specified reinforcement learning diffusion decision model to data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>DataFrame</em>) – <p>A pandas DataFrame containing data observations.</p>
+<p>Columns should include (it’s OK if some of them are column indexes too):</p>
+<ul>
+<li><p><em>trial_block</em>, the number of trial in a learning session.
+Should be integers starting from 1.</p></li>
+<li><p><em>f_cor</em>, the output from the correct option in the presented pair
+(the option with higher outcome on average).</p></li>
+<li><p><em>f_inc</em>, the output from the incorrect option in the presented pair
+(the option with lower outcome on average).</p></li>
+<li><p><em>cor_option</em>, the number identifying the correct option in the presented pair
+(the option with higher outcome on average).</p></li>
+<li><p><em>inc_option</em>, the number identifying the incorrect option in the presented pair
+(the option with lower outcome on average).</p></li>
+<li><p><em>block_label</em>, the number identifying the learning session.
+Should be integers starting from 1.
+Set to 1 in case there is only one learning session.</p></li>
+<li><p><em>rt</em>, response times in seconds.</p></li>
+<li><p><em>accuracy</em>, 0 if the incorrect option was chosen,
+1 if the correct option was chosen.</p></li>
+</ul>
+<p>If the model is hierarchical, also include:</p>
+<ul>
+<li><p><em>participant</em>, the participant number.
+Should be integers starting from 1.</p></li>
+</ul>
+</p></li>
+<li><p><strong>K</strong> (<em>int</em>) – Number of options per learning session.</p></li>
+<li><p><strong>initial_value_learning</strong> (<em>float</em>) – The assumed value expectation in the first learning session.
+The learning value in the following learning sessions is set to
+the average learned value in the previous learning session.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>res</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>rlssm.fits.DDModelResults</p>
+</dd>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>alpha_priors</strong> (<em>dict, optional</em>) – Priors for the learning rate parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>drift_scaling_priors</strong> (<em>dict, optional</em>) – Priors for the drift scaling parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>k_priors</strong> (<em>dict, optional</em>) – Priors for the k parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>A_priors</strong> (<em>dict, optional</em>) – Priors for the A parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>tau_priors</strong> (<em>dict, optional</em>) – Priors for the tau parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>utility_priors</strong> (<em>dict, optional</em>) – Priors for the utility time parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>alpha_pos_priors</strong> (<em>dict, optional</em>) – Priors for the learning rate for the positive PE
+(only meaningful if separate_learning_rates is True).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>alpha_neg_priors</strong> (<em>dict, optional</em>) – Priors for the learning rate for the negative PE
+(only meaningful if separate_learning_rates is True).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>include_rhat</strong> (<em>bool, default True</em>) – Whether to calculate the Gelman-Rubin convergence diagnostic r hat
+(Gelman &amp; Rubin, 1992).</p></li>
+<li><p><strong>include_waic</strong> (<em>bool, default True</em>) – Whether to calculate the widely applicable information criterion
+(WAIC; Watanabe, 2013).</p></li>
+<li><p><strong>pointwise_waic</strong> (<em>bool, default False</em>) – Whether to also inclue the pointwise WAIC.
+Only relevant if include_waic is True.</p></li>
+<li><p><strong>include_last_values</strong> (<em>bool, default True</em>) – Whether to extract the last values for each chain.</p></li>
+<li><p><strong>print_diagnostics</strong> (<em>bool, default True</em>) – Whether to print mcmc diagnostics after fitting.
+It is advised to leave it to True and always check, on top of the r hat.</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to pystan.StanModel.sampling().</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="rlardmodel-2a"></span><dl class="py class">
+<dt id="rlssm.RLARDModel_2A">
+<em class="property">class </em><code class="sig-prename descclassname">rlssm.</code><code class="sig-name descname">RLARDModel_2A</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hierarchical_levels</span></em>, <em class="sig-param"><span class="n">separate_learning_rates</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLARDModel_2A" title="Permalink to this definition">¶</a></dt>
+<dd><p>RLARDModel_2A allows to specify a combination of reinforcement learning
+and advantage race diffusion decision models.</p>
+<p>When initializing the model, you should specify whether the model is hierarchical or not.
+Additionally, you can specify the mechanisms that you wish to include or exclude.</p>
+<p>The underlying stan model will be compiled if no previously compiled model is found.
+After initializing the model, it can be fitted to a particular dataset using pystan.</p>
+<dl class="py method">
+<dt id="rlssm.RLARDModel_2A.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hierarchical_levels</span></em>, <em class="sig-param"><span class="n">separate_learning_rates</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLARDModel_2A.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a RLARDModel_2A object.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This model is restricted to two options per trial (coded as correct and incorrect).
+However, more than two options can be presented in the same learning session.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hierarchical_levels</strong> (<em>int</em>) – Set to 1 for individual data and to 2 for grouped data.</p></li>
+<li><p><strong>separate_learning_rates</strong> (<em>bool</em><em>, </em><em>default False</em>) – By default, there is only one learning rate.
+If set to True, separate learning rates are estimated
+for positive and negative prediction errors.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="rlssm.RLARDModel_2A.model_label">
+<code class="sig-name descname">model_label</code><a class="headerlink" href="#rlssm.RLARDModel_2A.model_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>The label of the fully specified model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RLARDModel_2A.n_parameters_individual">
+<code class="sig-name descname">n_parameters_individual</code><a class="headerlink" href="#rlssm.RLARDModel_2A.n_parameters_individual" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of individual parameters of the fully specified model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RLARDModel_2A.n_parameters_trial">
+<code class="sig-name descname">n_parameters_trial</code><a class="headerlink" href="#rlssm.RLARDModel_2A.n_parameters_trial" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of parameters that are estimated at a trial level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RLARDModel_2A.stan_model_path">
+<code class="sig-name descname">stan_model_path</code><a class="headerlink" href="#rlssm.RLARDModel_2A.stan_model_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The location of the stan model code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RLARDModel_2A.compiled_model">
+<code class="sig-name descname">compiled_model</code><a class="headerlink" href="#rlssm.RLARDModel_2A.compiled_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>The compiled stan model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>pystan.StanModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt id="rlssm.RLARDModel_2A.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">K</span></em>, <em class="sig-param"><span class="n">initial_value_learning</span></em>, <em class="sig-param"><span class="n">threshold_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ndt_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">v0_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ws_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">wd_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">alpha_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">alpha_pos_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">alpha_neg_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">include_rhat</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">include_waic</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">pointwise_waic</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">include_last_values</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">print_diagnostics</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLARDModel_2A.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fits the specified reinforcement learning diffusion decision model to data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>DataFrame</em>) – <p>A pandas DataFrame containing data observations.</p>
+<p>Columns should include (it’s OK if some of them are column indexes too):</p>
+<ul>
+<li><p><em>trial_block</em>, the number of trial in a learning session.
+Should be integers starting from 1.</p></li>
+<li><p><em>f_cor</em>, the output from the correct option in the presented pair
+(the option with higher outcome on average).</p></li>
+<li><p><em>f_inc</em>, the output from the incorrect option in the presented pair
+(the option with lower outcome on average).</p></li>
+<li><p><em>cor_option</em>, the number identifying the correct option in the presented pair
+(the option with higher outcome on average).</p></li>
+<li><p><em>inc_option</em>, the number identifying the incorrect option in the presented pair
+(the option with lower outcome on average).</p></li>
+<li><p><em>block_label</em>, the number identifying the learning session.
+Should be integers starting from 1.
+Set to 1 in case there is only one learning session.</p></li>
+<li><p><em>rt</em>, response times in seconds.</p></li>
+<li><p><em>accuracy</em>, 0 if the incorrect option was chosen,
+1 if the correct option was chosen.</p></li>
+</ul>
+<p>If the model is hierarchical, also include:</p>
+<ul>
+<li><p><em>participant</em>, the participant number.
+Should be integers starting from 1.</p></li>
+</ul>
+</p></li>
+<li><p><strong>K</strong> (<em>int</em>) – Number of options per learning session.</p></li>
+<li><p><strong>initial_value_learning</strong> (<em>float</em>) – The assumed value expectation in the first learning session.
+The learning value in the following learning sessions is set to
+the average learned value in the previous learning session.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>res</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>rlssm.fits.DDModelResults</p>
+</dd>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>threshold_priors</strong> (<em>dict, optional</em>) – Priors for the threshold parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>alpha_priors</strong> (<em>dict, optional</em>) – Priors for the learning rate parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>v0_priors</strong> (<em>dict, optional</em>) – Priors for the v0 parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>ws_priors</strong> (<em>dict, optional</em>) – Priors for the ws parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>wd_priors</strong> (<em>dict, optional</em>) – Priors for the wd parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>ndt_priors</strong> (<em>dict, optional</em>) – Priors for the non decision time parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>alpha_pos_priors</strong> (<em>dict, optional</em>) – Priors for the learning rate for the positive PE
+(only meaningful if separate_learning_rates is True).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>alpha_neg_priors</strong> (<em>dict, optional</em>) – Priors for the learning rate for the negative PE
+(only meaningful if separate_learning_rates is True).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>include_rhat</strong> (<em>bool, default True</em>) – Whether to calculate the Gelman-Rubin convergence diagnostic r hat
+(Gelman &amp; Rubin, 1992).</p></li>
+<li><p><strong>include_waic</strong> (<em>bool, default True</em>) – Whether to calculate the widely applicable information criterion
+(WAIC; Watanabe, 2013).</p></li>
+<li><p><strong>pointwise_waic</strong> (<em>bool, default False</em>) – Whether to also inclue the pointwise WAIC.
+Only relevant if include_waic is True.</p></li>
+<li><p><strong>include_last_values</strong> (<em>bool, default True</em>) – Whether to extract the last values for each chain.</p></li>
+<li><p><strong>print_diagnostics</strong> (<em>bool, default True</em>) – Whether to print mcmc diagnostics after fitting.
+It is advised to leave it to True and always check, on top of the r hat.</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to pystan.StanModel.sampling().</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="rlalbamodel-2a"></span><dl class="py class">
+<dt id="rlssm.RLALBAModel_2A">
+<em class="property">class </em><code class="sig-prename descclassname">rlssm.</code><code class="sig-name descname">RLALBAModel_2A</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hierarchical_levels</span></em>, <em class="sig-param"><span class="n">separate_learning_rates</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLALBAModel_2A" title="Permalink to this definition">¶</a></dt>
+<dd><p>RLALBAModel_2A allows to specify a combination of reinforcement learning
+and advantage linear ballistic accumulator models.</p>
+<p>When initializing the model, you should specify whether the model is hierarchical or not.
+Additionally, you can specify the mechanisms that you wish to include or exclude.</p>
+<p>The underlying stan model will be compiled if no previously compiled model is found.
+After initializing the model, it can be fitted to a particular dataset using pystan.</p>
+<dl class="py method">
+<dt id="rlssm.RLALBAModel_2A.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hierarchical_levels</span></em>, <em class="sig-param"><span class="n">separate_learning_rates</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLALBAModel_2A.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a RLALBAModel_2A object.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This model is restricted to two options per trial (coded as correct and incorrect).
+However, more than two options can be presented in the same learning session.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hierarchical_levels</strong> (<em>int</em>) – Set to 1 for individual data and to 2 for grouped data.</p></li>
+<li><p><strong>separate_learning_rates</strong> (<em>bool</em><em>, </em><em>default False</em>) – By default, there is only one learning rate.
+If set to True, separate learning rates are estimated
+for positive and negative prediction errors.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="rlssm.RLALBAModel_2A.model_label">
+<code class="sig-name descname">model_label</code><a class="headerlink" href="#rlssm.RLALBAModel_2A.model_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>The label of the fully specified model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RLALBAModel_2A.n_parameters_individual">
+<code class="sig-name descname">n_parameters_individual</code><a class="headerlink" href="#rlssm.RLALBAModel_2A.n_parameters_individual" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of individual parameters of the fully specified model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RLALBAModel_2A.n_parameters_trial">
+<code class="sig-name descname">n_parameters_trial</code><a class="headerlink" href="#rlssm.RLALBAModel_2A.n_parameters_trial" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of parameters that are estimated at a trial level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RLALBAModel_2A.stan_model_path">
+<code class="sig-name descname">stan_model_path</code><a class="headerlink" href="#rlssm.RLALBAModel_2A.stan_model_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The location of the stan model code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="rlssm.RLALBAModel_2A.compiled_model">
+<code class="sig-name descname">compiled_model</code><a class="headerlink" href="#rlssm.RLALBAModel_2A.compiled_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>The compiled stan model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>pystan.StanModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt id="rlssm.RLALBAModel_2A.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">K</span></em>, <em class="sig-param"><span class="n">initial_value_learning</span></em>, <em class="sig-param"><span class="n">k_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">A_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tau_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">alpha_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">v0_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ws_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">wd_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">alpha_pos_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">alpha_neg_priors</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">include_rhat</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">include_waic</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">pointwise_waic</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">include_last_values</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">print_diagnostics</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLALBAModel_2A.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fits the specified reinforcement learning diffusion decision model to data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>DataFrame</em>) – <p>A pandas DataFrame containing data observations.</p>
+<p>Columns should include (it’s OK if some of them are column indexes too):</p>
+<ul>
+<li><p><em>trial_block</em>, the number of trial in a learning session.
+Should be integers starting from 1.</p></li>
+<li><p><em>f_cor</em>, the output from the correct option in the presented pair
+(the option with higher outcome on average).</p></li>
+<li><p><em>f_inc</em>, the output from the incorrect option in the presented pair
+(the option with lower outcome on average).</p></li>
+<li><p><em>cor_option</em>, the number identifying the correct option in the presented pair
+(the option with higher outcome on average).</p></li>
+<li><p><em>inc_option</em>, the number identifying the incorrect option in the presented pair
+(the option with lower outcome on average).</p></li>
+<li><p><em>block_label</em>, the number identifying the learning session.
+Should be integers starting from 1.
+Set to 1 in case there is only one learning session.</p></li>
+<li><p><em>rt</em>, response times in seconds.</p></li>
+<li><p><em>accuracy</em>, 0 if the incorrect option was chosen,
+1 if the correct option was chosen.</p></li>
+</ul>
+<p>If the model is hierarchical, also include:</p>
+<ul>
+<li><p><em>participant</em>, the participant number.
+Should be integers starting from 1.</p></li>
+</ul>
+</p></li>
+<li><p><strong>K</strong> (<em>int</em>) – Number of options per learning session.</p></li>
+<li><p><strong>initial_value_learning</strong> (<em>float</em>) – The assumed value expectation in the first learning session.
+The learning value in the following learning sessions is set to
+the average learned value in the previous learning session.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>res</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>rlssm.fits.DDModelResults</p>
+</dd>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>k_priors</strong> (<em>dict, optional</em>) – Priors for the k parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>A_priors</strong> (<em>dict, optional</em>) – Priors for the A parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>tau_priors</strong> (<em>dict, optional</em>) – Priors for the tau parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>alpha_priors</strong> (<em>dict, optional</em>) – Priors for the learning rate parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>v0_priors</strong> (<em>dict, optional</em>) – Priors for the v0 parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>ws_priors</strong> (<em>dict, optional</em>) – Priors for the ws parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>wd_priors</strong> (<em>dict, optional</em>) – Priors for the wd parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>alpha_pos_priors</strong> (<em>dict, optional</em>) – Priors for the learning rate for the positive PE
+(only meaningful if separate_learning_rates is True).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>alpha_neg_priors</strong> (<em>dict, optional</em>) – Priors for the learning rate for the negative PE
+(only meaningful if separate_learning_rates is True).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>include_rhat</strong> (<em>bool, default True</em>) – Whether to calculate the Gelman-Rubin convergence diagnostic r hat
+(Gelman &amp; Rubin, 1992).</p></li>
+<li><p><strong>include_waic</strong> (<em>bool, default True</em>) – Whether to calculate the widely applicable information criterion
+(WAIC; Watanabe, 2013).</p></li>
+<li><p><strong>pointwise_waic</strong> (<em>bool, default False</em>) – Whether to also inclue the pointwise WAIC.
+Only relevant if include_waic is True.</p></li>
+<li><p><strong>include_last_values</strong> (<em>bool, default True</em>) – Whether to extract the last values for each chain.</p></li>
+<li><p><strong>print_diagnostics</strong> (<em>bool, default True</em>) – Whether to print mcmc diagnostics after fitting.
+It is advised to leave it to True and always check, on top of the r hat.</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to pystan.StanModel.sampling().</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="modelresult_RL.html" class="btn btn-neutral float-right" title="ModelResults classes (simple RL models)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../notebooks/load_from_saved.html" class="btn btn-neutral float-left" title="How to load a ModelResults object" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Laura Fontanesi
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

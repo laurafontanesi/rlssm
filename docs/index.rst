@@ -20,18 +20,7 @@ Parameter estimation is done at an individual or hierarchical level using `PySta
 
    installation
    references
-   cite
-   authors
-
-.. toctree::
-   :maxdepth: 2
-   :caption: How to:
-
-   models/define_model
-   models/inspect_simpleRL
-   models/inspect_SSM_DDM
-   models/inspect_SSM_race
-   simulations/simulateDDM
+   credits
 
 .. toctree::
    :maxdepth: 1
@@ -41,9 +30,19 @@ Parameter estimation is done at an individual or hierarchical level using `PySta
    notebooks/DDM_hierarchical_fitting
    notebooks/load_from_saved
 
-Indices and tables
-==================
+.. toctree::
+   :maxdepth: 1
+   :caption: API Reference:
+
+   models/model_classes
+   models/modelresult_RL
+   models/modelresult_DDM
+   models/modelresult_race
+   simulations/simulateDDM
+   simulations/simulaterace
+   simulations/simulateRL
+
+Index
+=====
 
 * :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

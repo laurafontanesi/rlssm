@@ -1,9 +1,9 @@
-Inspect a RL model fitted only on choices
-=========================================
+ModelResults class for RL models
+================================
 
 .. currentmodule:: rlssm.fits_RL
 
-After fitting your model, you might want to inspect it. There is one main class for RL models **fitted on choices alone**: :ref:`RLModelResults_2A <RLModelResults_2A>`.
+There is one class to inspect model fits of **RL models (fitted on choices alone)**: :ref:`RLModelResults_2A <RLModelResults_2A>`.
 
 The main functions of this class are:
 
@@ -15,6 +15,13 @@ The main functions of this class are:
 
 * Calculate and visualize **posterior predictive distributions** of the observed data. This step is important to assess the qualitative fit of the model to the data. Qualitative fit should be assessed not only when comparing different competing models, but also when a single candidate model is fitted. Different ways of calculating posterior predictive distributions are provided, together with different plotting options. In general, emphasis is given to calculating posterior predictive distributions across conditions. This allows us to assess whether a certain behavioral pattern observed in the data (e.g., due to experimental manipulations) can also be reproduced by the model.
 
+All models
+----------
+
+.. _ModelResults:
+.. autoclass:: ModelResults
+    :members:
+
 Reinforcement learning models
 -----------------------------
 
@@ -24,10 +31,3 @@ Reinforcement learning models
 
 	:show-inheritance:
 	:inherited-members:
-
-All models
-----------
-
-.. _ModelResults:
-.. autoclass:: ModelResults
-    :members:

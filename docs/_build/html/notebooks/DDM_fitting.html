@@ -100,24 +100,22 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Fit the DDM on individual data</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Import-the-data">Import the data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Initialise-the-model">Initialise the model</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#Fit">Fit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Initialize-the-model">Initialize the model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Fit">Fit</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get-Rhat">get Rhat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-wAIC">get wAIC</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#get-Rhat">get Rhat</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#get-wAIC">get wAIC</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#Posteriors">Posteriors</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Posterior-predictives">Posterior predictives</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#Ungrouped">Ungrouped</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Grouped">Grouped</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#Get-last-values-for-eventual-further-sampling">Get last values for eventual further sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Posteriors">Posteriors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Posterior-predictives">Posterior predictives</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Ungrouped">Ungrouped</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Grouped">Grouped</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="DDM_hierarchical_fitting.html">Fit the DDM on hierarchical data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="load_from_saved.html">How to load a ModelResults object</a></li>
 </ul>
 
             
@@ -454,7 +452,7 @@ div.rendered_html tbody tr:hover {
 </style>
 <div class="section" id="Fit-the-DDM-on-individual-data">
 <h1>Fit the DDM on individual data<a class="headerlink" href="#Fit-the-DDM-on-individual-data" title="Permalink to this headline">¶</a></h1>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
@@ -465,15 +463,6 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/Users/Khamir/opt/anaconda3/lib/python3.7/site-packages/statsmodels/tools/_testing.py:19: FutureWarning: pandas.util.testing is deprecated. Use the functions in the public API at pandas.testing instead.
-  import pandas.util.testing as tm
-</pre></div></div>
-</div>
 <div class="section" id="Import-the-data">
 <h2>Import the data<a class="headerlink" href="#Import-the-data" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
@@ -481,7 +470,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">par_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">))</span>
+<span></span><span class="n">par_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">))</span>
 <span class="n">data_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">par_path</span><span class="p">,</span> <span class="s1">&#39;data/data_experiment.csv&#39;</span><span class="p">)</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -493,14 +482,6 @@ div.rendered_html tbody tr:hover {
 <span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-INFO:numexpr.utils:NumExpr defaulting to 4 threads.
-</pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
@@ -608,8 +589,8 @@ INFO:numexpr.utils:NumExpr defaulting to 4 threads.
 </div></div>
 </div>
 </div>
-<div class="section" id="Initialise-the-model">
-<h2>Initialise the model<a class="headerlink" href="#Initialise-the-model" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Initialize-the-model">
+<h2>Initialize the model<a class="headerlink" href="#Initialize-the-model" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
@@ -663,8 +644,9 @@ Using cached StanModel
 False
 </pre></div></div>
 </div>
+</div>
 <div class="section" id="Fit">
-<h3>Fit<a class="headerlink" href="#Fit" title="Permalink to this headline">¶</a></h3>
+<h2>Fit<a class="headerlink" href="#Fit" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
@@ -674,13 +656,6 @@ False
 <span class="n">n_iter</span> <span class="o">=</span> <span class="mi">1000</span>
 <span class="n">n_chains</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="n">n_thin</span> <span class="o">=</span> <span class="mi">1</span>
-
-<span class="c1"># bayesian model</span>
-<span class="n">drift_priors</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="n">threshold_priors</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="n">ndt_priors</span> <span class="o">=</span> <span class="kc">None</span>
-
-<span class="n">starting_point</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span>
 </pre></div>
 </div>
 </div>
@@ -691,10 +666,6 @@ False
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">model_fit</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
     <span class="n">data</span><span class="p">,</span>
-    <span class="n">drift_priors</span><span class="o">=</span><span class="n">drift_priors</span><span class="p">,</span>
-    <span class="n">threshold_priors</span><span class="o">=</span><span class="n">threshold_priors</span><span class="p">,</span>
-    <span class="n">ndt_priors</span><span class="o">=</span><span class="n">ndt_priors</span><span class="p">,</span>
-    <span class="n">starting_point</span><span class="o">=</span><span class="n">starting_point</span><span class="p">,</span>
     <span class="n">thin</span> <span class="o">=</span> <span class="n">n_thin</span><span class="p">,</span>
     <span class="nb">iter</span> <span class="o">=</span> <span class="n">n_iter</span><span class="p">,</span>
     <span class="n">chains</span> <span class="o">=</span> <span class="n">n_chains</span><span class="p">,</span>
@@ -724,10 +695,8 @@ n_eff / iter looks reasonable for all parameters
 E-BFMI indicated no pathological behavior
 </pre></div></div>
 </div>
-</div>
-</div>
 <div class="section" id="get-Rhat">
-<h2>get Rhat<a class="headerlink" href="#get-Rhat" title="Permalink to this headline">¶</a></h2>
+<h3>get Rhat<a class="headerlink" href="#get-Rhat" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
@@ -770,31 +739,31 @@ E-BFMI indicated no pathological behavior
     </tr>
     <tr>
       <th>mean</th>
-      <td>1.003601</td>
+      <td>1.000108</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>0.002360</td>
+      <td>0.001876</td>
     </tr>
     <tr>
       <th>min</th>
-      <td>1.001408</td>
+      <td>0.998233</td>
     </tr>
     <tr>
       <th>25%</th>
-      <td>1.002352</td>
+      <td>0.999170</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>1.003296</td>
+      <td>1.000107</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>1.004697</td>
+      <td>1.001046</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>1.006098</td>
+      <td>1.001985</td>
     </tr>
   </tbody>
 </table>
@@ -839,17 +808,17 @@ E-BFMI indicated no pathological behavior
   <tbody>
     <tr>
       <th>0</th>
-      <td>1.001408</td>
+      <td>1.000107</td>
       <td>drift</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>1.006098</td>
+      <td>0.998233</td>
       <td>threshold</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>1.003296</td>
+      <td>1.001985</td>
       <td>ndt</td>
     </tr>
   </tbody>
@@ -858,7 +827,7 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="section" id="get-wAIC">
-<h2>get wAIC<a class="headerlink" href="#get-wAIC" title="Permalink to this headline">¶</a></h2>
+<h3>get wAIC<a class="headerlink" href="#get-wAIC" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
@@ -874,25 +843,27 @@ E-BFMI indicated no pathological behavior
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;lppd&#39;: -224.53079251766346,
- &#39;p_waic&#39;: 4.584567420263923,
- &#39;waic&#39;: 458.2307198758548,
- &#39;waic_se&#39;: 35.658134283717864}
+{&#39;lppd&#39;: -224.51089269946007,
+ &#39;p_waic&#39;: 4.568369989137585,
+ &#39;waic&#39;: 458.1585253771953,
+ &#39;waic_se&#39;: 35.614308641058926}
 </pre></div></div>
 </div>
+</div>
+</div>
 <div class="section" id="Posteriors">
-<h3>Posteriors<a class="headerlink" href="#Posteriors" title="Permalink to this headline">¶</a></h3>
+<h2>Posteriors<a class="headerlink" href="#Posteriors" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">samples</span>
+<span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -923,159 +894,75 @@ E-BFMI indicated no pathological behavior
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>0</td>
-      <td>345</td>
-      <td>0.898345</td>
-      <td>1.899095</td>
-      <td>0.904377</td>
+      <th>count</th>
+      <td>1000.00000</td>
+      <td>1000.000000</td>
+      <td>1000.000000</td>
+      <td>1000.000000</td>
+      <td>1000.000000</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>0</td>
-      <td>86</td>
-      <td>1.109947</td>
-      <td>2.010315</td>
-      <td>0.914344</td>
+      <th>mean</th>
+      <td>0.50000</td>
+      <td>249.500000</td>
+      <td>0.950234</td>
+      <td>2.046214</td>
+      <td>0.917508</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>0</td>
-      <td>76</td>
-      <td>0.883568</td>
-      <td>1.952430</td>
-      <td>0.919060</td>
+      <th>std</th>
+      <td>0.50025</td>
+      <td>144.409501</td>
+      <td>0.083177</td>
+      <td>0.076415</td>
+      <td>0.012294</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>0</td>
-      <td>29</td>
-      <td>0.909259</td>
-      <td>2.073794</td>
-      <td>0.905199</td>
+      <th>min</th>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.679088</td>
+      <td>1.845066</td>
+      <td>0.865905</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>0</td>
-      <td>271</td>
-      <td>0.980759</td>
-      <td>2.035320</td>
-      <td>0.921973</td>
+      <th>25%</th>
+      <td>0.00000</td>
+      <td>124.750000</td>
+      <td>0.893585</td>
+      <td>1.995491</td>
+      <td>0.910507</td>
     </tr>
     <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
+      <th>50%</th>
+      <td>0.50000</td>
+      <td>249.500000</td>
+      <td>0.948448</td>
+      <td>2.042306</td>
+      <td>0.919264</td>
     </tr>
     <tr>
-      <th>995</th>
-      <td>1</td>
-      <td>95</td>
-      <td>0.884244</td>
-      <td>2.103992</td>
-      <td>0.933621</td>
+      <th>75%</th>
+      <td>1.00000</td>
+      <td>374.250000</td>
+      <td>1.006465</td>
+      <td>2.097855</td>
+      <td>0.926007</td>
     </tr>
     <tr>
-      <th>996</th>
-      <td>1</td>
-      <td>392</td>
-      <td>1.060798</td>
-      <td>2.051015</td>
-      <td>0.927875</td>
-    </tr>
-    <tr>
-      <th>997</th>
-      <td>1</td>
-      <td>498</td>
-      <td>0.973864</td>
-      <td>2.138269</td>
-      <td>0.902334</td>
-    </tr>
-    <tr>
-      <th>998</th>
-      <td>1</td>
-      <td>371</td>
-      <td>0.885151</td>
-      <td>2.071079</td>
-      <td>0.911193</td>
-    </tr>
-    <tr>
-      <th>999</th>
-      <td>1</td>
-      <td>207</td>
-      <td>0.960801</td>
-      <td>2.028807</td>
-      <td>0.921436</td>
+      <th>max</th>
+      <td>1.00000</td>
+      <td>499.000000</td>
+      <td>1.237784</td>
+      <td>2.330128</td>
+      <td>0.944063</td>
     </tr>
   </tbody>
 </table>
-<p>1000 rows × 5 columns</p>
 </div></div>
 </div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">trial_samples</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-OrderedDict([(&#39;drift_t&#39;,
-              array([[0.89834522, 0.89834522, 0.89834522, ..., 0.89834522, 0.89834522,
-                      0.89834522],
-                     [1.10994672, 1.10994672, 1.10994672, ..., 1.10994672, 1.10994672,
-                      1.10994672],
-                     [0.88356787, 0.88356787, 0.88356787, ..., 0.88356787, 0.88356787,
-                      0.88356787],
-                     ...,
-                     [0.97386354, 0.97386354, 0.97386354, ..., 0.97386354, 0.97386354,
-                      0.97386354],
-                     [0.88515131, 0.88515131, 0.88515131, ..., 0.88515131, 0.88515131,
-                      0.88515131],
-                     [0.96080137, 0.96080137, 0.96080137, ..., 0.96080137, 0.96080137,
-                      0.96080137]])),
-             (&#39;threshold_t&#39;,
-              array([[1.89909495, 1.89909495, 1.89909495, ..., 1.89909495, 1.89909495,
-                      1.89909495],
-                     [2.01031534, 2.01031534, 2.01031534, ..., 2.01031534, 2.01031534,
-                      2.01031534],
-                     [1.95243049, 1.95243049, 1.95243049, ..., 1.95243049, 1.95243049,
-                      1.95243049],
-                     ...,
-                     [2.13826915, 2.13826915, 2.13826915, ..., 2.13826915, 2.13826915,
-                      2.13826915],
-                     [2.07107864, 2.07107864, 2.07107864, ..., 2.07107864, 2.07107864,
-                      2.07107864],
-                     [2.02880715, 2.02880715, 2.02880715, ..., 2.02880715, 2.02880715,
-                      2.02880715]])),
-             (&#39;ndt_t&#39;,
-              array([[0.90437705, 0.90437705, 0.90437705, ..., 0.90437705, 0.90437705,
-                      0.90437705],
-                     [0.91434386, 0.91434386, 0.91434386, ..., 0.91434386, 0.91434386,
-                      0.91434386],
-                     [0.91905996, 0.91905996, 0.91905996, ..., 0.91905996, 0.91905996,
-                      0.91905996],
-                     ...,
-                     [0.90233418, 0.90233418, 0.90233418, ..., 0.90233418, 0.90233418,
-                      0.90233418],
-                     [0.91119348, 0.91119348, 0.91119348, ..., 0.91119348, 0.91119348,
-                      0.91119348],
-                     [0.92143551, 0.92143551, 0.92143551, ..., 0.92143551, 0.92143551,
-                      0.92143551]]))])
-</pre></div></div>
-</div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1088,7 +975,7 @@ OrderedDict([(&#39;drift_t&#39;,
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1100,18 +987,16 @@ OrderedDict([(&#39;drift_t&#39;,
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_DDM_fitting_20_0.png" src="../_images/notebooks_DDM_fitting_20_0.png" />
+<img alt="../_images/notebooks_DDM_fitting_19_0.png" src="../_images/notebooks_DDM_fitting_19_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="Posterior-predictives">
-<h3>Posterior predictives<a class="headerlink" href="#Posterior-predictives" title="Permalink to this headline">¶</a></h3>
-</div>
-</div>
+<h2>Posterior predictives<a class="headerlink" href="#Posterior-predictives" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="Ungrouped">
-<h2>Ungrouped<a class="headerlink" href="#Ungrouped" title="Permalink to this headline">¶</a></h2>
+<h3>Ungrouped<a class="headerlink" href="#Ungrouped" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1121,7 +1006,7 @@ OrderedDict([(&#39;drift_t&#39;,
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1203,20 +1088,20 @@ OrderedDict([(&#39;drift_t&#39;,
   <tbody>
     <tr>
       <th>1</th>
-      <td>1.150377</td>
-      <td>1.091377</td>
-      <td>1.221377</td>
-      <td>1.193377</td>
-      <td>2.567377</td>
-      <td>1.573377</td>
-      <td>1.659377</td>
-      <td>2.916377</td>
-      <td>1.054377</td>
-      <td>2.604377</td>
+      <td>1.594541</td>
+      <td>1.162541</td>
+      <td>1.289541</td>
+      <td>1.754541</td>
+      <td>1.753541</td>
+      <td>1.811541</td>
+      <td>1.320541</td>
+      <td>1.341541</td>
+      <td>1.402541</td>
+      <td>1.497541</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>0.0</td>
+      <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1227,41 +1112,43 @@ OrderedDict([(&#39;drift_t&#39;,
     </tr>
     <tr>
       <th>2</th>
-      <td>1.143344</td>
-      <td>1.179344</td>
-      <td>1.798344</td>
-      <td>1.263344</td>
-      <td>1.146344</td>
-      <td>8.119344</td>
-      <td>1.422344</td>
-      <td>1.706344</td>
-      <td>1.361344</td>
-      <td>1.401344</td>
+      <td>1.825413</td>
+      <td>3.402413</td>
+      <td>3.323413</td>
+      <td>1.640413</td>
+      <td>3.008413</td>
+      <td>1.461413</td>
+      <td>1.797413</td>
+      <td>1.333413</td>
+      <td>1.849413</td>
+      <td>1.565413</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>1.709060</td>
-      <td>1.251060</td>
-      <td>1.147060</td>
-      <td>1.372060</td>
-      <td>2.104060</td>
-      <td>1.688060</td>
-      <td>1.432060</td>
-      <td>1.383060</td>
-      <td>1.219060</td>
-      <td>2.700060</td>
+      <td>1.106817</td>
+      <td>1.765817</td>
+      <td>1.790817</td>
+      <td>1.213817</td>
+      <td>2.590817</td>
+      <td>1.804817</td>
+      <td>1.824817</td>
+      <td>2.411817</td>
+      <td>1.685817</td>
+      <td>1.159817</td>
       <td>...</td>
+      <td>0.0</td>
+      <td>1.0</td>
       <td>1.0</td>
       <td>0.0</td>
       <td>1.0</td>
@@ -1270,45 +1157,43 @@ OrderedDict([(&#39;drift_t&#39;,
       <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2.252199</td>
-      <td>1.769199</td>
-      <td>2.181199</td>
-      <td>1.194199</td>
-      <td>3.051199</td>
-      <td>1.478199</td>
-      <td>1.832199</td>
-      <td>2.480199</td>
-      <td>1.376199</td>
-      <td>1.653199</td>
+      <td>1.458243</td>
+      <td>1.512243</td>
+      <td>1.121243</td>
+      <td>1.409243</td>
+      <td>2.005243</td>
+      <td>1.174243</td>
+      <td>2.046243</td>
+      <td>1.456243</td>
+      <td>1.286243</td>
+      <td>2.749243</td>
       <td>...</td>
-      <td>1.0</td>
-      <td>1.0</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>0.0</td>
+      <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>2.250973</td>
-      <td>1.096973</td>
-      <td>1.867973</td>
-      <td>1.345973</td>
-      <td>1.561973</td>
-      <td>1.185973</td>
-      <td>1.219973</td>
-      <td>2.095973</td>
-      <td>2.129973</td>
-      <td>2.314973</td>
+      <td>1.370265</td>
+      <td>3.151265</td>
+      <td>1.708265</td>
+      <td>1.207265</td>
+      <td>1.269265</td>
+      <td>1.261265</td>
+      <td>1.256265</td>
+      <td>1.958265</td>
+      <td>1.652265</td>
+      <td>3.398265</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1347,90 +1232,90 @@ OrderedDict([(&#39;drift_t&#39;,
     </tr>
     <tr>
       <th>96</th>
-      <td>2.044667</td>
-      <td>1.271667</td>
-      <td>1.171667</td>
-      <td>2.679667</td>
-      <td>1.670667</td>
-      <td>1.751667</td>
-      <td>1.627667</td>
-      <td>1.089667</td>
-      <td>2.006667</td>
-      <td>1.398667</td>
+      <td>1.159170</td>
+      <td>1.324170</td>
+      <td>1.612170</td>
+      <td>1.214170</td>
+      <td>2.033170</td>
+      <td>1.620170</td>
+      <td>1.644170</td>
+      <td>3.080170</td>
+      <td>1.342170</td>
+      <td>4.476170</td>
       <td>...</td>
       <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
       <td>1.0</td>
       <td>0.0</td>
       <td>1.0</td>
       <td>0.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>97</th>
-      <td>1.814151</td>
-      <td>1.111151</td>
-      <td>1.415151</td>
-      <td>3.180151</td>
-      <td>1.197151</td>
-      <td>2.546151</td>
-      <td>2.022151</td>
-      <td>2.045151</td>
-      <td>1.469151</td>
-      <td>2.123151</td>
+      <td>1.213858</td>
+      <td>1.226858</td>
+      <td>1.714858</td>
+      <td>1.259858</td>
+      <td>1.348858</td>
+      <td>1.542858</td>
+      <td>1.845858</td>
+      <td>1.163858</td>
+      <td>1.249858</td>
+      <td>1.375858</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
       <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
     </tr>
     <tr>
       <th>98</th>
-      <td>1.205312</td>
-      <td>1.251312</td>
-      <td>1.424312</td>
-      <td>1.473312</td>
-      <td>1.632312</td>
-      <td>1.975312</td>
-      <td>1.104312</td>
-      <td>1.988312</td>
-      <td>1.042312</td>
-      <td>1.548312</td>
+      <td>2.541807</td>
+      <td>1.892807</td>
+      <td>2.210807</td>
+      <td>1.674807</td>
+      <td>1.327807</td>
+      <td>3.093807</td>
+      <td>1.470807</td>
+      <td>1.102807</td>
+      <td>1.270807</td>
+      <td>1.553807</td>
       <td>...</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>1.117699</td>
-      <td>1.492699</td>
-      <td>1.631699</td>
-      <td>1.157699</td>
-      <td>1.206699</td>
-      <td>1.519699</td>
-      <td>1.633699</td>
-      <td>1.295699</td>
-      <td>2.294699</td>
-      <td>3.597699</td>
+      <td>1.695184</td>
+      <td>1.407184</td>
+      <td>1.459184</td>
+      <td>1.198184</td>
+      <td>1.206184</td>
+      <td>1.881184</td>
+      <td>1.444184</td>
+      <td>1.324184</td>
+      <td>1.227184</td>
+      <td>1.221184</td>
       <td>...</td>
-      <td>1.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1443,26 +1328,26 @@ OrderedDict([(&#39;drift_t&#39;,
     </tr>
     <tr>
       <th>100</th>
-      <td>1.920632</td>
-      <td>1.323632</td>
-      <td>1.925632</td>
-      <td>1.141632</td>
-      <td>1.587632</td>
-      <td>1.360632</td>
-      <td>2.209632</td>
-      <td>2.297632</td>
-      <td>1.146632</td>
-      <td>1.171632</td>
+      <td>1.549069</td>
+      <td>1.251069</td>
+      <td>1.501069</td>
+      <td>1.553069</td>
+      <td>1.048069</td>
+      <td>1.532069</td>
+      <td>1.330069</td>
+      <td>1.971069</td>
+      <td>1.077069</td>
+      <td>2.460069</td>
       <td>...</td>
       <td>1.0</td>
-      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
       <td>1.0</td>
     </tr>
   </tbody>
@@ -1471,7 +1356,7 @@ OrderedDict([(&#39;drift_t&#39;,
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1481,7 +1366,7 @@ OrderedDict([(&#39;drift_t&#39;,
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1538,82 +1423,82 @@ OrderedDict([(&#39;drift_t&#39;,
     <tr>
       <th>1</th>
       <td>0.858333</td>
-      <td>1.739556</td>
-      <td>1.815173</td>
-      <td>1.098077</td>
-      <td>1.226977</td>
-      <td>1.533877</td>
-      <td>1.770377</td>
-      <td>2.393977</td>
-      <td>1.143377</td>
-      <td>1.297377</td>
-      <td>1.523877</td>
-      <td>1.961877</td>
-      <td>2.722377</td>
+      <td>1.665562</td>
+      <td>1.672090</td>
+      <td>1.142541</td>
+      <td>1.287541</td>
+      <td>1.557541</td>
+      <td>1.860141</td>
+      <td>2.305141</td>
+      <td>1.150041</td>
+      <td>1.286041</td>
+      <td>1.502541</td>
+      <td>1.823041</td>
+      <td>2.422041</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.866667</td>
-      <td>1.615031</td>
-      <td>1.850346</td>
-      <td>1.225344</td>
-      <td>1.317844</td>
-      <td>1.425344</td>
-      <td>1.625744</td>
-      <td>2.088644</td>
-      <td>1.143544</td>
-      <td>1.288544</td>
-      <td>1.512344</td>
-      <td>1.713344</td>
-      <td>2.225344</td>
+      <td>0.879167</td>
+      <td>1.708663</td>
+      <td>1.724117</td>
+      <td>1.181213</td>
+      <td>1.399013</td>
+      <td>1.478413</td>
+      <td>1.736613</td>
+      <td>1.970013</td>
+      <td>1.156413</td>
+      <td>1.363413</td>
+      <td>1.571413</td>
+      <td>1.823413</td>
+      <td>2.541413</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.837500</td>
-      <td>1.636093</td>
-      <td>1.875602</td>
-      <td>1.175860</td>
-      <td>1.272060</td>
-      <td>1.467060</td>
-      <td>1.659660</td>
-      <td>1.995060</td>
-      <td>1.156060</td>
-      <td>1.291060</td>
-      <td>1.475060</td>
-      <td>1.755060</td>
-      <td>2.471060</td>
+      <td>0.908333</td>
+      <td>1.708879</td>
+      <td>1.070508</td>
+      <td>1.215217</td>
+      <td>1.359217</td>
+      <td>1.493817</td>
+      <td>1.755317</td>
+      <td>2.083217</td>
+      <td>1.188517</td>
+      <td>1.389117</td>
+      <td>1.598817</td>
+      <td>1.858217</td>
+      <td>2.476017</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.875000</td>
-      <td>1.784712</td>
-      <td>1.521978</td>
-      <td>1.236399</td>
-      <td>1.497199</td>
-      <td>1.842199</td>
-      <td>1.951599</td>
-      <td>2.490899</td>
-      <td>1.160099</td>
-      <td>1.344599</td>
-      <td>1.575699</td>
-      <td>1.926099</td>
-      <td>2.555299</td>
+      <td>0.887500</td>
+      <td>1.822226</td>
+      <td>1.843154</td>
+      <td>1.293643</td>
+      <td>1.460443</td>
+      <td>1.634243</td>
+      <td>2.156243</td>
+      <td>2.787443</td>
+      <td>1.157443</td>
+      <td>1.323443</td>
+      <td>1.595243</td>
+      <td>1.906043</td>
+      <td>2.895443</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.929167</td>
-      <td>1.733140</td>
-      <td>2.113670</td>
-      <td>1.239573</td>
-      <td>1.357573</td>
-      <td>1.613973</td>
-      <td>1.867573</td>
-      <td>2.648173</td>
-      <td>1.182373</td>
-      <td>1.350173</td>
-      <td>1.558973</td>
-      <td>1.899773</td>
-      <td>2.464373</td>
+      <td>0.879167</td>
+      <td>1.720669</td>
+      <td>4.087544</td>
+      <td>1.175465</td>
+      <td>1.241665</td>
+      <td>1.518265</td>
+      <td>1.799065</td>
+      <td>2.314865</td>
+      <td>1.160265</td>
+      <td>1.331265</td>
+      <td>1.510265</td>
+      <td>1.837265</td>
+      <td>2.470265</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1634,82 +1519,82 @@ OrderedDict([(&#39;drift_t&#39;,
     <tr>
       <th>96</th>
       <td>0.870833</td>
-      <td>1.884221</td>
-      <td>3.513828</td>
-      <td>1.147667</td>
-      <td>1.262667</td>
-      <td>1.739667</td>
-      <td>1.893667</td>
-      <td>2.646667</td>
-      <td>1.205667</td>
-      <td>1.397467</td>
-      <td>1.636667</td>
-      <td>2.096667</td>
-      <td>2.855067</td>
+      <td>1.816528</td>
+      <td>2.002940</td>
+      <td>1.182170</td>
+      <td>1.343170</td>
+      <td>1.593170</td>
+      <td>2.077170</td>
+      <td>2.343170</td>
+      <td>1.178770</td>
+      <td>1.350970</td>
+      <td>1.582170</td>
+      <td>1.911770</td>
+      <td>2.682570</td>
     </tr>
     <tr>
       <th>97</th>
-      <td>0.891667</td>
-      <td>1.667376</td>
-      <td>2.211374</td>
-      <td>1.172151</td>
-      <td>1.295151</td>
-      <td>1.444151</td>
-      <td>1.712151</td>
-      <td>2.385151</td>
-      <td>1.141451</td>
-      <td>1.270951</td>
-      <td>1.488651</td>
-      <td>1.757451</td>
-      <td>2.499051</td>
+      <td>0.850000</td>
+      <td>1.820087</td>
+      <td>1.513412</td>
+      <td>1.165858</td>
+      <td>1.251858</td>
+      <td>1.496858</td>
+      <td>1.829358</td>
+      <td>2.250858</td>
+      <td>1.182658</td>
+      <td>1.405758</td>
+      <td>1.647858</td>
+      <td>2.006858</td>
+      <td>2.808658</td>
     </tr>
     <tr>
       <th>98</th>
-      <td>0.891667</td>
-      <td>1.701645</td>
-      <td>1.556469</td>
-      <td>1.148312</td>
-      <td>1.286312</td>
-      <td>1.490812</td>
-      <td>1.715312</td>
-      <td>3.071312</td>
-      <td>1.143412</td>
-      <td>1.345112</td>
-      <td>1.545312</td>
-      <td>1.809512</td>
-      <td>2.485412</td>
+      <td>0.879167</td>
+      <td>1.764307</td>
+      <td>1.687487</td>
+      <td>1.178407</td>
+      <td>1.325607</td>
+      <td>1.409807</td>
+      <td>1.946007</td>
+      <td>2.770007</td>
+      <td>1.159807</td>
+      <td>1.345807</td>
+      <td>1.598807</td>
+      <td>1.910807</td>
+      <td>2.626807</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>0.866667</td>
-      <td>1.653444</td>
-      <td>2.355131</td>
-      <td>1.196499</td>
-      <td>1.322799</td>
-      <td>1.449699</td>
-      <td>1.658099</td>
-      <td>2.397399</td>
-      <td>1.175899</td>
-      <td>1.304199</td>
-      <td>1.486199</td>
-      <td>1.817499</td>
-      <td>2.288599</td>
+      <td>0.891667</td>
+      <td>1.764413</td>
+      <td>1.777278</td>
+      <td>1.319184</td>
+      <td>1.447184</td>
+      <td>1.593184</td>
+      <td>2.023684</td>
+      <td>2.407684</td>
+      <td>1.161384</td>
+      <td>1.366184</td>
+      <td>1.608684</td>
+      <td>1.924084</td>
+      <td>2.441284</td>
     </tr>
     <tr>
       <th>100</th>
-      <td>0.887500</td>
-      <td>1.753844</td>
-      <td>2.215495</td>
-      <td>1.093232</td>
-      <td>1.318232</td>
-      <td>1.436632</td>
-      <td>1.888032</td>
-      <td>2.542232</td>
-      <td>1.146032</td>
-      <td>1.338632</td>
-      <td>1.564632</td>
-      <td>1.816232</td>
-      <td>2.653032</td>
+      <td>0.866667</td>
+      <td>1.617074</td>
+      <td>2.062171</td>
+      <td>1.141569</td>
+      <td>1.317169</td>
+      <td>1.469569</td>
+      <td>1.834969</td>
+      <td>2.343869</td>
+      <td>1.169469</td>
+      <td>1.330069</td>
+      <td>1.480069</td>
+      <td>1.703969</td>
+      <td>2.138369</td>
     </tr>
   </tbody>
 </table>
@@ -1717,7 +1602,7 @@ OrderedDict([(&#39;drift_t&#39;,
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1729,11 +1614,11 @@ OrderedDict([(&#39;drift_t&#39;,
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_DDM_fitting_25_0.png" src="../_images/notebooks_DDM_fitting_25_0.png" />
+<img alt="../_images/notebooks_DDM_fitting_24_0.png" src="../_images/notebooks_DDM_fitting_24_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1741,18 +1626,29 @@ OrderedDict([(&#39;drift_t&#39;,
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/Users/laurafontanesi/git/rlssm/rlssm/random.py:210: RuntimeWarning: invalid value encountered in multiply
+  acc = np.empty(shape)*np.nan
+/Users/laurafontanesi/git/rlssm/rlssm/random.py:211: RuntimeWarning: invalid value encountered in multiply
+  rt = np.empty(shape)*np.nan
+</pre></div></div>
+</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_DDM_fitting_26_0.png" src="../_images/notebooks_DDM_fitting_26_0.png" />
+<img alt="../_images/notebooks_DDM_fitting_25_1.png" src="../_images/notebooks_DDM_fitting_25_1.png" />
 </div>
 </div>
 </div>
 <div class="section" id="Grouped">
-<h2>Grouped<a class="headerlink" href="#Grouped" title="Permalink to this headline">¶</a></h2>
+<h3>Grouped<a class="headerlink" href="#Grouped" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1761,7 +1657,7 @@ OrderedDict([(&#39;drift_t&#39;,
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1775,7 +1671,7 @@ OrderedDict([(&#39;drift_t&#39;,
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1784,7 +1680,7 @@ OrderedDict([(&#39;drift_t&#39;,
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1919,7 +1815,7 @@ OrderedDict([(&#39;drift_t&#39;,
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1930,8 +1826,19 @@ OrderedDict([(&#39;drift_t&#39;,
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/Users/laurafontanesi/git/rlssm/rlssm/random.py:210: RuntimeWarning: invalid value encountered in multiply
+  acc = np.empty(shape)*np.nan
+/Users/laurafontanesi/git/rlssm/rlssm/random.py:211: RuntimeWarning: invalid value encountered in multiply
+  rt = np.empty(shape)*np.nan
+</pre></div></div>
+</div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1985,63 +1892,63 @@ OrderedDict([(&#39;drift_t&#39;,
       <th rowspan="5" valign="top">1.0</th>
       <th rowspan="5" valign="top">AB</th>
       <th>1</th>
-      <td>0.80</td>
-      <td>1.676127</td>
-      <td>1.175583</td>
-      <td>1.433377</td>
-      <td>1.271377</td>
-      <td>1.579377</td>
-      <td>1.429877</td>
-      <td>1.738177</td>
-      <td>1.909377</td>
+      <td>0.95</td>
+      <td>1.682741</td>
+      <td>0.051371</td>
+      <td>2.288541</td>
+      <td>1.383341</td>
+      <td>2.288541</td>
+      <td>1.655541</td>
+      <td>2.288541</td>
+      <td>1.945741</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.95</td>
-      <td>1.568144</td>
-      <td>2.320608</td>
-      <td>1.311344</td>
-      <td>1.316144</td>
-      <td>1.311344</td>
-      <td>1.352344</td>
-      <td>1.311344</td>
-      <td>1.537944</td>
+      <td>0.85</td>
+      <td>1.651663</td>
+      <td>1.031071</td>
+      <td>1.360213</td>
+      <td>1.282213</td>
+      <td>1.377413</td>
+      <td>1.451413</td>
+      <td>1.772613</td>
+      <td>1.770413</td>
     </tr>
     <tr>
       <th>3</th>
       <td>0.95</td>
-      <td>1.569110</td>
-      <td>0.895593</td>
-      <td>1.298060</td>
-      <td>1.351060</td>
-      <td>1.298060</td>
-      <td>1.546060</td>
-      <td>1.298060</td>
-      <td>1.721660</td>
+      <td>1.743317</td>
+      <td>0.876341</td>
+      <td>2.408817</td>
+      <td>1.345217</td>
+      <td>2.408817</td>
+      <td>1.565817</td>
+      <td>2.408817</td>
+      <td>1.929817</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>1.00</td>
-      <td>2.040449</td>
-      <td>1.021799</td>
-      <td>NaN</td>
-      <td>1.553799</td>
-      <td>NaN</td>
-      <td>1.933699</td>
-      <td>NaN</td>
-      <td>2.317299</td>
+      <td>0.80</td>
+      <td>1.739193</td>
+      <td>0.230977</td>
+      <td>1.585243</td>
+      <td>1.368743</td>
+      <td>1.790243</td>
+      <td>1.717743</td>
+      <td>1.970243</td>
+      <td>2.056243</td>
     </tr>
     <tr>
       <th>5</th>
       <td>1.00</td>
-      <td>1.790973</td>
-      <td>2.855367</td>
+      <td>1.615365</td>
+      <td>0.888593</td>
       <td>NaN</td>
-      <td>1.325073</td>
+      <td>1.455965</td>
       <td>NaN</td>
-      <td>1.467973</td>
+      <td>1.574265</td>
       <td>NaN</td>
-      <td>1.922073</td>
+      <td>1.707365</td>
     </tr>
     <tr>
       <th>...</th>
@@ -2061,63 +1968,63 @@ OrderedDict([(&#39;drift_t&#39;,
       <th rowspan="5" valign="top">3.0</th>
       <th rowspan="5" valign="top">CD</th>
       <th>96</th>
-      <td>1.00</td>
-      <td>1.967717</td>
-      <td>0.926563</td>
-      <td>NaN</td>
-      <td>1.551267</td>
-      <td>NaN</td>
-      <td>1.703667</td>
-      <td>NaN</td>
-      <td>2.328967</td>
+      <td>0.85</td>
+      <td>1.712370</td>
+      <td>1.411909</td>
+      <td>1.435370</td>
+      <td>1.345570</td>
+      <td>1.630170</td>
+      <td>1.624170</td>
+      <td>1.685370</td>
+      <td>1.854170</td>
     </tr>
     <tr>
       <th>97</th>
-      <td>0.80</td>
-      <td>1.653751</td>
-      <td>0.648768</td>
-      <td>1.607051</td>
-      <td>1.216151</td>
-      <td>1.675651</td>
-      <td>1.363651</td>
-      <td>1.734951</td>
-      <td>2.084151</td>
+      <td>0.90</td>
+      <td>1.832358</td>
+      <td>0.912827</td>
+      <td>2.639658</td>
+      <td>1.426858</td>
+      <td>2.692858</td>
+      <td>1.541858</td>
+      <td>2.746058</td>
+      <td>1.791758</td>
     </tr>
     <tr>
       <th>98</th>
-      <td>0.95</td>
-      <td>1.682662</td>
-      <td>1.047883</td>
-      <td>1.709312</td>
-      <td>1.291112</td>
-      <td>1.709312</td>
-      <td>1.545312</td>
-      <td>1.709312</td>
-      <td>1.905912</td>
+      <td>0.90</td>
+      <td>1.718357</td>
+      <td>1.986354</td>
+      <td>1.268607</td>
+      <td>1.290807</td>
+      <td>1.283807</td>
+      <td>1.489807</td>
+      <td>1.299007</td>
+      <td>1.933407</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>0.85</td>
-      <td>1.603949</td>
-      <td>1.176441</td>
-      <td>1.592099</td>
-      <td>1.356499</td>
-      <td>1.739699</td>
-      <td>1.449699</td>
-      <td>1.942899</td>
-      <td>1.638699</td>
+      <td>0.80</td>
+      <td>1.774484</td>
+      <td>2.695123</td>
+      <td>1.221784</td>
+      <td>1.390184</td>
+      <td>1.297684</td>
+      <td>1.596184</td>
+      <td>1.381784</td>
+      <td>2.005184</td>
     </tr>
     <tr>
       <th>100</th>
-      <td>0.90</td>
-      <td>1.612082</td>
-      <td>0.859333</td>
-      <td>1.124432</td>
-      <td>1.196632</td>
-      <td>1.157632</td>
-      <td>1.587132</td>
-      <td>1.190832</td>
-      <td>1.920432</td>
+      <td>0.95</td>
+      <td>1.708869</td>
+      <td>1.609479</td>
+      <td>2.969069</td>
+      <td>1.487869</td>
+      <td>2.969069</td>
+      <td>1.646069</td>
+      <td>2.969069</td>
+      <td>1.733869</td>
     </tr>
   </tbody>
 </table>
@@ -2125,7 +2032,7 @@ OrderedDict([(&#39;drift_t&#39;,
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -2137,7 +2044,7 @@ OrderedDict([(&#39;drift_t&#39;,
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -2188,63 +2095,63 @@ OrderedDict([(&#39;drift_t&#39;,
     <tr>
       <th rowspan="5" valign="top">1</th>
       <th>1</th>
-      <td>0.866667</td>
-      <td>1.899144</td>
-      <td>1.070049</td>
-      <td>1.535977</td>
-      <td>1.445877</td>
-      <td>1.636377</td>
-      <td>1.692877</td>
-      <td>1.825577</td>
-      <td>2.005377</td>
+      <td>0.933333</td>
+      <td>1.593908</td>
+      <td>1.105874</td>
+      <td>1.466141</td>
+      <td>1.301141</td>
+      <td>1.538541</td>
+      <td>1.477541</td>
+      <td>1.610941</td>
+      <td>1.730141</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.933333</td>
-      <td>1.652977</td>
-      <td>0.763438</td>
-      <td>1.471044</td>
-      <td>1.317844</td>
-      <td>1.548844</td>
-      <td>1.656344</td>
-      <td>1.626644</td>
-      <td>1.816644</td>
+      <td>0.866667</td>
+      <td>1.823280</td>
+      <td>2.922837</td>
+      <td>1.275313</td>
+      <td>1.258913</td>
+      <td>2.053913</td>
+      <td>1.594413</td>
+      <td>2.851213</td>
+      <td>1.677413</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.833333</td>
-      <td>1.625860</td>
-      <td>1.061425</td>
-      <td>1.159060</td>
-      <td>1.301860</td>
-      <td>1.255060</td>
-      <td>1.500060</td>
-      <td>1.327860</td>
-      <td>1.860660</td>
+      <td>0.933333</td>
+      <td>1.807884</td>
+      <td>1.061185</td>
+      <td>1.547017</td>
+      <td>1.390417</td>
+      <td>1.617817</td>
+      <td>1.730317</td>
+      <td>1.688617</td>
+      <td>2.041917</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.966667</td>
-      <td>1.797399</td>
-      <td>1.597083</td>
-      <td>1.392199</td>
-      <td>1.502599</td>
-      <td>1.392199</td>
-      <td>1.646199</td>
-      <td>1.392199</td>
-      <td>1.866599</td>
+      <td>0.800000</td>
+      <td>1.727343</td>
+      <td>1.471560</td>
+      <td>1.301743</td>
+      <td>1.269743</td>
+      <td>1.336743</td>
+      <td>1.656743</td>
+      <td>1.397243</td>
+      <td>1.989043</td>
     </tr>
     <tr>
       <th>5</th>
       <td>0.833333</td>
-      <td>1.698373</td>
-      <td>1.762776</td>
-      <td>1.953373</td>
-      <td>1.289573</td>
-      <td>2.378973</td>
-      <td>1.403973</td>
-      <td>2.597373</td>
-      <td>1.619973</td>
+      <td>1.780965</td>
+      <td>3.304995</td>
+      <td>1.486265</td>
+      <td>1.439065</td>
+      <td>1.550265</td>
+      <td>1.692265</td>
+      <td>1.677465</td>
+      <td>1.861865</td>
     </tr>
     <tr>
       <th>...</th>
@@ -2263,62 +2170,62 @@ OrderedDict([(&#39;drift_t&#39;,
       <th rowspan="5" valign="top">8</th>
       <th>96</th>
       <td>0.833333</td>
-      <td>1.755867</td>
-      <td>1.104029</td>
-      <td>1.404667</td>
-      <td>1.350867</td>
-      <td>1.632667</td>
-      <td>1.537667</td>
-      <td>1.648667</td>
-      <td>2.197867</td>
+      <td>1.719803</td>
+      <td>1.397395</td>
+      <td>1.221770</td>
+      <td>1.328170</td>
+      <td>1.224170</td>
+      <td>1.531170</td>
+      <td>1.343370</td>
+      <td>1.902970</td>
     </tr>
     <tr>
       <th>97</th>
-      <td>0.900000</td>
-      <td>1.537651</td>
-      <td>0.734304</td>
-      <td>1.148351</td>
-      <td>1.255951</td>
-      <td>1.183151</td>
-      <td>1.490151</td>
-      <td>1.271151</td>
-      <td>1.717751</td>
+      <td>0.833333</td>
+      <td>1.890058</td>
+      <td>0.818019</td>
+      <td>1.898058</td>
+      <td>1.500658</td>
+      <td>2.366858</td>
+      <td>1.749858</td>
+      <td>2.370058</td>
+      <td>2.090058</td>
     </tr>
     <tr>
       <th>98</th>
-      <td>1.000000</td>
-      <td>1.584012</td>
-      <td>0.883700</td>
-      <td>NaN</td>
-      <td>1.259112</td>
-      <td>NaN</td>
-      <td>1.465812</td>
-      <td>NaN</td>
-      <td>1.739712</td>
+      <td>0.900000</td>
+      <td>1.584473</td>
+      <td>1.739119</td>
+      <td>1.412207</td>
+      <td>1.349807</td>
+      <td>1.543807</td>
+      <td>1.537807</td>
+      <td>1.702607</td>
+      <td>1.687807</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>0.933333</td>
-      <td>1.644565</td>
-      <td>2.034486</td>
-      <td>2.118399</td>
-      <td>1.406599</td>
-      <td>2.510199</td>
-      <td>1.490699</td>
-      <td>2.901999</td>
-      <td>1.636399</td>
+      <td>0.866667</td>
+      <td>1.708684</td>
+      <td>1.981371</td>
+      <td>1.373784</td>
+      <td>1.313184</td>
+      <td>1.460684</td>
+      <td>1.496684</td>
+      <td>1.604984</td>
+      <td>1.717684</td>
     </tr>
     <tr>
       <th>100</th>
-      <td>0.833333</td>
-      <td>1.775665</td>
-      <td>1.855677</td>
-      <td>1.663632</td>
-      <td>1.312632</td>
-      <td>1.827632</td>
-      <td>1.397632</td>
-      <td>2.264432</td>
-      <td>1.601632</td>
+      <td>1.000000</td>
+      <td>1.909169</td>
+      <td>0.697978</td>
+      <td>NaN</td>
+      <td>1.517769</td>
+      <td>NaN</td>
+      <td>1.905569</td>
+      <td>NaN</td>
+      <td>2.168869</td>
     </tr>
   </tbody>
 </table>
@@ -2326,7 +2233,7 @@ OrderedDict([(&#39;drift_t&#39;,
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -2340,7 +2247,7 @@ OrderedDict([(&#39;drift_t&#39;,
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_DDM_fitting_33_0.png" src="../_images/notebooks_DDM_fitting_33_0.png" />
+<img alt="../_images/notebooks_DDM_fitting_32_0.png" src="../_images/notebooks_DDM_fitting_32_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
@@ -2352,82 +2259,35 @@ OrderedDict([(&#39;drift_t&#39;,
     <span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
     <span class="n">grouping_var</span><span class="o">=</span><span class="s1">&#39;choice_pair&#39;</span><span class="p">,</span>
     <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;shades&#39;</span><span class="p">,</span>
-    <span class="n">quantiles</span><span class="o">=</span><span class="p">[</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">3</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="o">.</span><span class="mi">7</span><span class="p">,</span> <span class="o">.</span><span class="mi">9</span><span class="p">]);</span>
+    <span class="n">quantiles</span><span class="o">=</span><span class="p">[</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">3</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="o">.</span><span class="mi">7</span><span class="p">,</span> <span class="o">.</span><span class="mi">9</span><span class="p">])</span>
 </pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/Users/laurafontanesi/git/rlssm/rlssm/random.py:210: RuntimeWarning: invalid value encountered in multiply
+  acc = np.empty(shape)*np.nan
+/Users/laurafontanesi/git/rlssm/rlssm/random.py:211: RuntimeWarning: invalid value encountered in multiply
+  rt = np.empty(shape)*np.nan
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_DDM_fitting_33_1.png" src="../_images/notebooks_DDM_fitting_33_1.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_DDM_fitting_34_0.png" src="../_images/notebooks_DDM_fitting_34_0.png" />
+<img alt="../_images/notebooks_DDM_fitting_33_2.png" src="../_images/notebooks_DDM_fitting_33_2.png" />
 </div>
-</div>
-<div class="section" id="Get-last-values-for-eventual-further-sampling">
-<h3>Get last values for eventual further sampling<a class="headerlink" href="#Get-last-values-for-eventual-further-sampling" title="Permalink to this headline">¶</a></h3>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">sv</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">last_values</span>
-<span class="n">sv</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>chain</th>
-      <th>draw</th>
-      <th>warmup</th>
-      <th>drift</th>
-      <th>ndt</th>
-      <th>threshold</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>499</th>
-      <td>0</td>
-      <td>499</td>
-      <td>0</td>
-      <td>1.043022</td>
-      <td>0.396829</td>
-      <td>2.003004</td>
-    </tr>
-    <tr>
-      <th>999</th>
-      <td>1</td>
-      <td>499</td>
-      <td>0</td>
-      <td>0.927147</td>
-      <td>0.411506</td>
-      <td>1.863591</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:

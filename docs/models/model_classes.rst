@@ -1,10 +1,10 @@
-Define and fit a model
-======================
+Model classes
+=============
 
 .. currentmodule:: rlssm
 
 These classes can be used to define different available models. 
-There are three main classes, corresponding to the 5 main classes of models that are implemented in `rlssm`: 
+Curretly, 5 classes of models are implemented in `rlssm`: 
 
 1. simple reinforcement learning models: :ref:`RLModel_2A <RLModel_2A>`
 2. diffusion decision models: :ref:`DDModel <DDModel>`
@@ -13,6 +13,8 @@ There are three main classes, corresponding to the 5 main classes of models that
 5. reinforcement learning race models: :ref:`RLRDModel_2A <RLRDModel_2A>`, :ref:`RLLBAModel_2A <RLLBAModel_2A>`, :ref:`RLARDModel_2A <RLARDModel_2A>`, :ref:`RLALBAModel_2A <RLALBAModel_2A>`
 
 All classes have a hierarchical and non-hierarchical version, and come with additional cognitive mechanisms that can be added or excluded.
+
+.. note:: At the moment, all model classes are meant for decisions between 2 alternatives.
 
 Reinforcement learning models (for 2 alternatives)
 --------------------------------------------------

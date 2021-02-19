@@ -1,5 +1,5 @@
-Simulate data from the diffusion decision model
-===============================================
+Simulate data with the DDM
+==========================
 
 .. currentmodule:: rlssm.random
 

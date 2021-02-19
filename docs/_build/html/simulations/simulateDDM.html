@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Simulate data from the diffusion decision model &mdash; rlssm 0.1.dev documentation</title>
+  <title>Simulate data with the DDM &mdash; rlssm 0.1.dev documentation</title>
   
 
   
@@ -36,8 +36,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Import the grouped data" href="../notebooks/DDM_fitting.html" />
-    <link rel="prev" title="Inspect a race model or a RL-race model" href="../models/inspect_SSM_race.html" /> 
+    <link rel="next" title="Simulate data with race models" href="simulaterace.html" />
+    <link rel="prev" title="ModelResults class for race (or RL+race) models" href="../models/modelresult_race.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -83,31 +83,29 @@
             
               <p class="caption"><span class="caption-text">Getting started:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installing rlssm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cite.html">Cite</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../authors.html">Development team &amp; Contacts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
 </ul>
-<p class="caption"><span class="caption-text">How to:</span></p>
+<p class="caption"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/DDM_fitting.html">Fit the DDM on individual data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/DDM_hierarchical_fitting.html">Fit the DDM on hierarchical data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/load_from_saved.html">How to load a ModelResults object</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../models/define_model.html">Define and fit a model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../models/inspect_simpleRL.html">Inspect a RL model fitted only on choices</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../models/inspect_SSM_DDM.html">Inspect a DDM or a RLDDM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../models/inspect_SSM_race.html">Inspect a race model or a RL-race model</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Simulate data from the diffusion decision model</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/model_classes.html">Model classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/modelresult_RL.html">ModelResults class for RL models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/modelresult_DDM.html">ModelResults class for DDMs (or RLDDMs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/modelresult_race.html">ModelResults class for race (or RL+race) models</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Simulate data with the DDM</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#in-pandas">In pandas</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#in-numpy">In numpy</a></li>
 </ul>
 </li>
-</ul>
-<p class="caption"><span class="caption-text">Examples:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../notebooks/DDM_fitting.html">Import the grouped data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../notebooks/DDM_fitting.html#Initialise-the-model">Initialise the model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../notebooks/DDM_fitting.html#get-Rhat">get Rhat</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../notebooks/DDM_fitting.html#get-wAIC">get wAIC</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../notebooks/DDM_fitting.html#Ungrouped">Ungrouped</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../notebooks/DDM_fitting.html#Grouped">Grouped</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulaterace.html">Simulate data with race models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulateRL.html">Simulate data with RL models, RLDDMs, and RL+race models</a></li>
 </ul>
 
             
@@ -153,7 +151,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Simulate data from the diffusion decision model</li>
+      <li>Simulate data with the DDM</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -196,8 +194,8 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="simulate-data-from-the-diffusion-decision-model">
-<h1>Simulate data from the diffusion decision model<a class="headerlink" href="#simulate-data-from-the-diffusion-decision-model" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="simulate-data-with-the-ddm">
+<h1>Simulate data with the DDM<a class="headerlink" href="#simulate-data-with-the-ddm" title="Permalink to this headline">¶</a></h1>
 <p>These functions can be used to simulate data of a single participant or of a group of participants, given a set of parameter values.</p>
 <p>These functions can be thus used for parameter recovery: A model can be fit on the simulated data in order to compare the generating parameters with their estimated posterior distributions. For such purpose, <a class="reference internal" href="#simulate-ddm"><span class="std std-ref">simulate_ddm</span></a> (for a single participant) and <a class="reference internal" href="#simulate-hier-ddm"><span class="std std-ref">simulate_hier_ddm</span></a> (for a group of participants) should be used.</p>
 <p>For faster calculations, parameters can be given as numpy.ndarrays to <a class="reference internal" href="#random-ddm"><span class="std std-ref">random_ddm</span></a> and <a class="reference internal" href="#random-ddm-vector"><span class="std std-ref">random_ddm_vector</span></a>.</p>
@@ -556,10 +554,10 @@ Every element corresponds to the set of parameters given as input with the same 
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../notebooks/DDM_fitting.html" class="btn btn-neutral float-right" title="Import the grouped data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="simulaterace.html" class="btn btn-neutral float-right" title="Simulate data with race models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../models/inspect_SSM_race.html" class="btn btn-neutral float-left" title="Inspect a race model or a RL-race model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../models/modelresult_race.html" class="btn btn-neutral float-left" title="ModelResults class for race (or RL+race) models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
