@@ -213,15 +213,14 @@ class LBAModel_2A(Model):
         # start sampling...
         fitted_model = self.compiled_model.sampling(data_dict, **kwargs)
 
-        fitted_model = raceFittedModel_2A(fitted_model,
-                                                          data,
-                                                          self.hierarchical_levels,
-                                                          self.model_label,
-                                                          self.family,
-                                                          self.n_parameters_individual,
-                                                          self.n_parameters_trial,
-                                                          print_diagnostics,
-                                                          False)
+        fitted_model = raceFittedModel_2A(stan_model=fitted_model,
+                                          data=data,
+                                          hierarchical_levels=self.hierarchical_levels,
+                                          model_label=self.model_label,
+                                          family=self.family,
+                                          n_parameters_individual=self.n_parameters_individual,
+                                          n_parameters_trial=self.n_parameters_trial,
+                                          print_diagnostics=print_diagnostics)
 
         res = fitted_model.extract_results(include_rhat,
                                            include_waic,
@@ -566,15 +565,14 @@ class RLLBAModel_2A(Model):
 
         fitted_model = self.compiled_model.sampling(data_dict, **kwargs)
 
-        fitted_model = raceFittedModel_2A(fitted_model,
-                                                      data,
-                                                      self.hierarchical_levels,
-                                                      self.model_label,
-                                                      self.family,
-                                                      self.n_parameters_individual,
-                                                      self.n_parameters_trial,
-                                                      print_diagnostics,
-                                                      False)
+        fitted_model = raceFittedModel_2A(stan_model=fitted_model,
+                                          data=data,
+                                          hierarchical_levels=self.hierarchical_levels,
+                                          model_label=self.model_label,
+                                          family=self.family,
+                                          n_parameters_individual=self.n_parameters_individual,
+                                          n_parameters_trial=self.n_parameters_trial,
+                                          print_diagnostics=print_diagnostics)
 
         res = fitted_model.extract_results(include_rhat,
                                            include_waic,

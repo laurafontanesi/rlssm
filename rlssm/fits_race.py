@@ -15,14 +15,14 @@ from .fits import FittedModel, ModelResults
 
 class raceFittedModel_2A(FittedModel):
     def __init__(self,
-                      stan_model,
-                      data,
-                      hierarchical_levels,
-                      model_label,
-                      family,
-                      n_parameters_individual,
-                      n_parameters_trial,
-                      print_diagnostics):
+                  stan_model,
+                  data,
+                  hierarchical_levels,
+                  model_label,
+                  family,
+                  n_parameters_individual,
+                  n_parameters_trial,
+                  print_diagnostics):
         self.family = family
         super().__init__(stan_model,
                              data,
