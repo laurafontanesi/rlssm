@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Posteriors &mdash; rlssm 0.1.dev documentation</title>
+  <title>Fit the LBA on individual data &mdash; rlssm 0.1.dev documentation</title>
   
 
   
@@ -35,7 +35,9 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Model classes" href="../models/model_classes.html" />
+    <link rel="prev" title="Fit the RLDDM on individual data" href="RLDDM_fitting.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -87,14 +89,35 @@
 </ul>
 <p class="caption"><span class="caption-text">How to:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="load_from_saved.html">How to load a ModelResults object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="initialize_model.html">How to initialize a model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fit_model.html">How to fit a model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inspect_model.html">How to inspect model fit results</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="DDM_fitting.html">Fit the DDM on individual data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DDM_hierarchical_fitting.html">Fit the DDM on hierarchical data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DDM_starting-point-bias_fitting.html">Parameter recovery of the DDM with starting point bias</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DDM_starting-point-bias_hierarchical_fitting.html">Parameter recovery of the hierarchical DDM with starting point bias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RL_2A_fitting.html">Fit a RL model on individual data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RL_2A_hierarchical_fitting.html">Fit a RL model on hierarchical data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RLDDM_fitting.html">Fit the RLDDM on individual data</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Fit the LBA on individual data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Import-individual-data">Import individual data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Initialize-the-model">Initialize the model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Fit">Fit</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Get-rhat">Get rhat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Get-WAIC">Get WAIC</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Posteriors">Posteriors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Posterior-predictives">Posterior predictives</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Ungrouped">Ungrouped</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Grouped">Grouped</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">API Reference:</span></p>
 <ul>
@@ -150,7 +173,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Posteriors</li>
+      <li>Fit the LBA on individual data</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -439,6 +462,8 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
+<div class="section" id="Fit-the-LBA-on-individual-data">
+<h1>Fit the LBA on individual data<a class="headerlink" href="#Fit-the-LBA-on-individual-data" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -450,18 +475,18 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
+<div class="section" id="Import-individual-data">
+<h2>Import individual data<a class="headerlink" href="#Import-individual-data" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">par_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">))</span>
+<span></span><span class="n">par_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">))</span>
 <span class="n">data_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">par_path</span><span class="p">,</span> <span class="s1">&#39;data/data_experiment.csv&#39;</span><span class="p">)</span>
-
 <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">participant</span> <span class="o">==</span> <span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="n">data</span><span class="p">[</span><span class="s1">&#39;block_label&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">participant</span> <span class="o">==</span> <span class="mi">20</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># Only select 1 participant</span>
 
 <span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -505,79 +530,82 @@ div.rendered_html tbody tr:hover {
   <tbody>
     <tr>
       <th>0</th>
-      <td>10</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>61.0</td>
-      <td>52.0</td>
+      <td>20</td>
+      <td>1</td>
+      <td>1</td>
+      <td>46</td>
+      <td>46</td>
       <td>4</td>
-      <td>3</td>
-      <td>1.0</td>
-      <td>1.285418</td>
-      <td>0.0</td>
+      <td>2</td>
+      <td>1</td>
+      <td>2.574407</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>10</td>
-      <td>1.0</td>
-      <td>2.0</td>
-      <td>54.0</td>
-      <td>37.0</td>
+      <td>20</td>
+      <td>1</td>
+      <td>2</td>
+      <td>60</td>
+      <td>33</td>
       <td>4</td>
       <td>2</td>
-      <td>1.5</td>
-      <td>1.577622</td>
-      <td>0.0</td>
+      <td>2</td>
+      <td>1.952774</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>10</td>
-      <td>1.0</td>
-      <td>3.0</td>
-      <td>51.0</td>
-      <td>51.0</td>
-      <td>4</td>
+      <td>20</td>
+      <td>1</td>
       <td>3</td>
-      <td>2.5</td>
-      <td>1.564731</td>
-      <td>0.0</td>
+      <td>32</td>
+      <td>44</td>
+      <td>2</td>
+      <td>1</td>
+      <td>2</td>
+      <td>2.074999</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>10</td>
-      <td>1.0</td>
-      <td>4.0</td>
-      <td>50.0</td>
-      <td>35.0</td>
-      <td>3</td>
+      <td>20</td>
       <td>1</td>
-      <td>2.0</td>
-      <td>1.217245</td>
-      <td>1.0</td>
+      <td>4</td>
+      <td>56</td>
+      <td>40</td>
+      <td>4</td>
+      <td>2</td>
+      <td>3</td>
+      <td>2.320916</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>10</td>
-      <td>1.0</td>
-      <td>5.0</td>
-      <td>59.0</td>
-      <td>50.0</td>
-      <td>4</td>
+      <td>20</td>
+      <td>1</td>
+      <td>5</td>
+      <td>34</td>
+      <td>32</td>
       <td>2</td>
-      <td>3.0</td>
-      <td>1.929781</td>
-      <td>0.0</td>
+      <td>1</td>
+      <td>3</td>
+      <td>1.471107</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
+</div>
+<div class="section" id="Initialize-the-model">
+<h2>Initialize the model<a class="headerlink" href="#Initialize-the-model" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">LBAModel_2A</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span></span><span class="n">model</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">LBAModel_2A</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -589,13 +617,16 @@ div.rendered_html tbody tr:hover {
 Using cached StanModel
 </pre></div></div>
 </div>
+</div>
+<div class="section" id="Fit">
+<h2>Fit<a class="headerlink" href="#Fit" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># sampling parameters</span>
-<span class="n">n_iter</span> <span class="o">=</span> <span class="mi">700</span>
+<span class="n">n_iter</span> <span class="o">=</span> <span class="mi">1000</span>
 <span class="n">n_chains</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="n">n_thin</span> <span class="o">=</span> <span class="mi">5</span>
 </pre></div>
@@ -621,8 +652,6 @@ Using cached StanModel
 <div class="highlight"><pre>
 WARNING:pystan:Maximum (flat) parameter count (1000) exceeded: skipping diagnostic tests for n_eff and Rhat.
 To run all diagnostics call pystan.check_hmc_diagnostics(fit)
-WARNING:pystan:2 of 140 iterations ended with a divergence (1.43 %).
-WARNING:pystan:Try running with adapt_delta larger than 0.8 to remove the divergences.
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -632,95 +661,24 @@ WARNING:pystan:Try running with adapt_delta larger than 0.8 to remove the diverg
 <div class="highlight"><pre>
 Checks MCMC diagnostics:
 n_eff / iter looks reasonable for all parameters
-2.0 of 140 iterations ended with a divergence (1.4285714285714286%)
-  Try running with larger adapt_delta to remove the divergences
-0 of 140 iterations saturated the maximum tree depth of 10 (0.0%)
+0.0 of 200 iterations ended with a divergence (0.0%)
+0 of 200 iterations saturated the maximum tree depth of 10 (0.0%)
 E-BFMI indicated no pathological behavior
 </pre></div></div>
 </div>
+<div class="section" id="Get-rhat">
+<h3>Get rhat<a class="headerlink" href="#Get-rhat" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">rhat</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+<span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">rhat</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>rhat</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>count</th>
-      <td>5.000000</td>
-    </tr>
-    <tr>
-      <th>mean</th>
-      <td>1.016356</td>
-    </tr>
-    <tr>
-      <th>std</th>
-      <td>0.008087</td>
-    </tr>
-    <tr>
-      <th>min</th>
-      <td>1.007710</td>
-    </tr>
-    <tr>
-      <th>25%</th>
-      <td>1.009132</td>
-    </tr>
-    <tr>
-      <th>50%</th>
-      <td>1.016074</td>
-    </tr>
-    <tr>
-      <th>75%</th>
-      <td>1.022996</td>
-    </tr>
-    <tr>
-      <th>max</th>
-      <td>1.025870</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">rhat</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -749,35 +707,38 @@ E-BFMI indicated no pathological behavior
   <tbody>
     <tr>
       <th>0</th>
-      <td>1.025870</td>
+      <td>0.999308</td>
       <td>k</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>1.009132</td>
+      <td>0.993787</td>
       <td>A</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>1.016074</td>
+      <td>0.994871</td>
       <td>tau</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>1.022996</td>
+      <td>0.997899</td>
       <td>drift_cor</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>1.007710</td>
+      <td>0.995881</td>
       <td>drift_inc</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
+</div>
+<div class="section" id="Get-WAIC">
+<h3>Get WAIC<a class="headerlink" href="#Get-WAIC" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -786,30 +747,32 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;lppd&#39;: -237.72566174968202,
- &#39;p_waic&#39;: 3.122236004709617,
- &#39;waic&#39;: 481.69579550878325,
- &#39;waic_se&#39;: 28.77144099171388}
+{&#39;lppd&#39;: -196.19184542520793,
+ &#39;p_waic&#39;: 3.263574573818908,
+ &#39;waic&#39;: 398.9108399980537,
+ &#39;waic_se&#39;: 35.03540575995628}
 </pre></div></div>
 </div>
+</div>
+</div>
 <div class="section" id="Posteriors">
-<h1>Posteriors<a class="headerlink" href="#Posteriors" title="Permalink to this headline">¶</a></h1>
+<h2>Posteriors<a class="headerlink" href="#Posteriors" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">samples</span>
+<span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -842,206 +805,101 @@ E-BFMI indicated no pathological behavior
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>0</td>
-      <td>62</td>
-      <td>3.669709</td>
-      <td>0.850096</td>
-      <td>0.096483</td>
-      <td>2.861367</td>
-      <td>1.884172</td>
+      <th>count</th>
+      <td>200.000000</td>
+      <td>200.000000</td>
+      <td>200.000000</td>
+      <td>200.000000</td>
+      <td>200.000000</td>
+      <td>200.000000</td>
+      <td>200.000000</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>0</td>
-      <td>32</td>
-      <td>4.045519</td>
-      <td>0.944517</td>
-      <td>0.048823</td>
-      <td>2.989458</td>
-      <td>2.166580</td>
+      <th>mean</th>
+      <td>0.500000</td>
+      <td>49.500000</td>
+      <td>2.899983</td>
+      <td>1.325626</td>
+      <td>0.443462</td>
+      <td>3.053728</td>
+      <td>1.460445</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>0</td>
-      <td>7</td>
-      <td>3.340165</td>
-      <td>0.938221</td>
-      <td>0.171876</td>
-      <td>2.866527</td>
-      <td>2.127082</td>
+      <th>std</th>
+      <td>0.501255</td>
+      <td>28.938507</td>
+      <td>0.567316</td>
+      <td>0.543502</td>
+      <td>0.090944</td>
+      <td>0.242883</td>
+      <td>0.244762</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>0</td>
-      <td>3</td>
-      <td>3.835383</td>
-      <td>0.981928</td>
-      <td>0.102350</td>
-      <td>3.099966</td>
-      <td>2.235176</td>
+      <th>min</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1.595078</td>
+      <td>0.196071</td>
+      <td>0.214511</td>
+      <td>2.433204</td>
+      <td>0.878541</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>0</td>
-      <td>36</td>
-      <td>3.586005</td>
-      <td>0.924545</td>
-      <td>0.155582</td>
-      <td>3.036587</td>
-      <td>2.115467</td>
+      <th>25%</th>
+      <td>0.000000</td>
+      <td>24.750000</td>
+      <td>2.510042</td>
+      <td>0.890710</td>
+      <td>0.383582</td>
+      <td>2.873334</td>
+      <td>1.291813</td>
     </tr>
     <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
+      <th>50%</th>
+      <td>0.500000</td>
+      <td>49.500000</td>
+      <td>2.874702</td>
+      <td>1.369866</td>
+      <td>0.443345</td>
+      <td>3.056480</td>
+      <td>1.463942</td>
     </tr>
     <tr>
-      <th>135</th>
-      <td>1</td>
-      <td>35</td>
-      <td>3.275540</td>
-      <td>0.517982</td>
-      <td>0.180501</td>
-      <td>2.754708</td>
-      <td>1.812676</td>
+      <th>75%</th>
+      <td>1.000000</td>
+      <td>74.250000</td>
+      <td>3.277801</td>
+      <td>1.678011</td>
+      <td>0.495987</td>
+      <td>3.215857</td>
+      <td>1.628133</td>
     </tr>
     <tr>
-      <th>136</th>
-      <td>1</td>
-      <td>49</td>
-      <td>4.462554</td>
-      <td>0.960999</td>
-      <td>0.019331</td>
-      <td>3.241174</td>
-      <td>2.556430</td>
-    </tr>
-    <tr>
-      <th>137</th>
-      <td>1</td>
-      <td>61</td>
-      <td>2.883618</td>
-      <td>1.078033</td>
-      <td>0.210562</td>
-      <td>2.688096</td>
-      <td>1.800621</td>
-    </tr>
-    <tr>
-      <th>138</th>
-      <td>1</td>
-      <td>11</td>
-      <td>4.290410</td>
-      <td>1.087636</td>
-      <td>0.014903</td>
-      <td>3.176732</td>
-      <td>2.458804</td>
-    </tr>
-    <tr>
-      <th>139</th>
-      <td>1</td>
-      <td>67</td>
-      <td>2.773758</td>
-      <td>0.980757</td>
-      <td>0.240683</td>
-      <td>2.566372</td>
-      <td>1.770744</td>
+      <th>max</th>
+      <td>1.000000</td>
+      <td>99.000000</td>
+      <td>4.419686</td>
+      <td>2.696619</td>
+      <td>0.676422</td>
+      <td>3.684378</td>
+      <td>2.127303</td>
     </tr>
   </tbody>
 </table>
-<p>140 rows × 7 columns</p>
 </div></div>
 </div>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">trial_samples</span>
+<span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">context</span> <span class="o">=</span> <span class="s2">&quot;talk&quot;</span><span class="p">,</span>
+        <span class="n">style</span> <span class="o">=</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span>
+        <span class="n">palette</span> <span class="o">=</span> <span class="s2">&quot;husl&quot;</span><span class="p">,</span>
+        <span class="n">rc</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">:(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">8</span><span class="p">)})</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-OrderedDict([(&#39;k_t&#39;,
-              array([[3.66970874, 3.66970874, 3.66970874, ..., 3.66970874, 3.66970874,
-                      3.66970874],
-                     [4.04551877, 4.04551877, 4.04551877, ..., 4.04551877, 4.04551877,
-                      4.04551877],
-                     [3.34016478, 3.34016478, 3.34016478, ..., 3.34016478, 3.34016478,
-                      3.34016478],
-                     ...,
-                     [2.88361814, 2.88361814, 2.88361814, ..., 2.88361814, 2.88361814,
-                      2.88361814],
-                     [4.29040952, 4.29040952, 4.29040952, ..., 4.29040952, 4.29040952,
-                      4.29040952],
-                     [2.77375808, 2.77375808, 2.77375808, ..., 2.77375808, 2.77375808,
-                      2.77375808]])),
-             (&#39;A_t&#39;,
-              array([[0.85009641, 0.85009641, 0.85009641, ..., 0.85009641, 0.85009641,
-                      0.85009641],
-                     [0.94451657, 0.94451657, 0.94451657, ..., 0.94451657, 0.94451657,
-                      0.94451657],
-                     [0.93822107, 0.93822107, 0.93822107, ..., 0.93822107, 0.93822107,
-                      0.93822107],
-                     ...,
-                     [1.07803294, 1.07803294, 1.07803294, ..., 1.07803294, 1.07803294,
-                      1.07803294],
-                     [1.0876356 , 1.0876356 , 1.0876356 , ..., 1.0876356 , 1.0876356 ,
-                      1.0876356 ],
-                     [0.98075721, 0.98075721, 0.98075721, ..., 0.98075721, 0.98075721,
-                      0.98075721]])),
-             (&#39;tau_t&#39;,
-              array([[0.09648285, 0.09648285, 0.09648285, ..., 0.09648285, 0.09648285,
-                      0.09648285],
-                     [0.0488231 , 0.0488231 , 0.0488231 , ..., 0.0488231 , 0.0488231 ,
-                      0.0488231 ],
-                     [0.17187563, 0.17187563, 0.17187563, ..., 0.17187563, 0.17187563,
-                      0.17187563],
-                     ...,
-                     [0.2105619 , 0.2105619 , 0.2105619 , ..., 0.2105619 , 0.2105619 ,
-                      0.2105619 ],
-                     [0.01490342, 0.01490342, 0.01490342, ..., 0.01490342, 0.01490342,
-                      0.01490342],
-                     [0.24068309, 0.24068309, 0.24068309, ..., 0.24068309, 0.24068309,
-                      0.24068309]])),
-             (&#39;drift_cor_t&#39;,
-              array([[2.8613671 , 2.8613671 , 2.8613671 , ..., 2.8613671 , 2.8613671 ,
-                      2.8613671 ],
-                     [2.98945806, 2.98945806, 2.98945806, ..., 2.98945806, 2.98945806,
-                      2.98945806],
-                     [2.86652694, 2.86652694, 2.86652694, ..., 2.86652694, 2.86652694,
-                      2.86652694],
-                     ...,
-                     [2.68809619, 2.68809619, 2.68809619, ..., 2.68809619, 2.68809619,
-                      2.68809619],
-                     [3.17673184, 3.17673184, 3.17673184, ..., 3.17673184, 3.17673184,
-                      3.17673184],
-                     [2.56637204, 2.56637204, 2.56637204, ..., 2.56637204, 2.56637204,
-                      2.56637204]])),
-             (&#39;drift_inc_t&#39;,
-              array([[1.88417197, 1.88417197, 1.88417197, ..., 1.88417197, 1.88417197,
-                      1.88417197],
-                     [2.16658044, 2.16658044, 2.16658044, ..., 2.16658044, 2.16658044,
-                      2.16658044],
-                     [2.12708167, 2.12708167, 2.12708167, ..., 2.12708167, 2.12708167,
-                      2.12708167],
-                     ...,
-                     [1.8006208 , 1.8006208 , 1.8006208 , ..., 1.8006208 , 1.8006208 ,
-                      1.8006208 ],
-                     [2.45880368, 2.45880368, 2.45880368, ..., 2.45880368, 2.45880368,
-                      2.45880368],
-                     [1.77074447, 1.77074447, 1.77074447, ..., 1.77074447, 1.77074447,
-                      1.77074447]]))])
-</pre></div></div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
@@ -1056,74 +914,376 @@ OrderedDict([(&#39;k_t&#39;,
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_LBA_2A_fitting_11_0.png" src="../_images/notebooks_LBA_2A_fitting_11_0.png" />
+<img alt="../_images/notebooks_LBA_2A_fitting_16_0.png" src="../_images/notebooks_LBA_2A_fitting_16_0.png" />
 </div>
 </div>
-<div class="nbinput nblast docutils container">
+</div>
+<div class="section" id="Posterior-predictives">
+<h2>Posterior predictives<a class="headerlink" href="#Posterior-predictives" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Ungrouped">
+<h3>Ungrouped<a class="headerlink" href="#Ungrouped" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pp_rt</span><span class="p">,</span> <span class="n">pp_acc</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">get_posterior_predictives</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pp_rt</span>
+<span></span><span class="n">pp</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">get_posterior_predictives_df</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">pp</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th>variable</th>
+      <th colspan="10" halign="left">rt</th>
+      <th>...</th>
+      <th colspan="10" halign="left">accuracy</th>
+    </tr>
+    <tr>
+      <th>trial</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>10</th>
+      <th>...</th>
+      <th>231</th>
+      <th>232</th>
+      <th>233</th>
+      <th>234</th>
+      <th>235</th>
+      <th>236</th>
+      <th>237</th>
+      <th>238</th>
+      <th>239</th>
+      <th>240</th>
+    </tr>
+    <tr>
+      <th>sample</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>1.516327</td>
+      <td>2.351153</td>
+      <td>1.374823</td>
+      <td>1.259839</td>
+      <td>1.737453</td>
+      <td>1.795027</td>
+      <td>1.394409</td>
+      <td>1.952504</td>
+      <td>2.448559</td>
+      <td>1.368657</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2.001821</td>
+      <td>1.769339</td>
+      <td>2.727762</td>
+      <td>1.154691</td>
+      <td>1.739145</td>
+      <td>2.136975</td>
+      <td>1.387038</td>
+      <td>2.166988</td>
+      <td>1.361053</td>
+      <td>1.296931</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.469450</td>
+      <td>1.321076</td>
+      <td>1.330849</td>
+      <td>1.506188</td>
+      <td>2.410157</td>
+      <td>1.570472</td>
+      <td>1.103934</td>
+      <td>1.530620</td>
+      <td>1.486711</td>
+      <td>2.534645</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.936574</td>
+      <td>2.310510</td>
+      <td>1.191331</td>
+      <td>1.513816</td>
+      <td>1.419566</td>
+      <td>1.744239</td>
+      <td>2.669610</td>
+      <td>2.074534</td>
+      <td>2.434702</td>
+      <td>1.807426</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2.282956</td>
+      <td>1.277201</td>
+      <td>1.645373</td>
+      <td>1.201756</td>
+      <td>1.491680</td>
+      <td>2.866956</td>
+      <td>1.437065</td>
+      <td>1.960114</td>
+      <td>1.391610</td>
+      <td>1.184987</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>96</th>
+      <td>1.483665</td>
+      <td>1.542446</td>
+      <td>1.338777</td>
+      <td>1.576400</td>
+      <td>1.746624</td>
+      <td>1.512970</td>
+      <td>1.466700</td>
+      <td>1.301714</td>
+      <td>1.977307</td>
+      <td>1.306723</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>97</th>
+      <td>2.272836</td>
+      <td>1.255672</td>
+      <td>1.517556</td>
+      <td>1.219169</td>
+      <td>2.070153</td>
+      <td>4.923164</td>
+      <td>1.603480</td>
+      <td>1.627364</td>
+      <td>1.343404</td>
+      <td>2.043014</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>98</th>
+      <td>1.742976</td>
+      <td>1.740401</td>
+      <td>1.649284</td>
+      <td>1.079161</td>
+      <td>2.836790</td>
+      <td>1.464754</td>
+      <td>3.592029</td>
+      <td>1.361144</td>
+      <td>3.040886</td>
+      <td>1.396092</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>99</th>
+      <td>1.759882</td>
+      <td>1.424342</td>
+      <td>1.860511</td>
+      <td>1.557248</td>
+      <td>1.560753</td>
+      <td>1.266516</td>
+      <td>1.235101</td>
+      <td>1.435248</td>
+      <td>1.544745</td>
+      <td>1.537176</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>100</th>
+      <td>2.765884</td>
+      <td>2.133757</td>
+      <td>1.742483</td>
+      <td>1.367743</td>
+      <td>1.752768</td>
+      <td>1.637506</td>
+      <td>1.523769</td>
+      <td>1.186625</td>
+      <td>1.484621</td>
+      <td>1.719729</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>100 rows × 480 columns</p>
+</div></div>
+</div>
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-array([[1.67227333, 1.19625618, 1.35499495, ..., 1.61226654, 1.28342245,
-        2.87107757],
-       [2.24189042, 1.14633505, 1.77567165, ..., 2.06433049, 1.28386355,
-        1.24660241],
-       [1.46399255, 2.30636745, 1.27645439, ..., 1.59058809, 1.43104255,
-        1.7892862 ],
-       ...,
-       [1.17668837, 1.27226256, 1.04485603, ..., 1.40904885, 2.16827302,
-        1.63109905],
-       [1.12300287, 1.49991923, 1.54671045, ..., 1.3211988 , 2.04345841,
-        1.0473686 ],
-       [1.50107356, 3.18078481, 2.57910438, ..., 1.5625403 , 1.51545854,
-        1.28611096]])
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pp_acc</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-array([[1., 0., 1., ..., 1., 0., 0.],
-       [1., 1., 0., ..., 1., 1., 1.],
-       [1., 1., 1., ..., 1., 1., 1.],
-       ...,
-       [1., 1., 1., ..., 1., 1., 1.],
-       [1., 1., 1., ..., 1., 1., 1.],
-       [1., 1., 0., ..., 0., 1., 1.]])
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1133,7 +1293,7 @@ array([[1., 0., 1., ..., 1., 0., 0.],
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1189,83 +1349,83 @@ array([[1., 0., 1., ..., 1., 0., 0.],
   <tbody>
     <tr>
       <th>1</th>
-      <td>0.799163</td>
-      <td>1.614504</td>
-      <td>13.487908</td>
-      <td>1.157773</td>
-      <td>1.423071</td>
-      <td>1.579926</td>
-      <td>1.788719</td>
-      <td>2.137493</td>
-      <td>1.050592</td>
-      <td>1.238341</td>
-      <td>1.430955</td>
-      <td>1.595490</td>
-      <td>2.004905</td>
+      <td>0.854167</td>
+      <td>1.696167</td>
+      <td>1.988204</td>
+      <td>1.499848</td>
+      <td>1.644013</td>
+      <td>1.900039</td>
+      <td>2.187541</td>
+      <td>2.903518</td>
+      <td>1.188796</td>
+      <td>1.376445</td>
+      <td>1.552943</td>
+      <td>1.765277</td>
+      <td>2.151452</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.698745</td>
-      <td>1.577363</td>
-      <td>2.343839</td>
-      <td>1.168040</td>
-      <td>1.407806</td>
-      <td>1.604730</td>
-      <td>1.865734</td>
-      <td>2.347868</td>
-      <td>1.033369</td>
-      <td>1.204606</td>
-      <td>1.404072</td>
-      <td>1.672573</td>
-      <td>2.046526</td>
+      <td>0.866667</td>
+      <td>1.726863</td>
+      <td>8.552910</td>
+      <td>1.518115</td>
+      <td>1.640610</td>
+      <td>1.876076</td>
+      <td>2.004737</td>
+      <td>2.317148</td>
+      <td>1.244394</td>
+      <td>1.380747</td>
+      <td>1.560290</td>
+      <td>1.759367</td>
+      <td>2.126895</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.686192</td>
-      <td>1.457550</td>
-      <td>1.703131</td>
-      <td>1.173095</td>
-      <td>1.290601</td>
-      <td>1.454276</td>
-      <td>1.637265</td>
-      <td>1.932010</td>
-      <td>1.011161</td>
-      <td>1.173164</td>
-      <td>1.331002</td>
-      <td>1.539179</td>
-      <td>1.962778</td>
+      <td>0.883333</td>
+      <td>1.750167</td>
+      <td>1.084382</td>
+      <td>1.531423</td>
+      <td>1.752821</td>
+      <td>1.866646</td>
+      <td>2.367882</td>
+      <td>2.740933</td>
+      <td>1.231212</td>
+      <td>1.453110</td>
+      <td>1.633113</td>
+      <td>1.847774</td>
+      <td>2.293020</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.761506</td>
-      <td>1.518276</td>
-      <td>2.902984</td>
-      <td>1.108983</td>
-      <td>1.333951</td>
-      <td>1.482438</td>
-      <td>1.695597</td>
-      <td>2.171418</td>
-      <td>1.016300</td>
-      <td>1.239588</td>
-      <td>1.375935</td>
-      <td>1.594626</td>
-      <td>1.984548</td>
+      <td>0.891667</td>
+      <td>1.650683</td>
+      <td>0.907857</td>
+      <td>1.484965</td>
+      <td>1.617946</td>
+      <td>1.823915</td>
+      <td>1.973096</td>
+      <td>2.571463</td>
+      <td>1.210694</td>
+      <td>1.400524</td>
+      <td>1.533510</td>
+      <td>1.752159</td>
+      <td>2.160593</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.765690</td>
-      <td>1.482258</td>
-      <td>6.343259</td>
-      <td>1.166214</td>
-      <td>1.325327</td>
-      <td>1.469179</td>
-      <td>1.598495</td>
-      <td>2.083771</td>
-      <td>1.020502</td>
-      <td>1.223105</td>
-      <td>1.383049</td>
-      <td>1.554726</td>
-      <td>1.824439</td>
+      <td>0.845833</td>
+      <td>1.655703</td>
+      <td>2.292643</td>
+      <td>1.408410</td>
+      <td>1.570832</td>
+      <td>1.827004</td>
+      <td>1.965207</td>
+      <td>2.482023</td>
+      <td>1.236970</td>
+      <td>1.393996</td>
+      <td>1.503147</td>
+      <td>1.708311</td>
+      <td>2.102912</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1285,83 +1445,83 @@ array([[1., 0., 1., ..., 1., 0., 0.],
     </tr>
     <tr>
       <th>96</th>
-      <td>0.815900</td>
-      <td>1.434669</td>
-      <td>1.525270</td>
-      <td>1.088204</td>
-      <td>1.269907</td>
-      <td>1.417493</td>
-      <td>1.618231</td>
-      <td>1.990304</td>
-      <td>1.044163</td>
-      <td>1.223703</td>
-      <td>1.358508</td>
-      <td>1.522673</td>
-      <td>1.831072</td>
+      <td>0.812500</td>
+      <td>1.716487</td>
+      <td>3.384318</td>
+      <td>1.328627</td>
+      <td>1.505986</td>
+      <td>1.778971</td>
+      <td>1.993181</td>
+      <td>2.972509</td>
+      <td>1.173894</td>
+      <td>1.358528</td>
+      <td>1.489935</td>
+      <td>1.718626</td>
+      <td>2.228806</td>
     </tr>
     <tr>
       <th>97</th>
-      <td>0.711297</td>
-      <td>1.505379</td>
-      <td>1.400357</td>
-      <td>1.165943</td>
-      <td>1.382046</td>
-      <td>1.510394</td>
-      <td>1.732830</td>
-      <td>2.244687</td>
-      <td>1.040893</td>
-      <td>1.188039</td>
-      <td>1.322435</td>
-      <td>1.609117</td>
-      <td>2.043672</td>
+      <td>0.912500</td>
+      <td>1.674961</td>
+      <td>1.593930</td>
+      <td>1.476505</td>
+      <td>1.544206</td>
+      <td>1.863672</td>
+      <td>2.155558</td>
+      <td>2.453028</td>
+      <td>1.202290</td>
+      <td>1.386615</td>
+      <td>1.547794</td>
+      <td>1.761600</td>
+      <td>2.187730</td>
     </tr>
     <tr>
       <th>98</th>
-      <td>0.799163</td>
-      <td>1.443413</td>
-      <td>1.146682</td>
-      <td>1.086934</td>
-      <td>1.303866</td>
-      <td>1.514028</td>
-      <td>1.671234</td>
-      <td>2.114590</td>
-      <td>0.972940</td>
-      <td>1.184710</td>
-      <td>1.325524</td>
-      <td>1.520235</td>
-      <td>1.950058</td>
+      <td>0.879167</td>
+      <td>1.638210</td>
+      <td>1.604118</td>
+      <td>1.433736</td>
+      <td>1.666634</td>
+      <td>1.831126</td>
+      <td>1.902409</td>
+      <td>2.427948</td>
+      <td>1.212284</td>
+      <td>1.378741</td>
+      <td>1.553583</td>
+      <td>1.727408</td>
+      <td>2.038323</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>0.811715</td>
-      <td>1.421765</td>
-      <td>1.901745</td>
-      <td>1.169847</td>
-      <td>1.344220</td>
-      <td>1.498226</td>
-      <td>1.695812</td>
-      <td>1.974793</td>
-      <td>0.996752</td>
-      <td>1.155994</td>
-      <td>1.307926</td>
-      <td>1.486360</td>
-      <td>1.962106</td>
+      <td>0.895833</td>
+      <td>1.638988</td>
+      <td>1.136405</td>
+      <td>1.423751</td>
+      <td>1.533977</td>
+      <td>1.610694</td>
+      <td>1.965821</td>
+      <td>2.138073</td>
+      <td>1.216726</td>
+      <td>1.386022</td>
+      <td>1.530623</td>
+      <td>1.733852</td>
+      <td>2.198923</td>
     </tr>
     <tr>
       <th>100</th>
-      <td>0.757322</td>
-      <td>1.571454</td>
-      <td>3.782224</td>
-      <td>1.274544</td>
-      <td>1.445424</td>
-      <td>1.642612</td>
-      <td>1.895757</td>
-      <td>2.418593</td>
-      <td>0.992500</td>
-      <td>1.235976</td>
-      <td>1.406830</td>
-      <td>1.652972</td>
-      <td>2.039081</td>
+      <td>0.829167</td>
+      <td>1.730594</td>
+      <td>1.457498</td>
+      <td>1.497373</td>
+      <td>1.610076</td>
+      <td>1.754467</td>
+      <td>1.934712</td>
+      <td>2.452248</td>
+      <td>1.277899</td>
+      <td>1.468114</td>
+      <td>1.622925</td>
+      <td>1.822957</td>
+      <td>2.307559</td>
     </tr>
   </tbody>
 </table>
@@ -1369,7 +1529,7 @@ array([[1., 0., 1., ..., 1., 0., 0.],
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1381,11 +1541,11 @@ array([[1., 0., 1., ..., 1., 0., 0.],
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_LBA_2A_fitting_16_0.png" src="../_images/notebooks_LBA_2A_fitting_16_0.png" />
+<img alt="../_images/notebooks_LBA_2A_fitting_21_0.png" src="../_images/notebooks_LBA_2A_fitting_21_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1397,11 +1557,14 @@ array([[1., 0., 1., ..., 1., 0., 0.],
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_LBA_2A_fitting_17_0.png" src="../_images/notebooks_LBA_2A_fitting_17_0.png" />
+<img alt="../_images/notebooks_LBA_2A_fitting_22_0.png" src="../_images/notebooks_LBA_2A_fitting_22_0.png" />
 </div>
 </div>
+</div>
+<div class="section" id="Grouped">
+<h3>Grouped<a class="headerlink" href="#Grouped" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1410,11 +1573,12 @@ array([[1., 0., 1., ..., 1., 0., 0.],
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;choice_pair&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;AB&#39;</span>
+<span></span><span class="c1"># Define new grouping variables, in this case, for the different choice pairs, but any grouping var can do</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;choice_pair&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;AB&#39;</span>
 <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">data</span><span class="o">.</span><span class="n">cor_option</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">inc_option</span> <span class="o">==</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;choice_pair&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;AC&#39;</span>
 <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">data</span><span class="o">.</span><span class="n">cor_option</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">inc_option</span> <span class="o">==</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;choice_pair&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;BD&#39;</span>
 <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">data</span><span class="o">.</span><span class="n">cor_option</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">inc_option</span> <span class="o">==</span> <span class="mi">3</span><span class="p">),</span> <span class="s1">&#39;choice_pair&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;CD&#39;</span>
@@ -1424,145 +1588,7 @@ array([[1., 0., 1., ..., 1., 0., 0.],
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>index</th>
-      <th>participant</th>
-      <th>block_label</th>
-      <th>trial_block</th>
-      <th>f_cor</th>
-      <th>f_inc</th>
-      <th>cor_option</th>
-      <th>inc_option</th>
-      <th>times_seen</th>
-      <th>rt</th>
-      <th>accuracy</th>
-      <th>accuracy_rescale</th>
-      <th>choice_pair</th>
-      <th>block_bins</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0</td>
-      <td>10</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>61.0</td>
-      <td>52.0</td>
-      <td>4</td>
-      <td>3</td>
-      <td>1.0</td>
-      <td>1.285418</td>
-      <td>0.0</td>
-      <td>2</td>
-      <td>CD</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1</td>
-      <td>10</td>
-      <td>1.0</td>
-      <td>2.0</td>
-      <td>54.0</td>
-      <td>37.0</td>
-      <td>4</td>
-      <td>2</td>
-      <td>1.5</td>
-      <td>1.577622</td>
-      <td>0.0</td>
-      <td>2</td>
-      <td>BD</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2</td>
-      <td>10</td>
-      <td>1.0</td>
-      <td>3.0</td>
-      <td>51.0</td>
-      <td>51.0</td>
-      <td>4</td>
-      <td>3</td>
-      <td>2.5</td>
-      <td>1.564731</td>
-      <td>0.0</td>
-      <td>2</td>
-      <td>CD</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>3</td>
-      <td>10</td>
-      <td>1.0</td>
-      <td>4.0</td>
-      <td>50.0</td>
-      <td>35.0</td>
-      <td>3</td>
-      <td>1</td>
-      <td>2.0</td>
-      <td>1.217245</td>
-      <td>1.0</td>
-      <td>1</td>
-      <td>AC</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>4</td>
-      <td>10</td>
-      <td>1.0</td>
-      <td>5.0</td>
-      <td>59.0</td>
-      <td>50.0</td>
-      <td>4</td>
-      <td>2</td>
-      <td>3.0</td>
-      <td>1.929781</td>
-      <td>0.0</td>
-      <td>2</td>
-      <td>BD</td>
-      <td>1</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1574,7 +1600,7 @@ array([[1., 0., 1., ..., 1., 0., 0.],
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1625,66 +1651,66 @@ array([[1., 0., 1., ..., 1., 0., 0.],
   </thead>
   <tbody>
     <tr>
-      <th rowspan="5" valign="top">1.0</th>
+      <th rowspan="5" valign="top">1</th>
       <th rowspan="5" valign="top">AB</th>
       <th>1</th>
-      <td>0.75</td>
-      <td>1.480688</td>
-      <td>2.502428</td>
-      <td>1.024518</td>
-      <td>1.337262</td>
-      <td>1.176697</td>
-      <td>1.429384</td>
-      <td>1.184811</td>
-      <td>1.632312</td>
+      <td>1.00</td>
+      <td>1.681408</td>
+      <td>0.903394</td>
+      <td>NaN</td>
+      <td>1.399812</td>
+      <td>NaN</td>
+      <td>1.514297</td>
+      <td>NaN</td>
+      <td>1.794489</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.75</td>
-      <td>1.494594</td>
-      <td>0.638907</td>
-      <td>1.276671</td>
-      <td>1.304920</td>
-      <td>1.368122</td>
-      <td>1.462239</td>
-      <td>1.592027</td>
-      <td>1.717485</td>
+      <td>0.85</td>
+      <td>1.562615</td>
+      <td>1.231232</td>
+      <td>1.487588</td>
+      <td>1.361251</td>
+      <td>1.588107</td>
+      <td>1.423942</td>
+      <td>1.850989</td>
+      <td>1.668351</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.70</td>
-      <td>1.469694</td>
-      <td>0.803160</td>
-      <td>1.377936</td>
-      <td>1.306803</td>
-      <td>1.607192</td>
-      <td>1.426029</td>
-      <td>1.739389</td>
-      <td>1.511035</td>
+      <td>0.85</td>
+      <td>1.669896</td>
+      <td>1.833117</td>
+      <td>1.828193</td>
+      <td>1.511834</td>
+      <td>2.081510</td>
+      <td>1.548741</td>
+      <td>2.384440</td>
+      <td>1.649412</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.75</td>
-      <td>1.599615</td>
-      <td>0.447825</td>
-      <td>1.635178</td>
-      <td>1.299746</td>
-      <td>1.663089</td>
-      <td>1.517293</td>
-      <td>1.767739</td>
-      <td>1.702939</td>
+      <td>0.85</td>
+      <td>1.706396</td>
+      <td>0.553683</td>
+      <td>1.957702</td>
+      <td>1.391453</td>
+      <td>2.014691</td>
+      <td>1.545602</td>
+      <td>2.092177</td>
+      <td>1.620288</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.60</td>
-      <td>1.376990</td>
-      <td>0.803442</td>
-      <td>1.278217</td>
-      <td>1.263027</td>
-      <td>1.376664</td>
-      <td>1.332366</td>
-      <td>1.481102</td>
-      <td>1.425297</td>
+      <td>0.80</td>
+      <td>1.462708</td>
+      <td>-0.004163</td>
+      <td>1.605232</td>
+      <td>1.306055</td>
+      <td>1.666439</td>
+      <td>1.367250</td>
+      <td>1.720746</td>
+      <td>1.516865</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1701,66 +1727,66 @@ array([[1., 0., 1., ..., 1., 0., 0.],
       <td>...</td>
     </tr>
     <tr>
-      <th rowspan="5" valign="top">3.0</th>
+      <th rowspan="5" valign="top">3</th>
       <th rowspan="5" valign="top">CD</th>
       <th>96</th>
-      <td>0.85</td>
-      <td>1.565873</td>
-      <td>1.915931</td>
-      <td>1.406052</td>
-      <td>1.148709</td>
-      <td>1.572862</td>
-      <td>1.521186</td>
-      <td>1.668317</td>
-      <td>1.684704</td>
+      <td>0.80</td>
+      <td>1.773238</td>
+      <td>0.790351</td>
+      <td>1.196426</td>
+      <td>1.591572</td>
+      <td>1.585557</td>
+      <td>1.718615</td>
+      <td>2.026946</td>
+      <td>1.914956</td>
     </tr>
     <tr>
       <th>97</th>
-      <td>0.65</td>
-      <td>1.527317</td>
-      <td>0.883126</td>
-      <td>1.350817</td>
-      <td>1.273823</td>
-      <td>1.860067</td>
-      <td>1.364047</td>
-      <td>2.148044</td>
-      <td>1.472886</td>
+      <td>0.70</td>
+      <td>1.738502</td>
+      <td>1.280425</td>
+      <td>1.659392</td>
+      <td>1.427214</td>
+      <td>1.724478</td>
+      <td>1.604408</td>
+      <td>1.759436</td>
+      <td>2.106875</td>
     </tr>
     <tr>
       <th>98</th>
-      <td>0.65</td>
-      <td>1.589911</td>
-      <td>2.299556</td>
-      <td>1.215366</td>
-      <td>1.275721</td>
-      <td>1.510554</td>
-      <td>1.483562</td>
-      <td>1.572747</td>
-      <td>1.718701</td>
+      <td>0.85</td>
+      <td>1.684924</td>
+      <td>2.002707</td>
+      <td>1.812207</td>
+      <td>1.457479</td>
+      <td>1.878493</td>
+      <td>1.529541</td>
+      <td>2.325211</td>
+      <td>1.637719</td>
     </tr>
     <tr>
       <th>99</th>
       <td>0.85</td>
-      <td>1.309896</td>
-      <td>0.937661</td>
-      <td>1.121466</td>
-      <td>1.139482</td>
-      <td>1.217709</td>
-      <td>1.296632</td>
-      <td>1.262999</td>
-      <td>1.478310</td>
+      <td>1.708116</td>
+      <td>2.894151</td>
+      <td>1.635211</td>
+      <td>1.399594</td>
+      <td>1.652487</td>
+      <td>1.476365</td>
+      <td>1.665329</td>
+      <td>1.638770</td>
     </tr>
     <tr>
       <th>100</th>
-      <td>0.80</td>
-      <td>1.585306</td>
-      <td>1.786769</td>
-      <td>1.063191</td>
-      <td>1.419828</td>
-      <td>1.335941</td>
-      <td>1.494361</td>
-      <td>1.758357</td>
-      <td>1.715775</td>
+      <td>0.90</td>
+      <td>1.519268</td>
+      <td>1.147537</td>
+      <td>2.262331</td>
+      <td>1.286692</td>
+      <td>2.272119</td>
+      <td>1.360012</td>
+      <td>2.281907</td>
+      <td>1.400676</td>
     </tr>
   </tbody>
 </table>
@@ -1768,7 +1794,7 @@ array([[1., 0., 1., ..., 1., 0., 0.],
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1780,7 +1806,7 @@ array([[1., 0., 1., ..., 1., 0., 0.],
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1831,63 +1857,63 @@ array([[1., 0., 1., ..., 1., 0., 0.],
     <tr>
       <th rowspan="5" valign="top">1</th>
       <th>1</th>
-      <td>0.666667</td>
-      <td>1.822421</td>
-      <td>2.194476</td>
-      <td>1.374931</td>
-      <td>1.336806</td>
-      <td>1.552943</td>
-      <td>1.489791</td>
-      <td>2.269784</td>
-      <td>1.673727</td>
+      <td>0.766667</td>
+      <td>1.638274</td>
+      <td>0.956465</td>
+      <td>1.589372</td>
+      <td>1.371125</td>
+      <td>1.820360</td>
+      <td>1.539141</td>
+      <td>2.078767</td>
+      <td>1.730869</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.633333</td>
-      <td>1.538414</td>
-      <td>0.259050</td>
-      <td>1.501086</td>
-      <td>1.251568</td>
-      <td>1.625164</td>
-      <td>1.408985</td>
-      <td>1.884665</td>
-      <td>1.646852</td>
+      <td>0.833333</td>
+      <td>1.612351</td>
+      <td>0.655012</td>
+      <td>1.496590</td>
+      <td>1.402016</td>
+      <td>1.506009</td>
+      <td>1.477792</td>
+      <td>1.513142</td>
+      <td>1.731665</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.600000</td>
-      <td>1.514489</td>
-      <td>1.466880</td>
-      <td>1.433615</td>
-      <td>1.269109</td>
-      <td>1.600592</td>
-      <td>1.371785</td>
-      <td>1.817720</td>
-      <td>1.472953</td>
+      <td>0.900000</td>
+      <td>1.629827</td>
+      <td>0.913520</td>
+      <td>2.083429</td>
+      <td>1.390501</td>
+      <td>2.089259</td>
+      <td>1.479533</td>
+      <td>2.215808</td>
+      <td>1.655838</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.666667</td>
-      <td>1.426424</td>
-      <td>0.583451</td>
-      <td>1.353432</td>
-      <td>1.178183</td>
-      <td>1.560177</td>
-      <td>1.254533</td>
-      <td>1.617040</td>
-      <td>1.528058</td>
+      <td>0.833333</td>
+      <td>1.669009</td>
+      <td>2.153573</td>
+      <td>1.600106</td>
+      <td>1.391325</td>
+      <td>1.714567</td>
+      <td>1.546952</td>
+      <td>1.831776</td>
+      <td>1.676594</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.733333</td>
-      <td>1.555820</td>
-      <td>0.799654</td>
-      <td>1.539074</td>
-      <td>1.243777</td>
-      <td>1.633894</td>
-      <td>1.405582</td>
-      <td>1.925176</td>
-      <td>1.623275</td>
+      <td>0.900000</td>
+      <td>1.687632</td>
+      <td>1.143709</td>
+      <td>1.695958</td>
+      <td>1.394622</td>
+      <td>1.711742</td>
+      <td>1.623764</td>
+      <td>1.900608</td>
+      <td>1.794966</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1905,63 +1931,63 @@ array([[1., 0., 1., ..., 1., 0., 0.],
     <tr>
       <th rowspan="5" valign="top">8</th>
       <th>96</th>
-      <td>0.586207</td>
-      <td>1.497093</td>
-      <td>0.168614</td>
-      <td>1.219660</td>
-      <td>1.305840</td>
-      <td>1.347734</td>
-      <td>1.520579</td>
-      <td>1.687630</td>
-      <td>1.728446</td>
+      <td>0.900000</td>
+      <td>1.639858</td>
+      <td>3.603518</td>
+      <td>2.077193</td>
+      <td>1.400877</td>
+      <td>2.340582</td>
+      <td>1.432593</td>
+      <td>3.211126</td>
+      <td>1.553350</td>
     </tr>
     <tr>
       <th>97</th>
-      <td>0.689655</td>
-      <td>1.502492</td>
-      <td>4.012677</td>
-      <td>1.518617</td>
-      <td>1.147707</td>
-      <td>1.617530</td>
-      <td>1.249135</td>
-      <td>1.776427</td>
-      <td>1.352476</td>
+      <td>0.866667</td>
+      <td>1.714154</td>
+      <td>0.930458</td>
+      <td>1.655048</td>
+      <td>1.419414</td>
+      <td>1.838018</td>
+      <td>1.586430</td>
+      <td>2.046019</td>
+      <td>1.790083</td>
     </tr>
     <tr>
       <th>98</th>
-      <td>0.827586</td>
-      <td>1.349401</td>
-      <td>1.762134</td>
-      <td>1.207493</td>
-      <td>1.164657</td>
-      <td>1.241302</td>
-      <td>1.228657</td>
-      <td>1.507990</td>
-      <td>1.291924</td>
+      <td>0.933333</td>
+      <td>1.691284</td>
+      <td>0.810072</td>
+      <td>2.071750</td>
+      <td>1.378320</td>
+      <td>2.177797</td>
+      <td>1.628068</td>
+      <td>2.283844</td>
+      <td>1.846477</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>0.793103</td>
-      <td>1.401210</td>
-      <td>0.988129</td>
-      <td>1.339981</td>
-      <td>1.155294</td>
-      <td>1.434166</td>
-      <td>1.321854</td>
-      <td>1.524493</td>
-      <td>1.462061</td>
+      <td>0.966667</td>
+      <td>1.550891</td>
+      <td>1.024852</td>
+      <td>1.551561</td>
+      <td>1.344609</td>
+      <td>1.551561</td>
+      <td>1.481813</td>
+      <td>1.551561</td>
+      <td>1.662538</td>
     </tr>
     <tr>
       <th>100</th>
-      <td>0.655172</td>
-      <td>1.467377</td>
-      <td>2.354579</td>
-      <td>1.367404</td>
-      <td>1.240671</td>
-      <td>1.390406</td>
-      <td>1.330173</td>
-      <td>1.528429</td>
-      <td>1.421323</td>
+      <td>0.833333</td>
+      <td>1.852512</td>
+      <td>2.368602</td>
+      <td>1.572443</td>
+      <td>1.359105</td>
+      <td>1.754043</td>
+      <td>1.594390</td>
+      <td>1.803764</td>
+      <td>1.837678</td>
     </tr>
   </tbody>
 </table>
@@ -1969,7 +1995,7 @@ array([[1., 0., 1., ..., 1., 0., 0.],
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1983,11 +2009,11 @@ array([[1., 0., 1., ..., 1., 0., 0.],
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_LBA_2A_fitting_23_0.png" src="../_images/notebooks_LBA_2A_fitting_23_0.png" />
+<img alt="../_images/notebooks_LBA_2A_fitting_28_0.png" src="../_images/notebooks_LBA_2A_fitting_28_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -2003,78 +2029,8 @@ array([[1., 0., 1., ..., 1., 0., 0.],
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_LBA_2A_fitting_24_0.png" src="../_images/notebooks_LBA_2A_fitting_24_0.png" />
+<img alt="../_images/notebooks_LBA_2A_fitting_29_0.png" src="../_images/notebooks_LBA_2A_fitting_29_0.png" />
 </div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">sv</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">last_values</span>
-<span class="n">sv</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>chain</th>
-      <th>draw</th>
-      <th>warmup</th>
-      <th>A</th>
-      <th>drift_cor</th>
-      <th>drift_inc</th>
-      <th>k</th>
-      <th>tau</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>69</th>
-      <td>0</td>
-      <td>69</td>
-      <td>0</td>
-      <td>0.730618</td>
-      <td>3.406830</td>
-      <td>2.368292</td>
-      <td>4.27831</td>
-      <td>-2.573289</td>
-    </tr>
-    <tr>
-      <th>139</th>
-      <td>1</td>
-      <td>69</td>
-      <td>0</td>
-      <td>0.349217</td>
-      <td>3.515723</td>
-      <td>2.628843</td>
-      <td>4.76474</td>
-      <td>-4.380532</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
@@ -2086,12 +2042,23 @@ array([[1., 0., 1., ..., 1., 0., 0.],
 </div>
 </div>
 </div>
+</div>
+</div>
 
 
            </div>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../models/model_classes.html" class="btn btn-neutral float-right" title="Model classes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="RLDDM_fitting.html" class="btn btn-neutral float-left" title="Fit the RLDDM on individual data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

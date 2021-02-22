@@ -1,0 +1,267 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>How to inspect model fit results &mdash; rlssm 0.1.dev documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Fit the DDM on individual data" href="DDM_fitting.html" />
+    <link rel="prev" title="How to fit a model" href="fit_model.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> rlssm
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How to:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="initialize_model.html">How to initialize a model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fit_model.html">How to fit a model</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">How to inspect model fit results</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Non-learning-example-(non-hierarchical,-simulated-data)">Non-learning example (non-hierarchical, simulated data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Learning-example-(hierarchical,-real-data)">Learning example (hierarchical, real data)</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="DDM_fitting.html">Fit the DDM on individual data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DDM_hierarchical_fitting.html">Fit the DDM on hierarchical data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DDM_starting-point-bias_fitting.html">Parameter recovery of the DDM with starting point bias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DDM_starting-point-bias_hierarchical_fitting.html">Parameter recovery of the hierarchical DDM with starting point bias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RL_2A_fitting.html">Fit a RL model on individual data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RL_2A_hierarchical_fitting.html">Fit a RL model on hierarchical data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RLDDM_fitting.html">Fit the RLDDM on individual data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LBA_2A_fitting.html">Fit the LBA on individual data</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/model_classes.html">Model classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/modelresult_RL.html">ModelResults class for RL models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/modelresult_DDM.html">ModelResults class for DDMs (or RLDDMs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/modelresult_race.html">ModelResults class for race (or RL+race) models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../simulations/simulateDDM.html">Simulate data with the DDM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../simulations/simulaterace.html">Simulate data with race models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../simulations/simulateRL.html">Simulate data with RL models, RLDDMs, and RL+race models</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">rlssm</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>How to inspect model fit results</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/notebooks/inspect_model.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="How-to-inspect-model-fit-results">
+<h1>How to inspect model fit results<a class="headerlink" href="#How-to-inspect-model-fit-results" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Non-learning-example-(non-hierarchical,-simulated-data)">
+<h2>Non-learning example (non-hierarchical, simulated data)<a class="headerlink" href="#Non-learning-example-(non-hierarchical,-simulated-data)" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="Learning-example-(hierarchical,-real-data)">
+<h2>Learning example (hierarchical, real data)<a class="headerlink" href="#Learning-example-(hierarchical,-real-data)" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="DDM_fitting.html" class="btn btn-neutral float-right" title="Fit the DDM on individual data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="fit_model.html" class="btn btn-neutral float-left" title="How to fit a model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Laura Fontanesi
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

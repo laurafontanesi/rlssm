@@ -1,0 +1,1618 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>How to fit a model &mdash; rlssm 0.1.dev documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="How to inspect model fit results" href="inspect_model.html" />
+    <link rel="prev" title="How to initialize a model" href="initialize_model.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> rlssm
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How to:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="initialize_model.html">How to initialize a model</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">How to fit a model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Data-format">Data format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Non-learning-example-(non-hierarchical,-simulated-data)">Non-learning example (non-hierarchical, simulated data)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Learning-example-(hierarchical,-real-data)">Learning example (hierarchical, real data)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Additional-learning-parameters">Additional learning parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Specify-the-priors">Specify the priors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Specify-the-sampling-parameters">Specify the sampling parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Run">Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Diagnostics">Diagnostics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Save-the-results">Save the results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Re-load-previously-saved-results">Re-load previously saved results</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="inspect_model.html">How to inspect model fit results</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="DDM_fitting.html">Fit the DDM on individual data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DDM_hierarchical_fitting.html">Fit the DDM on hierarchical data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DDM_starting-point-bias_fitting.html">Parameter recovery of the DDM with starting point bias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DDM_starting-point-bias_hierarchical_fitting.html">Parameter recovery of the hierarchical DDM with starting point bias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RL_2A_fitting.html">Fit a RL model on individual data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RL_2A_hierarchical_fitting.html">Fit a RL model on hierarchical data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RLDDM_fitting.html">Fit the RLDDM on individual data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LBA_2A_fitting.html">Fit the LBA on individual data</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/model_classes.html">Model classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/modelresult_RL.html">ModelResults class for RL models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/modelresult_DDM.html">ModelResults class for DDMs (or RLDDMs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/modelresult_race.html">ModelResults class for race (or RL+race) models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../simulations/simulateDDM.html">Simulate data with the DDM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../simulations/simulaterace.html">Simulate data with race models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../simulations/simulateRL.html">Simulate data with RL models, RLDDMs, and RL+race models</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">rlssm</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>How to fit a model</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/notebooks/fit_model.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="How-to-fit-a-model">
+<h1>How to fit a model<a class="headerlink" href="#How-to-fit-a-model" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Data-format">
+<h2>Data format<a class="headerlink" href="#Data-format" title="Permalink to this headline">¶</a></h2>
+<p>All model classes have a <code class="docutils literal notranslate"><span class="pre">fit</span></code> method for fitting the model to (individual or group) data, and all <code class="docutils literal notranslate"><span class="pre">fit</span></code> methods have at least 1 required argument, <code class="docutils literal notranslate"><span class="pre">data</span></code>, which should be in the form of a pandas DataFrame.</p>
+<p>However, different model classes might require different columns in the data. You should check in the <strong>API Reference</strong> of each model class (or using <code class="docutils literal notranslate"><span class="pre">model.fit?</span></code>) what the required data columns are.</p>
+<p>Below, you can see a non-learning and a learning example:</p>
+<div class="section" id="Non-learning-example-(non-hierarchical,-simulated-data)">
+<h3>Non-learning example (non-hierarchical, simulated data)<a class="headerlink" href="#Non-learning-example-(non-hierarchical,-simulated-data)" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">rlssm</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model_ddm</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">DDModel</span><span class="p">(</span><span class="n">hierarchical_levels</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Using cached StanModel
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># simulate some DDM data:</span>
+<span class="kn">from</span> <span class="nn">rlssm.random</span> <span class="kn">import</span> <span class="n">simulate_ddm</span>
+<span class="n">data_ddm</span> <span class="o">=</span> <span class="n">simulate_ddm</span><span class="p">(</span>
+    <span class="n">n_trials</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span>
+    <span class="n">gen_drift</span><span class="o">=.</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">gen_threshold</span><span class="o">=</span><span class="mf">1.3</span><span class="p">,</span>
+    <span class="n">gen_ndt</span><span class="o">=.</span><span class="mi">23</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>For the simple, non-hierarchical DDM, it is only necessary to have <code class="docutils literal notranslate"><span class="pre">rt</span></code> and <code class="docutils literal notranslate"><span class="pre">accuracy</span></code> columns:</p>
+<ul class="simple">
+<li><p><em>rt</em>, response times in seconds.</p></li>
+<li><p><em>accuracy</em>, 0 if the incorrect option was chosen, 1 if the correct option was chosen.</p></li>
+</ul>
+<p>If the model is hierarchical, also include:</p>
+<ul class="simple">
+<li><p><em>participant</em>, the participant number. Should be integers starting from 1 (it’s also OK if <code class="docutils literal notranslate"><span class="pre">participant</span></code> is in the index).</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data_ddm</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>drift</th>
+      <th>rel_sp</th>
+      <th>threshold</th>
+      <th>ndt</th>
+      <th>rt</th>
+      <th>accuracy</th>
+    </tr>
+    <tr>
+      <th>participant</th>
+      <th>trial</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="5" valign="top">1</th>
+      <th>1</th>
+      <td>0.8</td>
+      <td>0.5</td>
+      <td>1.3</td>
+      <td>0.23</td>
+      <td>1.286</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.8</td>
+      <td>0.5</td>
+      <td>1.3</td>
+      <td>0.23</td>
+      <td>0.374</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.8</td>
+      <td>0.5</td>
+      <td>1.3</td>
+      <td>0.23</td>
+      <td>0.767</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.8</td>
+      <td>0.5</td>
+      <td>1.3</td>
+      <td>0.23</td>
+      <td>1.187</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.8</td>
+      <td>0.5</td>
+      <td>1.3</td>
+      <td>0.23</td>
+      <td>0.777</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Learning-example-(hierarchical,-real-data)">
+<h3>Learning example (hierarchical, real data)<a class="headerlink" href="#Learning-example-(hierarchical,-real-data)" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model_rl</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">RLModel_2A</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Using cached StanModel
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># import some data:</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">par_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">))</span>
+<span class="n">data_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">par_path</span><span class="p">,</span> <span class="s1">&#39;data/data_experiment.csv&#39;</span><span class="p">)</span>
+<span class="n">data_rl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Since this learning model is only fit on choices, only <code class="docutils literal notranslate"><span class="pre">accuracy</span></code> (and not <code class="docutils literal notranslate"><span class="pre">rt</span></code>) is required.</p>
+<p>Other columns that should be included are:</p>
+<ul class="simple">
+<li><p><em>trial_block</em>, the number of trial in a learning session. Should be integers starting from 1.</p></li>
+<li><p><em>f_cor</em>, the output from the correct option in the presented pair (the option with higher outcome on average).</p></li>
+<li><p><em>f_inc</em>, the output from the incorrect option in the presented pair (the option with lower outcome on average).</p></li>
+<li><p><em>cor_option</em>, the number identifying the correct option in the presented pair (the option with higher outcome on average).</p></li>
+<li><p><em>inc_option</em>, the number identifying the incorrect option in the presented pair(the option with lower outcome on average).</p></li>
+<li><p><em>block_label</em>, the number identifying the learning session. Should be integers starting from 1. Set to 1 in case there is only one learning session.</p></li>
+</ul>
+<p>If the model is hierarchical, also include:</p>
+<ul class="simple">
+<li><p><em>participant</em>, the participant number. Should be integers starting from 1.</p></li>
+</ul>
+<p>If increasing_sensitivity is True, also include:</p>
+<ul class="simple">
+<li><p><em>times_seen</em>, average number of times the presented options have been seen in a learning session.</p></li>
+</ul>
+<p>If any of these columns are part of the index with the approriate label, they will still be recognized.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data_rl</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>participant</th>
+      <th>block_label</th>
+      <th>trial_block</th>
+      <th>f_cor</th>
+      <th>f_inc</th>
+      <th>cor_option</th>
+      <th>inc_option</th>
+      <th>times_seen</th>
+      <th>rt</th>
+      <th>accuracy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>43</td>
+      <td>39</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.244082</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>60</td>
+      <td>50</td>
+      <td>4</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1.101821</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>44</td>
+      <td>36</td>
+      <td>4</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1.029923</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>1</td>
+      <td>4</td>
+      <td>55</td>
+      <td>55</td>
+      <td>4</td>
+      <td>3</td>
+      <td>2</td>
+      <td>1.368007</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>1</td>
+      <td>5</td>
+      <td>52</td>
+      <td>49</td>
+      <td>4</td>
+      <td>3</td>
+      <td>3</td>
+      <td>1.039329</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Additional-learning-parameters">
+<h3>Additional learning parameters<a class="headerlink" href="#Additional-learning-parameters" title="Permalink to this headline">¶</a></h3>
+<p>While all sequential sampling models (DDM and race models) <strong>without a learning component</strong> only require a <code class="docutils literal notranslate"><span class="pre">data</span></code> argument, all models with a learning components (RL models, RLDDMs, and RL+race models) also require a <code class="docutils literal notranslate"><span class="pre">K</span></code> argument, which is the total number of different options in a learning block (note that this can be different from the number of options presented in each trial), and <code class="docutils literal notranslate"><span class="pre">initial_value_learning</span></code>, which is the initial Q value (before learning).</p>
+</div>
+</div>
+<div class="section" id="Specify-the-priors">
+<h2>Specify the priors<a class="headerlink" href="#Specify-the-priors" title="Permalink to this headline">¶</a></h2>
+<p>You can decide whether to use the default priors or whether you want to change the mean or SD of the prior or hyper-prior distributions.</p>
+<p>To know what are the default priors, you can check the <strong>API Reference</strong> of each model class (or <code class="docutils literal notranslate"><span class="pre">model.fit?</span></code>).</p>
+</div>
+<div class="section" id="Specify-the-sampling-parameters">
+<h2>Specify the sampling parameters<a class="headerlink" href="#Specify-the-sampling-parameters" title="Permalink to this headline">¶</a></h2>
+<p>The last important step is to specify the sampling parameters <strong>(number of chains, iterations, warmups, thinning, etc.)</strong>.</p>
+<p>These are the arguments to the <code class="docutils literal notranslate"><span class="pre">pystan.StanModel.sampling()</span></code> function, and we simply refer to the <a class="reference external" href="https://pystan.readthedocs.io/">pystan documentation</a> for a better overview.</p>
+</div>
+<div class="section" id="Run">
+<h2>Run<a class="headerlink" href="#Run" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Run 2 chains, with 2000 samples each, 1000 of which warmup, with custom priors:</span>
+<span class="n">model_fit_ddm</span> <span class="o">=</span> <span class="n">model_ddm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">data_ddm</span><span class="p">,</span>
+    <span class="n">drift_priors</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;mu&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;sd&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">},</span>
+    <span class="n">threshold_priors</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;mu&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">5</span><span class="p">},</span>
+    <span class="n">ndt_priors</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;mu&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">1</span><span class="p">},</span>
+    <span class="n">chains</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="nb">iter</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
+    <span class="n">warmup</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+    <span class="n">pointwise_waic</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">thin</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+WARNING:pystan:Maximum (flat) parameter count (1000) exceeded: skipping diagnostic tests for n_eff and Rhat.
+To run all diagnostics call pystan.check_hmc_diagnostics(fit)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Checks MCMC diagnostics:
+n_eff / iter looks reasonable for all parameters
+0.0 of 2000 iterations ended with a divergence (0.0%)
+0 of 2000 iterations saturated the maximum tree depth of 10 (0.0%)
+E-BFMI indicated no pathological behavior
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Run 2 chains, with 3000 samples each, 1000 of which warmup, with thinning and custom priors:</span>
+<span class="n">model_fit_rl</span> <span class="o">=</span> <span class="n">model_rl</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">data_rl</span><span class="p">,</span>
+    <span class="n">K</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">initial_value_learning</span><span class="o">=</span><span class="mf">27.5</span><span class="p">,</span>
+    <span class="n">alpha_priors</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;mu_mu&#39;</span><span class="p">:</span><span class="o">-.</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;sd_mu&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;mu_sd&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd_sd&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">1</span><span class="p">},</span>
+    <span class="n">sensitivity_priors</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;mu_mu&#39;</span><span class="p">:</span><span class="o">-.</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;sd_mu&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;mu_sd&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd_sd&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">1</span><span class="p">},</span>
+    <span class="n">chains</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="nb">iter</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span>
+    <span class="n">warmup</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+    <span class="n">print_diagnostics</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="c1"># (not suggested, see below)</span>
+    <span class="n">thin</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+WARNING:pystan:Maximum (flat) parameter count (1000) exceeded: skipping diagnostic tests for n_eff and Rhat.
+To run all diagnostics call pystan.check_hmc_diagnostics(fit)
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Diagnostics">
+<h2>Diagnostics<a class="headerlink" href="#Diagnostics" title="Permalink to this headline">¶</a></h2>
+<p>As you can see, the MCMC diagnostics are already printed by default (if you do not want this, you can set <code class="docutils literal notranslate"><span class="pre">print_diagnostics</span></code> to <code class="docutils literal notranslate"><span class="pre">False</span></code>). I refer to <a class="reference external" href="https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html">https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html</a> for an excellent explanations of what these diagnostics actually mean and how to assess them.</p>
+<p>On top of these, you can also check the convergence of the chains and the WAIC:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">rhat</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rhat</th>
+      <th>variable</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.999902</td>
+      <td>drift</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.001713</td>
+      <td>threshold</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.001130</td>
+      <td>ndt</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model_fit_rl</span><span class="o">.</span><span class="n">rhat</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rhat</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>58.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>0.999875</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>0.000763</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.999067</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>0.999291</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>0.999658</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>1.000173</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>1.002636</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">waic</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;lppd&#39;: -206.31546680801432,
+ &#39;p_waic&#39;: 3.008203178578447,
+ &#39;waic&#39;: 418.6473399731855,
+ &#39;waic_se&#39;: 44.037247567155475,
+ &#39;pointwise_waic&#39;: array([ 6.86708836e+00,  9.06715564e-01,  1.18466469e+00,  4.05027111e+00,
+         1.25280354e+00,  3.65799930e+00, -8.88229710e-01,  1.06884090e+00,
+        -1.03569327e+00, -1.15022881e+00,  5.03448512e+00, -1.04099857e+00,
+         3.82845808e+00,  1.87628948e+00,  1.83899268e+00, -1.14924792e+00,
+        -9.11091144e-01,  3.15343043e+00,  6.94246394e-01, -1.02497280e+00,
+        -1.81811077e-01,  2.49372371e+00,  3.56937193e+00, -6.93939374e-01,
+         4.08401402e-01,  1.63447025e+00, -1.00311771e+00, -8.25998105e-01,
+         1.49116505e+00,  4.08401402e-01,  1.55267238e+00,  1.35673672e+00,
+        -8.32186269e-01,  4.42415932e-01,  1.19641138e+00, -1.18401195e+00,
+        -6.08707350e-01, -1.19060443e+00,  2.95772754e+00, -1.17595654e+00,
+        -1.22683684e+00, -9.78491963e-01, -1.00723759e-01, -9.57934728e-01,
+        -8.87143691e-01,  6.94246394e-01,  2.59515630e+00,  5.74625751e+00,
+        -1.23025041e+00, -6.34809430e-01, -1.04626596e+00, -7.63353790e-01,
+        -1.23296885e+00,  9.07969943e-01,  2.09811018e+00,  1.49766479e+00,
+         1.10401474e+00, -5.69363087e-01,  4.42608270e+00,  2.58835095e+00,
+        -6.01202580e-02,  3.40388443e-01, -1.06183070e+00,  7.22477133e+00,
+         2.65746748e+00,  1.05238402e+00, -2.15541140e-01, -1.20099196e+00,
+         2.98328807e+00,  9.07379622e-01,  2.92794140e-01,  3.08058474e+00,
+         4.09809458e+00, -6.02165256e-01,  1.02796584e+00, -1.23247791e+00,
+         1.76886412e+00,  5.03653700e-01, -5.32143953e-01,  9.25787966e-01,
+        -9.62058213e-01, -5.56202104e-01,  1.94126851e+00, -8.71932218e-02,
+         3.81193491e-01, -1.23087841e+00,  1.02393489e+00, -6.01229434e-01,
+         1.82250422e+00,  5.34331033e+00,  4.84172787e-01,  1.33457682e+00,
+        -8.88229710e-01, -1.16978417e+00, -1.95307524e-01,  1.63688366e-01,
+         2.55432711e+00,  3.68824634e+00,  1.49814406e+00,  8.03195195e-01,
+        -1.27080274e-02,  4.57644313e+00, -7.99751954e-01,  2.31933068e+00,
+         1.61576260e+00,  3.42192651e+00,  1.28297225e+01,  1.48451243e+00,
+        -6.54311689e-01,  9.13361999e-01,  5.43891159e+00,  2.54752295e+00,
+         7.59215234e-01,  9.13361999e-01,  2.67002654e+00,  4.66068541e+00,
+         2.94922783e+00,  4.56023090e-01, -1.22683684e+00, -1.02342457e+00,
+         4.49442581e+00,  1.68528003e+00, -7.44319432e-01,  1.57301943e+01,
+         3.37850947e+00, -1.81811077e-01,  3.67845287e+00, -1.18166437e+00,
+         9.17282590e-01, -1.14924792e+00,  4.52859896e+00, -7.44319432e-01,
+        -1.23336358e+00,  1.70479992e-01, -1.16987419e+00,  1.60749157e+00,
+        -3.29898746e-01,  9.91446334e-01,  9.68563627e-01, -9.52163261e-01,
+         2.27741944e+00, -8.81107789e-01, -3.43312759e-01, -7.31575332e-01,
+        -1.21301592e+00, -1.00311771e+00, -9.34700088e-01, -1.20099196e+00,
+         5.96482634e+00,  3.21028219e+00,  4.01599103e-01,  1.03479249e+00,
+        -1.22502381e+00,  4.17627893e+00,  6.81238725e+00,  1.56303911e+00,
+         8.84921031e-01,  1.65550869e+00,  7.61950403e+00, -3.70110729e-01,
+        -1.15428619e+00,  5.24647927e+00, -8.38359149e-01, -8.01099961e-01,
+         2.54147980e+00, -1.95307524e-01,  1.02115354e+00,  2.41186095e+00,
+         5.44486226e-01, -6.93103726e-01, -4.23572062e-01, -1.19666267e+00,
+         1.94368739e+00, -1.15022881e+00, -1.23025041e+00, -7.75041715e-01,
+         1.08551333e+01,  3.69894764e+00, -1.14153259e+00,  2.12538929e+00,
+         3.20345562e+00,  3.81482036e+00, -5.29817241e-01, -2.34645245e-01,
+        -7.75985607e-01,  1.59357051e+00, -8.56782193e-01, -1.14153259e+00,
+        -1.23025041e+00,  1.10290505e+00, -5.03354995e-01, -6.64404056e-01,
+         3.06010759e+00, -1.00311771e+00,  1.76217077e+00,  2.26179505e+00,
+        -1.20099196e+00,  2.48422135e-01, -2.49231929e-01, -2.69425527e-01,
+        -3.98058280e-02,  3.67163497e+00, -6.01229434e-01,  2.41828891e+00,
+         2.62335219e+00, -1.07199881e+00,  5.76637903e+00,  1.32956404e+00,
+        -1.21523895e+00, -8.62889994e-01,  3.16043075e+00,  2.83488400e+00,
+        -1.16602341e+00, -1.14250081e-01,  7.96385227e-01, -2.29022431e-01,
+        -1.07487459e-01,  9.26696565e-01, -1.21751231e+00,  4.15239802e-02,
+         2.45279157e+00,  2.65603678e-01, -9.11091144e-01, -1.34531219e-01,
+        -1.07412629e+00, -3.50016098e-01,  3.69894764e+00, -1.16602341e+00,
+        -9.94178750e-01, -1.94836942e-02,  2.31636210e+00,  1.43316141e-01,
+        -7.05965552e-01,  3.50120240e+00,  5.98937591e-01,  4.21038504e+00,
+         6.94246394e-01, -9.46366583e-01,  1.90996763e+00, -1.23327895e+00,
+        -6.68899286e-02,  5.26820088e+00,  9.39410833e-01, -1.20540295e+00,
+         6.46589214e-01,  9.05354181e-01,  4.79717654e+00,  4.70725442e+00,
+        -2.08798122e-01,  4.83130197e+00, -8.71932218e-02,  1.24591801e+00,
+         1.80907949e+00, -1.03703690e+00,  4.18691508e+00,  6.53397056e-01,
+         3.16724482e+00,  2.42550432e+00, -1.22296550e+00, -1.08691603e+00,
+         2.20723071e+00, -4.95204848e-01,  2.71205414e+00,  4.38507886e+00,
+         9.31627833e-01,  1.91670841e+00,  2.56793606e+00,  2.53465737e+00,
+         2.19359005e+00,  1.60749157e+00,  4.01587560e-01,  1.68900572e+00,
+        -8.01099961e-01, -8.93160468e-01,  5.24069279e-01, -6.08707350e-01,
+         1.01603669e+00,  9.18267005e-01,  4.31270977e+00,  1.79566426e+00,
+        -2.29022431e-01, -1.22791510e+00,  7.69146202e-01,  1.36865109e+00,
+         3.09229349e+00,  1.40954179e+00,  2.89473583e+00,  6.87437907e-01,
+         4.78834940e+00,  9.09249208e-01,  4.57644313e+00, -9.44847463e-01,
+        -1.34531219e-01, -3.16475336e-01,  9.69722596e-01,  1.02115354e+00,
+         5.71210373e+00, -1.68309049e-01,  2.27543655e+00,  2.11276568e+00,
+        -1.15827239e+00,  6.73821245e-01, -1.19978550e+00,  1.78896034e+00,
+         1.71627451e+00,  2.84024968e+00,  3.26788729e-01,  4.02977598e+00,
+        -9.78491963e-01,  7.07863674e-01,  1.85610469e+00, -5.36421006e-01,
+        -1.07412629e+00,  9.39847640e-01, -6.33521731e-01,  7.01054984e-01,
+         7.59215234e-01, -1.21751231e+00,  4.49009533e+00,  1.10352539e+00,
+        -8.23381886e-01, -1.19200573e+00,  2.05181961e+00,  2.35046788e+00,
+        -1.94836942e-02,  4.08401402e-01, -4.30240736e-01, -7.82283317e-01,
+         1.86626529e+00,  4.83620483e+00,  3.27627800e+00, -1.30520463e-01,
+        -1.13764814e+00,  9.39410833e-01,  1.62899345e+00, -3.70110729e-01,
+        -2.22282589e-01, -8.68980486e-01, -1.14153259e+00, -7.31575332e-01,
+        -1.07199881e+00, -1.04626596e+00,  3.43303768e+00,  1.31304121e+00,
+         9.32599365e-01,  2.52010321e-01,  1.49132822e+00,  3.40577317e+00,
+         5.71710829e-01,  1.54991330e+00,  3.33079997e+00, -1.23336358e+00,
+         7.14672464e-01,  1.63447025e+00,  3.98195547e+00, -7.31575332e-01,
+         2.38418283e-01, -6.15242975e-01, -9.78491963e-01,  1.40742732e+00,
+         4.07759856e+00,  2.65603678e-01,  3.04460136e+00,  4.15239802e-02,
+        -3.76803601e-01,  7.54683556e+00, -9.78491963e-01,  1.13015739e+00,
+         1.76806304e+00,  1.95816214e+00, -1.10140232e+00, -1.14190798e+00,
+         2.52010321e-01,  1.44361866e+00,  1.63447025e+00,  1.28227349e+00,
+        -2.82878517e-01,  3.13190066e-01,  9.37002028e-01,  2.58241523e+00,
+        -5.23208643e-01, -6.73744873e-01, -1.19060443e+00, -9.52163261e-01,
+         1.55647325e+00,  1.05730129e+00, -5.29817241e-01,  1.87990185e+00,
+         5.52086212e+00, -8.13577413e-01, -1.19978550e+00,  1.30068644e+00,
+        -1.19376176e+00,  2.65746748e+00,  2.44596970e+00,  1.16159747e-01,
+         7.21481352e-01,  4.17324992e+00,  9.24404976e-01, -1.14153259e+00])}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model_fit_rl</span><span class="o">.</span><span class="n">waic</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;lppd&#39;: -2632.987747986295,
+ &#39;p_waic&#39;: 52.546611787875065,
+ &#39;waic&#39;: 5371.06871954834,
+ &#39;waic_se&#39;: 94.00902560086969}
+</pre></div></div>
+</div>
+<p>If you want to also see the point-wise WAIC, you can set <code class="docutils literal notranslate"><span class="pre">pointwise_waic</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+</div>
+<div class="section" id="Save-the-results">
+<h2>Save the results<a class="headerlink" href="#Save-the-results" title="Permalink to this headline">¶</a></h2>
+<p>By default, the model fit results are saved in the same folder, using the <code class="docutils literal notranslate"><span class="pre">model_label</span></code> as filename. you can specify a different location using the <code class="docutils literal notranslate"><span class="pre">filename</span></code> argument.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Saving file as: /Users/laurafontanesi/git/rlssm/docs/notebooks/DDM.pkl
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model_fit_rl</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Saving file as: /Users/laurafontanesi/git/rlssm/docs/notebooks/hierRL_2A.pkl
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Re-load-previously-saved-results">
+<h2>Re-load previously saved results<a class="headerlink" href="#Re-load-previously-saved-results" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model_fit_ddm</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">load_model_results</span><span class="p">(</span><span class="s1">&#39;/Users/laurafontanesi/git/rlssm/docs/notebooks/DDM.pkl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model_fit_rl</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">load_model_results</span><span class="p">(</span><span class="s1">&#39;/Users/laurafontanesi/git/rlssm/docs/notebooks/hierRL_2A.pkl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The data the model was fit on are stored in <code class="docutils literal notranslate"><span class="pre">data_info</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">data_info</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>index</th>
+      <th>participant</th>
+      <th>trial</th>
+      <th>drift</th>
+      <th>rel_sp</th>
+      <th>threshold</th>
+      <th>ndt</th>
+      <th>rt</th>
+      <th>accuracy</th>
+      <th>accuracy_neg</th>
+      <th>accuracy_flipped</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0.8</td>
+      <td>0.5</td>
+      <td>1.3</td>
+      <td>0.23</td>
+      <td>1.286</td>
+      <td>0.0</td>
+      <td>-1</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>0.8</td>
+      <td>0.5</td>
+      <td>1.3</td>
+      <td>0.23</td>
+      <td>0.374</td>
+      <td>0.0</td>
+      <td>-1</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>1</td>
+      <td>3</td>
+      <td>0.8</td>
+      <td>0.5</td>
+      <td>1.3</td>
+      <td>0.23</td>
+      <td>0.767</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>-0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>1</td>
+      <td>4</td>
+      <td>0.8</td>
+      <td>0.5</td>
+      <td>1.3</td>
+      <td>0.23</td>
+      <td>1.187</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>-0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>1</td>
+      <td>5</td>
+      <td>0.8</td>
+      <td>0.5</td>
+      <td>1.3</td>
+      <td>0.23</td>
+      <td>0.777</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>-0.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>395</th>
+      <td>395</td>
+      <td>1</td>
+      <td>396</td>
+      <td>0.8</td>
+      <td>0.5</td>
+      <td>1.3</td>
+      <td>0.23</td>
+      <td>0.610</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>-0.0</td>
+    </tr>
+    <tr>
+      <th>396</th>
+      <td>396</td>
+      <td>1</td>
+      <td>397</td>
+      <td>0.8</td>
+      <td>0.5</td>
+      <td>1.3</td>
+      <td>0.23</td>
+      <td>0.699</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>-0.0</td>
+    </tr>
+    <tr>
+      <th>397</th>
+      <td>397</td>
+      <td>1</td>
+      <td>398</td>
+      <td>0.8</td>
+      <td>0.5</td>
+      <td>1.3</td>
+      <td>0.23</td>
+      <td>1.205</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>-0.0</td>
+    </tr>
+    <tr>
+      <th>398</th>
+      <td>398</td>
+      <td>1</td>
+      <td>399</td>
+      <td>0.8</td>
+      <td>0.5</td>
+      <td>1.3</td>
+      <td>0.23</td>
+      <td>0.388</td>
+      <td>0.0</td>
+      <td>-1</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>399</th>
+      <td>399</td>
+      <td>1</td>
+      <td>400</td>
+      <td>0.8</td>
+      <td>0.5</td>
+      <td>1.3</td>
+      <td>0.23</td>
+      <td>0.346</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>-0.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>400 rows × 11 columns</p>
+</div></div>
+</div>
+<p>And different parameter information are stored in <code class="docutils literal notranslate"><span class="pre">parameter_info</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model_fit_rl</span><span class="o">.</span><span class="n">parameters_info</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;hierarchical_levels&#39;: 2,
+ &#39;n_parameters_individual&#39;: 2,
+ &#39;n_parameters_trial&#39;: 0,
+ &#39;n_posterior_samples&#39;: 2000,
+ &#39;n_parameters_group&#39;: 4,
+ &#39;n_parameters_hierarchical&#39;: 58,
+ &#39;parameters_names&#39;: [&#39;mu_alpha&#39;,
+  &#39;mu_sensitivity&#39;,
+  &#39;sd_alpha&#39;,
+  &#39;sd_sensitivity&#39;,
+  &#39;z_alpha[1]&#39;,
+  &#39;z_alpha[2]&#39;,
+  &#39;z_alpha[3]&#39;,
+  &#39;z_alpha[4]&#39;,
+  &#39;z_alpha[5]&#39;,
+  &#39;z_alpha[6]&#39;,
+  &#39;z_alpha[7]&#39;,
+  &#39;z_alpha[8]&#39;,
+  &#39;z_alpha[9]&#39;,
+  &#39;z_alpha[10]&#39;,
+  &#39;z_alpha[11]&#39;,
+  &#39;z_alpha[12]&#39;,
+  &#39;z_alpha[13]&#39;,
+  &#39;z_alpha[14]&#39;,
+  &#39;z_alpha[15]&#39;,
+  &#39;z_alpha[16]&#39;,
+  &#39;z_alpha[17]&#39;,
+  &#39;z_alpha[18]&#39;,
+  &#39;z_alpha[19]&#39;,
+  &#39;z_alpha[20]&#39;,
+  &#39;z_alpha[21]&#39;,
+  &#39;z_alpha[22]&#39;,
+  &#39;z_alpha[23]&#39;,
+  &#39;z_alpha[24]&#39;,
+  &#39;z_alpha[25]&#39;,
+  &#39;z_alpha[26]&#39;,
+  &#39;z_alpha[27]&#39;,
+  &#39;z_sensitivity[1]&#39;,
+  &#39;z_sensitivity[2]&#39;,
+  &#39;z_sensitivity[3]&#39;,
+  &#39;z_sensitivity[4]&#39;,
+  &#39;z_sensitivity[5]&#39;,
+  &#39;z_sensitivity[6]&#39;,
+  &#39;z_sensitivity[7]&#39;,
+  &#39;z_sensitivity[8]&#39;,
+  &#39;z_sensitivity[9]&#39;,
+  &#39;z_sensitivity[10]&#39;,
+  &#39;z_sensitivity[11]&#39;,
+  &#39;z_sensitivity[12]&#39;,
+  &#39;z_sensitivity[13]&#39;,
+  &#39;z_sensitivity[14]&#39;,
+  &#39;z_sensitivity[15]&#39;,
+  &#39;z_sensitivity[16]&#39;,
+  &#39;z_sensitivity[17]&#39;,
+  &#39;z_sensitivity[18]&#39;,
+  &#39;z_sensitivity[19]&#39;,
+  &#39;z_sensitivity[20]&#39;,
+  &#39;z_sensitivity[21]&#39;,
+  &#39;z_sensitivity[22]&#39;,
+  &#39;z_sensitivity[23]&#39;,
+  &#39;z_sensitivity[24]&#39;,
+  &#39;z_sensitivity[25]&#39;,
+  &#39;z_sensitivity[26]&#39;,
+  &#39;z_sensitivity[27]&#39;],
+ &#39;group_parameters_names&#39;: [&#39;mu_alpha&#39;,
+  &#39;mu_sensitivity&#39;,
+  &#39;sd_alpha&#39;,
+  &#39;sd_sensitivity&#39;],
+ &#39;individual_parameters_names&#39;: [&#39;alpha&#39;, &#39;sensitivity&#39;],
+ &#39;group_parameters_names_transf&#39;: [&#39;transf_mu_alpha&#39;, &#39;transf_mu_sensitivity&#39;],
+ &#39;parameters_names_all&#39;: [&#39;mu_alpha&#39;,
+  &#39;mu_sensitivity&#39;,
+  &#39;sd_alpha&#39;,
+  &#39;sd_sensitivity&#39;,
+  &#39;z_alpha[1]&#39;,
+  &#39;z_alpha[2]&#39;,
+  &#39;z_alpha[3]&#39;,
+  &#39;z_alpha[4]&#39;,
+  &#39;z_alpha[5]&#39;,
+  &#39;z_alpha[6]&#39;,
+  &#39;z_alpha[7]&#39;,
+  &#39;z_alpha[8]&#39;,
+  &#39;z_alpha[9]&#39;,
+  &#39;z_alpha[10]&#39;,
+  &#39;z_alpha[11]&#39;,
+  &#39;z_alpha[12]&#39;,
+  &#39;z_alpha[13]&#39;,
+  &#39;z_alpha[14]&#39;,
+  &#39;z_alpha[15]&#39;,
+  &#39;z_alpha[16]&#39;,
+  &#39;z_alpha[17]&#39;,
+  &#39;z_alpha[18]&#39;,
+  &#39;z_alpha[19]&#39;,
+  &#39;z_alpha[20]&#39;,
+  &#39;z_alpha[21]&#39;,
+  &#39;z_alpha[22]&#39;,
+  &#39;z_alpha[23]&#39;,
+  &#39;z_alpha[24]&#39;,
+  &#39;z_alpha[25]&#39;,
+  &#39;z_alpha[26]&#39;,
+  &#39;z_alpha[27]&#39;,
+  &#39;z_sensitivity[1]&#39;,
+  &#39;z_sensitivity[2]&#39;,
+  &#39;z_sensitivity[3]&#39;,
+  &#39;z_sensitivity[4]&#39;,
+  &#39;z_sensitivity[5]&#39;,
+  &#39;z_sensitivity[6]&#39;,
+  &#39;z_sensitivity[7]&#39;,
+  &#39;z_sensitivity[8]&#39;,
+  &#39;z_sensitivity[9]&#39;,
+  &#39;z_sensitivity[10]&#39;,
+  &#39;z_sensitivity[11]&#39;,
+  &#39;z_sensitivity[12]&#39;,
+  &#39;z_sensitivity[13]&#39;,
+  &#39;z_sensitivity[14]&#39;,
+  &#39;z_sensitivity[15]&#39;,
+  &#39;z_sensitivity[16]&#39;,
+  &#39;z_sensitivity[17]&#39;,
+  &#39;z_sensitivity[18]&#39;,
+  &#39;z_sensitivity[19]&#39;,
+  &#39;z_sensitivity[20]&#39;,
+  &#39;z_sensitivity[21]&#39;,
+  &#39;z_sensitivity[22]&#39;,
+  &#39;z_sensitivity[23]&#39;,
+  &#39;z_sensitivity[24]&#39;,
+  &#39;z_sensitivity[25]&#39;,
+  &#39;z_sensitivity[26]&#39;,
+  &#39;z_sensitivity[27]&#39;]}
+</pre></div></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="inspect_model.html" class="btn btn-neutral float-right" title="How to inspect model fit results" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="initialize_model.html" class="btn btn-neutral float-left" title="How to initialize a model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Laura Fontanesi
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

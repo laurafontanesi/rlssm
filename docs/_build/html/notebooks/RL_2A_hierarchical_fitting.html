@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Import the grouped data &mdash; rlssm 0.1.dev documentation</title>
+  <title>Fit a RL model on hierarchical data &mdash; rlssm 0.1.dev documentation</title>
   
 
   
@@ -35,7 +35,9 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Fit the RLDDM on individual data" href="RLDDM_fitting.html" />
+    <link rel="prev" title="Fit a RL model on individual data" href="RL_2A_fitting.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -87,14 +89,35 @@
 </ul>
 <p class="caption"><span class="caption-text">How to:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="load_from_saved.html">How to load a ModelResults object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="initialize_model.html">How to initialize a model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fit_model.html">How to fit a model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inspect_model.html">How to inspect model fit results</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="DDM_fitting.html">Fit the DDM on individual data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DDM_hierarchical_fitting.html">Fit the DDM on hierarchical data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DDM_starting-point-bias_fitting.html">Parameter recovery of the DDM with starting point bias</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DDM_starting-point-bias_hierarchical_fitting.html">Parameter recovery of the hierarchical DDM with starting point bias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RL_2A_fitting.html">Fit a RL model on individual data</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Fit a RL model on hierarchical data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Import-the-data">Import the data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Initialize-the-model">Initialize the model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Fit">Fit</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get-Rhat">get Rhat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-wAIC">get wAIC</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Posteriors">Posteriors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Posterior-predictives">Posterior predictives</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Ungrouped">Ungrouped</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Grouped">Grouped</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="RLDDM_fitting.html">Fit the RLDDM on individual data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LBA_2A_fitting.html">Fit the LBA on individual data</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API Reference:</span></p>
 <ul>
@@ -150,7 +173,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Import the grouped data</li>
+      <li>Fit a RL model on hierarchical data</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -439,7 +462,9 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<div class="nbinput docutils container">
+<div class="section" id="Fit-a-RL-model-on-hierarchical-data">
+<h1>Fit a RL model on hierarchical data<a class="headerlink" href="#Fit-a-RL-model-on-hierarchical-data" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
@@ -450,42 +475,21 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/Users/Khamir/opt/anaconda3/lib/python3.7/site-packages/statsmodels/tools/_testing.py:19: FutureWarning: pandas.util.testing is deprecated. Use the functions in the public API at pandas.testing instead.
-  import pandas.util.testing as tm
-</pre></div></div>
-</div>
-<div class="section" id="Import-the-grouped-data">
-<h1>Import the grouped data<a class="headerlink" href="#Import-the-grouped-data" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Import-the-data">
+<h2>Import the data<a class="headerlink" href="#Import-the-data" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">par_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">))</span>
+<span></span><span class="n">par_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">))</span>
 <span class="n">data_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">par_path</span><span class="p">,</span> <span class="s1">&#39;data/data_experiment.csv&#39;</span><span class="p">)</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">participant</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="n">data</span><span class="p">[</span><span class="s1">&#39;block_label&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-
 <span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-INFO:numexpr.utils:NumExpr defaulting to 4 threads.
-</pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
@@ -526,185 +530,116 @@ INFO:numexpr.utils:NumExpr defaulting to 4 threads.
     <tr>
       <th>0</th>
       <td>1</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>43.0</td>
-      <td>39.0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>43</td>
+      <td>39</td>
       <td>2</td>
       <td>1</td>
-      <td>1.0</td>
+      <td>1</td>
       <td>1.244082</td>
-      <td>0.0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1</td>
-      <td>1.0</td>
-      <td>2.0</td>
-      <td>60.0</td>
-      <td>50.0</td>
+      <td>1</td>
+      <td>2</td>
+      <td>60</td>
+      <td>50</td>
       <td>4</td>
       <td>3</td>
-      <td>1.0</td>
+      <td>1</td>
       <td>1.101821</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>2</th>
       <td>1</td>
-      <td>1.0</td>
-      <td>3.0</td>
-      <td>44.0</td>
-      <td>36.0</td>
+      <td>1</td>
+      <td>3</td>
+      <td>44</td>
+      <td>36</td>
       <td>4</td>
       <td>2</td>
-      <td>2.0</td>
+      <td>2</td>
       <td>1.029923</td>
-      <td>0.0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>3</th>
       <td>1</td>
-      <td>1.0</td>
-      <td>4.0</td>
-      <td>55.0</td>
-      <td>55.0</td>
+      <td>1</td>
+      <td>4</td>
+      <td>55</td>
+      <td>55</td>
       <td>4</td>
       <td>3</td>
-      <td>2.5</td>
+      <td>2</td>
       <td>1.368007</td>
-      <td>0.0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>4</th>
       <td>1</td>
-      <td>1.0</td>
-      <td>5.0</td>
-      <td>52.0</td>
-      <td>49.0</td>
+      <td>1</td>
+      <td>5</td>
+      <td>52</td>
+      <td>49</td>
       <td>4</td>
       <td>3</td>
-      <td>3.5</td>
+      <td>3</td>
       <td>1.039329</td>
-      <td>1.0</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
 </div>
-<div class="section" id="Initialise-the-model">
-<h1>Initialise the model<a class="headerlink" href="#Initialise-the-model" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Initialize-the-model">
+<h2>Initialize the model<a class="headerlink" href="#Initialize-the-model" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">RLModel_2A</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">increasing_sensitivity</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">separate_learning_rates</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span></span><span class="c1"># you can &quot;turn on and off&quot; different mechanisms:</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">RLModel_2A</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+                         <span class="n">increasing_sensitivity</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                         <span class="n">separate_learning_rates</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-Using cached StanModel
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model</span><span class="o">.</span><span class="n">family</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">model_label</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">hierarchical_levels</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-(&#39;RL_2A&#39;, &#39;hierRL_2A_pow_2lr&#39;, 2)
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model</span><span class="o">.</span><span class="n">increasing_sensitivity</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">separate_learning_rates</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-(True, True)
+INFO:pystan:COMPILING THE C++ CODE FOR MODEL anon_model_85e7d33dd046aaf5975b754dfee23d15 NOW.
 </pre></div></div>
 </div>
 </div>
 <div class="section" id="Fit">
-<h1>Fit<a class="headerlink" href="#Fit" title="Permalink to this headline">¶</a></h1>
+<h2>Fit<a class="headerlink" href="#Fit" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># sampling parameters</span>
-<span class="n">n_iter</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">n_iter</span> <span class="o">=</span> <span class="mi">5000</span>
 <span class="n">n_chains</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="n">n_thin</span> <span class="o">=</span> <span class="mi">1</span>
 
 <span class="c1"># learning parameters</span>
-<span class="n">K</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1"># n options</span>
-<span class="n">initial_value_learning</span> <span class="o">=</span> <span class="mf">27.5</span> <span class="c1"># intitial value (Q0)</span>
-
-<span class="c1"># bayesian model</span>
-<span class="n">alpha_pos_priors</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;mu_mu&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd_mu&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;mu_sd&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd_sd&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">5</span><span class="p">}</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># User-Supplied Initial Values:</span>
-<span class="n">n_participants</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">participant</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
-
-<span class="k">def</span> <span class="nf">starting_values</span><span class="p">(</span><span class="n">chain_id</span><span class="p">,</span> <span class="n">n_participants</span><span class="o">=</span><span class="n">n_participants</span><span class="p">):</span>
-    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-    <span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
-
-    <span class="n">out</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;mu_alpha_pos&#39;</span><span class="p">:</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="o">.</span><span class="mi">1</span><span class="p">),</span>
-        <span class="s1">&#39;mu_alpha_neg&#39;</span><span class="p">:</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="o">.</span><span class="mi">1</span><span class="p">),</span>
-        <span class="s1">&#39;mu_consistency&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="o">.</span><span class="mi">5</span><span class="p">),</span>
-        <span class="s1">&#39;mu_scaling&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
-
-        <span class="s1">&#39;sd_alpha_pos&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span>
-        <span class="s1">&#39;sd_alpha_neg&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span>
-        <span class="s1">&#39;sd_consistency&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span>
-        <span class="s1">&#39;sd_scaling&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span>
-
-        <span class="s1">&#39;z_alpha_pos&#39;</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_participants</span><span class="p">)),</span>
-        <span class="s1">&#39;z_alpha_neg&#39;</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_participants</span><span class="p">)),</span>
-        <span class="s1">&#39;z_consistency&#39;</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_participants</span><span class="p">)),</span>
-        <span class="s1">&#39;z_scaling&#39;</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_participants</span><span class="p">))</span>
-    <span class="p">}</span>
-
-    <span class="k">return</span> <span class="n">out</span>
+<span class="n">K</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1"># n options in a learning block (participants see 2 at a time)</span>
+<span class="n">initial_value_learning</span> <span class="o">=</span> <span class="mf">27.5</span> <span class="c1"># intitial learning value (Q0)</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -712,7 +647,6 @@ Using cached StanModel
     <span class="n">data</span><span class="p">,</span>
     <span class="n">K</span><span class="p">,</span>
     <span class="n">initial_value_learning</span><span class="p">,</span>
-    <span class="n">alpha_pos_priors</span> <span class="o">=</span> <span class="n">alpha_pos_priors</span><span class="p">,</span>
     <span class="n">thin</span> <span class="o">=</span> <span class="n">n_thin</span><span class="p">,</span>
     <span class="nb">iter</span> <span class="o">=</span> <span class="n">n_iter</span><span class="p">,</span>
     <span class="n">chains</span> <span class="o">=</span> <span class="n">n_chains</span><span class="p">)</span>
@@ -726,8 +660,6 @@ Using cached StanModel
 <div class="highlight"><pre>
 WARNING:pystan:Maximum (flat) parameter count (1000) exceeded: skipping diagnostic tests for n_eff and Rhat.
 To run all diagnostics call pystan.check_hmc_diagnostics(fit)
-WARNING:pystan:814 of 1000 iterations ended with a divergence (81.4 %).
-WARNING:pystan:Try running with adapt_delta larger than 0.8 to remove the divergences.
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -736,18 +668,460 @@ WARNING:pystan:Try running with adapt_delta larger than 0.8 to remove the diverg
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Checks MCMC diagnostics:
-n_eff / iter looks reasonable for all parameters
-814.0 of 1000 iterations ended with a divergence (81.4%)
-  Try running with larger adapt_delta to remove the divergences
-0 of 1000 iterations saturated the maximum tree depth of 10 (0.0%)
+n_eff / iter for parameter log_p_t[1] is 0.00023747030172105283!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[2] is 0.00023747030172105283!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[81] is 0.0002313787222847051!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[161] is 0.00023348617734135585!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[162] is 0.00023348617734135585!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[241] is 0.00023964664705545727!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[242] is 0.00023964664705545727!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[320] is 0.0002344048901968685!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[400] is 0.00023346145482911864!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[480] is 0.00031411362774945185!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[482] is 0.00031411362774945185!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[560] is 0.00033195583747102383!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[561] is 0.00033195583747102383!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[640] is 0.00034870776213383474!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[720] is 0.00020584030891033725!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[723] is 0.00020584030891033725!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[800] is 0.0002192570987477215!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[801] is 0.0002192570987477215!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[880] is 0.00022069063208916687!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[881] is 0.00022069063208916687!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[959] is 0.00020243641558292258!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[1039] is 0.00020308664495786218!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[1041] is 0.00020308664495786218!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[1119] is 0.00020303371055687162!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[1199] is 0.00021093782470744835!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[1279] is 0.00023037061848270727!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[1281] is 0.00023037061848270727!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[1359] is 0.00023071617409731502!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[1439] is 0.00022160271228907806!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[1519] is 0.00022469930327223477!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[1520] is 0.00022469930327223477!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[1599] is 0.00022656886653641312!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[1679] is 0.00020553086543856268!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[1681] is 0.00020553086543856268!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[1682] is 0.00020735198086014402!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[1759] is 0.0002105895403550728!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[1839] is 0.00021201871642573158!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[1841] is 0.00021201871642573158!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[1919] is 0.00020583532185437686!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[1998] is 0.00020239394247168016!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[2078] is 0.00020247101586603336!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[2158] is 0.00022513477790795893!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[2237] is 0.00023906432193263445!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[2317] is 0.00023912992306449442!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[2318] is 0.00023912992306449442!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[2397] is 0.00020181794381728398!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[2477] is 0.00020573846087284733!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[2556] is 0.00020597173552872758!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[2557] is 0.00020597173552872758!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[2636] is 0.0002054242048598645!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[2637] is 0.0002054242048598645!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[2714] is 0.00023286208557102706!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[2715] is 0.00023286208557102706!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[2794] is 0.00023346152925830701!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[2796] is 0.00023346152925830701!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[2874] is 0.00020064046581162734!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[2876] is 0.00020064046581162734!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[2954] is 0.00020391041478951314!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[3034] is 0.00020366316648175967!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[3113] is 0.00022105853526058628!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[3192] is 0.00020946299345349907!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[3193] is 0.00020946299345349907!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[3272] is 0.00020886110338365552!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[3352] is 0.00020343151073789586!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[3431] is 0.00022923085000981392!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[3511] is 0.00022779354964688018!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[3591] is 0.0002386722891792471!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[3671] is 0.0002755508086184896!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[3751] is 0.0003066844716582841!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[3754] is 0.0003066844716582841!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[3831] is 0.00023331680258585705!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[3833] is 0.00023331680258585705!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[3911] is 0.00023943540595961608!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[3912] is 0.00023943540595961608!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[3990] is 0.000239877083594941!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[4070] is 0.00020713355402489616!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[4148] is 0.00020756241015544642!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[4149] is 0.00020756241015544642!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[4228] is 0.0002086012202500429!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[4308] is 0.00020579064106531687!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[4309] is 0.00020579064106531687!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[4388] is 0.00022288493077958537!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[4389] is 0.00022288493077958537!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[4467] is 0.00022751548347654636!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[4469] is 0.00022751548347654636!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[4547] is 0.00020290002039964231!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[4548] is 0.00020269412586527825!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[4627] is 0.0002343085227568206!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[4707] is 0.00023205524401152534!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[4787] is 0.00023132897808041114!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[4866] is 0.000504311352624081!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[4946] is 0.0005023575824719348!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[5026] is 0.00023246103920694167!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[5106] is 0.00024946490260224004!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[5107] is 0.00024946490260224004!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[5186] is 0.0002544114449851243!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[5266] is 0.0002599511820234745!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[5506] is 0.00021158354456150027!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[5586] is 0.00022031339985831565!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[5666] is 0.00022214885164697834!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[5667] is 0.00022214885164697834!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[5746] is 0.00022820188983931668!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[5825] is 0.00022464982211609511!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[5826] is 0.00022464982211609511!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[5905] is 0.0002403507697051144!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[5985] is 0.0002016890473765176!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[6065] is 0.00020280585765141313!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[6066] is 0.00020280585765141313!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[6145] is 0.00020278358501260357!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[6225] is 0.0002047322466638337!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[6226] is 0.0002047322466638337!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[6305] is 0.00020507551724218974!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[6306] is 0.00020507551724218974!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[6385] is 0.00020717422577068407!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_p_t[6386] is 0.00020717422577068407!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[1] is 0.0002717188067442273!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[2] is 0.00024069847654999968!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[81] is 0.0007752289206635788!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[161] is 0.0002485251830632205!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[162] is 0.0008985037715956164!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[241] is 0.00038960525761118993!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[242] is 0.00025202905864908897!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[320] is 0.0006210833670392529!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[480] is 0.000324160835299159!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[482] is 0.000324160835299159!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[560] is 0.00035551596496669535!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[561] is 0.00035551596496669535!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[640] is 0.00033668661685869395!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[720] is 0.0002071380871059156!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[723] is 0.0002071380871059156!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[800] is 0.00022405268401520077!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[801] is 0.00022405268401520077!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[880] is 0.00022574620819173322!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[881] is 0.0002303208345372973!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[959] is 0.0002029748722172854!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[1039] is 0.0002033127021153906!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[1041] is 0.00020374623122833388!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[1119] is 0.00020367555758188396!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[1199] is 0.00021472325377009348!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[1279] is 0.0005038332661661523!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[1281] is 0.00023878762552036545!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[1359] is 0.00023929907816299875!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[1439] is 0.0002318808263864851!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[1520] is 0.00023476492748614736!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[1679] is 0.0002063782029301045!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[1681] is 0.00020659320121636888!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[1682] is 0.00020996091797449137!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[1759] is 0.00021356543826448534!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[1839] is 0.00021611354425077494!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[1841] is 0.00021428142098976592!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[1919] is 0.00020801471701365192!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[1998] is 0.0002027388226817652!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[2078] is 0.00020276431779711704!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[2158] is 0.00024346187812806933!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[2237] is 0.00034271604524504324!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[2317] is 0.00040851870576252874!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[2318] is 0.00040851870576252874!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[2397] is 0.0002024408867540366!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[2477] is 0.00020793930724189358!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[2556] is 0.00020796796417868184!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[2557] is 0.00020761567377076647!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[2636] is 0.00020693810656010242!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[2637] is 0.00020661873565699435!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[2714] is 0.00027230502545483673!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[2715] is 0.00023597871281733497!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[2794] is 0.00023661164552857508!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[2796] is 0.00027781890401992184!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[2874] is 0.0002007783866865317!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[2876] is 0.0002007783866865317!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[2954] is 0.00020485911896576004!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[3034] is 0.00020448742688892164!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[3113] is 0.00022623891893834648!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[3192] is 0.00021359016974708774!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[3272] is 0.0002127367173195521!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[3352] is 0.0002039129555157679!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[3431] is 0.00024474431870239675!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[3511] is 0.0005542949223588211!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[3591] is 0.00025259663994892713!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[3671] is 0.00030949056088650027!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[3751] is 0.0003613503338579131!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[3754] is 0.0003613503338579131!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[3831] is 0.0002620110567599813!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[3833] is 0.0002363565815614494!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[3911] is 0.00033380152573460315!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[3912] is 0.00033380152573460315!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[3990] is 0.00025207821642711774!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[4070] is 0.00020836447261635355!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[4148] is 0.00020924127597563694!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[4149] is 0.00020924127597563694!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[4228] is 0.00021085310446321927!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[4308] is 0.00020719901968219636!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[4309] is 0.00020682947162614095!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[4388] is 0.00023428665951592356!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[4389] is 0.00023428665951592356!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[4467] is 0.0002587223137716281!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[4469] is 0.00023385213101419406!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[4547] is 0.00020341382188097322!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[4548] is 0.00020307221838449007!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[4627] is 0.0004146674485020371!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[4707] is 0.0004239159561579698!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[4866] is 0.0005104303199887707!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[4946] is 0.0005763216126261141!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[5026] is 0.00045105513400851783!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[5186] is 0.00027635171213632944!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[5346] is 0.00029827741530953357!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[5506] is 0.00021291761323229014!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[5586] is 0.00022990457582431522!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[5666] is 0.0008054498083579704!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[5667] is 0.0008054498083579704!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[5746] is 0.0002420368676229473!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[5825] is 0.00023503207865233942!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[5905] is 0.00025830711702322937!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[5985] is 0.0002026449794911374!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[6065] is 0.00020419079193442614!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[6066] is 0.00020419079193442614!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[6145] is 0.0002037927353078551!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[6225] is 0.0002057560693096832!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[6226] is 0.0002057560693096832!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[6305] is 0.0002056740453611895!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[6306] is 0.0002056740453611895!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[6385] is 0.0002081235601695553!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter for parameter log_lik[6386] is 0.00020815717284333176!
+E-BFMI below 0.2 indicates you may need to reparameterize your model
+n_eff / iter below 0.001 indicates that the effective sample size has likely been overestimated
+0.0 of 5000 iterations ended with a divergence (0.0%)
+0 of 5000 iterations saturated the maximum tree depth of 10 (0.0%)
 E-BFMI indicated no pathological behavior
 </pre></div></div>
 </div>
-</div>
 <div class="section" id="get-Rhat">
-<h1>get Rhat<a class="headerlink" href="#get-Rhat" title="Permalink to this headline">¶</a></h1>
+<h3>get Rhat<a class="headerlink" href="#get-Rhat" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -756,7 +1130,7 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -784,101 +1158,35 @@ E-BFMI indicated no pathological behavior
   <tbody>
     <tr>
       <th>count</th>
-      <td>24.000000</td>
+      <td>87.000000</td>
     </tr>
     <tr>
       <th>mean</th>
-      <td>1.015905</td>
+      <td>1.001652</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>0.022220</td>
+      <td>0.003058</td>
     </tr>
     <tr>
       <th>min</th>
-      <td>0.998962</td>
+      <td>0.999611</td>
     </tr>
     <tr>
       <th>25%</th>
-      <td>1.002015</td>
+      <td>0.999975</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>1.007323</td>
+      <td>1.000402</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>1.017522</td>
+      <td>1.002264</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>1.081682</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">rhat</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>rhat</th>
-      <th>variable</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1.073527</td>
-      <td>mu_alpha_pos</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1.001434</td>
-      <td>mu_alpha_neg</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>1.000209</td>
-      <td>mu_consistency</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1.017083</td>
-      <td>mu_scaling</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>1.081682</td>
-      <td>sd_alpha_pos</td>
+      <td>1.017657</td>
     </tr>
   </tbody>
 </table>
@@ -886,9 +1194,9 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="section" id="get-wAIC">
-<h1>get wAIC<a class="headerlink" href="#get-wAIC" title="Permalink to this headline">¶</a></h1>
+<h3>get wAIC<a class="headerlink" href="#get-wAIC" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -897,30 +1205,32 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;lppd&#39;: -412.5377916113189,
- &#39;p_waic&#39;: 8.770263522293563,
- &#39;waic&#39;: 842.6161102672249,
- &#39;waic_se&#39;: 34.751672560289}
+{&#39;lppd&#39;: -2568.4317960879453,
+ &#39;p_waic&#39;: 64.246543173176,
+ &#39;waic&#39;: 5265.356678522243,
+ &#39;waic_se&#39;: 90.23490325898337}
 </pre></div></div>
+</div>
+</div>
 </div>
 <div class="section" id="Posteriors">
 <h2>Posteriors<a class="headerlink" href="#Posteriors" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">samples</span>
+<span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -946,328 +1256,225 @@ E-BFMI indicated no pathological behavior
       <th>draw</th>
       <th>transf_mu_alpha_pos</th>
       <th>transf_mu_alpha_neg</th>
-      <th>transf_mu_consistency</th>
-      <th>transf_mu_scaling</th>
+      <th>transf_mu_sensitivity</th>
       <th>alpha_pos_sbj[1]</th>
       <th>alpha_pos_sbj[2]</th>
       <th>alpha_pos_sbj[3]</th>
       <th>alpha_pos_sbj[4]</th>
+      <th>alpha_pos_sbj[5]</th>
       <th>...</th>
-      <th>alpha_neg_sbj[3]</th>
-      <th>alpha_neg_sbj[4]</th>
-      <th>consistency_sbj[1]</th>
-      <th>consistency_sbj[2]</th>
-      <th>consistency_sbj[3]</th>
-      <th>consistency_sbj[4]</th>
-      <th>scaling_sbj[1]</th>
-      <th>scaling_sbj[2]</th>
-      <th>scaling_sbj[3]</th>
-      <th>scaling_sbj[4]</th>
+      <th>sensitivity_sbj[18]</th>
+      <th>sensitivity_sbj[19]</th>
+      <th>sensitivity_sbj[20]</th>
+      <th>sensitivity_sbj[21]</th>
+      <th>sensitivity_sbj[22]</th>
+      <th>sensitivity_sbj[23]</th>
+      <th>sensitivity_sbj[24]</th>
+      <th>sensitivity_sbj[25]</th>
+      <th>sensitivity_sbj[26]</th>
+      <th>sensitivity_sbj[27]</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>0</td>
-      <td>151</td>
-      <td>0.010641</td>
-      <td>0.202797</td>
-      <td>1.807443e-13</td>
-      <td>19.336160</td>
-      <td>0.010949</td>
-      <td>0.004388</td>
-      <td>0.003359</td>
-      <td>0.012103</td>
+      <th>count</th>
+      <td>5000.00000</td>
+      <td>5000.000000</td>
+      <td>5000.000000</td>
+      <td>5000.000000</td>
+      <td>5000.000000</td>
+      <td>5000.000000</td>
+      <td>5000.000000</td>
+      <td>5000.000000</td>
+      <td>5000.000000</td>
+      <td>5000.000000</td>
       <td>...</td>
-      <td>0.588475</td>
-      <td>3.847571e-03</td>
-      <td>0.000000e+00</td>
-      <td>2.529846e-02</td>
-      <td>2.402555e-02</td>
-      <td>2.215828e-11</td>
-      <td>10.628908</td>
-      <td>24.737152</td>
-      <td>15.638247</td>
-      <td>21.505756</td>
+      <td>5000.000000</td>
+      <td>5000.000000</td>
+      <td>5000.000000</td>
+      <td>5000.000000</td>
+      <td>5000.000000</td>
+      <td>5000.000000</td>
+      <td>5000.000000</td>
+      <td>5000.000000</td>
+      <td>5000.000000</td>
+      <td>5000.000000</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>0</td>
-      <td>341</td>
-      <td>0.012059</td>
-      <td>0.164839</td>
-      <td>1.025047e-07</td>
-      <td>23.057092</td>
-      <td>0.012186</td>
-      <td>0.004007</td>
-      <td>0.003638</td>
-      <td>0.019986</td>
+      <th>mean</th>
+      <td>0.50000</td>
+      <td>1249.500000</td>
+      <td>0.066724</td>
+      <td>0.244974</td>
+      <td>0.361721</td>
+      <td>0.038006</td>
+      <td>0.010173</td>
+      <td>0.048696</td>
+      <td>0.146821</td>
+      <td>0.134911</td>
       <td>...</td>
-      <td>0.665281</td>
-      <td>1.325577e-03</td>
-      <td>1.081659e-10</td>
-      <td>0.000000e+00</td>
-      <td>5.653968e-10</td>
-      <td>6.493245e-09</td>
-      <td>4.126252</td>
-      <td>55.297337</td>
-      <td>26.338080</td>
-      <td>9.567918</td>
+      <td>0.136067</td>
+      <td>0.320794</td>
+      <td>0.367682</td>
+      <td>0.793641</td>
+      <td>0.591713</td>
+      <td>0.961189</td>
+      <td>0.420030</td>
+      <td>0.657458</td>
+      <td>0.092742</td>
+      <td>0.252568</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>0</td>
-      <td>66</td>
-      <td>0.009189</td>
-      <td>0.678871</td>
-      <td>2.438011e-08</td>
-      <td>33.554196</td>
-      <td>0.012800</td>
-      <td>0.005034</td>
-      <td>0.003378</td>
-      <td>0.019490</td>
+      <th>std</th>
+      <td>0.50005</td>
+      <td>721.759958</td>
+      <td>0.018311</td>
+      <td>0.046023</td>
+      <td>0.056664</td>
+      <td>0.023549</td>
+      <td>0.004139</td>
+      <td>0.056156</td>
+      <td>0.084688</td>
+      <td>0.067579</td>
       <td>...</td>
-      <td>0.609839</td>
-      <td>6.992230e-04</td>
-      <td>5.201173e-12</td>
-      <td>1.316725e-13</td>
-      <td>0.000000e+00</td>
-      <td>1.110223e-14</td>
-      <td>48.164868</td>
-      <td>24.923084</td>
-      <td>4.397065</td>
-      <td>65.910597</td>
+      <td>0.142427</td>
+      <td>0.083155</td>
+      <td>0.059834</td>
+      <td>0.210083</td>
+      <td>0.127341</td>
+      <td>0.207392</td>
+      <td>0.084830</td>
+      <td>0.172396</td>
+      <td>0.048833</td>
+      <td>0.052704</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>0</td>
-      <td>80</td>
-      <td>0.005871</td>
-      <td>0.628901</td>
-      <td>0.000000e+00</td>
-      <td>38.501985</td>
-      <td>0.013507</td>
-      <td>0.005118</td>
-      <td>0.003066</td>
-      <td>0.015686</td>
+      <th>min</th>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.024354</td>
+      <td>0.109829</td>
+      <td>0.194459</td>
+      <td>0.004458</td>
+      <td>0.002260</td>
+      <td>0.001171</td>
+      <td>0.016571</td>
+      <td>0.019734</td>
       <td>...</td>
-      <td>0.830924</td>
-      <td>2.569010e-03</td>
-      <td>0.000000e+00</td>
-      <td>0.000000e+00</td>
-      <td>0.000000e+00</td>
-      <td>0.000000e+00</td>
-      <td>23.889429</td>
-      <td>21.140338</td>
-      <td>38.929447</td>
-      <td>42.524500</td>
+      <td>0.013190</td>
+      <td>0.141832</td>
+      <td>0.216083</td>
+      <td>0.359327</td>
+      <td>0.321128</td>
+      <td>0.452598</td>
+      <td>0.223012</td>
+      <td>0.259511</td>
+      <td>0.022542</td>
+      <td>0.127103</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>0</td>
-      <td>426</td>
-      <td>0.008905</td>
-      <td>0.351488</td>
-      <td>0.000000e+00</td>
-      <td>25.117721</td>
-      <td>0.011027</td>
-      <td>0.003010</td>
-      <td>0.003628</td>
-      <td>0.015119</td>
+      <th>25%</th>
+      <td>0.00000</td>
+      <td>624.750000</td>
+      <td>0.053892</td>
+      <td>0.213485</td>
+      <td>0.322546</td>
+      <td>0.023834</td>
+      <td>0.007603</td>
+      <td>0.003617</td>
+      <td>0.088741</td>
+      <td>0.086015</td>
       <td>...</td>
-      <td>0.366919</td>
-      <td>2.771243e-04</td>
-      <td>0.000000e+00</td>
-      <td>0.000000e+00</td>
-      <td>0.000000e+00</td>
-      <td>0.000000e+00</td>
-      <td>20.750421</td>
-      <td>11.455314</td>
-      <td>8.150572</td>
-      <td>0.000023</td>
+      <td>0.059877</td>
+      <td>0.259763</td>
+      <td>0.327552</td>
+      <td>0.654118</td>
+      <td>0.505373</td>
+      <td>0.816957</td>
+      <td>0.362855</td>
+      <td>0.536331</td>
+      <td>0.069057</td>
+      <td>0.217340</td>
     </tr>
     <tr>
-      <th>...</th>
+      <th>50%</th>
+      <td>0.50000</td>
+      <td>1249.500000</td>
+      <td>0.064572</td>
+      <td>0.240162</td>
+      <td>0.355767</td>
+      <td>0.032948</td>
+      <td>0.009383</td>
+      <td>0.031871</td>
+      <td>0.126847</td>
+      <td>0.121251</td>
       <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
+      <td>0.078173</td>
+      <td>0.309836</td>
+      <td>0.360764</td>
+      <td>0.754539</td>
+      <td>0.572355</td>
+      <td>0.938055</td>
+      <td>0.408312</td>
+      <td>0.637224</td>
+      <td>0.082764</td>
+      <td>0.245234</td>
     </tr>
     <tr>
-      <th>995</th>
-      <td>1</td>
-      <td>290</td>
-      <td>0.022145</td>
-      <td>0.200028</td>
-      <td>0.000000e+00</td>
-      <td>0.000780</td>
-      <td>0.010388</td>
-      <td>0.006677</td>
-      <td>0.002353</td>
-      <td>0.023682</td>
+      <th>75%</th>
+      <td>1.00000</td>
+      <td>1874.250000</td>
+      <td>0.076803</td>
+      <td>0.271523</td>
+      <td>0.394753</td>
+      <td>0.045360</td>
+      <td>0.011671</td>
+      <td>0.080263</td>
+      <td>0.181019</td>
+      <td>0.168311</td>
       <td>...</td>
-      <td>0.832753</td>
-      <td>3.371890e-03</td>
-      <td>2.916978e-11</td>
-      <td>2.287059e-14</td>
-      <td>0.000000e+00</td>
-      <td>0.000000e+00</td>
-      <td>0.000072</td>
-      <td>0.131995</td>
-      <td>0.000244</td>
-      <td>0.000380</td>
+      <td>0.150494</td>
+      <td>0.368362</td>
+      <td>0.400960</td>
+      <td>0.881530</td>
+      <td>0.658451</td>
+      <td>1.081726</td>
+      <td>0.463639</td>
+      <td>0.755038</td>
+      <td>0.101191</td>
+      <td>0.279548</td>
     </tr>
     <tr>
-      <th>996</th>
-      <td>1</td>
-      <td>318</td>
-      <td>0.011784</td>
-      <td>0.047482</td>
-      <td>4.088469e-03</td>
-      <td>69.605617</td>
-      <td>0.007781</td>
-      <td>0.007654</td>
-      <td>0.002492</td>
-      <td>0.018870</td>
+      <th>max</th>
+      <td>1.00000</td>
+      <td>2499.000000</td>
+      <td>0.175701</td>
+      <td>0.488028</td>
+      <td>0.655635</td>
+      <td>0.336519</td>
+      <td>0.056567</td>
+      <td>0.606490</td>
+      <td>0.750089</td>
+      <td>0.588811</td>
       <td>...</td>
-      <td>0.720370</td>
-      <td>1.191278e-09</td>
-      <td>7.386521e-07</td>
-      <td>3.886821e-01</td>
-      <td>1.420946e-03</td>
-      <td>7.649352e-08</td>
-      <td>88.775460</td>
-      <td>104.955108</td>
-      <td>57.534386</td>
-      <td>78.188621</td>
-    </tr>
-    <tr>
-      <th>997</th>
-      <td>1</td>
-      <td>168</td>
-      <td>0.018125</td>
-      <td>0.131500</td>
-      <td>3.642930e-11</td>
-      <td>3.180360</td>
-      <td>0.013010</td>
-      <td>0.006467</td>
-      <td>0.002694</td>
-      <td>0.025857</td>
-      <td>...</td>
-      <td>0.829241</td>
-      <td>7.436781e-06</td>
-      <td>7.544122e-08</td>
-      <td>2.642331e-14</td>
-      <td>2.753353e-14</td>
-      <td>2.161174e-08</td>
-      <td>0.006803</td>
-      <td>78.812938</td>
-      <td>42.308060</td>
-      <td>0.000748</td>
-    </tr>
-    <tr>
-      <th>998</th>
-      <td>1</td>
-      <td>68</td>
-      <td>0.017947</td>
-      <td>0.120837</td>
-      <td>0.000000e+00</td>
-      <td>30.495698</td>
-      <td>0.013074</td>
-      <td>0.003898</td>
-      <td>0.003163</td>
-      <td>0.018252</td>
-      <td>...</td>
-      <td>0.605559</td>
-      <td>2.557298e-04</td>
-      <td>2.220446e-15</td>
-      <td>0.000000e+00</td>
-      <td>0.000000e+00</td>
-      <td>0.000000e+00</td>
-      <td>28.318647</td>
-      <td>30.975493</td>
-      <td>29.558877</td>
-      <td>30.742780</td>
-    </tr>
-    <tr>
-      <th>999</th>
-      <td>1</td>
-      <td>426</td>
-      <td>0.012796</td>
-      <td>0.185168</td>
-      <td>0.000000e+00</td>
-      <td>53.599027</td>
-      <td>0.009208</td>
-      <td>0.005319</td>
-      <td>0.004086</td>
-      <td>0.016137</td>
-      <td>...</td>
-      <td>0.372979</td>
-      <td>1.897822e-04</td>
-      <td>0.000000e+00</td>
-      <td>0.000000e+00</td>
-      <td>0.000000e+00</td>
-      <td>0.000000e+00</td>
-      <td>52.179665</td>
-      <td>58.486534</td>
-      <td>52.172403</td>
-      <td>55.378269</td>
+      <td>1.598757</td>
+      <td>0.738939</td>
+      <td>1.068068</td>
+      <td>2.026769</td>
+      <td>1.952079</td>
+      <td>2.066180</td>
+      <td>1.350689</td>
+      <td>1.889106</td>
+      <td>1.253123</td>
+      <td>0.633065</td>
     </tr>
   </tbody>
 </table>
-<p>1000 rows × 22 columns</p>
+<p>8 rows × 86 columns</p>
 </div></div>
 </div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">trial_samples</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-OrderedDict([(&#39;log_p_t&#39;,
-              array([[-0.69314718, -0.69314718, -0.60440721, ..., -0.0111039 ,
-                      -0.29310712, -0.00702939],
-                     [-0.69314718, -0.69314718, -0.59492368, ..., -0.00875037,
-                      -0.38514937, -0.0023375 ],
-                     [-0.69314718, -0.69314718, -0.59025755, ..., -0.01006879,
-                      -0.4086564 , -0.0026096 ],
-                     ...,
-                     [-0.69314718, -0.69314718, -0.58866217, ..., -0.01257145,
-                      -0.50380026, -0.00183871],
-                     [-0.69314718, -0.69314718, -0.588177  , ..., -0.01128259,
-                      -0.4176347 , -0.00306565],
-                     [-0.69314718, -0.69314718, -0.6179428 , ..., -0.01231992,
-                      -0.40207684, -0.00395019]]))])
-</pre></div></div>
-</div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1280,7 +1487,7 @@ OrderedDict([(&#39;log_p_t&#39;,
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1292,45 +1499,26 @@ OrderedDict([(&#39;log_p_t&#39;,
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_RL_2A_hierarchical_fitting_20_0.png" src="../_images/notebooks_RL_2A_hierarchical_fitting_20_0.png" />
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">plot_posteriors</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">show_intervals</span><span class="o">=</span><span class="s2">&quot;BCI&quot;</span><span class="p">,</span> <span class="n">alpha_intervals</span><span class="o">=.</span><span class="mi">1</span><span class="p">,</span> <span class="n">clip</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/notebooks_RL_2A_hierarchical_fitting_21_0.png" src="../_images/notebooks_RL_2A_hierarchical_fitting_21_0.png" />
+<img alt="../_images/notebooks_RL_2A_hierarchical_fitting_16_0.png" src="../_images/notebooks_RL_2A_hierarchical_fitting_16_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="Posterior-predictives">
 <h2>Posterior predictives<a class="headerlink" href="#Posterior-predictives" title="Permalink to this headline">¶</a></h2>
-</div>
-</div>
 <div class="section" id="Ungrouped">
-<h1>Ungrouped<a class="headerlink" href="#Ungrouped" title="Permalink to this headline">¶</a></h1>
+<h3>Ungrouped<a class="headerlink" href="#Ungrouped" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">pp</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">get_posterior_predictives_df</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
-
 <span class="n">pp</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1371,16 +1559,16 @@ OrderedDict([(&#39;log_p_t&#39;,
       <th>9</th>
       <th>10</th>
       <th>...</th>
-      <th>949</th>
-      <th>950</th>
-      <th>951</th>
-      <th>952</th>
-      <th>953</th>
-      <th>954</th>
-      <th>955</th>
-      <th>956</th>
-      <th>957</th>
-      <th>958</th>
+      <th>6455</th>
+      <th>6456</th>
+      <th>6457</th>
+      <th>6458</th>
+      <th>6459</th>
+      <th>6460</th>
+      <th>6461</th>
+      <th>6462</th>
+      <th>6463</th>
+      <th>6464</th>
     </tr>
     <tr>
       <th>sample</th>
@@ -1412,68 +1600,68 @@ OrderedDict([(&#39;log_p_t&#39;,
       <th>1</th>
       <td>1</td>
       <td>1</td>
+      <td>0</td>
+      <td>0</td>
       <td>1</td>
       <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
       <td>1</td>
       <td>...</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
       <td>1</td>
     </tr>
     <tr>
       <th>2</th>
       <td>1</td>
-      <td>0</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
+      <td>0</td>
+      <td>0</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>...</td>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>1</td>
     </tr>
     <tr>
       <th>3</th>
       <td>0</td>
+      <td>1</td>
+      <td>0</td>
       <td>0</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
       <td>0</td>
       <td>1</td>
-      <td>0</td>
+      <td>1</td>
       <td>...</td>
       <td>1</td>
-      <td>1</td>
       <td>0</td>
       <td>1</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
@@ -1482,13 +1670,13 @@ OrderedDict([(&#39;log_p_t&#39;,
     </tr>
     <tr>
       <th>4</th>
+      <td>1</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
+      <td>1</td>
       <td>0</td>
-      <td>1</td>
-      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
@@ -1497,7 +1685,7 @@ OrderedDict([(&#39;log_p_t&#39;,
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
+      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
@@ -1506,12 +1694,12 @@ OrderedDict([(&#39;log_p_t&#39;,
     </tr>
     <tr>
       <th>5</th>
-      <td>0</td>
-      <td>1</td>
       <td>1</td>
       <td>0</td>
       <td>0</td>
+      <td>0</td>
       <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
@@ -1519,7 +1707,7 @@ OrderedDict([(&#39;log_p_t&#39;,
       <td>...</td>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
+      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
@@ -1557,63 +1745,63 @@ OrderedDict([(&#39;log_p_t&#39;,
       <td>1</td>
       <td>1</td>
       <td>0</td>
-      <td>1</td>
+      <td>0</td>
+      <td>0</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
+      <td>0</td>
       <td>...</td>
       <td>1</td>
-      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>1</td>
     </tr>
     <tr>
       <th>497</th>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
-      <td>0</td>
       <td>...</td>
+      <td>0</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>0</td>
+      <td>1</td>
       <td>1</td>
     </tr>
     <tr>
       <th>498</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
       <td>0</td>
-      <td>1</td>
-      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>...</td>
-      <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
@@ -1626,25 +1814,25 @@ OrderedDict([(&#39;log_p_t&#39;,
     </tr>
     <tr>
       <th>499</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>1</td>
       <td>0</td>
       <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>...</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
     </tr>
@@ -1652,44 +1840,43 @@ OrderedDict([(&#39;log_p_t&#39;,
       <th>500</th>
       <td>1</td>
       <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
       <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>1</td>
       <td>...</td>
       <td>1</td>
       <td>1</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
     </tr>
   </tbody>
 </table>
-<p>500 rows × 958 columns</p>
+<p>500 rows × 6464 columns</p>
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">pp_summary</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">get_posterior_predictives_summary</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
-
 <span class="n">pp_summary</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1721,23 +1908,23 @@ OrderedDict([(&#39;log_p_t&#39;,
   <tbody>
     <tr>
       <th>1</th>
-      <td>0.789144</td>
+      <td>0.805693</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.798539</td>
+      <td>0.804301</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.811065</td>
+      <td>0.789759</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.791232</td>
+      <td>0.802754</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.772443</td>
+      <td>0.803218</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1745,23 +1932,23 @@ OrderedDict([(&#39;log_p_t&#39;,
     </tr>
     <tr>
       <th>496</th>
-      <td>0.758873</td>
+      <td>0.797184</td>
     </tr>
     <tr>
       <th>497</th>
-      <td>0.792276</td>
+      <td>0.790068</td>
     </tr>
     <tr>
       <th>498</th>
-      <td>0.805846</td>
+      <td>0.803991</td>
     </tr>
     <tr>
       <th>499</th>
-      <td>0.780793</td>
+      <td>0.800124</td>
     </tr>
     <tr>
       <th>500</th>
-      <td>0.774530</td>
+      <td>0.793936</td>
     </tr>
   </tbody>
 </table>
@@ -1769,13 +1956,13 @@ OrderedDict([(&#39;log_p_t&#39;,
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 
 <span class="n">model_fit</span><span class="o">.</span><span class="n">plot_mean_posterior_predictives</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">show_intervals</span><span class="o">=</span><span class="s1">&#39;HDI&#39;</span><span class="p">)</span>
 
@@ -1790,161 +1977,38 @@ OrderedDict([(&#39;log_p_t&#39;,
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_RL_2A_hierarchical_fitting_26_0.png" src="../_images/notebooks_RL_2A_hierarchical_fitting_26_0.png" />
+<img alt="../_images/notebooks_RL_2A_hierarchical_fitting_21_0.png" src="../_images/notebooks_RL_2A_hierarchical_fitting_21_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="Grouped">
-<h1>Grouped<a class="headerlink" href="#Grouped" title="Permalink to this headline">¶</a></h1>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<h3>Grouped<a class="headerlink" href="#Grouped" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Define new grouping variables, in this case, for the different choice pairs, but any grouping var can do</span>
 <span class="n">data</span><span class="p">[</span><span class="s1">&#39;choice_pair&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;AB&#39;</span>
 <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">data</span><span class="o">.</span><span class="n">cor_option</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">inc_option</span> <span class="o">==</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;choice_pair&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;AC&#39;</span>
 <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">data</span><span class="o">.</span><span class="n">cor_option</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">inc_option</span> <span class="o">==</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;choice_pair&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;BD&#39;</span>
 <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">data</span><span class="o">.</span><span class="n">cor_option</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">inc_option</span> <span class="o">==</span> <span class="mi">3</span><span class="p">),</span> <span class="s1">&#39;choice_pair&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;CD&#39;</span>
 
 <span class="n">data</span><span class="p">[</span><span class="s1">&#39;block_bins&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">trial_block</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
-
-<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>level_0</th>
-      <th>index</th>
-      <th>participant</th>
-      <th>block_label</th>
-      <th>trial_block</th>
-      <th>f_cor</th>
-      <th>f_inc</th>
-      <th>cor_option</th>
-      <th>inc_option</th>
-      <th>times_seen</th>
-      <th>rt</th>
-      <th>accuracy</th>
-      <th>choice_pair</th>
-      <th>block_bins</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>43.0</td>
-      <td>39.0</td>
-      <td>2</td>
-      <td>1</td>
-      <td>1.0</td>
-      <td>1.244082</td>
-      <td>0.0</td>
-      <td>AB</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1.0</td>
-      <td>2.0</td>
-      <td>60.0</td>
-      <td>50.0</td>
-      <td>4</td>
-      <td>3</td>
-      <td>1.0</td>
-      <td>1.101821</td>
-      <td>1.0</td>
-      <td>CD</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2</td>
-      <td>2</td>
-      <td>1</td>
-      <td>1.0</td>
-      <td>3.0</td>
-      <td>44.0</td>
-      <td>36.0</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2.0</td>
-      <td>1.029923</td>
-      <td>0.0</td>
-      <td>BD</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>3</td>
-      <td>3</td>
-      <td>1</td>
-      <td>1.0</td>
-      <td>4.0</td>
-      <td>55.0</td>
-      <td>55.0</td>
-      <td>4</td>
-      <td>3</td>
-      <td>2.5</td>
-      <td>1.368007</td>
-      <td>0.0</td>
-      <td>CD</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>4</td>
-      <td>4</td>
-      <td>1</td>
-      <td>1.0</td>
-      <td>5.0</td>
-      <td>52.0</td>
-      <td>49.0</td>
-      <td>4</td>
-      <td>3</td>
-      <td>3.5</td>
-      <td>1.039329</td>
-      <td>1.0</td>
-      <td>CD</td>
-      <td>1</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1953,7 +2017,7 @@ OrderedDict([(&#39;log_p_t&#39;,
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1990,27 +2054,27 @@ OrderedDict([(&#39;log_p_t&#39;,
   </thead>
   <tbody>
     <tr>
-      <th rowspan="5" valign="top">1.0</th>
+      <th rowspan="5" valign="top">1</th>
       <th rowspan="5" valign="top">1</th>
       <th rowspan="5" valign="top">AB</th>
       <th>1</th>
-      <td>0.6</td>
+      <td>0.555556</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.6</td>
+      <td>0.555556</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.2</td>
+      <td>0.603175</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.6</td>
+      <td>0.507937</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.4</td>
+      <td>0.507937</td>
     </tr>
     <tr>
       <th>...</th>
@@ -2020,27 +2084,27 @@ OrderedDict([(&#39;log_p_t&#39;,
       <td>...</td>
     </tr>
     <tr>
-      <th rowspan="5" valign="top">3.0</th>
+      <th rowspan="5" valign="top">3</th>
       <th rowspan="5" valign="top">8</th>
       <th rowspan="5" valign="top">CD</th>
       <th>496</th>
-      <td>0.4</td>
+      <td>0.777778</td>
     </tr>
     <tr>
       <th>497</th>
-      <td>1.0</td>
+      <td>0.722222</td>
     </tr>
     <tr>
       <th>498</th>
-      <td>1.0</td>
+      <td>0.833333</td>
     </tr>
     <tr>
       <th>499</th>
-      <td>0.6</td>
+      <td>0.722222</td>
     </tr>
     <tr>
       <th>500</th>
-      <td>0.8</td>
+      <td>0.777778</td>
     </tr>
   </tbody>
 </table>
@@ -2048,7 +2112,7 @@ OrderedDict([(&#39;log_p_t&#39;,
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -2068,120 +2132,9 @@ OrderedDict([(&#39;log_p_t&#39;,
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_RL_2A_hierarchical_fitting_30_0.png" src="../_images/notebooks_RL_2A_hierarchical_fitting_30_0.png" />
+<img alt="../_images/notebooks_RL_2A_hierarchical_fitting_26_0.png" src="../_images/notebooks_RL_2A_hierarchical_fitting_26_0.png" />
 </div>
 </div>
-<div class="section" id="Get-last-values-for-eventual-further-sampling">
-<h2>Get last values for eventual further sampling<a class="headerlink" href="#Get-last-values-for-eventual-further-sampling" title="Permalink to this headline">¶</a></h2>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">sv</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">last_values</span>
-<span class="n">sv</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>chain</th>
-      <th>draw</th>
-      <th>warmup</th>
-      <th>mu_alpha_neg</th>
-      <th>mu_alpha_pos</th>
-      <th>mu_consistency</th>
-      <th>mu_scaling</th>
-      <th>sd_alpha_neg</th>
-      <th>sd_alpha_pos</th>
-      <th>sd_consistency</th>
-      <th>...</th>
-      <th>z_alpha_pos[3]</th>
-      <th>z_alpha_pos[4]</th>
-      <th>z_consistency[1]</th>
-      <th>z_consistency[2]</th>
-      <th>z_consistency[3]</th>
-      <th>z_consistency[4]</th>
-      <th>z_scaling[1]</th>
-      <th>z_scaling[2]</th>
-      <th>z_scaling[3]</th>
-      <th>z_scaling[4]</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>499</th>
-      <td>0</td>
-      <td>499</td>
-      <td>0</td>
-      <td>-1.557190</td>
-      <td>-1.719634</td>
-      <td>-39.952220</td>
-      <td>7.610549</td>
-      <td>1.409172</td>
-      <td>0.532081</td>
-      <td>14.519081</td>
-      <td>...</td>
-      <td>-1.916148</td>
-      <td>-0.586565</td>
-      <td>-0.232832</td>
-      <td>-0.741959</td>
-      <td>-0.828419</td>
-      <td>-0.723340</td>
-      <td>-1.410976</td>
-      <td>-0.067900</td>
-      <td>1.104156</td>
-      <td>1.376141</td>
-    </tr>
-    <tr>
-      <th>999</th>
-      <td>1</td>
-      <td>499</td>
-      <td>0</td>
-      <td>-0.081763</td>
-      <td>-2.353104</td>
-      <td>-9.560325</td>
-      <td>45.134087</td>
-      <td>0.857415</td>
-      <td>0.206819</td>
-      <td>5.091073</td>
-      <td>...</td>
-      <td>-2.318053</td>
-      <td>1.144838</td>
-      <td>-1.096003</td>
-      <td>1.188168</td>
-      <td>-1.215879</td>
-      <td>-1.505021</td>
-      <td>0.870739</td>
-      <td>1.718529</td>
-      <td>0.894685</td>
-      <td>-0.298384</td>
-    </tr>
-  </tbody>
-</table>
-<p>2 rows × 27 columns</p>
-</div></div>
 </div>
 </div>
 </div>
@@ -2191,6 +2144,15 @@ OrderedDict([(&#39;log_p_t&#39;,
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="RLDDM_fitting.html" class="btn btn-neutral float-right" title="Fit the RLDDM on individual data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="RL_2A_fitting.html" class="btn btn-neutral float-left" title="Fit a RL model on individual data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

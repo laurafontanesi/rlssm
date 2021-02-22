@@ -26,7 +26,9 @@ Parameter estimation is done at an individual or hierarchical level using `PySta
    :maxdepth: 2
    :caption: How to:
 
-   notebooks/load_from_saved
+   notebooks/initialize_model
+   notebooks/fit_model
+   notebooks/inspect_model
 
 .. toctree::
    :maxdepth: 1
@@ -36,6 +38,10 @@ Parameter estimation is done at an individual or hierarchical level using `PySta
    notebooks/DDM_hierarchical_fitting
    notebooks/DDM_starting-point-bias_fitting
    notebooks/DDM_starting-point-bias_hierarchical_fitting
+   notebooks/RL_2A_fitting
+   notebooks/RL_2A_hierarchical_fitting
+   notebooks/RLDDM_fitting
+   notebooks/LBA_2A_fitting
 
 .. toctree::
    :maxdepth: 1
