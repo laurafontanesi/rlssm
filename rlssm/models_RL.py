@@ -77,6 +77,26 @@ class RLModel_2A(Model):
             self.model_label += '_2lr'
             self.n_parameters_individual += 1
 
+        # Define default priors
+        if self.hierarchical_levels == 1:
+            self.priors = dict(
+                alpha_priors={'mu':0, 'sd':1},
+                sensitivity_priors={'mu':1, 'sd':50},
+                consistency_priors={'mu':1, 'sd':50},
+                scaling_priors={'mu':1, 'sd':50},
+                alpha_pos_priors={'mu':0, 'sd':1},
+                alpha_neg_priors={'mu':0, 'sd':1}
+                )
+        else:
+            self.priors = dict(
+                alpha_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1},
+                sensitivity_priors={'mu_mu':1, 'sd_mu':30, 'mu_sd':0, 'sd_sd':30},
+                consistency_priors={'mu_mu':1, 'sd_mu':30, 'mu_sd':0, 'sd_sd':30},
+                scaling_priors={'mu_mu':1, 'sd_mu':30, 'mu_sd':0, 'sd_sd':30},
+                alpha_pos_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1},
+                alpha_neg_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1}
+                )
+
         # Set the stan model path
         self._set_model_path()
 
@@ -84,21 +104,21 @@ class RLModel_2A(Model):
         self._compile_stan_model()
 
     def fit(self,
-                data,
-                K,
-                initial_value_learning,
-                alpha_priors=None,
-                sensitivity_priors=None,
-                consistency_priors=None,
-                scaling_priors=None,
-                alpha_pos_priors=None,
-                alpha_neg_priors=None,
-                include_rhat=True,
-                include_waic=True,
-                include_last_values=True,
-                pointwise_waic=False,
-                print_diagnostics=True,
-                **kwargs):
+            data,
+            K,
+            initial_value_learning,
+            alpha_priors=None,
+            sensitivity_priors=None,
+            consistency_priors=None,
+            scaling_priors=None,
+            alpha_pos_priors=None,
+            alpha_neg_priors=None,
+            include_rhat=True,
+            include_waic=True,
+            include_last_values=True,
+            pointwise_waic=False,
+            print_diagnostics=True,
+            **kwargs):
         """Fits the specified reinforcement learning model to data.
 
         Parameters
@@ -158,8 +178,6 @@ class RLModel_2A(Model):
             Priors for the learning rate parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
-            Default is {'mu':0, 'sd':1} for non-hierarchical, and
-            {'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1} for hierarchical models.
 
         sensitivity_priors : dict, optional
             Priors for the sensitivity parameter.
@@ -212,123 +230,76 @@ class RLModel_2A(Model):
             Additional arguments to pystan.StanModel.sampling().
 
         """
-        data.reset_index(inplace=True)
-
+        data.reset_index(inplace=True) # reset index
         N = data.shape[0] # n observations
+
+        # change default priors:
+        if alpha_priors is not None:
+            self.priors['alpha_priors'] = alpha_priors
+        if sensitivity_priors is not None:
+            self.priors['sensitivity_priors'] = sensitivity_priors
+        if consistency_priors is not None:
+            self.priors['consistency_priors'] = consistency_priors
+        if scaling_priors is not None:
+            self.priors['scaling_priors'] = scaling_priors
+        if alpha_pos_priors is not None:
+            self.priors['alpha_pos_priors'] = alpha_pos_priors
+        if alpha_neg_priors is not None:
+            self.priors['alpha_neg_priors'] = alpha_neg_priors
+
+        data_dict = {'N': N,
+                     'K': K,
+                     'trial_block': data['trial_block'].values.astype(int),
+                     'f_cor': data['f_cor'].values,
+                     'f_inc': data['f_inc'].values,
+                     'cor_option': data['cor_option'].values.astype(int),
+                     'inc_option': data['inc_option'].values.astype(int),
+                     'block_label': data['block_label'].values.astype(int),
+                     'accuracy': data['accuracy'].values.astype(int),
+                     'initial_value': initial_value_learning}
+
         if self.hierarchical_levels == 2:
-            # set default priors for the hierarchical model:
-            if alpha_priors is None:
-                alpha_priors = {'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1}
-            if sensitivity_priors is None:
-                sensitivity_priors = {'mu_mu':1, 'sd_mu':30, 'mu_sd':0, 'sd_sd':30}
-            if consistency_priors is None:
-                consistency_priors = {'mu_mu':1, 'sd_mu':30, 'mu_sd':0, 'sd_sd':30}
-            if scaling_priors is None:
-                scaling_priors = {'mu_mu':1, 'sd_mu':30, 'mu_sd':0, 'sd_sd':30}
-            if alpha_pos_priors is None:
-                alpha_pos_priors = {'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1}
-            if alpha_neg_priors is None:
-                alpha_neg_priors = {'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1}
-
+            keys_priors = ["mu_mu", "sd_mu", "mu_sd", "sd_sd"]
             L = len(pd.unique(data.participant)) # n subjects (levels)
-            data_dict = {'N': N,
-                             'L': L,
-                             'K': K,
-                             'participant': data['participant'].values.astype(int),
-                             'trial_block': data['trial_block'].values.astype(int),
-                             'f_cor': data['f_cor'].values,
-                             'f_inc': data['f_inc'].values,
-                             'cor_option': data['cor_option'].values.astype(int),
-                             'inc_option': data['inc_option'].values.astype(int),
-                             'block_label': data['block_label'].values.astype(int),
-                             'accuracy': data['accuracy'].values.astype(int),
-                             'initial_value': initial_value_learning,
-                             'alpha_priors': [alpha_priors['mu_mu'],
-                                              alpha_priors['sd_mu'],
-                                              alpha_priors['mu_sd'],
-                                              alpha_priors['sd_sd']],
-                             'sensitivity_priors': [sensitivity_priors['mu_mu'],
-                                                    sensitivity_priors['sd_mu'],
-                                                    sensitivity_priors['mu_sd'],
-                                                    sensitivity_priors['sd_sd']]}
-
-            # adjust priors for more complex models
-            if self.increasing_sensitivity:
-                data_dict.update({'consistency_priors': [consistency_priors['mu_mu'],
-                                                         consistency_priors['sd_mu'],
-                                                         consistency_priors['mu_sd'],
-                                                         consistency_priors['sd_sd']],
-                                  'scaling_priors': [scaling_priors['mu_mu'],
-                                                     scaling_priors['sd_mu'],
-                                                     scaling_priors['mu_sd'],
-                                                     scaling_priors['sd_sd']]})
-                data_dict.update({'times_seen': data['times_seen'].values})
-                del data_dict['sensitivity_priors']
-            if self.separate_learning_rates:
-                data_dict.update({'alpha_pos_priors': [alpha_pos_priors['mu_mu'],
-                                                       alpha_pos_priors['sd_mu'],
-                                                       alpha_pos_priors['mu_sd'],
-                                                       alpha_pos_priors['sd_sd']],
-                                  'alpha_neg_priors': [alpha_neg_priors['mu_mu'],
-                                                       alpha_neg_priors['sd_mu'],
-                                                       alpha_neg_priors['mu_sd'],
-                                                       alpha_neg_priors['sd_sd']]})
-                del data_dict['alpha_priors']
-
+            data_dict.update({'L': L, 
+                              'participant': data['participant'].values.astype(int)})
         else:
-            # set default priors for the non-hierarchical model:
-            if alpha_priors is None:
-                alpha_priors = {'mu':0, 'sd':1}
-            if sensitivity_priors is None:
-                sensitivity_priors = {'mu':1, 'sd':50}
-            if consistency_priors is None:
-                consistency_priors = {'mu':1, 'sd':50}
-            if scaling_priors is None:
-                scaling_priors = {'mu':1, 'sd':50}
-            if alpha_pos_priors is None:
-                alpha_pos_priors = {'mu':0, 'sd':1}
-            if alpha_neg_priors is None:
-                alpha_neg_priors = {'mu':0, 'sd':1}
+            keys_priors = ["mu", "sd"]
 
-            data_dict = {'N': N,
-                         'K': K,
-                         'trial_block': data['trial_block'].values.astype(int),
-                         'f_cor': data['f_cor'].values,
-                         'f_inc': data['f_inc'].values,
-                         'cor_option': data['cor_option'].values.astype(int),
-                         'inc_option': data['inc_option'].values.astype(int),
-                         'block_label': data['block_label'].values.astype(int),
-                         'accuracy': data['accuracy'].values.astype(int),
-                         'initial_value': initial_value_learning,
-                         'alpha_priors': [alpha_priors['mu'], alpha_priors['sd']],
-                         'sensitivity_priors': [sensitivity_priors['mu'], sensitivity_priors['sd']]}
+        # Add priors:
+        if self.separate_learning_rates:
+            data_dict.update({'alpha_pos_priors': [self.priors['alpha_pos_priors'][key] for key in keys_priors],
+                              'alpha_neg_priors': [self.priors['alpha_neg_priors'][key] for key in keys_priors]})
+            del self.priors['alpha_priors']
+        else:
+            data_dict.update({'alpha_priors': [self.priors['alpha_priors'][key] for key in keys_priors]})
+            del self.priors['alpha_pos_priors']
+            del self.priors['alpha_neg_priors']
 
-            # adjust priors for more complex models
-            if self.increasing_sensitivity:
-                data_dict.update({'consistency_priors': [consistency_priors['mu'],
-                                                         consistency_priors['sd']],
-                                  'scaling_priors': [scaling_priors['mu'],
-                                                     scaling_priors['sd']]})
-                data_dict.update({'times_seen': data['times_seen'].values})
-                del data_dict['sensitivity_priors']
-            if self.separate_learning_rates:
-                data_dict.update({'alpha_pos_priors': [alpha_pos_priors['mu'],
-                                                       alpha_pos_priors['sd']],
-                                  'alpha_neg_priors': [alpha_neg_priors['mu'],
-                                                       alpha_neg_priors['sd']]})
-                del data_dict['alpha_priors']
+        if self.increasing_sensitivity:
+            data_dict.update({'consistency_priors': [self.priors['consistency_priors'][key] for key in keys_priors],
+                              'scaling_priors': [self.priors['scaling_priors'][key] for key in keys_priors],
+                              'times_seen': data['times_seen'].values})
+            del self.priors['sensitivity_priors']
+        else:
+            data_dict.update({'sensitivity_priors': [self.priors['sensitivity_priors'][key] for key in keys_priors]})
+            del self.priors['consistency_priors']
+            del self.priors['scaling_priors']
+        print("Fitting the model using the priors:")
+        for key in self.priors:
+            print(key, self.priors[key])
 
         # start sampling...
         fitted_model = self.compiled_model.sampling(data_dict, **kwargs)
 
         fitted_model = RLFittedModel_2A(fitted_model,
-                                     data,
-                                     self.hierarchical_levels,
-                                     self.model_label,
-                                     self.family,
-                                     self.n_parameters_individual,
-                                     self.n_parameters_trial,
-                                     print_diagnostics)
+                                        data,
+                                        self.hierarchical_levels,
+                                        self.model_label,
+                                        self.family,
+                                        self.n_parameters_individual,
+                                        self.n_parameters_trial,
+                                        print_diagnostics)
         res = fitted_model.extract_results(include_rhat,
                                            include_waic,
                                            pointwise_waic,
