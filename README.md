@@ -6,4 +6,4 @@ Parameter estimation is done at an individual or hierarchical level using [PySta
 
 ## Documentation
 
-The latest documentation can be found here:...
+The latest documentation can be found here: https://rlssm.readthedocs.io/
