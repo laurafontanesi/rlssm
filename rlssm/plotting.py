@@ -167,8 +167,8 @@ def plot_grouped_mean_prediction(x,
                             **intervals_kws)
         ax.set_xlabel(x)
         ax.set_ylabel(y_predictions)
-        x_ = range(len(x_order))
-        plt.xticks(x_, x_order)
+        #x_ = range(len(x_order))
+        #plt.xticks(x_, x_order)
     else:
         if hue_order is None:
             hue_order = np.array(predictions.index.get_level_values(hue).unique())
@@ -210,8 +210,8 @@ def plot_grouped_mean_prediction(x,
         ax.legend(bbox_to_anchor=(1, 1))
         ax.set_xlabel(x)
         ax.set_ylabel(y_predictions)
-        x_ = range(len(x_order))
-        plt.xticks(x_, x_order)
+        #x_ = range(len(x_order))
+        #plt.xticks(x_, x_order)
         return ax
 
 def plot_quantiles_prediction(predictions,
