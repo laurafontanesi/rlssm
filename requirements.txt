@@ -2,4 +2,4 @@ numpy
 pandas
 seaborn
 scipy
-pystan=2.19
+pystan==2.19
