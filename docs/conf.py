@@ -35,7 +35,6 @@ extensions = ['recommonmark',
               'sphinx_rtd_theme',
               'sphinx.ext.napoleon',
               'sphinx.ext.autosummary',
-              'sphinx.ext.githubpages',
               'nbsphinx']
 
 source_suffix = {
