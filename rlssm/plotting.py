@@ -205,7 +205,7 @@ def plot_grouped_mean_prediction(x,
                                 high,
                                 low < high,
                                 color=palette[i],
-                                label="BCI prediction (%s)" % hue_labels[i],
+                                label="{} prediction ({})".format(show_intervals, hue_labels[i]),
                                 **intervals_kws)
         ax.legend(bbox_to_anchor=(1, 1))
         ax.set_xlabel(x)
