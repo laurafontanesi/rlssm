@@ -2,4 +2,10 @@ sphinx
 sphinx_rtd_theme
 nbsphinx
 recommonmark
+numpy
+pandas
+seaborn
+scipy
+pystan==2.19
+seaborn
 rlssm
