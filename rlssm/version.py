@@ -5,7 +5,7 @@ from os.path import join as pjoin
 _version_major = 0
 _version_minor = 1
 _version_micro = 1  # use '' for first of series, number for 1 and above
-# _version_extra = ''  # Uncomment this for full releases
+_version_extra = 'dev'  # Uncomment this for full releases
 
 # Construct full version string from these.
 _ver = [_version_major, _version_minor]
@@ -17,10 +17,11 @@ if _version_extra:
 __version__ = '.'.join(map(str, _ver))
 
 CLASSIFIERS = ["Development Status :: 1 - Planning",
+               "Environment :: Console",
                "Intended Audience :: Science/Research",
                "License :: OSI Approved :: MIT License",
                "Operating System :: OS Independent",
-               "Programming Language :: Python :: 3'",
+               "Programming Language :: Python",
                "Topic :: Scientific/Engineering"]
 
 # Description should be a one-liner:
