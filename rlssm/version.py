@@ -26,17 +26,24 @@ CLASSIFIERS = ["Development Status :: 1 - Planning",
                "Topic :: Scientific/Engineering"]
 
 # Description should be a one-liner:
-description = "rlssm: a package for fitting RL models, DDM, and combinations of the two"
+description = "rlssm: a package for fitting RL models, SSM, and combinations of the two"
 # Long description will go up on the pypi page
 long_description = """
 
 rlssm
 ========
-rlssm is a Python package for fitting RL models, DDM, and combinations of the two using Bayesian parameter estimation and it's based on [PyStan](https://pystan.readthedocs.io/en/latest/index.html).
+``rlssm`` is a Python package for fitting reinforcement learning (RL) models,
+sequential sampling models (DDM, RDM, LBA, ALBA, and ARDM),
+and combinations of the two, using Bayesian parameter estimation.
 
-The RLSSMs (combinations of RL and DDM) are based on the following papers:
-- Fontanesi, L., Gluth, S., Spektor, M.S. et al. Psychon Bull Rev (2019) 26: 1099. https://doi.org/10.3758/s13423-018-1554-2
-- Fontanesi, L., Palminteri, S. & Lebreton, M. Cogn Affect Behav Neurosci (2019) 19: 490. https://doi.org/10.3758/s13415-019-00723-1
+Parameter estimation is done at an individual or hierarchical level
+using ``PyStan``, the Python Interface to Stan.
+Stan performs Bayesian inference using the No-U-Turn sampler,
+a variant of Hamiltonian Monte Carlo.
+
+Documentation
+=============
+The latest documentation can be found here: https://rlssm.readthedocs.io/
 
 License
 =======
@@ -46,7 +53,7 @@ for usage, and a DISCLAIMER OF ALL WARRANTIES.
 
 All trademarks referenced herein are property of their respective holders.
 
-Copyright (c) 2019--, Laura Fontanesi,
+Copyright (c) 2021--, Laura Fontanesi,
 University of Basel.
 """
 
