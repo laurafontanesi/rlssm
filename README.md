@@ -6,7 +6,9 @@ Parameter estimation is done at an individual or hierarchical level using [PySta
 
 ## Install
 You can install the rlssm package using: 
-	`pip install rlssm`
+```
+pip install rlssm
+```
 
 Make sure you have the dependecies installed first.
 
@@ -18,10 +20,12 @@ Make sure you have the dependecies installed first.
 
 ### Conda environment (suggested)
 If you have Andaconda or miniconda installed and you would like to create a separate environment:
-	`conda create --n stanenv python=3 pandas scipy seaborn pystan=2.19`
-	`conda activate stanenv`
-	`pip install rlssm`
 
+```
+conda create --n stanenv python=3 pandas scipy seaborn pystan=2.19
+conda activate stanenv
+pip install rlssm
+```
 ## Documentation
 
 The latest documentation can be found here: https://rlssm.readthedocs.io/
