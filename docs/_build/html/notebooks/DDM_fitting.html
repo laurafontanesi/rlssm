@@ -482,11 +482,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">par_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">))</span>
-<span class="n">data_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">par_path</span><span class="p">,</span> <span class="s1">&#39;data/data_experiment.csv&#39;</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">participant</span> <span class="o">==</span> <span class="mi">20</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># Only select 1 participant</span>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">load_example_dataset</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 
 <span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -530,68 +526,68 @@ div.rendered_html tbody tr:hover {
   <tbody>
     <tr>
       <th>0</th>
-      <td>20</td>
+      <td>15</td>
       <td>1</td>
       <td>1</td>
-      <td>46</td>
-      <td>46</td>
-      <td>4</td>
-      <td>2</td>
+      <td>50</td>
+      <td>28</td>
+      <td>3</td>
       <td>1</td>
-      <td>2.574407</td>
+      <td>1</td>
+      <td>2.630658</td>
       <td>1</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>20</td>
+      <td>15</td>
       <td>1</td>
       <td>2</td>
-      <td>60</td>
-      <td>33</td>
-      <td>4</td>
+      <td>52</td>
+      <td>44</td>
+      <td>3</td>
+      <td>1</td>
       <td>2</td>
-      <td>2</td>
-      <td>1.952774</td>
+      <td>2.718299</td>
       <td>1</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>20</td>
+      <td>15</td>
       <td>1</td>
       <td>3</td>
-      <td>32</td>
-      <td>44</td>
+      <td>30</td>
+      <td>38</td>
       <td>2</td>
       <td>1</td>
       <td>2</td>
-      <td>2.074999</td>
-      <td>0</td>
+      <td>2.382882</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>20</td>
+      <td>15</td>
       <td>1</td>
       <td>4</td>
-      <td>56</td>
-      <td>40</td>
+      <td>64</td>
+      <td>45</td>
       <td>4</td>
       <td>2</td>
-      <td>3</td>
-      <td>2.320916</td>
-      <td>0</td>
+      <td>1</td>
+      <td>2.167205</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>20</td>
+      <td>15</td>
       <td>1</td>
       <td>5</td>
-      <td>34</td>
-      <td>32</td>
-      <td>2</td>
+      <td>48</td>
+      <td>26</td>
+      <td>3</td>
       <td>1</td>
       <td>3</td>
-      <td>1.471107</td>
-      <td>1</td>
+      <td>2.748257</td>
+      <td>0</td>
     </tr>
   </tbody>
 </table>
@@ -720,17 +716,17 @@ E-BFMI indicated no pathological behavior
   <tbody>
     <tr>
       <th>0</th>
-      <td>1.002939</td>
+      <td>1.000810</td>
       <td>drift</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>1.004659</td>
+      <td>1.006943</td>
       <td>threshold</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>1.005173</td>
+      <td>1.007549</td>
       <td>ndt</td>
     </tr>
   </tbody>
@@ -755,10 +751,10 @@ E-BFMI indicated no pathological behavior
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;lppd&#39;: -224.544973536372,
- &#39;p_waic&#39;: 4.223537903846255,
- &#39;waic&#39;: 457.5370228804365,
- &#39;waic_se&#39;: 35.60746504526109}
+{&#39;lppd&#39;: -249.31901167684737,
+ &#39;p_waic&#39;: 3.0587189056624244,
+ &#39;waic&#39;: 504.7554611650196,
+ &#39;waic_se&#39;: 34.26010966730786}
 </pre></div></div>
 </div>
 </div>
@@ -817,57 +813,57 @@ E-BFMI indicated no pathological behavior
       <th>mean</th>
       <td>0.50000</td>
       <td>249.500000</td>
-      <td>0.951527</td>
-      <td>2.045126</td>
-      <td>0.917638</td>
+      <td>0.887978</td>
+      <td>2.066264</td>
+      <td>0.936474</td>
     </tr>
     <tr>
       <th>std</th>
       <td>0.50025</td>
       <td>144.409501</td>
-      <td>0.077108</td>
-      <td>0.071808</td>
-      <td>0.011498</td>
+      <td>0.077742</td>
+      <td>0.078720</td>
+      <td>0.016016</td>
     </tr>
     <tr>
       <th>min</th>
       <td>0.00000</td>
       <td>0.000000</td>
-      <td>0.727742</td>
-      <td>1.812423</td>
-      <td>0.867889</td>
+      <td>0.639946</td>
+      <td>1.866531</td>
+      <td>0.871589</td>
     </tr>
     <tr>
       <th>25%</th>
       <td>0.00000</td>
       <td>124.750000</td>
-      <td>0.901608</td>
-      <td>1.997233</td>
-      <td>0.910352</td>
+      <td>0.838996</td>
+      <td>2.012143</td>
+      <td>0.926123</td>
     </tr>
     <tr>
       <th>50%</th>
       <td>0.50000</td>
       <td>249.500000</td>
-      <td>0.951500</td>
-      <td>2.043214</td>
-      <td>0.917820</td>
+      <td>0.887060</td>
+      <td>2.060566</td>
+      <td>0.938202</td>
     </tr>
     <tr>
       <th>75%</th>
       <td>1.00000</td>
       <td>374.250000</td>
-      <td>1.002131</td>
-      <td>2.086384</td>
-      <td>0.926001</td>
+      <td>0.939397</td>
+      <td>2.117163</td>
+      <td>0.948530</td>
     </tr>
     <tr>
       <th>max</th>
       <td>1.00000</td>
       <td>499.000000</td>
-      <td>1.193748</td>
-      <td>2.275688</td>
-      <td>0.946229</td>
+      <td>1.172651</td>
+      <td>2.364307</td>
+      <td>0.971738</td>
     </tr>
   </tbody>
 </table>
@@ -961,6 +957,7 @@ E-BFMI indicated no pathological behavior
       <th>9</th>
       <th>10</th>
       <th>...</th>
+      <th>230</th>
       <th>231</th>
       <th>232</th>
       <th>233</th>
@@ -970,7 +967,6 @@ E-BFMI indicated no pathological behavior
       <th>237</th>
       <th>238</th>
       <th>239</th>
-      <th>240</th>
     </tr>
     <tr>
       <th>sample</th>
@@ -1000,40 +996,40 @@ E-BFMI indicated no pathological behavior
   <tbody>
     <tr>
       <th>1</th>
-      <td>1.179975</td>
-      <td>1.259975</td>
-      <td>2.517975</td>
-      <td>2.305975</td>
-      <td>2.064975</td>
-      <td>2.762975</td>
-      <td>1.163975</td>
-      <td>1.745975</td>
-      <td>1.118975</td>
-      <td>2.103975</td>
+      <td>1.223334</td>
+      <td>2.259334</td>
+      <td>1.509334</td>
+      <td>1.212334</td>
+      <td>2.187334</td>
+      <td>2.319334</td>
+      <td>1.228334</td>
+      <td>2.348334</td>
+      <td>1.991334</td>
+      <td>1.349334</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
+      <td>0.0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>1.482660</td>
-      <td>1.304660</td>
-      <td>3.035660</td>
-      <td>1.299660</td>
-      <td>5.320660</td>
-      <td>1.363660</td>
-      <td>4.454660</td>
-      <td>1.459660</td>
-      <td>2.523660</td>
-      <td>2.634660</td>
+      <td>1.305570</td>
+      <td>1.567570</td>
+      <td>1.483570</td>
+      <td>1.874570</td>
+      <td>1.748570</td>
+      <td>1.159570</td>
+      <td>1.312570</td>
+      <td>1.802570</td>
+      <td>1.703570</td>
+      <td>1.095570</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1048,16 +1044,16 @@ E-BFMI indicated no pathological behavior
     </tr>
     <tr>
       <th>3</th>
-      <td>3.800896</td>
-      <td>1.877896</td>
-      <td>1.563896</td>
-      <td>1.224896</td>
-      <td>1.124896</td>
-      <td>3.377896</td>
-      <td>1.439896</td>
-      <td>1.340896</td>
-      <td>1.399896</td>
-      <td>1.181896</td>
+      <td>1.400020</td>
+      <td>1.402020</td>
+      <td>3.388020</td>
+      <td>1.057020</td>
+      <td>2.142020</td>
+      <td>1.223020</td>
+      <td>2.474020</td>
+      <td>1.597020</td>
+      <td>1.396020</td>
+      <td>1.279020</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1065,55 +1061,55 @@ E-BFMI indicated no pathological behavior
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
+      <td>0.0</td>
       <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
+      <td>0.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2.988164</td>
-      <td>2.331164</td>
-      <td>1.529164</td>
-      <td>1.133164</td>
-      <td>2.879164</td>
-      <td>2.045164</td>
-      <td>1.305164</td>
-      <td>1.428164</td>
-      <td>1.355164</td>
-      <td>1.192164</td>
+      <td>4.672817</td>
+      <td>1.878817</td>
+      <td>1.780817</td>
+      <td>1.547817</td>
+      <td>2.339817</td>
+      <td>1.494817</td>
+      <td>1.835817</td>
+      <td>1.222817</td>
+      <td>2.578817</td>
+      <td>3.279817</td>
       <td>...</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
       <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>1.508560</td>
-      <td>1.292560</td>
-      <td>1.200560</td>
-      <td>2.301560</td>
-      <td>1.193560</td>
-      <td>2.334560</td>
-      <td>1.980560</td>
-      <td>1.432560</td>
-      <td>1.219560</td>
-      <td>2.527560</td>
+      <td>3.312260</td>
+      <td>2.279260</td>
+      <td>2.675260</td>
+      <td>1.332260</td>
+      <td>1.425260</td>
+      <td>2.339260</td>
+      <td>1.814260</td>
+      <td>1.268260</td>
+      <td>1.372260</td>
+      <td>1.549260</td>
       <td>...</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
       <td>0.0</td>
       <td>1.0</td>
       <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1144,47 +1140,47 @@ E-BFMI indicated no pathological behavior
     </tr>
     <tr>
       <th>96</th>
-      <td>1.233225</td>
-      <td>3.160225</td>
-      <td>1.278225</td>
-      <td>1.740225</td>
-      <td>1.298225</td>
-      <td>1.138225</td>
-      <td>1.567225</td>
-      <td>1.297225</td>
-      <td>1.440225</td>
-      <td>1.222225</td>
+      <td>2.024093</td>
+      <td>1.262093</td>
+      <td>2.446093</td>
+      <td>4.031093</td>
+      <td>1.437093</td>
+      <td>1.193093</td>
+      <td>2.746093</td>
+      <td>1.450093</td>
+      <td>1.216093</td>
+      <td>2.919093</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
     </tr>
     <tr>
       <th>97</th>
-      <td>1.310389</td>
-      <td>1.701389</td>
-      <td>1.346389</td>
-      <td>1.714389</td>
-      <td>2.045389</td>
-      <td>1.457389</td>
-      <td>1.458389</td>
-      <td>2.228389</td>
-      <td>1.847389</td>
-      <td>1.245389</td>
+      <td>1.300279</td>
+      <td>1.493279</td>
+      <td>1.214279</td>
+      <td>1.889279</td>
+      <td>1.611279</td>
+      <td>1.160279</td>
+      <td>1.265279</td>
+      <td>1.881279</td>
+      <td>3.004279</td>
+      <td>2.891279</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1192,16 +1188,16 @@ E-BFMI indicated no pathological behavior
     </tr>
     <tr>
       <th>98</th>
-      <td>2.503255</td>
-      <td>1.490255</td>
-      <td>1.487255</td>
-      <td>2.730255</td>
-      <td>2.163255</td>
-      <td>1.087255</td>
-      <td>2.749255</td>
-      <td>1.549255</td>
-      <td>1.639255</td>
-      <td>1.343255</td>
+      <td>1.342920</td>
+      <td>1.468920</td>
+      <td>2.064920</td>
+      <td>1.563920</td>
+      <td>3.481920</td>
+      <td>1.511920</td>
+      <td>1.863920</td>
+      <td>1.289920</td>
+      <td>1.685920</td>
+      <td>1.471920</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1216,18 +1212,17 @@ E-BFMI indicated no pathological behavior
     </tr>
     <tr>
       <th>99</th>
-      <td>1.875819</td>
-      <td>1.231819</td>
-      <td>1.131819</td>
-      <td>1.313819</td>
-      <td>2.089819</td>
-      <td>1.671819</td>
-      <td>1.479819</td>
-      <td>1.257819</td>
-      <td>1.943819</td>
-      <td>1.104819</td>
+      <td>1.473277</td>
+      <td>2.308277</td>
+      <td>1.750277</td>
+      <td>1.995277</td>
+      <td>1.345277</td>
+      <td>1.712277</td>
+      <td>1.291277</td>
+      <td>1.392277</td>
+      <td>1.486277</td>
+      <td>1.976277</td>
       <td>...</td>
-      <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1237,23 +1232,24 @@ E-BFMI indicated no pathological behavior
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
+      <td>1.0</td>
     </tr>
     <tr>
       <th>100</th>
-      <td>1.333983</td>
-      <td>3.515983</td>
-      <td>1.304983</td>
-      <td>1.599983</td>
-      <td>1.364983</td>
-      <td>1.925983</td>
-      <td>1.811983</td>
-      <td>1.350983</td>
-      <td>1.178983</td>
-      <td>1.441983</td>
+      <td>1.485624</td>
+      <td>1.479624</td>
+      <td>1.893624</td>
+      <td>2.016624</td>
+      <td>1.354624</td>
+      <td>2.434624</td>
+      <td>1.665624</td>
+      <td>2.441624</td>
+      <td>1.143624</td>
+      <td>1.129624</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>1.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1264,7 +1260,7 @@ E-BFMI indicated no pathological behavior
     </tr>
   </tbody>
 </table>
-<p>100 rows × 480 columns</p>
+<p>100 rows × 478 columns</p>
 </div></div>
 </div>
 <div class="nbinput docutils container">
@@ -1334,83 +1330,83 @@ E-BFMI indicated no pathological behavior
   <tbody>
     <tr>
       <th>1</th>
-      <td>0.891667</td>
-      <td>1.763025</td>
-      <td>1.842064</td>
-      <td>1.134475</td>
-      <td>1.285975</td>
-      <td>1.636475</td>
-      <td>1.825475</td>
-      <td>2.060975</td>
-      <td>1.163275</td>
-      <td>1.322375</td>
-      <td>1.586475</td>
-      <td>1.959275</td>
-      <td>2.664975</td>
+      <td>0.878661</td>
+      <td>1.892451</td>
+      <td>2.078444</td>
+      <td>1.378734</td>
+      <td>1.538534</td>
+      <td>1.742334</td>
+      <td>2.037534</td>
+      <td>3.194934</td>
+      <td>1.212934</td>
+      <td>1.432634</td>
+      <td>1.656334</td>
+      <td>2.048934</td>
+      <td>2.963734</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.866667</td>
-      <td>1.788194</td>
-      <td>1.994050</td>
-      <td>1.157860</td>
-      <td>1.477660</td>
-      <td>1.731160</td>
-      <td>2.136660</td>
-      <td>2.601560</td>
-      <td>1.133160</td>
-      <td>1.363960</td>
-      <td>1.651160</td>
-      <td>1.908260</td>
-      <td>2.577460</td>
+      <td>0.832636</td>
+      <td>1.769654</td>
+      <td>3.328429</td>
+      <td>1.184570</td>
+      <td>1.293470</td>
+      <td>1.441070</td>
+      <td>1.742370</td>
+      <td>2.202970</td>
+      <td>1.185370</td>
+      <td>1.381770</td>
+      <td>1.575570</td>
+      <td>1.923370</td>
+      <td>2.626970</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.891667</td>
-      <td>1.753208</td>
-      <td>1.778375</td>
-      <td>1.238896</td>
-      <td>1.466396</td>
-      <td>1.898896</td>
-      <td>1.998396</td>
-      <td>2.197896</td>
-      <td>1.144596</td>
-      <td>1.343496</td>
-      <td>1.550396</td>
-      <td>1.963696</td>
-      <td>2.601196</td>
+      <td>0.924686</td>
+      <td>1.782321</td>
+      <td>1.752938</td>
+      <td>1.219020</td>
+      <td>1.453120</td>
+      <td>1.737520</td>
+      <td>1.887220</td>
+      <td>2.282020</td>
+      <td>1.230020</td>
+      <td>1.360020</td>
+      <td>1.584020</td>
+      <td>1.929020</td>
+      <td>2.615020</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.883333</td>
-      <td>1.779364</td>
-      <td>1.463521</td>
-      <td>1.183664</td>
-      <td>1.445264</td>
-      <td>1.546164</td>
-      <td>1.995764</td>
-      <td>2.671664</td>
-      <td>1.163364</td>
-      <td>1.345164</td>
-      <td>1.549664</td>
-      <td>1.947164</td>
-      <td>2.591664</td>
+      <td>0.803347</td>
+      <td>1.767152</td>
+      <td>1.387015</td>
+      <td>1.225617</td>
+      <td>1.505617</td>
+      <td>1.725817</td>
+      <td>1.867217</td>
+      <td>2.265217</td>
+      <td>1.175917</td>
+      <td>1.353117</td>
+      <td>1.589317</td>
+      <td>1.994917</td>
+      <td>2.578117</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.879167</td>
-      <td>1.827126</td>
-      <td>1.876930</td>
-      <td>1.200560</td>
-      <td>1.314160</td>
-      <td>1.545560</td>
-      <td>1.878560</td>
-      <td>2.679560</td>
-      <td>1.202560</td>
-      <td>1.402560</td>
-      <td>1.611560</td>
-      <td>1.897560</td>
-      <td>2.713560</td>
+      <td>0.895397</td>
+      <td>1.745301</td>
+      <td>2.373022</td>
+      <td>1.250060</td>
+      <td>1.413660</td>
+      <td>1.624260</td>
+      <td>1.853460</td>
+      <td>2.186860</td>
+      <td>1.179860</td>
+      <td>1.352760</td>
+      <td>1.582260</td>
+      <td>1.840360</td>
+      <td>2.588060</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1430,83 +1426,83 @@ E-BFMI indicated no pathological behavior
     </tr>
     <tr>
       <th>96</th>
-      <td>0.887500</td>
-      <td>1.761817</td>
-      <td>1.910651</td>
-      <td>1.213225</td>
-      <td>1.391425</td>
-      <td>1.582225</td>
-      <td>1.706425</td>
-      <td>2.179425</td>
-      <td>1.160825</td>
-      <td>1.364025</td>
-      <td>1.627225</td>
-      <td>1.929225</td>
-      <td>2.590225</td>
+      <td>0.849372</td>
+      <td>1.825122</td>
+      <td>2.236298</td>
+      <td>1.277593</td>
+      <td>1.400593</td>
+      <td>1.548593</td>
+      <td>1.712593</td>
+      <td>2.730093</td>
+      <td>1.198093</td>
+      <td>1.389893</td>
+      <td>1.613093</td>
+      <td>2.038493</td>
+      <td>2.657093</td>
     </tr>
     <tr>
       <th>97</th>
-      <td>0.870833</td>
-      <td>1.685927</td>
-      <td>1.293942</td>
-      <td>1.197389</td>
-      <td>1.446389</td>
-      <td>1.592389</td>
-      <td>1.861389</td>
-      <td>2.003389</td>
-      <td>1.182189</td>
-      <td>1.322189</td>
-      <td>1.558389</td>
-      <td>1.759189</td>
-      <td>2.508789</td>
+      <td>0.874477</td>
+      <td>1.747479</td>
+      <td>1.793196</td>
+      <td>1.177179</td>
+      <td>1.235679</td>
+      <td>1.505779</td>
+      <td>1.718079</td>
+      <td>2.450379</td>
+      <td>1.171479</td>
+      <td>1.301479</td>
+      <td>1.504279</td>
+      <td>1.795079</td>
+      <td>2.846879</td>
     </tr>
     <tr>
       <th>98</th>
-      <td>0.858333</td>
-      <td>1.799713</td>
-      <td>1.913578</td>
-      <td>1.241555</td>
-      <td>1.497555</td>
-      <td>1.672755</td>
-      <td>2.257755</td>
-      <td>2.936855</td>
-      <td>1.176755</td>
-      <td>1.347755</td>
-      <td>1.582755</td>
-      <td>1.902755</td>
-      <td>2.566255</td>
+      <td>0.836820</td>
+      <td>1.865740</td>
+      <td>1.573733</td>
+      <td>1.221320</td>
+      <td>1.324320</td>
+      <td>1.529920</td>
+      <td>1.825520</td>
+      <td>2.247520</td>
+      <td>1.200220</td>
+      <td>1.433020</td>
+      <td>1.740920</td>
+      <td>2.032520</td>
+      <td>2.920520</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>0.833333</td>
-      <td>1.720603</td>
-      <td>1.896240</td>
-      <td>1.184919</td>
-      <td>1.388419</td>
-      <td>1.601319</td>
-      <td>1.956319</td>
-      <td>2.288819</td>
-      <td>1.155419</td>
-      <td>1.360519</td>
-      <td>1.575819</td>
-      <td>1.855119</td>
-      <td>2.411919</td>
+      <td>0.887029</td>
+      <td>1.832696</td>
+      <td>1.897374</td>
+      <td>1.208077</td>
+      <td>1.358877</td>
+      <td>1.609277</td>
+      <td>1.928877</td>
+      <td>2.915877</td>
+      <td>1.184377</td>
+      <td>1.371877</td>
+      <td>1.601277</td>
+      <td>2.000277</td>
+      <td>2.812677</td>
     </tr>
     <tr>
       <th>100</th>
-      <td>0.879167</td>
-      <td>1.676004</td>
-      <td>1.550239</td>
-      <td>1.184383</td>
-      <td>1.463783</td>
-      <td>1.601983</td>
-      <td>1.967583</td>
-      <td>2.397983</td>
-      <td>1.168983</td>
-      <td>1.345983</td>
-      <td>1.542983</td>
-      <td>1.788983</td>
-      <td>2.392983</td>
+      <td>0.870293</td>
+      <td>1.697068</td>
+      <td>2.067900</td>
+      <td>1.206624</td>
+      <td>1.279624</td>
+      <td>1.573624</td>
+      <td>1.868624</td>
+      <td>2.586624</td>
+      <td>1.143124</td>
+      <td>1.328724</td>
+      <td>1.525124</td>
+      <td>1.824924</td>
+      <td>2.440624</td>
     </tr>
   </tbody>
 </table>
@@ -1640,62 +1636,62 @@ E-BFMI indicated no pathological behavior
       <th rowspan="5" valign="top">AB</th>
       <th>1</th>
       <td>0.85</td>
-      <td>1.786375</td>
-      <td>0.194693</td>
-      <td>1.754775</td>
-      <td>1.541975</td>
-      <td>2.107975</td>
-      <td>1.719975</td>
-      <td>2.122775</td>
-      <td>1.933375</td>
+      <td>2.110784</td>
+      <td>1.247609</td>
+      <td>1.394134</td>
+      <td>1.324534</td>
+      <td>1.427334</td>
+      <td>1.898334</td>
+      <td>1.492934</td>
+      <td>2.750934</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.80</td>
-      <td>1.705360</td>
-      <td>1.818448</td>
-      <td>1.248160</td>
-      <td>1.336160</td>
-      <td>1.412660</td>
-      <td>1.444660</td>
-      <td>1.686860</td>
-      <td>1.770660</td>
+      <td>0.85</td>
+      <td>1.624170</td>
+      <td>0.995058</td>
+      <td>1.831370</td>
+      <td>1.357170</td>
+      <td>2.268570</td>
+      <td>1.439570</td>
+      <td>2.271770</td>
+      <td>1.612570</td>
     </tr>
     <tr>
       <th>3</th>
       <td>0.95</td>
-      <td>1.817246</td>
-      <td>0.115157</td>
-      <td>1.509896</td>
-      <td>1.563496</td>
-      <td>1.509896</td>
-      <td>1.883896</td>
-      <td>1.509896</td>
-      <td>2.072496</td>
+      <td>1.735570</td>
+      <td>1.643538</td>
+      <td>1.350020</td>
+      <td>1.374820</td>
+      <td>1.350020</td>
+      <td>1.546020</td>
+      <td>1.350020</td>
+      <td>1.817820</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>1.00</td>
-      <td>1.908614</td>
-      <td>1.600054</td>
-      <td>NaN</td>
-      <td>1.523164</td>
-      <td>NaN</td>
-      <td>1.694664</td>
-      <td>NaN</td>
-      <td>2.021064</td>
+      <td>0.75</td>
+      <td>1.557317</td>
+      <td>1.365500</td>
+      <td>1.221417</td>
+      <td>1.320417</td>
+      <td>1.239817</td>
+      <td>1.503817</td>
+      <td>1.509417</td>
+      <td>1.694217</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.95</td>
-      <td>1.746560</td>
-      <td>0.850843</td>
-      <td>2.117560</td>
-      <td>1.448560</td>
-      <td>2.117560</td>
-      <td>1.718560</td>
-      <td>2.117560</td>
-      <td>1.867160</td>
+      <td>0.85</td>
+      <td>1.756110</td>
+      <td>1.313400</td>
+      <td>1.313460</td>
+      <td>1.244660</td>
+      <td>1.338260</td>
+      <td>1.565260</td>
+      <td>1.588660</td>
+      <td>2.090260</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1715,63 +1711,63 @@ E-BFMI indicated no pathological behavior
       <th rowspan="5" valign="top">3</th>
       <th rowspan="5" valign="top">CD</th>
       <th>96</th>
-      <td>0.80</td>
-      <td>1.657825</td>
-      <td>0.847885</td>
-      <td>1.694525</td>
-      <td>1.243725</td>
-      <td>1.865225</td>
-      <td>1.355725</td>
-      <td>2.052525</td>
-      <td>1.752225</td>
+      <td>0.75</td>
+      <td>1.501643</td>
+      <td>0.760884</td>
+      <td>1.369893</td>
+      <td>1.277693</td>
+      <td>1.553093</td>
+      <td>1.382093</td>
+      <td>1.657093</td>
+      <td>1.625293</td>
     </tr>
     <tr>
       <th>97</th>
-      <td>0.95</td>
-      <td>1.656689</td>
-      <td>1.547319</td>
-      <td>1.506389</td>
-      <td>1.368189</td>
-      <td>1.506389</td>
-      <td>1.441389</td>
-      <td>1.506389</td>
-      <td>1.693389</td>
+      <td>1.00</td>
+      <td>1.679479</td>
+      <td>1.992939</td>
+      <td>NaN</td>
+      <td>1.343079</td>
+      <td>NaN</td>
+      <td>1.527279</td>
+      <td>NaN</td>
+      <td>1.597579</td>
     </tr>
     <tr>
       <th>98</th>
-      <td>0.95</td>
-      <td>1.609455</td>
-      <td>0.471516</td>
-      <td>1.422255</td>
-      <td>1.313855</td>
-      <td>1.422255</td>
-      <td>1.554255</td>
-      <td>1.422255</td>
-      <td>1.836055</td>
+      <td>1.00</td>
+      <td>1.809320</td>
+      <td>2.061042</td>
+      <td>NaN</td>
+      <td>1.290220</td>
+      <td>NaN</td>
+      <td>1.469920</td>
+      <td>NaN</td>
+      <td>1.932820</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>0.85</td>
-      <td>1.699369</td>
-      <td>0.865524</td>
-      <td>2.108219</td>
-      <td>1.264219</td>
-      <td>2.147819</td>
-      <td>1.561819</td>
-      <td>2.535019</td>
-      <td>1.810019</td>
+      <td>0.95</td>
+      <td>1.526577</td>
+      <td>1.452011</td>
+      <td>1.913277</td>
+      <td>1.293877</td>
+      <td>1.913277</td>
+      <td>1.353277</td>
+      <td>1.913277</td>
+      <td>1.658677</td>
     </tr>
     <tr>
       <th>100</th>
-      <td>0.95</td>
-      <td>1.618533</td>
-      <td>0.499902</td>
-      <td>1.057983</td>
-      <td>1.308783</td>
-      <td>1.057983</td>
-      <td>1.556983</td>
-      <td>1.057983</td>
-      <td>1.942183</td>
+      <td>0.85</td>
+      <td>1.690874</td>
+      <td>2.286446</td>
+      <td>1.749624</td>
+      <td>1.329624</td>
+      <td>1.943624</td>
+      <td>1.404624</td>
+      <td>1.964424</td>
+      <td>1.777024</td>
     </tr>
   </tbody>
 </table>
@@ -1842,63 +1838,63 @@ E-BFMI indicated no pathological behavior
     <tr>
       <th rowspan="5" valign="top">1</th>
       <th>1</th>
-      <td>0.766667</td>
-      <td>1.822608</td>
-      <td>1.617771</td>
-      <td>1.503575</td>
-      <td>1.258375</td>
-      <td>1.686975</td>
-      <td>1.688975</td>
-      <td>1.991575</td>
-      <td>1.995575</td>
+      <td>0.933333</td>
+      <td>1.963768</td>
+      <td>1.036143</td>
+      <td>1.866334</td>
+      <td>1.523834</td>
+      <td>2.112334</td>
+      <td>1.723834</td>
+      <td>2.358334</td>
+      <td>2.232334</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.866667</td>
-      <td>1.703960</td>
-      <td>2.065860</td>
-      <td>1.639160</td>
-      <td>1.342660</td>
-      <td>1.702160</td>
-      <td>1.522660</td>
-      <td>1.719860</td>
-      <td>1.851660</td>
+      <td>0.833333</td>
+      <td>1.588937</td>
+      <td>2.913381</td>
+      <td>1.240770</td>
+      <td>1.281170</td>
+      <td>1.549570</td>
+      <td>1.446570</td>
+      <td>1.569570</td>
+      <td>1.629170</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.833333</td>
-      <td>1.699829</td>
-      <td>0.993305</td>
-      <td>1.479496</td>
-      <td>1.346696</td>
-      <td>2.021896</td>
-      <td>1.500896</td>
-      <td>2.309096</td>
-      <td>1.709296</td>
+      <td>0.933333</td>
+      <td>1.896486</td>
+      <td>2.235551</td>
+      <td>1.538420</td>
+      <td>1.590420</td>
+      <td>1.672020</td>
+      <td>1.839520</td>
+      <td>1.805620</td>
+      <td>2.031920</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.866667</td>
-      <td>1.805464</td>
-      <td>2.768418</td>
-      <td>1.201264</td>
-      <td>1.336664</td>
-      <td>1.416664</td>
-      <td>1.456164</td>
-      <td>1.675764</td>
-      <td>1.880164</td>
+      <td>0.833333</td>
+      <td>1.723484</td>
+      <td>1.037996</td>
+      <td>1.675017</td>
+      <td>1.328017</td>
+      <td>1.723817</td>
+      <td>1.482817</td>
+      <td>1.995017</td>
+      <td>1.927617</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.933333</td>
-      <td>1.957560</td>
-      <td>1.354595</td>
-      <td>2.626960</td>
-      <td>1.452460</td>
-      <td>3.026560</td>
-      <td>1.659060</td>
-      <td>3.426160</td>
-      <td>2.174660</td>
+      <td>0.966667</td>
+      <td>1.668193</td>
+      <td>2.396271</td>
+      <td>2.047260</td>
+      <td>1.285660</td>
+      <td>2.047260</td>
+      <td>1.446260</td>
+      <td>2.047260</td>
+      <td>1.650460</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1916,63 +1912,63 @@ E-BFMI indicated no pathological behavior
     <tr>
       <th rowspan="5" valign="top">8</th>
       <th>96</th>
-      <td>0.833333</td>
-      <td>1.845325</td>
-      <td>1.067375</td>
-      <td>1.519425</td>
-      <td>1.583025</td>
-      <td>1.888225</td>
-      <td>1.744225</td>
-      <td>1.921825</td>
-      <td>2.078625</td>
+      <td>0.689655</td>
+      <td>1.988265</td>
+      <td>1.413794</td>
+      <td>1.474693</td>
+      <td>1.529093</td>
+      <td>1.514093</td>
+      <td>1.859093</td>
+      <td>2.040893</td>
+      <td>2.171193</td>
     </tr>
     <tr>
       <th>97</th>
-      <td>0.966667</td>
-      <td>1.798956</td>
-      <td>0.957869</td>
-      <td>1.264389</td>
-      <td>1.561589</td>
-      <td>1.264389</td>
-      <td>1.702389</td>
-      <td>1.264389</td>
-      <td>1.975189</td>
+      <td>0.793103</td>
+      <td>1.831796</td>
+      <td>1.107177</td>
+      <td>1.467779</td>
+      <td>1.469279</td>
+      <td>1.586779</td>
+      <td>1.549279</td>
+      <td>1.791779</td>
+      <td>2.077879</td>
     </tr>
     <tr>
       <th>98</th>
-      <td>0.900000</td>
-      <td>1.684521</td>
-      <td>1.868615</td>
-      <td>1.455855</td>
-      <td>1.415855</td>
-      <td>1.598255</td>
-      <td>1.578255</td>
-      <td>1.626255</td>
-      <td>1.935455</td>
+      <td>0.793103</td>
+      <td>1.898368</td>
+      <td>2.873183</td>
+      <td>1.320920</td>
+      <td>1.476520</td>
+      <td>1.478920</td>
+      <td>1.701920</td>
+      <td>1.585420</td>
+      <td>2.138520</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>0.633333</td>
-      <td>1.617619</td>
-      <td>1.177833</td>
-      <td>1.281819</td>
-      <td>1.405819</td>
-      <td>1.360819</td>
-      <td>1.842819</td>
-      <td>1.371819</td>
-      <td>1.904219</td>
+      <td>0.896552</td>
+      <td>2.043208</td>
+      <td>2.130396</td>
+      <td>1.331477</td>
+      <td>1.459777</td>
+      <td>1.346277</td>
+      <td>1.714277</td>
+      <td>1.890677</td>
+      <td>2.075277</td>
     </tr>
     <tr>
       <th>100</th>
-      <td>0.900000</td>
-      <td>1.624883</td>
-      <td>2.170855</td>
-      <td>1.344383</td>
-      <td>1.270183</td>
-      <td>1.431983</td>
-      <td>1.428983</td>
-      <td>1.691583</td>
-      <td>1.576383</td>
+      <td>0.965517</td>
+      <td>1.748003</td>
+      <td>1.149147</td>
+      <td>1.250624</td>
+      <td>1.506824</td>
+      <td>1.250624</td>
+      <td>1.692624</td>
+      <td>1.250624</td>
+      <td>1.907424</td>
     </tr>
   </tbody>
 </table>

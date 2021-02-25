@@ -2,7 +2,7 @@
  "cells": [
   {
    "cell_type": "markdown",
-   "id": "prepared-local",
+   "id": "introductory-nashville",
    "metadata": {},
    "source": [
     "# How to fit a model"
@@ -10,7 +10,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "short-sauce",
+   "id": "descending-plate",
    "metadata": {},
    "source": [
     "To fit a model, there are 3 main things to specify:\n",
@@ -32,8 +32,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 28,
-   "id": "attempted-kitty",
+   "execution_count": 1,
+   "id": "associate-police",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -42,7 +42,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "deadly-option",
+   "id": "electrical-factor",
    "metadata": {},
    "source": [
     "## Non-learning example (non-hierarchical, simulated data)"
@@ -51,7 +51,7 @@
   {
    "cell_type": "code",
    "execution_count": 2,
-   "id": "economic-recovery",
+   "id": "flying-stomach",
    "metadata": {},
    "outputs": [
     {
@@ -69,7 +69,7 @@
   {
    "cell_type": "code",
    "execution_count": 3,
-   "id": "classical-sherman",
+   "id": "aggregate-northern",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -84,7 +84,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "enormous-sharp",
+   "id": "direct-anaheim",
    "metadata": {},
    "source": [
     "For the simple, non-hierarchical DDM, it is only necessary to have `rt` and `accuracy` columns:\n",
@@ -97,7 +97,7 @@
   {
    "cell_type": "code",
    "execution_count": 4,
-   "id": "approximate-retro",
+   "id": "expired-kruger",
    "metadata": {},
    "outputs": [
     {
@@ -148,8 +148,8 @@
        "      <td>0.5</td>\n",
        "      <td>1.3</td>\n",
        "      <td>0.23</td>\n",
-       "      <td>0.444</td>\n",
-       "      <td>1.0</td>\n",
+       "      <td>1.134</td>\n",
+       "      <td>0.0</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>2</th>\n",
@@ -157,7 +157,7 @@
        "      <td>0.5</td>\n",
        "      <td>1.3</td>\n",
        "      <td>0.23</td>\n",
-       "      <td>0.436</td>\n",
+       "      <td>0.433</td>\n",
        "      <td>1.0</td>\n",
        "    </tr>\n",
        "    <tr>\n",
@@ -166,7 +166,7 @@
        "      <td>0.5</td>\n",
        "      <td>1.3</td>\n",
        "      <td>0.23</td>\n",
-       "      <td>0.505</td>\n",
+       "      <td>0.702</td>\n",
        "      <td>1.0</td>\n",
        "    </tr>\n",
        "    <tr>\n",
@@ -175,7 +175,7 @@
        "      <td>0.5</td>\n",
        "      <td>1.3</td>\n",
        "      <td>0.23</td>\n",
-       "      <td>0.348</td>\n",
+       "      <td>0.695</td>\n",
        "      <td>1.0</td>\n",
        "    </tr>\n",
        "    <tr>\n",
@@ -184,8 +184,8 @@
        "      <td>0.5</td>\n",
        "      <td>1.3</td>\n",
        "      <td>0.23</td>\n",
-       "      <td>0.613</td>\n",
-       "      <td>0.0</td>\n",
+       "      <td>0.351</td>\n",
+       "      <td>1.0</td>\n",
        "    </tr>\n",
        "  </tbody>\n",
        "</table>\n",
@@ -194,11 +194,11 @@
       "text/plain": [
        "                   drift  rel_sp  threshold   ndt     rt  accuracy\n",
        "participant trial                                                 \n",
-       "1           1        0.8     0.5        1.3  0.23  0.444       1.0\n",
-       "            2        0.8     0.5        1.3  0.23  0.436       1.0\n",
-       "            3        0.8     0.5        1.3  0.23  0.505       1.0\n",
-       "            4        0.8     0.5        1.3  0.23  0.348       1.0\n",
-       "            5        0.8     0.5        1.3  0.23  0.613       0.0"
+       "1           1        0.8     0.5        1.3  0.23  1.134       0.0\n",
+       "            2        0.8     0.5        1.3  0.23  0.433       1.0\n",
+       "            3        0.8     0.5        1.3  0.23  0.702       1.0\n",
+       "            4        0.8     0.5        1.3  0.23  0.695       1.0\n",
+       "            5        0.8     0.5        1.3  0.23  0.351       1.0"
       ]
      },
      "execution_count": 4,
@@ -212,8 +212,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 8,
-   "id": "neural-vanilla",
+   "execution_count": 5,
+   "id": "verified-daughter",
    "metadata": {},
    "outputs": [
     {
@@ -261,7 +261,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "closing-hours",
+   "id": "curious-alloy",
    "metadata": {},
    "source": [
     "## Learning example (hierarchical, real data)"
@@ -269,8 +269,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 21,
-   "id": "worst-asbestos",
+   "execution_count": 6,
+   "id": "comparative-transportation",
    "metadata": {},
    "outputs": [
     {
@@ -287,55 +287,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 6,
-   "id": "exterior-lighter",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# import some data:\n",
-    "import pandas as pd\n",
-    "import os\n",
-    "par_path = os.path.abspath(os.path.join(os.getcwd(), os.pardir, os.pardir))\n",
-    "data_path = os.path.join(par_path, 'data/data_experiment.csv')\n",
-    "data_rl = pd.read_csv(data_path, index_col=0)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "single-collar",
-   "metadata": {},
-   "source": [
-    "Since this learning model is only fit on choices, `rt` are not required.\n",
-    "\n",
-    "Other columns/indexes that should be included are:\n",
-    "\n",
-    "- *accuracy*, 0 if the incorrect option was chosen, 1 if the correct option was chosen.\n",
-    "\n",
-    "- *trial_block*, the number of trial in a learning session. Should be integers starting from 1.\n",
-    "\n",
-    "- *f_cor*, the output from the correct option in the presented pair (the option with higher outcome on average).\n",
-    "\n",
-    "- *f_inc*, the output from the incorrect option in the presented pair (the option with lower outcome on average).\n",
-    "\n",
-    "- *cor_option*, the number identifying the correct option in the presented pair (the option with higher outcome on average).\n",
-    "\n",
-    "- *inc_option*, the number identifying the incorrect option in the presented pair(the option with lower outcome on average).\n",
-    "\n",
-    "- *block_label*, the number identifying the learning session. Should be integers starting from 1. Set to 1 in case there is only one learning session.\n",
-    "\n",
-    "If the model is hierarchical, also include:\n",
-    "\n",
-    "- *participant*, the participant number. Should be integers starting from 1.\n",
-    "\n",
-    "If increasing_sensitivity is True, also include:\n",
-    "\n",
-    "- *times_seen*, average number of times the presented options have been seen in a learning session."
-   ]
-  },
-  {
-   "cell_type": "code",
    "execution_count": 7,
-   "id": "major-television",
+   "id": "revised-museum",
    "metadata": {},
    "outputs": [
     {
@@ -463,13 +416,182 @@
     }
    ],
    "source": [
+    "# import some example data:\n",
+    "data_rl = rlssm.load_example_dataset(hierarchical_levels = 2)\n",
+    "\n",
+    "data_rl.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "respective-finger",
+   "metadata": {},
+   "source": [
+    "Since this learning model is only fit on choices, `rt` are not required.\n",
+    "\n",
+    "Other columns/indexes that should be included are:\n",
+    "\n",
+    "- *accuracy*, 0 if the incorrect option was chosen, 1 if the correct option was chosen.\n",
+    "\n",
+    "- *trial_block*, the number of trial in a learning session. Should be integers starting from 1.\n",
+    "\n",
+    "- *f_cor*, the output from the correct option in the presented pair (the option with higher outcome on average).\n",
+    "\n",
+    "- *f_inc*, the output from the incorrect option in the presented pair (the option with lower outcome on average).\n",
+    "\n",
+    "- *cor_option*, the number identifying the correct option in the presented pair (the option with higher outcome on average).\n",
+    "\n",
+    "- *inc_option*, the number identifying the incorrect option in the presented pair(the option with lower outcome on average).\n",
+    "\n",
+    "- *block_label*, the number identifying the learning session. Should be integers starting from 1. Set to 1 in case there is only one learning session.\n",
+    "\n",
+    "If the model is hierarchical, also include:\n",
+    "\n",
+    "- *participant*, the participant number. Should be integers starting from 1.\n",
+    "\n",
+    "If increasing_sensitivity is True, also include:\n",
+    "\n",
+    "- *times_seen*, average number of times the presented options have been seen in a learning session."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "diagnostic-norfolk",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>participant</th>\n",
+       "      <th>block_label</th>\n",
+       "      <th>trial_block</th>\n",
+       "      <th>f_cor</th>\n",
+       "      <th>f_inc</th>\n",
+       "      <th>cor_option</th>\n",
+       "      <th>inc_option</th>\n",
+       "      <th>times_seen</th>\n",
+       "      <th>rt</th>\n",
+       "      <th>accuracy</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>43</td>\n",
+       "      <td>39</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1.244082</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>60</td>\n",
+       "      <td>50</td>\n",
+       "      <td>4</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1.101821</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>3</td>\n",
+       "      <td>44</td>\n",
+       "      <td>36</td>\n",
+       "      <td>4</td>\n",
+       "      <td>2</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1.029923</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>4</td>\n",
+       "      <td>55</td>\n",
+       "      <td>55</td>\n",
+       "      <td>4</td>\n",
+       "      <td>3</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1.368007</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>5</td>\n",
+       "      <td>52</td>\n",
+       "      <td>49</td>\n",
+       "      <td>4</td>\n",
+       "      <td>3</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1.039329</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   participant  block_label  trial_block  f_cor  f_inc  cor_option  \\\n",
+       "0            1            1            1     43     39           2   \n",
+       "1            1            1            2     60     50           4   \n",
+       "2            1            1            3     44     36           4   \n",
+       "3            1            1            4     55     55           4   \n",
+       "4            1            1            5     52     49           4   \n",
+       "\n",
+       "   inc_option  times_seen        rt  accuracy  \n",
+       "0           1           1  1.244082         0  \n",
+       "1           3           1  1.101821         1  \n",
+       "2           2           2  1.029923         0  \n",
+       "3           3           2  1.368007         0  \n",
+       "4           3           3  1.039329         1  "
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
     "data_rl.head()"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 9,
-   "id": "further-appraisal",
+   "id": "trained-landscape",
    "metadata": {},
    "outputs": [
     {
@@ -507,7 +629,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "assigned-enhancement",
+   "id": "frank-lindsay",
    "metadata": {},
    "source": [
     "## Diagnostics"
@@ -515,7 +637,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "advised-inspiration",
+   "id": "weird-diameter",
    "metadata": {},
    "source": [
     "As you can see, the MCMC diagnostics are already printed by default (if you do not want this, you can set `print_diagnostics` to `False`). I refer to https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html for an excellent explanation of what these diagnostics actually mean and how to assess them.\n",
@@ -526,7 +648,7 @@
   {
    "cell_type": "code",
    "execution_count": 10,
-   "id": "meaning-hardwood",
+   "id": "civic-student",
    "metadata": {},
    "outputs": [
     {
@@ -557,17 +679,17 @@
        "  <tbody>\n",
        "    <tr>\n",
        "      <th>0</th>\n",
-       "      <td>1.000842</td>\n",
+       "      <td>1.000630</td>\n",
        "      <td>drift</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>1</th>\n",
-       "      <td>1.000977</td>\n",
+       "      <td>0.999847</td>\n",
        "      <td>threshold</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>2</th>\n",
-       "      <td>1.000020</td>\n",
+       "      <td>0.999237</td>\n",
        "      <td>ndt</td>\n",
        "    </tr>\n",
        "  </tbody>\n",
@@ -576,9 +698,9 @@
       ],
       "text/plain": [
        "       rhat   variable\n",
-       "0  1.000842      drift\n",
-       "1  1.000977  threshold\n",
-       "2  1.000020        ndt"
+       "0  1.000630      drift\n",
+       "1  0.999847  threshold\n",
+       "2  0.999237        ndt"
       ]
      },
      "execution_count": 10,
@@ -593,7 +715,7 @@
   {
    "cell_type": "code",
    "execution_count": 11,
-   "id": "latin-closing",
+   "id": "moral-strap",
    "metadata": {},
    "outputs": [
     {
@@ -627,31 +749,31 @@
        "    </tr>\n",
        "    <tr>\n",
        "      <th>mean</th>\n",
-       "      <td>1.000254</td>\n",
+       "      <td>1.000025</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>std</th>\n",
-       "      <td>0.001035</td>\n",
+       "      <td>0.000724</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>min</th>\n",
-       "      <td>0.999024</td>\n",
+       "      <td>0.999071</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>25%</th>\n",
-       "      <td>0.999638</td>\n",
+       "      <td>0.999492</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>50%</th>\n",
-       "      <td>0.999920</td>\n",
+       "      <td>0.999797</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>75%</th>\n",
-       "      <td>1.000865</td>\n",
+       "      <td>1.000427</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>max</th>\n",
-       "      <td>1.004222</td>\n",
+       "      <td>1.001968</td>\n",
        "    </tr>\n",
        "  </tbody>\n",
        "</table>\n",
@@ -660,13 +782,13 @@
       "text/plain": [
        "            rhat\n",
        "count  58.000000\n",
-       "mean    1.000254\n",
-       "std     0.001035\n",
-       "min     0.999024\n",
-       "25%     0.999638\n",
-       "50%     0.999920\n",
-       "75%     1.000865\n",
-       "max     1.004222"
+       "mean    1.000025\n",
+       "std     0.000724\n",
+       "min     0.999071\n",
+       "25%     0.999492\n",
+       "50%     0.999797\n",
+       "75%     1.000427\n",
+       "max     1.001968"
       ]
      },
      "execution_count": 11,
@@ -681,16 +803,16 @@
   {
    "cell_type": "code",
    "execution_count": 12,
-   "id": "entire-digit",
+   "id": "conceptual-appointment",
    "metadata": {},
    "outputs": [
     {
      "data": {
       "text/plain": [
-       "{'lppd': -210.8358205012861,\n",
-       " 'p_waic': 4.300418641142651,\n",
-       " 'waic': 430.27247828485747,\n",
-       " 'waic_se': 46.48406623386149}"
+       "{'lppd': -201.4814621446239,\n",
+       " 'p_waic': 3.304311118929816,\n",
+       " 'waic': 409.5715465271074,\n",
+       " 'waic_se': 45.969396831225254}"
       ]
      },
      "execution_count": 12,
@@ -705,16 +827,16 @@
   {
    "cell_type": "code",
    "execution_count": 13,
-   "id": "advised-phenomenon",
+   "id": "closed-ballot",
    "metadata": {},
    "outputs": [
     {
      "data": {
       "text/plain": [
-       "{'lppd': -2632.867582843026,\n",
-       " 'p_waic': 52.7245071254338,\n",
-       " 'waic': 5371.1841799369195,\n",
-       " 'waic_se': 93.96972430397454}"
+       "{'lppd': -2632.8620973496854,\n",
+       " 'p_waic': 53.04664551553182,\n",
+       " 'waic': 5371.817485730435,\n",
+       " 'waic_se': 94.06444827215812}"
       ]
      },
      "execution_count": 13,
@@ -728,7 +850,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "metropolitan-prince",
+   "id": "taken-conjunction",
    "metadata": {},
    "source": [
     "If you want to also see the point-wise WAIC, you can set `pointwise_waic` to `True`."
@@ -736,7 +858,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "conceptual-count",
+   "id": "several-kernel",
    "metadata": {},
    "source": [
     "## Save the results"
@@ -744,7 +866,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "communist-scotland",
+   "id": "noble-engagement",
    "metadata": {},
    "source": [
     "By default, the model fit results are saved in the same folder, using the `model_label` as filename. you can specify a different location using the `filename` argument."
@@ -753,7 +875,7 @@
   {
    "cell_type": "code",
    "execution_count": 14,
-   "id": "direct-exercise",
+   "id": "weird-brief",
    "metadata": {},
    "outputs": [
     {
@@ -771,7 +893,7 @@
   {
    "cell_type": "code",
    "execution_count": 15,
-   "id": "adequate-murray",
+   "id": "announced-combination",
    "metadata": {},
    "outputs": [
     {
@@ -788,7 +910,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "existing-friendship",
+   "id": "tropical-hamburg",
    "metadata": {},
    "source": [
     "## Re-load previously saved results"
@@ -797,7 +919,7 @@
   {
    "cell_type": "code",
    "execution_count": 16,
-   "id": "framed-lemon",
+   "id": "administrative-overhead",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -807,7 +929,7 @@
   {
    "cell_type": "code",
    "execution_count": 17,
-   "id": "pending-herald",
+   "id": "weighted-significance",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -816,7 +938,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "corresponding-intensity",
+   "id": "colonial-cloud",
    "metadata": {},
    "source": [
     "The data the model was fit on are stored in `data_info`:"
@@ -824,8 +946,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 25,
-   "id": "proper-piece",
+   "execution_count": 18,
+   "id": "mighty-school",
    "metadata": {},
    "outputs": [
     {
@@ -1052,7 +1174,7 @@
        "[6464 rows x 11 columns]"
       ]
      },
-     "execution_count": 25,
+     "execution_count": 18,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1063,7 +1185,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "stock-beach",
+   "id": "impressive-bulgarian",
    "metadata": {},
    "source": [
     "The priors are stored in `priors`:"
@@ -1071,8 +1193,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 22,
-   "id": "continuous-multimedia",
+   "execution_count": 19,
+   "id": "excited-victory",
    "metadata": {},
    "outputs": [
     {
@@ -1083,7 +1205,7 @@
        " 'ndt_priors': {'mu': 0, 'sd': 0.1}}"
       ]
      },
-     "execution_count": 22,
+     "execution_count": 19,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1094,8 +1216,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 23,
-   "id": "aboriginal-highland",
+   "execution_count": 20,
+   "id": "representative-express",
    "metadata": {},
    "outputs": [
     {
@@ -1105,7 +1227,7 @@
        " 'sensitivity_priors': {'mu_mu': -0.1, 'sd_mu': 0.1, 'mu_sd': 0, 'sd_sd': 0.1}}"
       ]
      },
-     "execution_count": 23,
+     "execution_count": 20,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1116,7 +1238,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "secret-specification",
+   "id": "settled-genetics",
    "metadata": {},
    "source": [
     "And different parameter information are stored in `parameter_info`:"
@@ -1124,8 +1246,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 24,
-   "id": "complimentary-teddy",
+   "execution_count": 21,
+   "id": "extensive-evolution",
    "metadata": {},
    "outputs": [
     {
@@ -1140,7 +1262,7 @@
        " 'parameters_names_all': ['drift', 'threshold', 'ndt']}"
       ]
      },
-     "execution_count": 24,
+     "execution_count": 21,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1151,20 +1273,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 30,
-   "id": "fewer-highway",
+   "execution_count": 22,
+   "id": "digital-arthur",
    "metadata": {},
    "outputs": [
     {
      "data": {
       "text/plain": [
-       "{'lppd': -2632.867582843026,\n",
-       " 'p_waic': 52.7245071254338,\n",
-       " 'waic': 5371.1841799369195,\n",
-       " 'waic_se': 93.96972430397454}"
+       "{'lppd': -2632.8620973496854,\n",
+       " 'p_waic': 53.04664551553182,\n",
+       " 'waic': 5371.817485730435,\n",
+       " 'waic_se': 94.06444827215812}"
       ]
      },
-     "execution_count": 30,
+     "execution_count": 22,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1175,7 +1297,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "atmospheric-electric",
+   "id": "foreign-staff",
    "metadata": {},
    "source": [
     "And, of course, you can inspect the model's posteriors, see [How to inspect a model](https://rlssm.readthedocs.io/en/latest/notebooks/inspect_model.html) for more details on this."

@@ -464,7 +464,7 @@ div.rendered_html tbody tr:hover {
 <p><strong>Additional learning parameters:</strong> While all sequential sampling models (DDM and race models) <strong>without a learning component</strong> only require a <code class="docutils literal notranslate"><span class="pre">data</span></code> argument, all models with a learning components (RL models, RLDDMs, and RL+race models) also require a <code class="docutils literal notranslate"><span class="pre">K</span></code> argument, which is the total number of different options in a learning block (note that this can be different from the number of options presented in each trial), and <code class="docutils literal notranslate"><span class="pre">initial_value_learning</span></code>, which is the initial Q value (before
 learning).</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -570,8 +570,8 @@ Using cached StanModel
       <td>0.5</td>
       <td>1.3</td>
       <td>0.23</td>
-      <td>0.444</td>
-      <td>1.0</td>
+      <td>1.134</td>
+      <td>0.0</td>
     </tr>
     <tr>
       <th>2</th>
@@ -579,7 +579,7 @@ Using cached StanModel
       <td>0.5</td>
       <td>1.3</td>
       <td>0.23</td>
-      <td>0.436</td>
+      <td>0.433</td>
       <td>1.0</td>
     </tr>
     <tr>
@@ -588,7 +588,7 @@ Using cached StanModel
       <td>0.5</td>
       <td>1.3</td>
       <td>0.23</td>
-      <td>0.505</td>
+      <td>0.702</td>
       <td>1.0</td>
     </tr>
     <tr>
@@ -597,7 +597,7 @@ Using cached StanModel
       <td>0.5</td>
       <td>1.3</td>
       <td>0.23</td>
-      <td>0.348</td>
+      <td>0.695</td>
       <td>1.0</td>
     </tr>
     <tr>
@@ -606,15 +606,15 @@ Using cached StanModel
       <td>0.5</td>
       <td>1.3</td>
       <td>0.23</td>
-      <td>0.613</td>
-      <td>0.0</td>
+      <td>0.351</td>
+      <td>1.0</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -667,7 +667,7 @@ E-BFMI indicated no pathological behavior
 <div class="section" id="Learning-example-(hierarchical,-real-data)">
 <h2>Learning example (hierarchical, real data)<a class="headerlink" href="#Learning-example-(hierarchical,-real-data)" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -683,19 +683,122 @@ E-BFMI indicated no pathological behavior
 Using cached StanModel
 </pre></div></div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># import some data:</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="n">par_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">))</span>
-<span class="n">data_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">par_path</span><span class="p">,</span> <span class="s1">&#39;data/data_experiment.csv&#39;</span><span class="p">)</span>
-<span class="n">data_rl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span></span><span class="c1"># import some example data:</span>
+<span class="n">data_rl</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">load_example_dataset</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">data_rl</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>participant</th>
+      <th>block_label</th>
+      <th>trial_block</th>
+      <th>f_cor</th>
+      <th>f_inc</th>
+      <th>cor_option</th>
+      <th>inc_option</th>
+      <th>times_seen</th>
+      <th>rt</th>
+      <th>accuracy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>43</td>
+      <td>39</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.244082</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>60</td>
+      <td>50</td>
+      <td>4</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1.101821</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>44</td>
+      <td>36</td>
+      <td>4</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1.029923</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>1</td>
+      <td>4</td>
+      <td>55</td>
+      <td>55</td>
+      <td>4</td>
+      <td>3</td>
+      <td>2</td>
+      <td>1.368007</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>1</td>
+      <td>5</td>
+      <td>52</td>
+      <td>49</td>
+      <td>4</td>
+      <td>3</td>
+      <td>3</td>
+      <td>1.039329</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
 </div>
 <p>Since this learning model is only fit on choices, <code class="docutils literal notranslate"><span class="pre">rt</span></code> are not required.</p>
 <p>Other columns/indexes that should be included are:</p>
@@ -717,7 +820,7 @@ Using cached StanModel
 <li><p><em>times_seen</em>, average number of times the presented options have been seen in a learning session.</p></li>
 </ul>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -726,7 +829,7 @@ Using cached StanModel
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -913,17 +1016,17 @@ To run all diagnostics call pystan.check_hmc_diagnostics(fit)
   <tbody>
     <tr>
       <th>0</th>
-      <td>1.000842</td>
+      <td>1.000630</td>
       <td>drift</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>1.000977</td>
+      <td>0.999847</td>
       <td>threshold</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>1.000020</td>
+      <td>0.999237</td>
       <td>ndt</td>
     </tr>
   </tbody>
@@ -972,31 +1075,31 @@ To run all diagnostics call pystan.check_hmc_diagnostics(fit)
     </tr>
     <tr>
       <th>mean</th>
-      <td>1.000254</td>
+      <td>1.000025</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>0.001035</td>
+      <td>0.000724</td>
     </tr>
     <tr>
       <th>min</th>
-      <td>0.999024</td>
+      <td>0.999071</td>
     </tr>
     <tr>
       <th>25%</th>
-      <td>0.999638</td>
+      <td>0.999492</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>0.999920</td>
+      <td>0.999797</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>1.000865</td>
+      <td>1.000427</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>1.004222</td>
+      <td>1.001968</td>
     </tr>
   </tbody>
 </table>
@@ -1017,10 +1120,10 @@ To run all diagnostics call pystan.check_hmc_diagnostics(fit)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;lppd&#39;: -210.8358205012861,
- &#39;p_waic&#39;: 4.300418641142651,
- &#39;waic&#39;: 430.27247828485747,
- &#39;waic_se&#39;: 46.48406623386149}
+{&#39;lppd&#39;: -201.4814621446239,
+ &#39;p_waic&#39;: 3.304311118929816,
+ &#39;waic&#39;: 409.5715465271074,
+ &#39;waic_se&#39;: 45.969396831225254}
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -1038,10 +1141,10 @@ To run all diagnostics call pystan.check_hmc_diagnostics(fit)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;lppd&#39;: -2632.867582843026,
- &#39;p_waic&#39;: 52.7245071254338,
- &#39;waic&#39;: 5371.1841799369195,
- &#39;waic_se&#39;: 93.96972430397454}
+{&#39;lppd&#39;: -2632.8620973496854,
+ &#39;p_waic&#39;: 53.04664551553182,
+ &#39;waic&#39;: 5371.817485730435,
+ &#39;waic_se&#39;: 94.06444827215812}
 </pre></div></div>
 </div>
 <p>If you want to also see the point-wise WAIC, you can set <code class="docutils literal notranslate"><span class="pre">pointwise_waic</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
@@ -1106,7 +1209,7 @@ Saving file as: /Users/laurafontanesi/git/rlssm/docs/notebooks/hierRL_2A.pkl
 </div>
 <p>The data the model was fit on are stored in <code class="docutils literal notranslate"><span class="pre">data_info</span></code>:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1115,7 +1218,7 @@ Saving file as: /Users/laurafontanesi/git/rlssm/docs/notebooks/hierRL_2A.pkl
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1312,7 +1415,7 @@ Saving file as: /Users/laurafontanesi/git/rlssm/docs/notebooks/hierRL_2A.pkl
 </div>
 <p>The priors are stored in <code class="docutils literal notranslate"><span class="pre">priors</span></code>:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1321,7 +1424,7 @@ Saving file as: /Users/laurafontanesi/git/rlssm/docs/notebooks/hierRL_2A.pkl
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1332,7 +1435,7 @@ Saving file as: /Users/laurafontanesi/git/rlssm/docs/notebooks/hierRL_2A.pkl
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1341,7 +1444,7 @@ Saving file as: /Users/laurafontanesi/git/rlssm/docs/notebooks/hierRL_2A.pkl
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1352,7 +1455,7 @@ Saving file as: /Users/laurafontanesi/git/rlssm/docs/notebooks/hierRL_2A.pkl
 </div>
 <p>And different parameter information are stored in <code class="docutils literal notranslate"><span class="pre">parameter_info</span></code>:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1361,7 +1464,7 @@ Saving file as: /Users/laurafontanesi/git/rlssm/docs/notebooks/hierRL_2A.pkl
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1376,7 +1479,7 @@ Saving file as: /Users/laurafontanesi/git/rlssm/docs/notebooks/hierRL_2A.pkl
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1385,15 +1488,15 @@ Saving file as: /Users/laurafontanesi/git/rlssm/docs/notebooks/hierRL_2A.pkl
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;lppd&#39;: -2632.867582843026,
- &#39;p_waic&#39;: 52.7245071254338,
- &#39;waic&#39;: 5371.1841799369195,
- &#39;waic_se&#39;: 93.96972430397454}
+{&#39;lppd&#39;: -2632.8620973496854,
+ &#39;p_waic&#39;: 53.04664551553182,
+ &#39;waic&#39;: 5371.817485730435,
+ &#39;waic_se&#39;: 94.06444827215812}
 </pre></div></div>
 </div>
 <p>And, of course, you can inspect the model’s posteriors, see <a class="reference external" href="https://rlssm.readthedocs.io/en/latest/notebooks/inspect_model.html">How to inspect a model</a> for more details on this.</p>
