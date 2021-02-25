@@ -49,13 +49,14 @@ class RLFittedModel_2A(FittedModel):
         # trial parameters
         trial_samples = self.stan_model.extract(['log_p_t'])
         res = RLModelResults_2A(self.model_label,
-                             self.data_info,
-                             self.parameters_info,
-                             rhat,
-                             waic,
-                             last_values,
-                             samples,
-                             trial_samples)
+                                self.data_info,
+                                self.parameters_info,
+                                self.priors,
+                                rhat,
+                                waic,
+                                last_values,
+                                samples,
+                                trial_samples)
         return res
 
 class RLModelResults_2A(ModelResults):

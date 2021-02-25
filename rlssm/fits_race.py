@@ -22,7 +22,8 @@ class raceFittedModel_2A(FittedModel):
                   family,
                   n_parameters_individual,
                   n_parameters_trial,
-                  print_diagnostics):
+                  print_diagnostics,
+                  priors):
         self.family = family
         super().__init__(stan_model,
                              data,
@@ -31,7 +32,8 @@ class raceFittedModel_2A(FittedModel):
                              family,
                              n_parameters_individual,
                              n_parameters_trial,
-                             print_diagnostics)
+                             print_diagnostics,
+                             priors)
 
     def extract_results(self, include_rhat, include_waic, pointwise_waic, include_last_values):
         if include_rhat:
@@ -82,6 +84,7 @@ class raceFittedModel_2A(FittedModel):
         res = raceModelResults_2A(self.model_label,
                                              self.data_info,
                                              self.parameters_info,
+                                             self.priors,
                                              rhat,
                                              waic,
                                              last_values,
@@ -95,6 +98,7 @@ class raceModelResults_2A(ModelResults):
                  model_label,
                  data_info,
                  parameters_info,
+                 priors,
                  rhat,
                  waic,
                  last_values,
@@ -105,6 +109,7 @@ class raceModelResults_2A(ModelResults):
         super().__init__(model_label,
                          data_info,
                          parameters_info,
+                         priors,
                          rhat,
                          waic,
                          last_values,

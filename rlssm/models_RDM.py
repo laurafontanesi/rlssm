@@ -51,6 +51,22 @@ class RDModel_2A(Model):
         self.n_parameters_individual = 4 # non-decision time, drift_cor, drift_inc, threshold
         self.n_parameters_trial = 0
 
+        # Define default priors
+        if self.hierarchical_levels == 1:
+            self.priors = dict(
+                drift_priors={'mu':1, 'sd':5},
+                threshold_priors={'mu':0, 'sd':5},
+                ndt_priors={'mu':0, 'sd':5}
+                )
+        else:
+            self.priors = dict(
+                drift_priors={'mu_mu':1, 'sd_mu':5, 'mu_sd':0, 'sd_sd':5},
+                threshold_priors={'mu_mu':1, 'sd_mu':3, 'mu_sd':0, 'sd_sd':3},
+                ndt_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
+                )
+
+        # Set up model label and priors for mechanisms
+
         # Set the stan model path
         self._set_model_path()
 
@@ -144,65 +160,50 @@ class RDModel_2A(Model):
         data['accuracy_rescale'] = 2
         data.loc[data.accuracy == 1, 'accuracy_rescale'] = 1
 
+        # change default priors:
+        if drift_priors is not None:
+            self.priors['drift_priors'] = drift_priors
+        if threshold_priors is not None:
+            self.priors['threshold_priors'] = threshold_priors
+        if ndt_priors is not None:
+            self.priors['ndt_priors'] = ndt_priors
+
+        data_dict = {'N': N,
+                     'rt': data['rt'].values,
+                     'accuracy': data['accuracy_rescale'].values.astype(int),
+                     'threshold_priors': [threshold_priors['mu'], threshold_priors['sd']],
+                     'ndt_priors': [ndt_priors['mu'], ndt_priors['sd']],
+                     'drift_priors': [drift_priors['mu'], drift_priors['sd']]
+                    }
+
         if self.hierarchical_levels == 2:
-            # set default priors for the hierarchical model:
-            if threshold_priors is None:
-                threshold_priors = {'mu_mu':1, 'sd_mu':3, 'mu_sd':0, 'sd_sd':3}
-            if ndt_priors is None:
-                ndt_priors = {'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1}
-            if drift_priors is None:
-                drift_priors = {'mu_mu':1, 'sd_mu':5, 'mu_sd':0, 'sd_sd':5}
-
+            keys_priors = ["mu_mu", "sd_mu", "mu_sd", "sd_sd"]
             L = len(pd.unique(data.participant)) # n subjects (levels)
-
-            data_dict = {'N': N,
-                         'L': L,
-                         'participant': data['participant'].values.astype(int),
-                         'rt': data['rt'].values,
-                         'accuracy': data['accuracy_rescale'].values.astype(int),
-                         'threshold_priors': [threshold_priors['mu_mu'],
-                                              threshold_priors['sd_mu'],
-                                              threshold_priors['mu_sd'],
-                                              threshold_priors['sd_sd']],
-                         'ndt_priors': [ndt_priors['mu_mu'],
-                                        ndt_priors['sd_mu'],
-                                        ndt_priors['mu_sd'],
-                                        ndt_priors['sd_sd']],
-                         'drift_priors': [drift_priors['mu_mu'],
-                                          drift_priors['sd_mu'],
-                                          drift_priors['mu_sd'],
-                                          drift_priors['sd_sd']]
-                        }
-            # adjust priors for more complex models
-
+            data_dict.update({'L': L, 
+                              'participant': data['participant'].values.astype(int)})
         else:
-            # set default priors for the non-hierarchical model:
-            if threshold_priors is None:
-                threshold_priors = {'mu':1, 'sd':5}
-            if ndt_priors is None:
-                ndt_priors = {'mu':0.3, 'sd':0.3}
-            if drift_priors is None:
-                drift_priors = {'mu':1, 'sd':5}
+            keys_priors = ["mu", "sd"]
 
-            data_dict = {'N': N,
-                         'rt': data['rt'].values,
-                         'accuracy': data['accuracy_rescale'].values.astype(int),
-                         'threshold_priors': [threshold_priors['mu'], threshold_priors['sd']],
-                         'ndt_priors': [ndt_priors['mu'], ndt_priors['sd']],
-                         'drift_priors': [drift_priors['mu'], drift_priors['sd']]
-                        }
+        # Add data for mechanisms:
+
+        # Add priors:
+        print("Fitting the model using the priors:")
+        for par in self.priors.keys():
+            data_dict.update({par: [self.priors[par][key] for key in keys_priors]})
+            print(par, self.priors[par])
 
         # start sampling...
         fitted_model = self.compiled_model.sampling(data_dict, **kwargs)
 
         fitted_model = raceFittedModel_2A(fitted_model,
-                                                      data,
-                                                      self.hierarchical_levels,
-                                                      self.model_label,
-                                                      self.family,
-                                                      self.n_parameters_individual,
-                                                      self.n_parameters_trial,
-                                                      print_diagnostics)
+                                          data,
+                                          self.hierarchical_levels,
+                                          self.model_label,
+                                          self.family,
+                                          self.n_parameters_individual,
+                                          self.n_parameters_trial,
+                                          print_diagnostics,
+                                          self.priors)
 
         res = fitted_model.extract_results(include_rhat,
                                            include_waic,
@@ -273,13 +274,41 @@ class RLRDModel_2A(Model):
         self.n_parameters_individual = 4 # non-decision time, threshold, scaling, learning rate
         self.n_parameters_trial = 0
 
-        if self.separate_learning_rates:
-            self.model_label += '_2lr' # positive learning rate and negative learning rate
+        # Define default priors
+        if self.hierarchical_levels == 1:
+            self.priors = dict(
+                threshold_priors={'mu':0, 'sd':5},
+                ndt_priors={'mu':0, 'sd':5},
+                alpha_priors={'mu':0, 'sd':1},
+                alpha_pos_priors={'mu':0, 'sd':1},
+                alpha_neg_priors={'mu':0, 'sd':1},
+                drift_scaling_priors={'mu':0, 'sd':0.5},
+                utility_priors={'mu':0, 'sd':2}
+                )
+        else:
+            self.priors = dict(
+                threshold_priors={'mu_mu':1, 'sd_mu':3, 'mu_sd':0, 'sd_sd':3},
+                ndt_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
+                alpha_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1},
+                alpha_pos_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1},
+                alpha_neg_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1},
+                drift_scaling_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
+                utility_priors={'mu_mu':0, 'sd_mu':0.1, 'mu_sd':0, 'sd_sd':2}
+                )
+
+        # Set up model label and priors for mechanisms
+        if separate_learning_rates:
+            self.model_label += '_2lr'
             self.n_parameters_individual += 1
+            del self.priors['alpha_priors']
+        else:
+            del self.priors['alpha_pos_priors']
+            del self.priors['alpha_neg_priors']
 
         if self.nonlinear_mapping:
             self.model_label += '_nonlin'
-
+        else:
+            del self.priors['utility_priors']
 
         # Set the stan model path
         self._set_model_path()
@@ -423,122 +452,63 @@ class RLRDModel_2A(Model):
 
         data['accuracy_rescale'] = 2
         data.loc[data.accuracy == 1, 'accuracy_rescale'] = 1
+
+        # change default priors:
+        if threshold_priors is not None:
+            self.priors['threshold_priors'] = threshold_priors
+        if ndt_priors is not None:
+            self.priors['ndt_priors'] = ndt_priors
+        if drift_scaling_priors is not None:
+            self.priors['drift_scaling_priors'] = drift_scaling_priors
+        if utility_priors is not None:
+            self.priors['utility_priors'] = utility_priors
+        if alpha_priors is not None:
+            self.priors['alpha_priors'] = alpha_priors
+        if alpha_pos_priors is not None:
+            self.priors['alpha_pos_priors'] = alpha_pos_priors
+        if alpha_neg_priors is not None:
+            self.priors['alpha_neg_priors'] = alpha_neg_priors
+
+        data_dict = {'N': N,
+                     'K': K,
+                     'trial_block': data['trial_block'].values.astype(int),
+                     'f_cor': data['f_cor'].values,
+                     'f_inc': data['f_inc'].values,
+                     'cor_option': data['cor_option'].values.astype(int),
+                     'inc_option': data['inc_option'].values.astype(int),
+                     'block_label': data['block_label'].values.astype(int),
+                     'rt': data['rt'].values,
+                     'accuracy': data['accuracy_rescale'].values.astype(int),
+                     'initial_value': initial_value_learning}
+
         if self.hierarchical_levels == 2:
-            # set default priors for the hierarchical model:
-            if alpha_priors is None:
-                alpha_priors = {'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1}
-            if drift_scaling_priors is None:
-                drift_scaling_priors = {'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1}
-            if threshold_priors is None:
-                threshold_priors = {'mu_mu':1, 'sd_mu':3, 'mu_sd':0, 'sd_sd':3}
-            if ndt_priors is None:
-                ndt_priors = {'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1}
-            if utility_priors is None:
-                utility_priors = {'mu_mu':0, 'sd_mu':0.1, 'mu_sd':0, 'sd_sd':2}
-            if alpha_pos_priors is None:
-                alpha_pos_priors = {'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1}
-            if alpha_neg_priors is None:
-                alpha_neg_priors = {'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1}
-
+            keys_priors = ["mu_mu", "sd_mu", "mu_sd", "sd_sd"]
             L = len(pd.unique(data.participant)) # n subjects (levels)
-            data_dict = {'N': N,
-                         'K': K,
-                         'L': L,
-                         'participant': data['participant'].values.astype(int),
-                         'trial_block': data['trial_block'].values.astype(int),
-                         'f_cor': data['f_cor'].values,
-                         'f_inc': data['f_inc'].values,
-                         'cor_option': data['cor_option'].values.astype(int),
-                         'inc_option': data['inc_option'].values.astype(int),
-                         'block_label': data['block_label'].values.astype(int),
-                         'rt': data['rt'].values,
-                         'accuracy': data['accuracy_rescale'].values.astype(int),
-                         'initial_value': initial_value_learning,
-                         'alpha_priors': [alpha_priors['mu_mu'],
-                                          alpha_priors['sd_mu'],
-                                          alpha_priors['mu_sd'],
-                                          alpha_priors['sd_sd']],
-                         'drift_scaling_priors': [drift_scaling_priors['mu_mu'],
-                                                  drift_scaling_priors['sd_mu'],
-                                                  drift_scaling_priors['mu_sd'],
-                                                  drift_scaling_priors['sd_sd']],
-                         'threshold_priors': [threshold_priors['mu_mu'],
-                                              threshold_priors['sd_mu'],
-                                              threshold_priors['mu_sd'],
-                                              threshold_priors['sd_sd']],
-                         'ndt_priors': [ndt_priors['mu_mu'],
-                                        ndt_priors['sd_mu'],
-                                        ndt_priors['mu_sd'],
-                                        ndt_priors['sd_sd']],
-                        }
-
-            if self.separate_learning_rates:
-                data_dict.update({'alpha_pos_priors': [alpha_pos_priors['mu_mu'],
-                                                       alpha_pos_priors['sd_mu'],
-                                                       alpha_pos_priors['mu_sd'],
-                                                       alpha_pos_priors['sd_sd']],
-                                  'alpha_neg_priors': [alpha_neg_priors['mu_mu'],
-                                                       alpha_neg_priors['sd_mu'],
-                                                       alpha_neg_priors['mu_sd'],
-                                                       alpha_neg_priors['sd_sd']]})
-                del data_dict['alpha_priors']
-            if self.nonlinear_mapping:
-                data_dict.update({'utility_priors':[0, .1, 0, 2]})
-
+            data_dict.update({'L': L, 
+                              'participant': data['participant'].values.astype(int)})
         else:
-            # set default priors for the hierarchical model:
-            if alpha_priors is None:
-                alpha_priors = {'mu':0, 'sd':1}
-            if drift_scaling_priors is None:
-                drift_scaling_priors = {'mu':0, 'sd':0.5}
-            if threshold_priors is None:
-                threshold_priors = {'mu':1, 'sd':5}
-            if ndt_priors is None:
-                ndt_priors = {'mu':0.3, 'sd':0.3}
-            if alpha_pos_priors is None:
-                alpha_pos_priors = {'mu':0, 'sd':1}
-            if alpha_neg_priors is None:
-                alpha_neg_priors = {'mu':0, 'sd':1}
+            keys_priors = ["mu", "sd"]
 
+        # Add data for mechanisms:
 
-            data_dict = {'N': N,
-                         'K': K,
-                         'trial_block': data['trial_block'].values.astype(int),
-                         'f_cor': data['f_cor'].values,
-                         'f_inc': data['f_inc'].values,
-                         'cor_option': data['cor_option'].values.astype(int),
-                         'inc_option': data['inc_option'].values.astype(int),
-                         'block_label': data['block_label'].values.astype(int),
-                         'rt': data['rt'].values,
-                         'accuracy': data['accuracy_rescale'].values.astype(int),
-                         'initial_value': initial_value_learning,
-                         'alpha_priors': [alpha_priors['mu'], alpha_priors['sd']],
-                         'drift_scaling_priors': [drift_scaling_priors['mu'],
-                                                  drift_scaling_priors['sd']],
-                         'threshold_priors': [threshold_priors['mu'], threshold_priors['sd']],
-                         'ndt_priors': [ndt_priors['mu'], ndt_priors['sd']]
-                        }
+        # Add priors:
+        print("Fitting the model using the priors:")
+        for par in self.priors.keys():
+            data_dict.update({par: [self.priors[par][key] for key in keys_priors]})
+            print(par, self.priors[par])
 
-            if self.separate_learning_rates:
-                data_dict.update({'alpha_pos_priors': [alpha_pos_priors['mu'],
-                                                       alpha_pos_priors['sd']],
-                                  'alpha_neg_priors': [alpha_neg_priors['mu'],
-                                                       alpha_neg_priors['sd']]})
-                del data_dict['alpha_priors']
-
-            if self.nonlinear_mapping:
-                data_dict.update({'utility_priors':[0, 2]})
-
+        # start sampling...
         fitted_model = self.compiled_model.sampling(data_dict, **kwargs)
 
         fitted_model = raceFittedModel_2A(fitted_model,
-                                      data,
-                                      self.hierarchical_levels,
-                                      self.model_label,
-                                      self.family,
-                                      self.n_parameters_individual,
-                                      self.n_parameters_trial,
-                                      print_diagnostics)
+                                          data,
+                                          self.hierarchical_levels,
+                                          self.model_label,
+                                          self.family,
+                                          self.n_parameters_individual,
+                                          self.n_parameters_trial,
+                                          print_diagnostics,
+                                          self.priors)
 
         res = fitted_model.extract_results(include_rhat,
                                            include_waic,

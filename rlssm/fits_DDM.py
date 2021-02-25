@@ -23,6 +23,7 @@ class DDMFittedModel(FittedModel):
                  n_parameters_individual,
                  n_parameters_trial,
                  print_diagnostics,
+                 priors,
                  starting_point_bias,
                  drift_variability,
                  starting_point_variability,
@@ -36,7 +37,8 @@ class DDMFittedModel(FittedModel):
                          family,
                          n_parameters_individual,
                          n_parameters_trial,
-                         print_diagnostics)
+                         print_diagnostics,
+                         priors)
         self.starting_point_bias = starting_point_bias
         self.drift_variability = drift_variability
         self.starting_point_variability = starting_point_variability
@@ -90,6 +92,7 @@ class DDMFittedModel(FittedModel):
         res = DDModelResults(self.model_label,
                              self.data_info,
                              self.parameters_info,
+                             self.priors,
                              rhat,
                              waic,
                              last_values,
@@ -113,6 +116,7 @@ class DDModelResults(ModelResults):
                  model_label,
                  data_info,
                  parameters_info,
+                 priors,
                  rhat,
                  waic,
                  last_values,
@@ -124,6 +128,7 @@ class DDModelResults(ModelResults):
         super().__init__(model_label,
                          data_info,
                          parameters_info,
+                         priors,
                          rhat,
                          waic,
                          last_values,

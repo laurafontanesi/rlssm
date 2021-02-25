@@ -69,14 +69,6 @@ class RLModel_2A(Model):
         self.n_parameters_individual = 2
         self.n_parameters_trial = 0
 
-        if increasing_sensitivity:
-            self.model_label += '_pow'
-            self.n_parameters_individual += 1
-
-        if separate_learning_rates:
-            self.model_label += '_2lr'
-            self.n_parameters_individual += 1
-
         # Define default priors
         if self.hierarchical_levels == 1:
             self.priors = dict(
@@ -96,6 +88,23 @@ class RLModel_2A(Model):
                 alpha_pos_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1},
                 alpha_neg_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1}
                 )
+
+        # Set up model label and priors for mechanisms
+        if increasing_sensitivity:
+            self.model_label += '_pow'
+            self.n_parameters_individual += 1
+            del self.priors['sensitivity_priors']
+        else:
+            del self.priors['consistency_priors']
+            del self.priors['scaling_priors']
+
+        if separate_learning_rates:
+            self.model_label += '_2lr'
+            self.n_parameters_individual += 1
+            del self.priors['alpha_priors']
+        else:
+            del self.priors['alpha_pos_priors']
+            del self.priors['alpha_neg_priors']
 
         # Set the stan model path
         self._set_model_path()
@@ -266,40 +275,28 @@ class RLModel_2A(Model):
         else:
             keys_priors = ["mu", "sd"]
 
-        # Add priors:
-        if self.separate_learning_rates:
-            data_dict.update({'alpha_pos_priors': [self.priors['alpha_pos_priors'][key] for key in keys_priors],
-                              'alpha_neg_priors': [self.priors['alpha_neg_priors'][key] for key in keys_priors]})
-            del self.priors['alpha_priors']
-        else:
-            data_dict.update({'alpha_priors': [self.priors['alpha_priors'][key] for key in keys_priors]})
-            del self.priors['alpha_pos_priors']
-            del self.priors['alpha_neg_priors']
-
+        # Add data for mechanisms:
         if self.increasing_sensitivity:
-            data_dict.update({'consistency_priors': [self.priors['consistency_priors'][key] for key in keys_priors],
-                              'scaling_priors': [self.priors['scaling_priors'][key] for key in keys_priors],
-                              'times_seen': data['times_seen'].values})
-            del self.priors['sensitivity_priors']
-        else:
-            data_dict.update({'sensitivity_priors': [self.priors['sensitivity_priors'][key] for key in keys_priors]})
-            del self.priors['consistency_priors']
-            del self.priors['scaling_priors']
+                    data_dict.update({'times_seen': data['times_seen'].values})
+
+        # Add priors:
         print("Fitting the model using the priors:")
-        for key in self.priors:
-            print(key, self.priors[key])
+        for par in self.priors.keys():
+            data_dict.update({par: [self.priors[par][key] for key in keys_priors]})
+            print(par, self.priors[par])
 
         # start sampling...
         fitted_model = self.compiled_model.sampling(data_dict, **kwargs)
 
-        fitted_model = RLFittedModel_2A(fitted_model,
-                                        data,
-                                        self.hierarchical_levels,
-                                        self.model_label,
-                                        self.family,
-                                        self.n_parameters_individual,
-                                        self.n_parameters_trial,
-                                        print_diagnostics)
+        fitted_model = RLFittedModel_2A(stan_model=fitted_model,
+                                        data=data,
+                                        hierarchical_levels=self.hierarchical_levels,
+                                        model_label=self.model_label,
+                                        family=self.family,
+                                        n_parameters_individual=self.n_parameters_individual,
+                                        n_parameters_trial=self.n_parameters_trial,
+                                        print_diagnostics=print_diagnostics,
+                                        priors=self.priors)
         res = fitted_model.extract_results(include_rhat,
                                            include_waic,
                                            pointwise_waic,

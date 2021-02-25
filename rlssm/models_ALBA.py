@@ -48,10 +48,30 @@ class ALBAModel_2A(Model):
         super().__init__(hierarchical_levels, "ALBA_2A")
 
         # Define the model parameters
-
         self.n_parameters_individual = 6 # k, A, tau, v0, ws, wd
         self.n_parameters_trial = 0
 
+        # Define default priors
+        if self.hierarchical_levels == 1:
+            self.priors = dict(
+                k_priors={'mu':1, 'sd':1},
+                A_priors={'mu':0.3, 'sd':1},
+                tau_priors={'mu':0, 'sd':1},
+                v0_priors={'mu':9, 'sd':2},
+                ws_priors={'mu':0, 'sd':2},
+                wd_priors={'mu':3, 'sd':3},
+                )
+        else:
+            self.priors = dict(
+                k_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
+                A_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
+                tau_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
+                v0_priors={'mu_mu':9, 'sd_mu':3, 'mu_sd':2, 'sd_sd':1},
+                ws_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':2, 'sd_sd':1},
+                wd_priors={'mu_mu':3, 'sd_mu':1, 'mu_sd':3, 'sd_sd':1},
+                )
+
+        # Set up model label and priors for mechanisms
 
         # Set the stan model path
         self._set_model_path()
@@ -164,85 +184,42 @@ class ALBAModel_2A(Model):
         data['accuracy_rescale'] = 2
         data.loc[data.accuracy == 1, 'accuracy_rescale'] = 1
 
+        # change default priors:
+        if k_priors is not None:
+            self.priors['k_priors'] = k_priors
+        if A_priors is not None:
+            self.priors['A_priors'] = A_priors
+        if tau_priors is not None:
+            self.priors['tau_priors'] = tau_priors
+        if v0_priors is not None:
+            self.priors['v0_priors'] = v0_priors
+        if ws_priors is not None:
+            self.priors['ws_priors'] = ws_priors
+        if wd_priors is not None:
+            self.priors['wd_priors'] = wd_priors
+
+        data_dict = {
+            'N': N,
+            'rt': data['rt'].values,
+            'accuracy': data['accuracy_rescale'].values.astype(int),
+            'S_cor': data['S_cor'].values,
+            'S_inc': data['S_inc'].values}
+
         if self.hierarchical_levels == 2:
-            # set default priors for the hierarchical model:
-            if k_priors is None:
-                k_priors = {'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1}
-            if A_priors is None:
-                A_priors = {'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1}
-            if tau_priors is None:
-                tau_priors = {'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1}
-            if v0_priors is None:
-                v0_priors = {'mu_mu':9, 'sd_mu':3, 'mu_sd':2, 'sd_sd':1}
-            if ws_priors is None:
-                ws_priors = {'mu_mu':0, 'sd_mu':1, 'mu_sd':2, 'sd_sd':1}
-            if wd_priors is None:
-                wd_priors = {'mu_mu':3, 'sd_mu':1, 'mu_sd':3, 'sd_sd':1}
-
-
-
+            keys_priors = ["mu_mu", "sd_mu", "mu_sd", "sd_sd"]
             L = len(pd.unique(data.participant)) # n subjects (levels)
-
-            data_dict = {'N': N,
-                             'L': L,
-                             'participant': data['participant'].values.astype(int),
-                             'rt': data['rt'].values,
-                             'accuracy': data['accuracy_rescale'].values.astype(int),
-                             'S_cor': data['S_cor'].values,
-                             'S_inc': data['S_inc'].values,
-                             'k_priors': [k_priors['mu_mu'],
-                                               k_priors['sd_mu'],
-                                               k_priors['mu_sd'],
-                                               k_priors['sd_sd']],
-                             'A_priors': [A_priors['mu_mu'],
-                                            A_priors['sd_mu'],
-                                            A_priors['mu_sd'],
-                                            A_priors['sd_sd']],
-                            'tau_priors': [tau_priors['mu_mu'],
-                                             tau_priors['sd_mu'],
-                                             tau_priors['mu_sd'],
-                                             tau_priors['sd_sd']],
-                             'v0_priors': [v0_priors['mu_mu'],
-                                                 v0_priors['sd_mu'],
-                                                 v0_priors['mu_sd'],
-                                                 v0_priors['sd_sd']],
-                            'ws_priors': [ws_priors['mu_mu'],
-                                                ws_priors['sd_mu'],
-                                                ws_priors['mu_sd'],
-                                                ws_priors['sd_sd']],
-                            'wd_priors': [wd_priors['mu_mu'],
-                                                wd_priors['sd_mu'],
-                                                wd_priors['mu_sd'],
-                                                wd_priors['sd_sd']]}
-            # adjust priors for more complex models
-
+            data_dict.update({'L': L, 
+                              'participant': data['participant'].values.astype(int)})
         else:
-            # set default priors for the non-hierarchical model:
-            if k_priors is None:
-                k_priors = {'mu':1, 'sd':1}
-            if A_priors is None:
-                A_priors = {'mu':0.3, 'sd':1}
-            if tau_priors is None:
-                tau_priors = {'mu':0, 'sd':1}
-            if v0_priors is None:
-                v0_priors = {'mu':9, 'sd':2}
-            if ws_priors is None:
-                ws_priors = {'mu':0, 'sd':2}
-            if wd_priors is None:
-                wd_priors = {'mu':3, 'sd':3}
+            keys_priors = ["mu", "sd"]
 
-            data_dict = {'N': N,
-                              'rt': data['rt'].values,
-                              'accuracy': data['accuracy_rescale'].values.astype(int),
-                              'S_cor': data['S_cor'].values,
-                              'S_inc': data['S_inc'].values,
-                              'k_priors': [k_priors['mu'], k_priors['sd']],
-                              'A_priors': [A_priors['mu'], A_priors['sd']],
-                              'tau_priors': [tau_priors['mu'], tau_priors['sd']],
-                              'v0_priors': [v0_priors['mu'], v0_priors['sd']],
-                              'ws_priors': [ws_priors['mu'], ws_priors['sd']],
-                              'wd_priors': [wd_priors['mu'], wd_priors['sd']]
-                              }
+        # Add data for mechanisms:
+
+        # Add priors:
+        print("Fitting the model using the priors:")
+        for par in self.priors.keys():
+            data_dict.update({par: [self.priors[par][key] for key in keys_priors]})
+            print(par, self.priors[par])
 
         # start sampling...
         fitted_model = self.compiled_model.sampling(data_dict, **kwargs)
@@ -254,7 +231,8 @@ class ALBAModel_2A(Model):
                                                           self.family,
                                                           self.n_parameters_individual,
                                                           self.n_parameters_trial,
-                                                          print_diagnostics)
+                                                          print_diagnostics,
+                                                          self.priors)
 
         res = fitted_model.extract_results(include_rhat,
                                                            include_waic,
@@ -319,10 +297,40 @@ class RLALBAModel_2A(Model):
         self.n_parameters_individual = 7 # k, A, tau, v0, ws, wd, learning rate
         self.n_parameters_trial = 0
 
-        if self.separate_learning_rates:
+        # Define default priors
+        if self.hierarchical_levels == 1:
+            self.priors = dict(
+                k_priors={'mu':1, 'sd':1},
+                A_priors={'mu':0.3, 'sd':1},
+                tau_priors={'mu':0, 'sd':1},
+                alpha_priors={'mu':0, 'sd':1},
+                alpha_pos_priors={'mu':0, 'sd':1},
+                alpha_neg_priors={'mu':0, 'sd':1},
+                v0_priors={'mu':9, 'sd':2},
+                ws_priors={'mu':0, 'sd':2},
+                wd_priors={'mu':3, 'sd':3}
+                )
+        else:
+            self.priors = dict(
+                k_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
+                A_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
+                tau_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
+                alpha_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1},
+                alpha_pos_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1},
+                alpha_neg_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1},
+                v0_priors={'mu_mu':9, 'sd_mu':3, 'mu_sd':2, 'sd_sd':1},
+                ws_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':2, 'sd_sd':1},
+                wd_priors={'mu_mu':3, 'sd_mu':1, 'mu_sd':3, 'sd_sd':1}
+                )
+
+        # Set up model label and priors for mechanisms
+        if separate_learning_rates:
             self.model_label += '_2lr'
             self.n_parameters_individual += 1
-
+            del self.priors['alpha_priors']
+        else:
+            del self.priors['alpha_pos_priors']
+            del self.priors['alpha_neg_priors']
 
         # Set the stan model path
         self._set_model_path()
@@ -337,10 +345,10 @@ class RLALBAModel_2A(Model):
             k_priors=None,
             A_priors=None,
             tau_priors=None,
-            alpha_priors=None,
             v0_priors=None,
             ws_priors=None,
             wd_priors=None,
+            alpha_priors=None,
             alpha_pos_priors=None,
             alpha_neg_priors=None,
             include_rhat=True,
@@ -478,130 +486,56 @@ class RLALBAModel_2A(Model):
 
         data['accuracy_rescale'] = 2
         data.loc[data.accuracy == 1, 'accuracy_rescale'] = 1
+
+        # change default priors:
+        if k_priors is not None:
+            self.priors['k_priors'] = k_priors
+        if A_priors is not None:
+            self.priors['A_priors'] = A_priors
+        if tau_priors is not None:
+            self.priors['tau_priors'] = tau_priors
+        if v0_priors is not None:
+            self.priors['v0_priors'] = v0_priors
+        if ws_priors is not None:
+            self.priors['ws_priors'] = ws_priors
+        if wd_priors is not None:
+            self.priors['wd_priors'] = wd_priors
+        if alpha_priors is not None:
+            self.priors['alpha_priors'] = alpha_priors
+        if alpha_pos_priors is not None:
+            self.priors['alpha_pos_priors'] = alpha_pos_priors
+        if alpha_neg_priors is not None:
+            self.priors['alpha_neg_priors'] = alpha_neg_priors
+
+        data_dict = {'N': N,
+                     'K': K,
+                     'trial_block': data['trial_block'].values.astype(int),
+                     'f_cor': data['f_cor'].values,
+                     'f_inc': data['f_inc'].values,
+                     'cor_option': data['cor_option'].values.astype(int),
+                     'inc_option': data['inc_option'].values.astype(int),
+                     'block_label': data['block_label'].values.astype(int),
+                     'rt': data['rt'].values,
+                     'accuracy': data['accuracy_rescale'].values.astype(int),
+                     'initial_value': initial_value_learning}
+
         if self.hierarchical_levels == 2:
-            # set default priors for the hierarchical model:
-            if k_priors is None:
-                k_priors = {'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1}
-            if A_priors is None:
-                A_priors = {'mu_mu':0, 'sd_mu':0.1, 'mu_sd':0, 'sd_sd':1}
-            if tau_priors is None:
-                tau_priors = {'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1}
-            if v0_priors is None:
-                v0_priors = {'mu_mu':9, 'sd_mu':1, 'mu_sd':2, 'sd_sd':1}
-            if ws_priors is None:
-                ws_priors = {'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1}
-            if wd_priors is None:
-                wd_priors = {'mu_mu':3, 'sd_mu':1, 'mu_sd':3, 'sd_sd':1}
-            if alpha_priors is None:
-                alpha_priors = {'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1}
-            if alpha_pos_priors is None:
-                alpha_pos_priors = {'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1}
-            if alpha_neg_priors is None:
-                alpha_neg_priors = {'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1}
-
+            keys_priors = ["mu_mu", "sd_mu", "mu_sd", "sd_sd"]
             L = len(pd.unique(data.participant)) # n subjects (levels)
-            data_dict = {'N': N,
-                             'K': K,
-                             'L': L,
-                             'participant': data['participant'].values.astype(int),
-                             'trial_block': data['trial_block'].values.astype(int),
-                             'f_cor': data['f_cor'].values,
-                             'f_inc': data['f_inc'].values,
-                             'cor_option': data['cor_option'].values.astype(int),
-                             'inc_option': data['inc_option'].values.astype(int),
-                             'block_label': data['block_label'].values.astype(int),
-                             'rt': data['rt'].values,
-                             'accuracy': data['accuracy_rescale'].values.astype(int),
-                             'initial_value': initial_value_learning,
-                             'k_priors': [k_priors['mu_mu'],
-                                               k_priors['sd_mu'],
-                                               k_priors['mu_sd'],
-                                               k_priors['sd_sd']],
-                             'A_priors': [A_priors['mu_mu'],
-                                               A_priors['sd_mu'],
-                                               A_priors['mu_sd'],
-                                               A_priors['sd_sd']],
-                             'tau_priors': [tau_priors['mu_mu'],
-                                                  tau_priors['sd_mu'],
-                                                  tau_priors['mu_sd'],
-                                                  tau_priors['sd_sd']],
-                             'v0_priors': [v0_priors['mu_mu'],
-                                               v0_priors['sd_mu'],
-                                               v0_priors['mu_sd'],
-                                               v0_priors['sd_sd']],
-                             'ws_priors': [ws_priors['mu_mu'],
-                                               ws_priors['sd_mu'],
-                                               ws_priors['mu_sd'],
-                                               ws_priors['sd_sd']],
-                             'wd_priors': [wd_priors['mu_mu'],
-                                               wd_priors['sd_mu'],
-                                               wd_priors['mu_sd'],
-                                               wd_priors['sd_sd']],
-                             'alpha_priors': [alpha_priors['mu_mu'],
-                                              alpha_priors['sd_mu'],
-                                              alpha_priors['mu_sd'],
-                                              alpha_priors['sd_sd']]
-                            }
-
-            if self.separate_learning_rates:
-                data_dict.update({'alpha_pos_priors': [alpha_pos_priors['mu_mu'],
-                                                       alpha_pos_priors['sd_mu'],
-                                                       alpha_pos_priors['mu_sd'],
-                                                       alpha_pos_priors['sd_sd']],
-                                  'alpha_neg_priors': [alpha_neg_priors['mu_mu'],
-                                                       alpha_neg_priors['sd_mu'],
-                                                       alpha_neg_priors['mu_sd'],
-                                                       alpha_neg_priors['sd_sd']]})
-                del data_dict['alpha_priors']
-
+            data_dict.update({'L': L, 
+                              'participant': data['participant'].values.astype(int)})
         else:
-            # set default priors for the hierarchical model:
-            if k_priors is None:
-                k_priors = {'mu':1, 'sd':1}
-            if A_priors is None:
-                A_priors = {'mu':0.3, 'sd':1}
-            if tau_priors is None:
-                tau_priors = {'mu':0, 'sd':1}
-            if alpha_priors is None:
-                alpha_priors = {'mu':0, 'sd':1}
-            if v0_priors is None:
-                v0_priors = {'mu':9, 'sd':2}
-            if ws_priors is None:
-                ws_priors = {'mu':0, 'sd':2}
-            if wd_priors is None:
-                wd_priors = {'mu':3, 'sd':3}
-            if alpha_pos_priors is None:
-                alpha_pos_priors = {'mu':0, 'sd':1}
-            if alpha_neg_priors is None:
-                alpha_neg_priors = {'mu':0, 'sd':1}
+            keys_priors = ["mu", "sd"]
 
-            data_dict = {'N': N,
-                         'K': K,
-                         'trial_block': data['trial_block'].values.astype(int),
-                         'f_cor': data['f_cor'].values,
-                         'f_inc': data['f_inc'].values,
-                         'cor_option': data['cor_option'].values.astype(int),
-                         'inc_option': data['inc_option'].values.astype(int),
-                         'block_label': data['block_label'].values.astype(int),
-                         'rt': data['rt'].values,
-                         'accuracy': data['accuracy_rescale'].values.astype(int),
-                         'initial_value': initial_value_learning,
-                         'k_priors': [k_priors['mu'], k_priors['sd']],
-                         'A_priors': [A_priors['mu'], A_priors['sd']],
-                         'tau_priors': [tau_priors['mu'], tau_priors['sd']],
-                         'v0_priors': [v0_priors['mu'], v0_priors['sd']],
-                         'ws_priors': [ws_priors['mu'], ws_priors['sd']],
-                         'wd_priors': [wd_priors['mu'], wd_priors['sd']],
-                         'alpha_priors': [alpha_priors['mu'], alpha_priors['sd']]
-                        }
+        # Add data for mechanisms:
 
-            if self.separate_learning_rates:
-                data_dict.update({'alpha_pos_priors': [alpha_pos_priors['mu'],
-                                                       alpha_pos_priors['sd']],
-                                  'alpha_neg_priors': [alpha_neg_priors['mu'],
-                                                       alpha_neg_priors['sd']]})
-                del data_dict['alpha_priors']
+        # Add priors:
+        print("Fitting the model using the priors:")
+        for par in self.priors.keys():
+            data_dict.update({par: [self.priors[par][key] for key in keys_priors]})
+            print(par, self.priors[par])
 
+        # start sampling...
         fitted_model = self.compiled_model.sampling(data_dict, **kwargs)
 
         fitted_model = raceFittedModel_2A(fitted_model,
@@ -611,7 +545,8 @@ class RLALBAModel_2A(Model):
                                                       self.family,
                                                       self.n_parameters_individual,
                                                       self.n_parameters_trial,
-                                                      print_diagnostics)
+                                                      print_diagnostics,
+                                                      self.priors)
 
         res = fitted_model.extract_results(include_rhat,
                                            include_waic,
