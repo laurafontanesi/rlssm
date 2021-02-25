@@ -2,6 +2,8 @@ import pickle
 import numpy as np
 
 def load_model_results(filename):
+    """Load model results from pickle.
+    """
     return pickle.load(open(filename, "rb"))
 
 def list_trial_variables(var_name, N):

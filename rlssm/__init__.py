@@ -7,3 +7,4 @@ from .models_LBA import *
 from .models_ARDM import *
 from .models_ALBA import *
 from .utils import load_model_results
+from .load_data import load_example_dataset
