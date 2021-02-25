@@ -91,15 +91,8 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="initialize_model.html">How to initialize a model</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">How to fit a model</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#Data-format">Data format</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#Non-learning-example-(non-hierarchical,-simulated-data)">Non-learning example (non-hierarchical, simulated data)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Learning-example-(hierarchical,-real-data)">Learning example (hierarchical, real data)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Additional-learning-parameters">Additional learning parameters</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#Specify-the-priors">Specify the priors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Specify-the-sampling-parameters">Specify the sampling parameters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Run">Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Non-learning-example-(non-hierarchical,-simulated-data)">Non-learning example (non-hierarchical, simulated data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Learning-example-(hierarchical,-real-data)">Learning example (hierarchical, real data)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Diagnostics">Diagnostics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Save-the-results">Save the results</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Re-load-previously-saved-results">Re-load previously saved results</a></li>
@@ -463,15 +456,15 @@ div.rendered_html tbody tr:hover {
 </style>
 <div class="section" id="How-to-fit-a-model">
 <h1>How to fit a model<a class="headerlink" href="#How-to-fit-a-model" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="Data-format">
-<h2>Data format<a class="headerlink" href="#Data-format" title="Permalink to this headline">¶</a></h2>
-<p>All model classes have a <code class="docutils literal notranslate"><span class="pre">fit</span></code> method for fitting the model to (individual or group) data, and all <code class="docutils literal notranslate"><span class="pre">fit</span></code> methods have at least 1 required argument, <code class="docutils literal notranslate"><span class="pre">data</span></code>, which should be in the form of a pandas DataFrame.</p>
-<p>However, different model classes might require different columns in the data. You should check in the <strong>API Reference</strong> of each model class (or using <code class="docutils literal notranslate"><span class="pre">model.fit?</span></code>) what the required data columns are.</p>
-<p>Below, you can see a non-learning and a learning example:</p>
-<div class="section" id="Non-learning-example-(non-hierarchical,-simulated-data)">
-<h3>Non-learning example (non-hierarchical, simulated data)<a class="headerlink" href="#Non-learning-example-(non-hierarchical,-simulated-data)" title="Permalink to this headline">¶</a></h3>
+<p>To fit a model, there are 3 main things to specify:</p>
+<p><strong>1. Data:</strong> The <code class="docutils literal notranslate"><span class="pre">data</span></code>, which should be in the form of a pandas DataFrame.</p>
+<p>Different model classes might require different columns in the data. You should check in the <a class="reference external" href="https://rlssm.readthedocs.io/en/latest/models/model_classes.html">API Reference</a> of each model class (or using <code class="docutils literal notranslate"><span class="pre">model.fit?</span></code>) what the required data columns are.</p>
+<p><strong>2. The priors (optional):</strong> You can decide whether to use the default priors (which you can see after initializing the model) or whether you want to change the mean or SD of the prior or hyper-prior distributions. Whether you changed the priors or not, they are always printed out when the model starts fitting.</p>
+<p><strong>3. Sampling parameters:</strong> The sampling parameters <strong>(number of chains, iterations, warmups, thinning, etc.)</strong> are the arguments to the <code class="docutils literal notranslate"><span class="pre">pystan.StanModel.sampling()</span></code> function, and we simply refer to the <a class="reference external" href="https://pystan.readthedocs.io/">pystan documentation</a> for a better overview.</p>
+<p><strong>Additional learning parameters:</strong> While all sequential sampling models (DDM and race models) <strong>without a learning component</strong> only require a <code class="docutils literal notranslate"><span class="pre">data</span></code> argument, all models with a learning components (RL models, RLDDMs, and RL+race models) also require a <code class="docutils literal notranslate"><span class="pre">K</span></code> argument, which is the total number of different options in a learning block (note that this can be different from the number of options presented in each trial), and <code class="docutils literal notranslate"><span class="pre">initial_value_learning</span></code>, which is the initial Q value (before
+learning).</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -479,6 +472,8 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
+<div class="section" id="Non-learning-example-(non-hierarchical,-simulated-data)">
+<h2>Non-learning example (non-hierarchical, simulated data)<a class="headerlink" href="#Non-learning-example-(non-hierarchical,-simulated-data)" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
@@ -515,10 +510,6 @@ Using cached StanModel
 <ul class="simple">
 <li><p><em>rt</em>, response times in seconds.</p></li>
 <li><p><em>accuracy</em>, 0 if the incorrect option was chosen, 1 if the correct option was chosen.</p></li>
-</ul>
-<p>If the model is hierarchical, also include:</p>
-<ul class="simple">
-<li><p><em>participant</em>, the participant number. Should be integers starting from 1 (it’s also OK if <code class="docutils literal notranslate"><span class="pre">participant</span></code> is in the index).</p></li>
 </ul>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -579,8 +570,8 @@ Using cached StanModel
       <td>0.5</td>
       <td>1.3</td>
       <td>0.23</td>
-      <td>1.286</td>
-      <td>0.0</td>
+      <td>0.444</td>
+      <td>1.0</td>
     </tr>
     <tr>
       <th>2</th>
@@ -588,8 +579,8 @@ Using cached StanModel
       <td>0.5</td>
       <td>1.3</td>
       <td>0.23</td>
-      <td>0.374</td>
-      <td>0.0</td>
+      <td>0.436</td>
+      <td>1.0</td>
     </tr>
     <tr>
       <th>3</th>
@@ -597,7 +588,7 @@ Using cached StanModel
       <td>0.5</td>
       <td>1.3</td>
       <td>0.23</td>
-      <td>0.767</td>
+      <td>0.505</td>
       <td>1.0</td>
     </tr>
     <tr>
@@ -606,7 +597,7 @@ Using cached StanModel
       <td>0.5</td>
       <td>1.3</td>
       <td>0.23</td>
-      <td>1.187</td>
+      <td>0.348</td>
       <td>1.0</td>
     </tr>
     <tr>
@@ -615,18 +606,68 @@ Using cached StanModel
       <td>0.5</td>
       <td>1.3</td>
       <td>0.23</td>
-      <td>0.777</td>
-      <td>1.0</td>
+      <td>0.613</td>
+      <td>0.0</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Run 2 chains, with 2000 samples each, 1000 of which warmup, with custom priors:</span>
+<span class="n">model_fit_ddm</span> <span class="o">=</span> <span class="n">model_ddm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">data_ddm</span><span class="p">,</span>
+    <span class="n">drift_priors</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;mu&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;sd&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">},</span>
+    <span class="n">threshold_priors</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;mu&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">5</span><span class="p">},</span>
+    <span class="n">ndt_priors</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;mu&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">1</span><span class="p">},</span>
+    <span class="n">chains</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="nb">iter</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
+    <span class="n">warmup</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+    <span class="n">thin</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Fitting the model using the priors:
+drift_priors {&#39;mu&#39;: 0.5, &#39;sd&#39;: 1}
+threshold_priors {&#39;mu&#39;: 0, &#39;sd&#39;: 0.5}
+ndt_priors {&#39;mu&#39;: 0, &#39;sd&#39;: 0.1}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+WARNING:pystan:Maximum (flat) parameter count (1000) exceeded: skipping diagnostic tests for n_eff and Rhat.
+To run all diagnostics call pystan.check_hmc_diagnostics(fit)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Checks MCMC diagnostics:
+n_eff / iter looks reasonable for all parameters
+0.0 of 2000 iterations ended with a divergence (0.0%)
+0 of 2000 iterations saturated the maximum tree depth of 10 (0.0%)
+E-BFMI indicated no pathological behavior
+</pre></div></div>
+</div>
 </div>
 <div class="section" id="Learning-example-(hierarchical,-real-data)">
-<h3>Learning example (hierarchical, real data)<a class="headerlink" href="#Learning-example-(hierarchical,-real-data)" title="Permalink to this headline">¶</a></h3>
+<h2>Learning example (hierarchical, real data)<a class="headerlink" href="#Learning-example-(hierarchical,-real-data)" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -656,9 +697,10 @@ Using cached StanModel
 </pre></div>
 </div>
 </div>
-<p>Since this learning model is only fit on choices, only <code class="docutils literal notranslate"><span class="pre">accuracy</span></code> (and not <code class="docutils literal notranslate"><span class="pre">rt</span></code>) is required.</p>
-<p>Other columns that should be included are:</p>
+<p>Since this learning model is only fit on choices, <code class="docutils literal notranslate"><span class="pre">rt</span></code> are not required.</p>
+<p>Other columns/indexes that should be included are:</p>
 <ul class="simple">
+<li><p><em>accuracy</em>, 0 if the incorrect option was chosen, 1 if the correct option was chosen.</p></li>
 <li><p><em>trial_block</em>, the number of trial in a learning session. Should be integers starting from 1.</p></li>
 <li><p><em>f_cor</em>, the output from the correct option in the presented pair (the option with higher outcome on average).</p></li>
 <li><p><em>f_inc</em>, the output from the incorrect option in the presented pair (the option with lower outcome on average).</p></li>
@@ -674,7 +716,6 @@ Using cached StanModel
 <ul class="simple">
 <li><p><em>times_seen</em>, average number of times the presented options have been seen in a learning session.</p></li>
 </ul>
-<p>If any of these columns are part of the index with the approriate label, they will still be recognized.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
@@ -789,64 +830,6 @@ Using cached StanModel
 </table>
 </div></div>
 </div>
-</div>
-<div class="section" id="Additional-learning-parameters">
-<h3>Additional learning parameters<a class="headerlink" href="#Additional-learning-parameters" title="Permalink to this headline">¶</a></h3>
-<p>While all sequential sampling models (DDM and race models) <strong>without a learning component</strong> only require a <code class="docutils literal notranslate"><span class="pre">data</span></code> argument, all models with a learning components (RL models, RLDDMs, and RL+race models) also require a <code class="docutils literal notranslate"><span class="pre">K</span></code> argument, which is the total number of different options in a learning block (note that this can be different from the number of options presented in each trial), and <code class="docutils literal notranslate"><span class="pre">initial_value_learning</span></code>, which is the initial Q value (before learning).</p>
-</div>
-</div>
-<div class="section" id="Specify-the-priors">
-<h2>Specify the priors<a class="headerlink" href="#Specify-the-priors" title="Permalink to this headline">¶</a></h2>
-<p>You can decide whether to use the default priors or whether you want to change the mean or SD of the prior or hyper-prior distributions.</p>
-<p>To know what are the default priors, you can check the <strong>API Reference</strong> of each model class (or <code class="docutils literal notranslate"><span class="pre">model.fit?</span></code>).</p>
-</div>
-<div class="section" id="Specify-the-sampling-parameters">
-<h2>Specify the sampling parameters<a class="headerlink" href="#Specify-the-sampling-parameters" title="Permalink to this headline">¶</a></h2>
-<p>The last important step is to specify the sampling parameters <strong>(number of chains, iterations, warmups, thinning, etc.)</strong>.</p>
-<p>These are the arguments to the <code class="docutils literal notranslate"><span class="pre">pystan.StanModel.sampling()</span></code> function, and we simply refer to the <a class="reference external" href="https://pystan.readthedocs.io/">pystan documentation</a> for a better overview.</p>
-</div>
-<div class="section" id="Run">
-<h2>Run<a class="headerlink" href="#Run" title="Permalink to this headline">¶</a></h2>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Run 2 chains, with 2000 samples each, 1000 of which warmup, with custom priors:</span>
-<span class="n">model_fit_ddm</span> <span class="o">=</span> <span class="n">model_ddm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
-    <span class="n">data_ddm</span><span class="p">,</span>
-    <span class="n">drift_priors</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;mu&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;sd&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">},</span>
-    <span class="n">threshold_priors</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;mu&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">5</span><span class="p">},</span>
-    <span class="n">ndt_priors</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;mu&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">1</span><span class="p">},</span>
-    <span class="n">chains</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="nb">iter</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
-    <span class="n">warmup</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
-    <span class="n">pointwise_waic</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">thin</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-WARNING:pystan:Maximum (flat) parameter count (1000) exceeded: skipping diagnostic tests for n_eff and Rhat.
-To run all diagnostics call pystan.check_hmc_diagnostics(fit)
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Checks MCMC diagnostics:
-n_eff / iter looks reasonable for all parameters
-0.0 of 2000 iterations ended with a divergence (0.0%)
-0 of 2000 iterations saturated the maximum tree depth of 10 (0.0%)
-E-BFMI indicated no pathological behavior
-</pre></div></div>
-</div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
@@ -866,6 +849,16 @@ E-BFMI indicated no pathological behavior
     <span class="n">thin</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Fitting the model using the priors:
+alpha_priors {&#39;mu_mu&#39;: -0.3, &#39;sd_mu&#39;: 0.1, &#39;mu_sd&#39;: 0, &#39;sd_sd&#39;: 0.1}
+sensitivity_priors {&#39;mu_mu&#39;: -0.1, &#39;sd_mu&#39;: 0.1, &#39;mu_sd&#39;: 0, &#39;sd_sd&#39;: 0.1}
+</pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
@@ -920,17 +913,17 @@ To run all diagnostics call pystan.check_hmc_diagnostics(fit)
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.999902</td>
+      <td>1.000842</td>
       <td>drift</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>1.001713</td>
+      <td>1.000977</td>
       <td>threshold</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>1.001130</td>
+      <td>1.000020</td>
       <td>ndt</td>
     </tr>
   </tbody>
@@ -979,38 +972,38 @@ To run all diagnostics call pystan.check_hmc_diagnostics(fit)
     </tr>
     <tr>
       <th>mean</th>
-      <td>0.999875</td>
+      <td>1.000254</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>0.000763</td>
+      <td>0.001035</td>
     </tr>
     <tr>
       <th>min</th>
-      <td>0.999067</td>
+      <td>0.999024</td>
     </tr>
     <tr>
       <th>25%</th>
-      <td>0.999291</td>
+      <td>0.999638</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>0.999658</td>
+      <td>0.999920</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>1.000173</td>
+      <td>1.000865</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>1.002636</td>
+      <td>1.004222</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1019,115 +1012,15 @@ To run all diagnostics call pystan.check_hmc_diagnostics(fit)
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;lppd&#39;: -206.31546680801432,
- &#39;p_waic&#39;: 3.008203178578447,
- &#39;waic&#39;: 418.6473399731855,
- &#39;waic_se&#39;: 44.037247567155475,
- &#39;pointwise_waic&#39;: array([ 6.86708836e+00,  9.06715564e-01,  1.18466469e+00,  4.05027111e+00,
-         1.25280354e+00,  3.65799930e+00, -8.88229710e-01,  1.06884090e+00,
-        -1.03569327e+00, -1.15022881e+00,  5.03448512e+00, -1.04099857e+00,
-         3.82845808e+00,  1.87628948e+00,  1.83899268e+00, -1.14924792e+00,
-        -9.11091144e-01,  3.15343043e+00,  6.94246394e-01, -1.02497280e+00,
-        -1.81811077e-01,  2.49372371e+00,  3.56937193e+00, -6.93939374e-01,
-         4.08401402e-01,  1.63447025e+00, -1.00311771e+00, -8.25998105e-01,
-         1.49116505e+00,  4.08401402e-01,  1.55267238e+00,  1.35673672e+00,
-        -8.32186269e-01,  4.42415932e-01,  1.19641138e+00, -1.18401195e+00,
-        -6.08707350e-01, -1.19060443e+00,  2.95772754e+00, -1.17595654e+00,
-        -1.22683684e+00, -9.78491963e-01, -1.00723759e-01, -9.57934728e-01,
-        -8.87143691e-01,  6.94246394e-01,  2.59515630e+00,  5.74625751e+00,
-        -1.23025041e+00, -6.34809430e-01, -1.04626596e+00, -7.63353790e-01,
-        -1.23296885e+00,  9.07969943e-01,  2.09811018e+00,  1.49766479e+00,
-         1.10401474e+00, -5.69363087e-01,  4.42608270e+00,  2.58835095e+00,
-        -6.01202580e-02,  3.40388443e-01, -1.06183070e+00,  7.22477133e+00,
-         2.65746748e+00,  1.05238402e+00, -2.15541140e-01, -1.20099196e+00,
-         2.98328807e+00,  9.07379622e-01,  2.92794140e-01,  3.08058474e+00,
-         4.09809458e+00, -6.02165256e-01,  1.02796584e+00, -1.23247791e+00,
-         1.76886412e+00,  5.03653700e-01, -5.32143953e-01,  9.25787966e-01,
-        -9.62058213e-01, -5.56202104e-01,  1.94126851e+00, -8.71932218e-02,
-         3.81193491e-01, -1.23087841e+00,  1.02393489e+00, -6.01229434e-01,
-         1.82250422e+00,  5.34331033e+00,  4.84172787e-01,  1.33457682e+00,
-        -8.88229710e-01, -1.16978417e+00, -1.95307524e-01,  1.63688366e-01,
-         2.55432711e+00,  3.68824634e+00,  1.49814406e+00,  8.03195195e-01,
-        -1.27080274e-02,  4.57644313e+00, -7.99751954e-01,  2.31933068e+00,
-         1.61576260e+00,  3.42192651e+00,  1.28297225e+01,  1.48451243e+00,
-        -6.54311689e-01,  9.13361999e-01,  5.43891159e+00,  2.54752295e+00,
-         7.59215234e-01,  9.13361999e-01,  2.67002654e+00,  4.66068541e+00,
-         2.94922783e+00,  4.56023090e-01, -1.22683684e+00, -1.02342457e+00,
-         4.49442581e+00,  1.68528003e+00, -7.44319432e-01,  1.57301943e+01,
-         3.37850947e+00, -1.81811077e-01,  3.67845287e+00, -1.18166437e+00,
-         9.17282590e-01, -1.14924792e+00,  4.52859896e+00, -7.44319432e-01,
-        -1.23336358e+00,  1.70479992e-01, -1.16987419e+00,  1.60749157e+00,
-        -3.29898746e-01,  9.91446334e-01,  9.68563627e-01, -9.52163261e-01,
-         2.27741944e+00, -8.81107789e-01, -3.43312759e-01, -7.31575332e-01,
-        -1.21301592e+00, -1.00311771e+00, -9.34700088e-01, -1.20099196e+00,
-         5.96482634e+00,  3.21028219e+00,  4.01599103e-01,  1.03479249e+00,
-        -1.22502381e+00,  4.17627893e+00,  6.81238725e+00,  1.56303911e+00,
-         8.84921031e-01,  1.65550869e+00,  7.61950403e+00, -3.70110729e-01,
-        -1.15428619e+00,  5.24647927e+00, -8.38359149e-01, -8.01099961e-01,
-         2.54147980e+00, -1.95307524e-01,  1.02115354e+00,  2.41186095e+00,
-         5.44486226e-01, -6.93103726e-01, -4.23572062e-01, -1.19666267e+00,
-         1.94368739e+00, -1.15022881e+00, -1.23025041e+00, -7.75041715e-01,
-         1.08551333e+01,  3.69894764e+00, -1.14153259e+00,  2.12538929e+00,
-         3.20345562e+00,  3.81482036e+00, -5.29817241e-01, -2.34645245e-01,
-        -7.75985607e-01,  1.59357051e+00, -8.56782193e-01, -1.14153259e+00,
-        -1.23025041e+00,  1.10290505e+00, -5.03354995e-01, -6.64404056e-01,
-         3.06010759e+00, -1.00311771e+00,  1.76217077e+00,  2.26179505e+00,
-        -1.20099196e+00,  2.48422135e-01, -2.49231929e-01, -2.69425527e-01,
-        -3.98058280e-02,  3.67163497e+00, -6.01229434e-01,  2.41828891e+00,
-         2.62335219e+00, -1.07199881e+00,  5.76637903e+00,  1.32956404e+00,
-        -1.21523895e+00, -8.62889994e-01,  3.16043075e+00,  2.83488400e+00,
-        -1.16602341e+00, -1.14250081e-01,  7.96385227e-01, -2.29022431e-01,
-        -1.07487459e-01,  9.26696565e-01, -1.21751231e+00,  4.15239802e-02,
-         2.45279157e+00,  2.65603678e-01, -9.11091144e-01, -1.34531219e-01,
-        -1.07412629e+00, -3.50016098e-01,  3.69894764e+00, -1.16602341e+00,
-        -9.94178750e-01, -1.94836942e-02,  2.31636210e+00,  1.43316141e-01,
-        -7.05965552e-01,  3.50120240e+00,  5.98937591e-01,  4.21038504e+00,
-         6.94246394e-01, -9.46366583e-01,  1.90996763e+00, -1.23327895e+00,
-        -6.68899286e-02,  5.26820088e+00,  9.39410833e-01, -1.20540295e+00,
-         6.46589214e-01,  9.05354181e-01,  4.79717654e+00,  4.70725442e+00,
-        -2.08798122e-01,  4.83130197e+00, -8.71932218e-02,  1.24591801e+00,
-         1.80907949e+00, -1.03703690e+00,  4.18691508e+00,  6.53397056e-01,
-         3.16724482e+00,  2.42550432e+00, -1.22296550e+00, -1.08691603e+00,
-         2.20723071e+00, -4.95204848e-01,  2.71205414e+00,  4.38507886e+00,
-         9.31627833e-01,  1.91670841e+00,  2.56793606e+00,  2.53465737e+00,
-         2.19359005e+00,  1.60749157e+00,  4.01587560e-01,  1.68900572e+00,
-        -8.01099961e-01, -8.93160468e-01,  5.24069279e-01, -6.08707350e-01,
-         1.01603669e+00,  9.18267005e-01,  4.31270977e+00,  1.79566426e+00,
-        -2.29022431e-01, -1.22791510e+00,  7.69146202e-01,  1.36865109e+00,
-         3.09229349e+00,  1.40954179e+00,  2.89473583e+00,  6.87437907e-01,
-         4.78834940e+00,  9.09249208e-01,  4.57644313e+00, -9.44847463e-01,
-        -1.34531219e-01, -3.16475336e-01,  9.69722596e-01,  1.02115354e+00,
-         5.71210373e+00, -1.68309049e-01,  2.27543655e+00,  2.11276568e+00,
-        -1.15827239e+00,  6.73821245e-01, -1.19978550e+00,  1.78896034e+00,
-         1.71627451e+00,  2.84024968e+00,  3.26788729e-01,  4.02977598e+00,
-        -9.78491963e-01,  7.07863674e-01,  1.85610469e+00, -5.36421006e-01,
-        -1.07412629e+00,  9.39847640e-01, -6.33521731e-01,  7.01054984e-01,
-         7.59215234e-01, -1.21751231e+00,  4.49009533e+00,  1.10352539e+00,
-        -8.23381886e-01, -1.19200573e+00,  2.05181961e+00,  2.35046788e+00,
-        -1.94836942e-02,  4.08401402e-01, -4.30240736e-01, -7.82283317e-01,
-         1.86626529e+00,  4.83620483e+00,  3.27627800e+00, -1.30520463e-01,
-        -1.13764814e+00,  9.39410833e-01,  1.62899345e+00, -3.70110729e-01,
-        -2.22282589e-01, -8.68980486e-01, -1.14153259e+00, -7.31575332e-01,
-        -1.07199881e+00, -1.04626596e+00,  3.43303768e+00,  1.31304121e+00,
-         9.32599365e-01,  2.52010321e-01,  1.49132822e+00,  3.40577317e+00,
-         5.71710829e-01,  1.54991330e+00,  3.33079997e+00, -1.23336358e+00,
-         7.14672464e-01,  1.63447025e+00,  3.98195547e+00, -7.31575332e-01,
-         2.38418283e-01, -6.15242975e-01, -9.78491963e-01,  1.40742732e+00,
-         4.07759856e+00,  2.65603678e-01,  3.04460136e+00,  4.15239802e-02,
-        -3.76803601e-01,  7.54683556e+00, -9.78491963e-01,  1.13015739e+00,
-         1.76806304e+00,  1.95816214e+00, -1.10140232e+00, -1.14190798e+00,
-         2.52010321e-01,  1.44361866e+00,  1.63447025e+00,  1.28227349e+00,
-        -2.82878517e-01,  3.13190066e-01,  9.37002028e-01,  2.58241523e+00,
-        -5.23208643e-01, -6.73744873e-01, -1.19060443e+00, -9.52163261e-01,
-         1.55647325e+00,  1.05730129e+00, -5.29817241e-01,  1.87990185e+00,
-         5.52086212e+00, -8.13577413e-01, -1.19978550e+00,  1.30068644e+00,
-        -1.19376176e+00,  2.65746748e+00,  2.44596970e+00,  1.16159747e-01,
-         7.21481352e-01,  4.17324992e+00,  9.24404976e-01, -1.14153259e+00])}
+{&#39;lppd&#39;: -210.8358205012861,
+ &#39;p_waic&#39;: 4.300418641142651,
+ &#39;waic&#39;: 430.27247828485747,
+ &#39;waic_se&#39;: 46.48406623386149}
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -1145,10 +1038,10 @@ To run all diagnostics call pystan.check_hmc_diagnostics(fit)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;lppd&#39;: -2632.987747986295,
- &#39;p_waic&#39;: 52.546611787875065,
- &#39;waic&#39;: 5371.06871954834,
- &#39;waic_se&#39;: 94.00902560086969}
+{&#39;lppd&#39;: -2632.867582843026,
+ &#39;p_waic&#39;: 52.7245071254338,
+ &#39;waic&#39;: 5371.1841799369195,
+ &#39;waic_se&#39;: 93.96972430397454}
 </pre></div></div>
 </div>
 <p>If you want to also see the point-wise WAIC, you can set <code class="docutils literal notranslate"><span class="pre">pointwise_waic</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
@@ -1157,7 +1050,7 @@ To run all diagnostics call pystan.check_hmc_diagnostics(fit)
 <h2>Save the results<a class="headerlink" href="#Save-the-results" title="Permalink to this headline">¶</a></h2>
 <p>By default, the model fit results are saved in the same folder, using the <code class="docutils literal notranslate"><span class="pre">model_label</span></code> as filename. you can specify a different location using the <code class="docutils literal notranslate"><span class="pre">filename</span></code> argument.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1174,7 +1067,7 @@ Saving file as: /Users/laurafontanesi/git/rlssm/docs/notebooks/DDM.pkl
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1194,7 +1087,7 @@ Saving file as: /Users/laurafontanesi/git/rlssm/docs/notebooks/hierRL_2A.pkl
 <div class="section" id="Re-load-previously-saved-results">
 <h2>Re-load previously saved results<a class="headerlink" href="#Re-load-previously-saved-results" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1203,7 +1096,7 @@ Saving file as: /Users/laurafontanesi/git/rlssm/docs/notebooks/hierRL_2A.pkl
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1213,16 +1106,16 @@ Saving file as: /Users/laurafontanesi/git/rlssm/docs/notebooks/hierRL_2A.pkl
 </div>
 <p>The data the model was fit on are stored in <code class="docutils literal notranslate"><span class="pre">data_info</span></code>:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">data_info</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span>
+<span></span><span class="n">model_fit_rl</span><span class="o">.</span><span class="n">data_info</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1246,15 +1139,15 @@ Saving file as: /Users/laurafontanesi/git/rlssm/docs/notebooks/hierRL_2A.pkl
       <th></th>
       <th>index</th>
       <th>participant</th>
-      <th>trial</th>
-      <th>drift</th>
-      <th>rel_sp</th>
-      <th>threshold</th>
-      <th>ndt</th>
+      <th>block_label</th>
+      <th>trial_block</th>
+      <th>f_cor</th>
+      <th>f_inc</th>
+      <th>cor_option</th>
+      <th>inc_option</th>
+      <th>times_seen</th>
       <th>rt</th>
       <th>accuracy</th>
-      <th>accuracy_neg</th>
-      <th>accuracy_flipped</th>
     </tr>
   </thead>
   <tbody>
@@ -1263,70 +1156,70 @@ Saving file as: /Users/laurafontanesi/git/rlssm/docs/notebooks/hierRL_2A.pkl
       <td>0</td>
       <td>1</td>
       <td>1</td>
-      <td>0.8</td>
-      <td>0.5</td>
-      <td>1.3</td>
-      <td>0.23</td>
-      <td>1.286</td>
-      <td>0.0</td>
-      <td>-1</td>
-      <td>1.0</td>
+      <td>1</td>
+      <td>43</td>
+      <td>39</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.244082</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1</td>
       <td>1</td>
+      <td>1</td>
       <td>2</td>
-      <td>0.8</td>
-      <td>0.5</td>
-      <td>1.3</td>
-      <td>0.23</td>
-      <td>0.374</td>
-      <td>0.0</td>
-      <td>-1</td>
-      <td>1.0</td>
+      <td>60</td>
+      <td>50</td>
+      <td>4</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1.101821</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>2</th>
       <td>2</td>
       <td>1</td>
-      <td>3</td>
-      <td>0.8</td>
-      <td>0.5</td>
-      <td>1.3</td>
-      <td>0.23</td>
-      <td>0.767</td>
-      <td>1.0</td>
       <td>1</td>
-      <td>-0.0</td>
+      <td>3</td>
+      <td>44</td>
+      <td>36</td>
+      <td>4</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1.029923</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>3</th>
       <td>3</td>
       <td>1</td>
-      <td>4</td>
-      <td>0.8</td>
-      <td>0.5</td>
-      <td>1.3</td>
-      <td>0.23</td>
-      <td>1.187</td>
-      <td>1.0</td>
       <td>1</td>
-      <td>-0.0</td>
+      <td>4</td>
+      <td>55</td>
+      <td>55</td>
+      <td>4</td>
+      <td>3</td>
+      <td>2</td>
+      <td>1.368007</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>4</th>
       <td>4</td>
       <td>1</td>
-      <td>5</td>
-      <td>0.8</td>
-      <td>0.5</td>
-      <td>1.3</td>
-      <td>0.23</td>
-      <td>0.777</td>
-      <td>1.0</td>
       <td>1</td>
-      <td>-0.0</td>
+      <td>5</td>
+      <td>52</td>
+      <td>49</td>
+      <td>4</td>
+      <td>3</td>
+      <td>3</td>
+      <td>1.039329</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1343,224 +1236,143 @@ Saving file as: /Users/laurafontanesi/git/rlssm/docs/notebooks/hierRL_2A.pkl
       <td>...</td>
     </tr>
     <tr>
-      <th>395</th>
-      <td>395</td>
+      <th>6459</th>
+      <td>6459</td>
+      <td>27</td>
+      <td>3</td>
+      <td>76</td>
+      <td>37</td>
+      <td>36</td>
+      <td>2</td>
       <td>1</td>
-      <td>396</td>
-      <td>0.8</td>
-      <td>0.5</td>
-      <td>1.3</td>
-      <td>0.23</td>
-      <td>0.610</td>
-      <td>1.0</td>
+      <td>39</td>
+      <td>1.875327</td>
       <td>1</td>
-      <td>-0.0</td>
     </tr>
     <tr>
-      <th>396</th>
-      <td>396</td>
+      <th>6460</th>
+      <td>6460</td>
+      <td>27</td>
+      <td>3</td>
+      <td>77</td>
+      <td>58</td>
+      <td>41</td>
+      <td>4</td>
+      <td>2</td>
+      <td>39</td>
+      <td>1.696957</td>
       <td>1</td>
-      <td>397</td>
-      <td>0.8</td>
-      <td>0.5</td>
-      <td>1.3</td>
-      <td>0.23</td>
-      <td>0.699</td>
-      <td>1.0</td>
-      <td>1</td>
-      <td>-0.0</td>
     </tr>
     <tr>
-      <th>397</th>
-      <td>397</td>
+      <th>6461</th>
+      <td>6461</td>
+      <td>27</td>
+      <td>3</td>
+      <td>78</td>
+      <td>64</td>
+      <td>49</td>
+      <td>4</td>
+      <td>3</td>
+      <td>38</td>
+      <td>2.059956</td>
       <td>1</td>
-      <td>398</td>
-      <td>0.8</td>
-      <td>0.5</td>
-      <td>1.3</td>
-      <td>0.23</td>
-      <td>1.205</td>
-      <td>1.0</td>
-      <td>1</td>
-      <td>-0.0</td>
     </tr>
     <tr>
-      <th>398</th>
-      <td>398</td>
+      <th>6462</th>
+      <td>6462</td>
+      <td>27</td>
+      <td>3</td>
+      <td>79</td>
+      <td>44</td>
+      <td>37</td>
+      <td>3</td>
       <td>1</td>
-      <td>399</td>
-      <td>0.8</td>
-      <td>0.5</td>
-      <td>1.3</td>
-      <td>0.23</td>
-      <td>0.388</td>
-      <td>0.0</td>
-      <td>-1</td>
-      <td>1.0</td>
+      <td>39</td>
+      <td>1.623731</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>399</th>
-      <td>399</td>
+      <th>6463</th>
+      <td>6463</td>
+      <td>27</td>
+      <td>3</td>
+      <td>80</td>
+      <td>51</td>
+      <td>51</td>
+      <td>4</td>
+      <td>3</td>
+      <td>40</td>
+      <td>1.115363</td>
       <td>1</td>
-      <td>400</td>
-      <td>0.8</td>
-      <td>0.5</td>
-      <td>1.3</td>
-      <td>0.23</td>
-      <td>0.346</td>
-      <td>1.0</td>
-      <td>1</td>
-      <td>-0.0</td>
     </tr>
   </tbody>
 </table>
-<p>400 rows × 11 columns</p>
+<p>6464 rows × 11 columns</p>
 </div></div>
 </div>
-<p>And different parameter information are stored in <code class="docutils literal notranslate"><span class="pre">parameter_info</span></code>:</p>
+<p>The priors in <code class="docutils literal notranslate"><span class="pre">priors</span></code>:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model_fit_rl</span><span class="o">.</span><span class="n">parameters_info</span>
+<span></span><span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">priors</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;hierarchical_levels&#39;: 2,
- &#39;n_parameters_individual&#39;: 2,
+{&#39;drift_priors&#39;: {&#39;mu&#39;: 0.5, &#39;sd&#39;: 1},
+ &#39;threshold_priors&#39;: {&#39;mu&#39;: 0, &#39;sd&#39;: 0.5},
+ &#39;ndt_priors&#39;: {&#39;mu&#39;: 0, &#39;sd&#39;: 0.1}}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model_fit_rl</span><span class="o">.</span><span class="n">priors</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;alpha_priors&#39;: {&#39;mu_mu&#39;: -0.3, &#39;sd_mu&#39;: 0.1, &#39;mu_sd&#39;: 0, &#39;sd_sd&#39;: 0.1},
+ &#39;sensitivity_priors&#39;: {&#39;mu_mu&#39;: -0.1, &#39;sd_mu&#39;: 0.1, &#39;mu_sd&#39;: 0, &#39;sd_sd&#39;: 0.1}}
+</pre></div></div>
+</div>
+<p>And different parameter information are stored in <code class="docutils literal notranslate"><span class="pre">parameter_info</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">parameters_info</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;hierarchical_levels&#39;: 1,
+ &#39;n_parameters_individual&#39;: 3,
  &#39;n_parameters_trial&#39;: 0,
  &#39;n_posterior_samples&#39;: 2000,
- &#39;n_parameters_group&#39;: 4,
- &#39;n_parameters_hierarchical&#39;: 58,
- &#39;parameters_names&#39;: [&#39;mu_alpha&#39;,
-  &#39;mu_sensitivity&#39;,
-  &#39;sd_alpha&#39;,
-  &#39;sd_sensitivity&#39;,
-  &#39;z_alpha[1]&#39;,
-  &#39;z_alpha[2]&#39;,
-  &#39;z_alpha[3]&#39;,
-  &#39;z_alpha[4]&#39;,
-  &#39;z_alpha[5]&#39;,
-  &#39;z_alpha[6]&#39;,
-  &#39;z_alpha[7]&#39;,
-  &#39;z_alpha[8]&#39;,
-  &#39;z_alpha[9]&#39;,
-  &#39;z_alpha[10]&#39;,
-  &#39;z_alpha[11]&#39;,
-  &#39;z_alpha[12]&#39;,
-  &#39;z_alpha[13]&#39;,
-  &#39;z_alpha[14]&#39;,
-  &#39;z_alpha[15]&#39;,
-  &#39;z_alpha[16]&#39;,
-  &#39;z_alpha[17]&#39;,
-  &#39;z_alpha[18]&#39;,
-  &#39;z_alpha[19]&#39;,
-  &#39;z_alpha[20]&#39;,
-  &#39;z_alpha[21]&#39;,
-  &#39;z_alpha[22]&#39;,
-  &#39;z_alpha[23]&#39;,
-  &#39;z_alpha[24]&#39;,
-  &#39;z_alpha[25]&#39;,
-  &#39;z_alpha[26]&#39;,
-  &#39;z_alpha[27]&#39;,
-  &#39;z_sensitivity[1]&#39;,
-  &#39;z_sensitivity[2]&#39;,
-  &#39;z_sensitivity[3]&#39;,
-  &#39;z_sensitivity[4]&#39;,
-  &#39;z_sensitivity[5]&#39;,
-  &#39;z_sensitivity[6]&#39;,
-  &#39;z_sensitivity[7]&#39;,
-  &#39;z_sensitivity[8]&#39;,
-  &#39;z_sensitivity[9]&#39;,
-  &#39;z_sensitivity[10]&#39;,
-  &#39;z_sensitivity[11]&#39;,
-  &#39;z_sensitivity[12]&#39;,
-  &#39;z_sensitivity[13]&#39;,
-  &#39;z_sensitivity[14]&#39;,
-  &#39;z_sensitivity[15]&#39;,
-  &#39;z_sensitivity[16]&#39;,
-  &#39;z_sensitivity[17]&#39;,
-  &#39;z_sensitivity[18]&#39;,
-  &#39;z_sensitivity[19]&#39;,
-  &#39;z_sensitivity[20]&#39;,
-  &#39;z_sensitivity[21]&#39;,
-  &#39;z_sensitivity[22]&#39;,
-  &#39;z_sensitivity[23]&#39;,
-  &#39;z_sensitivity[24]&#39;,
-  &#39;z_sensitivity[25]&#39;,
-  &#39;z_sensitivity[26]&#39;,
-  &#39;z_sensitivity[27]&#39;],
- &#39;group_parameters_names&#39;: [&#39;mu_alpha&#39;,
-  &#39;mu_sensitivity&#39;,
-  &#39;sd_alpha&#39;,
-  &#39;sd_sensitivity&#39;],
- &#39;individual_parameters_names&#39;: [&#39;alpha&#39;, &#39;sensitivity&#39;],
- &#39;group_parameters_names_transf&#39;: [&#39;transf_mu_alpha&#39;, &#39;transf_mu_sensitivity&#39;],
- &#39;parameters_names_all&#39;: [&#39;mu_alpha&#39;,
-  &#39;mu_sensitivity&#39;,
-  &#39;sd_alpha&#39;,
-  &#39;sd_sensitivity&#39;,
-  &#39;z_alpha[1]&#39;,
-  &#39;z_alpha[2]&#39;,
-  &#39;z_alpha[3]&#39;,
-  &#39;z_alpha[4]&#39;,
-  &#39;z_alpha[5]&#39;,
-  &#39;z_alpha[6]&#39;,
-  &#39;z_alpha[7]&#39;,
-  &#39;z_alpha[8]&#39;,
-  &#39;z_alpha[9]&#39;,
-  &#39;z_alpha[10]&#39;,
-  &#39;z_alpha[11]&#39;,
-  &#39;z_alpha[12]&#39;,
-  &#39;z_alpha[13]&#39;,
-  &#39;z_alpha[14]&#39;,
-  &#39;z_alpha[15]&#39;,
-  &#39;z_alpha[16]&#39;,
-  &#39;z_alpha[17]&#39;,
-  &#39;z_alpha[18]&#39;,
-  &#39;z_alpha[19]&#39;,
-  &#39;z_alpha[20]&#39;,
-  &#39;z_alpha[21]&#39;,
-  &#39;z_alpha[22]&#39;,
-  &#39;z_alpha[23]&#39;,
-  &#39;z_alpha[24]&#39;,
-  &#39;z_alpha[25]&#39;,
-  &#39;z_alpha[26]&#39;,
-  &#39;z_alpha[27]&#39;,
-  &#39;z_sensitivity[1]&#39;,
-  &#39;z_sensitivity[2]&#39;,
-  &#39;z_sensitivity[3]&#39;,
-  &#39;z_sensitivity[4]&#39;,
-  &#39;z_sensitivity[5]&#39;,
-  &#39;z_sensitivity[6]&#39;,
-  &#39;z_sensitivity[7]&#39;,
-  &#39;z_sensitivity[8]&#39;,
-  &#39;z_sensitivity[9]&#39;,
-  &#39;z_sensitivity[10]&#39;,
-  &#39;z_sensitivity[11]&#39;,
-  &#39;z_sensitivity[12]&#39;,
-  &#39;z_sensitivity[13]&#39;,
-  &#39;z_sensitivity[14]&#39;,
-  &#39;z_sensitivity[15]&#39;,
-  &#39;z_sensitivity[16]&#39;,
-  &#39;z_sensitivity[17]&#39;,
-  &#39;z_sensitivity[18]&#39;,
-  &#39;z_sensitivity[19]&#39;,
-  &#39;z_sensitivity[20]&#39;,
-  &#39;z_sensitivity[21]&#39;,
-  &#39;z_sensitivity[22]&#39;,
-  &#39;z_sensitivity[23]&#39;,
-  &#39;z_sensitivity[24]&#39;,
-  &#39;z_sensitivity[25]&#39;,
-  &#39;z_sensitivity[26]&#39;,
-  &#39;z_sensitivity[27]&#39;]}
+ &#39;parameters_names&#39;: [&#39;drift&#39;, &#39;threshold&#39;, &#39;ndt&#39;],
+ &#39;parameters_names_transf&#39;: [&#39;transf_drift&#39;, &#39;transf_threshold&#39;, &#39;transf_ndt&#39;],
+ &#39;parameters_names_all&#39;: [&#39;drift&#39;, &#39;threshold&#39;, &#39;ndt&#39;]}
 </pre></div></div>
 </div>
 </div>

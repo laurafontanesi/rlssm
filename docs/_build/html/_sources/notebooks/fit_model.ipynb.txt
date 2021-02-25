@@ -2,7 +2,7 @@
  "cells": [
   {
    "cell_type": "markdown",
-   "id": "finished-miniature",
+   "id": "opening-sapphire",
    "metadata": {},
    "source": [
     "# How to fit a model"
@@ -10,36 +10,30 @@
   },
   {
    "cell_type": "markdown",
-   "id": "civilian-oracle",
+   "id": "reported-hindu",
    "metadata": {},
    "source": [
-    "## Data format"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "blocked-morocco",
-   "metadata": {},
-   "source": [
-    "All model classes have a `fit` method for fitting the model to (individual or group) data, and all `fit` methods have at least 1 required argument, `data`, which should be in the form of a pandas DataFrame.\n",
+    "To fit a model, there are 3 main things to specify:\n",
     "\n",
-    "However, different model classes might require different columns in the data. You should check in the **API Reference** of each model class (or using `model.fit?`) what the required data columns are.\n",
+    "**1. Data:**\n",
+    "The `data`, which should be in the form of a pandas DataFrame.\n",
     "\n",
-    "Below, you can see a non-learning and a learning example: "
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "scenic-collaboration",
-   "metadata": {},
-   "source": [
-    "### Non-learning example (non-hierarchical, simulated data)"
+    "Different model classes might require different columns in the data. You should check in the [API Reference](https://rlssm.readthedocs.io/en/latest/models/model_classes.html) of each model class (or using `model.fit?`) what the required data columns are.\n",
+    "\n",
+    "**2. The priors (optional):**\n",
+    "You can decide whether to use the default priors (which you can see after initializing the model) or whether you want to change the mean or SD of the prior or hyper-prior distributions. Whether you changed the priors or not, they are always printed out when the model starts fitting.\n",
+    "\n",
+    "**3. Sampling parameters:**\n",
+    "The sampling parameters **(number of chains, iterations, warmups, thinning, etc.)** are the arguments to the `pystan.StanModel.sampling()` function, and we simply refer to the [pystan documentation](https://pystan.readthedocs.io/) for a better overview.\n",
+    "\n",
+    "**Additional learning parameters:**\n",
+    "While all sequential sampling models (DDM and race models) **without a learning component** only require a `data` argument, all models with a learning components (RL models, RLDDMs, and RL+race models) also require a `K` argument, which is the total number of different options in a learning block (note that this can be different from the number of options presented in each trial), and `initial_value_learning`, which is the initial Q value (before learning)."
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 14,
-   "id": "hearing-movie",
+   "execution_count": 28,
+   "id": "direct-testing",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -47,9 +41,17 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "id": "breathing-congress",
+   "metadata": {},
+   "source": [
+    "## Non-learning example (non-hierarchical, simulated data)"
+   ]
+  },
+  {
    "cell_type": "code",
    "execution_count": 2,
-   "id": "chief-usage",
+   "id": "employed-guatemala",
    "metadata": {},
    "outputs": [
     {
@@ -67,7 +69,7 @@
   {
    "cell_type": "code",
    "execution_count": 3,
-   "id": "subtle-registrar",
+   "id": "further-delight",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -82,24 +84,20 @@
   },
   {
    "cell_type": "markdown",
-   "id": "domestic-elephant",
+   "id": "overhead-venue",
    "metadata": {},
    "source": [
     "For the simple, non-hierarchical DDM, it is only necessary to have `rt` and `accuracy` columns:\n",
     "\n",
     "- *rt*, response times in seconds.\n",
     "\n",
-    "- *accuracy*, 0 if the incorrect option was chosen, 1 if the correct option was chosen.\n",
-    "\n",
-    "If the model is hierarchical, also include:\n",
-    "\n",
-    "- *participant*, the participant number. Should be integers starting from 1 (it's also OK if `participant` is in the index)."
+    "- *accuracy*, 0 if the incorrect option was chosen, 1 if the correct option was chosen."
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 4,
-   "id": "measured-necessity",
+   "id": "immediate-harvey",
    "metadata": {},
    "outputs": [
     {
@@ -150,8 +148,8 @@
        "      <td>0.5</td>\n",
        "      <td>1.3</td>\n",
        "      <td>0.23</td>\n",
-       "      <td>1.286</td>\n",
-       "      <td>0.0</td>\n",
+       "      <td>0.444</td>\n",
+       "      <td>1.0</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>2</th>\n",
@@ -159,8 +157,8 @@
        "      <td>0.5</td>\n",
        "      <td>1.3</td>\n",
        "      <td>0.23</td>\n",
-       "      <td>0.374</td>\n",
-       "      <td>0.0</td>\n",
+       "      <td>0.436</td>\n",
+       "      <td>1.0</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>3</th>\n",
@@ -168,7 +166,7 @@
        "      <td>0.5</td>\n",
        "      <td>1.3</td>\n",
        "      <td>0.23</td>\n",
-       "      <td>0.767</td>\n",
+       "      <td>0.505</td>\n",
        "      <td>1.0</td>\n",
        "    </tr>\n",
        "    <tr>\n",
@@ -177,7 +175,7 @@
        "      <td>0.5</td>\n",
        "      <td>1.3</td>\n",
        "      <td>0.23</td>\n",
-       "      <td>1.187</td>\n",
+       "      <td>0.348</td>\n",
        "      <td>1.0</td>\n",
        "    </tr>\n",
        "    <tr>\n",
@@ -186,8 +184,8 @@
        "      <td>0.5</td>\n",
        "      <td>1.3</td>\n",
        "      <td>0.23</td>\n",
-       "      <td>0.777</td>\n",
-       "      <td>1.0</td>\n",
+       "      <td>0.613</td>\n",
+       "      <td>0.0</td>\n",
        "    </tr>\n",
        "  </tbody>\n",
        "</table>\n",
@@ -196,11 +194,11 @@
       "text/plain": [
        "                   drift  rel_sp  threshold   ndt     rt  accuracy\n",
        "participant trial                                                 \n",
-       "1           1        0.8     0.5        1.3  0.23  1.286       0.0\n",
-       "            2        0.8     0.5        1.3  0.23  0.374       0.0\n",
-       "            3        0.8     0.5        1.3  0.23  0.767       1.0\n",
-       "            4        0.8     0.5        1.3  0.23  1.187       1.0\n",
-       "            5        0.8     0.5        1.3  0.23  0.777       1.0"
+       "1           1        0.8     0.5        1.3  0.23  0.444       1.0\n",
+       "            2        0.8     0.5        1.3  0.23  0.436       1.0\n",
+       "            3        0.8     0.5        1.3  0.23  0.505       1.0\n",
+       "            4        0.8     0.5        1.3  0.23  0.348       1.0\n",
+       "            5        0.8     0.5        1.3  0.23  0.613       0.0"
       ]
      },
      "execution_count": 4,
@@ -213,17 +211,66 @@
    ]
   },
   {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "cordless-wagon",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Fitting the model using the priors:\n",
+      "drift_priors {'mu': 0.5, 'sd': 1}\n",
+      "threshold_priors {'mu': 0, 'sd': 0.5}\n",
+      "ndt_priors {'mu': 0, 'sd': 0.1}\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "WARNING:pystan:Maximum (flat) parameter count (1000) exceeded: skipping diagnostic tests for n_eff and Rhat.\n",
+      "To run all diagnostics call pystan.check_hmc_diagnostics(fit)\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Checks MCMC diagnostics:\n",
+      "n_eff / iter looks reasonable for all parameters\n",
+      "0.0 of 2000 iterations ended with a divergence (0.0%)\n",
+      "0 of 2000 iterations saturated the maximum tree depth of 10 (0.0%)\n",
+      "E-BFMI indicated no pathological behavior\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Run 2 chains, with 2000 samples each, 1000 of which warmup, with custom priors:\n",
+    "model_fit_ddm = model_ddm.fit(\n",
+    "    data_ddm,\n",
+    "    drift_priors={'mu':.5, 'sd':1},\n",
+    "    threshold_priors={'mu':0, 'sd':.5},\n",
+    "    ndt_priors={'mu':0, 'sd':.1},\n",
+    "    chains=2,\n",
+    "    iter=2000,\n",
+    "    warmup=1000,\n",
+    "    thin=1)"
+   ]
+  },
+  {
    "cell_type": "markdown",
-   "id": "considered-marshall",
+   "id": "liquid-johns",
    "metadata": {},
    "source": [
-    "### Learning example (hierarchical, real data)"
+    "## Learning example (hierarchical, real data)"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 5,
-   "id": "requested-colonial",
+   "execution_count": 21,
+   "id": "occasional-arlington",
    "metadata": {},
    "outputs": [
     {
@@ -241,7 +288,7 @@
   {
    "cell_type": "code",
    "execution_count": 6,
-   "id": "varying-wrong",
+   "id": "finished-lobby",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -255,12 +302,14 @@
   },
   {
    "cell_type": "markdown",
-   "id": "dress-steal",
+   "id": "loaded-longer",
    "metadata": {},
    "source": [
-    "Since this learning model is only fit on choices, only `accuracy` (and not `rt`) is required.\n",
+    "Since this learning model is only fit on choices, `rt` are not required.\n",
     "\n",
-    "Other columns that should be included are:\n",
+    "Other columns/indexes that should be included are:\n",
+    "\n",
+    "- *accuracy*, 0 if the incorrect option was chosen, 1 if the correct option was chosen.\n",
     "\n",
     "- *trial_block*, the number of trial in a learning session. Should be integers starting from 1.\n",
     "\n",
@@ -280,15 +329,13 @@
     "\n",
     "If increasing_sensitivity is True, also include:\n",
     "\n",
-    "- *times_seen*, average number of times the presented options have been seen in a learning session.\n",
-    "  \n",
-    "If any of these columns are part of the index with the approriate label, they will still be recognized."
+    "- *times_seen*, average number of times the presented options have been seen in a learning session."
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 7,
-   "id": "attractive-yugoslavia",
+   "id": "interesting-roller",
    "metadata": {},
    "outputs": [
     {
@@ -420,111 +467,20 @@
    ]
   },
   {
-   "cell_type": "markdown",
-   "id": "rapid-developer",
-   "metadata": {},
-   "source": [
-    "### Additional learning parameters"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "alien-wilson",
-   "metadata": {},
-   "source": [
-    "While all sequential sampling models (DDM and race models) **without a learning component** only require a `data` argument, all models with a learning components (RL models, RLDDMs, and RL+race models) also require a `K` argument, which is the total number of different options in a learning block (note that this can be different from the number of options presented in each trial), and `initial_value_learning`, which is the initial Q value (before learning)."
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "collectible-marina",
-   "metadata": {},
-   "source": [
-    "## Specify the priors"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "boring-apparel",
-   "metadata": {},
-   "source": [
-    "You can decide whether to use the default priors or whether you want to change the mean or SD of the prior or hyper-prior distributions.\n",
-    "\n",
-    "To know what are the default priors, you can check the **API Reference** of each model class (or `model.fit?`)."
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "christian-composition",
-   "metadata": {},
-   "source": [
-    "## Specify the sampling parameters"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "light-healing",
-   "metadata": {},
-   "source": [
-    "The last important step is to specify the sampling parameters **(number of chains, iterations, warmups, thinning, etc.)**.\n",
-    "\n",
-    "These are the arguments to the `pystan.StanModel.sampling()` function, and we simply refer to the [pystan documentation](https://pystan.readthedocs.io/) for a better overview."
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "individual-thomson",
-   "metadata": {},
-   "source": [
-    "## Run"
-   ]
-  },
-  {
    "cell_type": "code",
-   "execution_count": 15,
-   "id": "listed-fault",
+   "execution_count": 9,
+   "id": "sharing-meditation",
    "metadata": {},
    "outputs": [
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "WARNING:pystan:Maximum (flat) parameter count (1000) exceeded: skipping diagnostic tests for n_eff and Rhat.\n",
-      "To run all diagnostics call pystan.check_hmc_diagnostics(fit)\n"
-     ]
-    },
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "Checks MCMC diagnostics:\n",
-      "n_eff / iter looks reasonable for all parameters\n",
-      "0.0 of 2000 iterations ended with a divergence (0.0%)\n",
-      "0 of 2000 iterations saturated the maximum tree depth of 10 (0.0%)\n",
-      "E-BFMI indicated no pathological behavior\n"
+      "Fitting the model using the priors:\n",
+      "alpha_priors {'mu_mu': -0.3, 'sd_mu': 0.1, 'mu_sd': 0, 'sd_sd': 0.1}\n",
+      "sensitivity_priors {'mu_mu': -0.1, 'sd_mu': 0.1, 'mu_sd': 0, 'sd_sd': 0.1}\n"
      ]
-    }
-   ],
-   "source": [
-    "# Run 2 chains, with 2000 samples each, 1000 of which warmup, with custom priors:\n",
-    "model_fit_ddm = model_ddm.fit(\n",
-    "    data_ddm,\n",
-    "    drift_priors={'mu':.5, 'sd':1},\n",
-    "    threshold_priors={'mu':0, 'sd':.5},\n",
-    "    ndt_priors={'mu':0, 'sd':.1},\n",
-    "    chains=2,\n",
-    "    iter=2000,\n",
-    "    warmup=1000,\n",
-    "    pointwise_waic=True,\n",
-    "    thin=1)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 9,
-   "id": "automotive-lending",
-   "metadata": {},
-   "outputs": [
+    },
     {
      "name": "stderr",
      "output_type": "stream",
@@ -551,7 +507,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "therapeutic-morrison",
+   "id": "offshore-cover",
    "metadata": {},
    "source": [
     "## Diagnostics"
@@ -559,7 +515,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "younger-coordinator",
+   "id": "fitted-trial",
    "metadata": {},
    "source": [
     "As you can see, the MCMC diagnostics are already printed by default (if you do not want this, you can set `print_diagnostics` to `False`). I refer to https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html for an excellent explanations of what these diagnostics actually mean and how to assess them.\n",
@@ -570,7 +526,7 @@
   {
    "cell_type": "code",
    "execution_count": 10,
-   "id": "ideal-investing",
+   "id": "advised-medium",
    "metadata": {},
    "outputs": [
     {
@@ -601,17 +557,17 @@
        "  <tbody>\n",
        "    <tr>\n",
        "      <th>0</th>\n",
-       "      <td>0.999902</td>\n",
+       "      <td>1.000842</td>\n",
        "      <td>drift</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>1</th>\n",
-       "      <td>1.001713</td>\n",
+       "      <td>1.000977</td>\n",
        "      <td>threshold</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>2</th>\n",
-       "      <td>1.001130</td>\n",
+       "      <td>1.000020</td>\n",
        "      <td>ndt</td>\n",
        "    </tr>\n",
        "  </tbody>\n",
@@ -620,9 +576,9 @@
       ],
       "text/plain": [
        "       rhat   variable\n",
-       "0  0.999902      drift\n",
-       "1  1.001713  threshold\n",
-       "2  1.001130        ndt"
+       "0  1.000842      drift\n",
+       "1  1.000977  threshold\n",
+       "2  1.000020        ndt"
       ]
      },
      "execution_count": 10,
@@ -637,7 +593,7 @@
   {
    "cell_type": "code",
    "execution_count": 11,
-   "id": "ethical-laptop",
+   "id": "loving-anthony",
    "metadata": {},
    "outputs": [
     {
@@ -671,31 +627,31 @@
        "    </tr>\n",
        "    <tr>\n",
        "      <th>mean</th>\n",
-       "      <td>0.999875</td>\n",
+       "      <td>1.000254</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>std</th>\n",
-       "      <td>0.000763</td>\n",
+       "      <td>0.001035</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>min</th>\n",
-       "      <td>0.999067</td>\n",
+       "      <td>0.999024</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>25%</th>\n",
-       "      <td>0.999291</td>\n",
+       "      <td>0.999638</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>50%</th>\n",
-       "      <td>0.999658</td>\n",
+       "      <td>0.999920</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>75%</th>\n",
-       "      <td>1.000173</td>\n",
+       "      <td>1.000865</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>max</th>\n",
-       "      <td>1.002636</td>\n",
+       "      <td>1.004222</td>\n",
        "    </tr>\n",
        "  </tbody>\n",
        "</table>\n",
@@ -704,13 +660,13 @@
       "text/plain": [
        "            rhat\n",
        "count  58.000000\n",
-       "mean    0.999875\n",
-       "std     0.000763\n",
-       "min     0.999067\n",
-       "25%     0.999291\n",
-       "50%     0.999658\n",
-       "75%     1.000173\n",
-       "max     1.002636"
+       "mean    1.000254\n",
+       "std     0.001035\n",
+       "min     0.999024\n",
+       "25%     0.999638\n",
+       "50%     0.999920\n",
+       "75%     1.000865\n",
+       "max     1.004222"
       ]
      },
      "execution_count": 11,
@@ -724,120 +680,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 16,
-   "id": "human-damage",
+   "execution_count": 12,
+   "id": "involved-captain",
    "metadata": {},
    "outputs": [
     {
      "data": {
       "text/plain": [
-       "{'lppd': -206.31546680801432,\n",
-       " 'p_waic': 3.008203178578447,\n",
-       " 'waic': 418.6473399731855,\n",
-       " 'waic_se': 44.037247567155475,\n",
-       " 'pointwise_waic': array([ 6.86708836e+00,  9.06715564e-01,  1.18466469e+00,  4.05027111e+00,\n",
-       "         1.25280354e+00,  3.65799930e+00, -8.88229710e-01,  1.06884090e+00,\n",
-       "        -1.03569327e+00, -1.15022881e+00,  5.03448512e+00, -1.04099857e+00,\n",
-       "         3.82845808e+00,  1.87628948e+00,  1.83899268e+00, -1.14924792e+00,\n",
-       "        -9.11091144e-01,  3.15343043e+00,  6.94246394e-01, -1.02497280e+00,\n",
-       "        -1.81811077e-01,  2.49372371e+00,  3.56937193e+00, -6.93939374e-01,\n",
-       "         4.08401402e-01,  1.63447025e+00, -1.00311771e+00, -8.25998105e-01,\n",
-       "         1.49116505e+00,  4.08401402e-01,  1.55267238e+00,  1.35673672e+00,\n",
-       "        -8.32186269e-01,  4.42415932e-01,  1.19641138e+00, -1.18401195e+00,\n",
-       "        -6.08707350e-01, -1.19060443e+00,  2.95772754e+00, -1.17595654e+00,\n",
-       "        -1.22683684e+00, -9.78491963e-01, -1.00723759e-01, -9.57934728e-01,\n",
-       "        -8.87143691e-01,  6.94246394e-01,  2.59515630e+00,  5.74625751e+00,\n",
-       "        -1.23025041e+00, -6.34809430e-01, -1.04626596e+00, -7.63353790e-01,\n",
-       "        -1.23296885e+00,  9.07969943e-01,  2.09811018e+00,  1.49766479e+00,\n",
-       "         1.10401474e+00, -5.69363087e-01,  4.42608270e+00,  2.58835095e+00,\n",
-       "        -6.01202580e-02,  3.40388443e-01, -1.06183070e+00,  7.22477133e+00,\n",
-       "         2.65746748e+00,  1.05238402e+00, -2.15541140e-01, -1.20099196e+00,\n",
-       "         2.98328807e+00,  9.07379622e-01,  2.92794140e-01,  3.08058474e+00,\n",
-       "         4.09809458e+00, -6.02165256e-01,  1.02796584e+00, -1.23247791e+00,\n",
-       "         1.76886412e+00,  5.03653700e-01, -5.32143953e-01,  9.25787966e-01,\n",
-       "        -9.62058213e-01, -5.56202104e-01,  1.94126851e+00, -8.71932218e-02,\n",
-       "         3.81193491e-01, -1.23087841e+00,  1.02393489e+00, -6.01229434e-01,\n",
-       "         1.82250422e+00,  5.34331033e+00,  4.84172787e-01,  1.33457682e+00,\n",
-       "        -8.88229710e-01, -1.16978417e+00, -1.95307524e-01,  1.63688366e-01,\n",
-       "         2.55432711e+00,  3.68824634e+00,  1.49814406e+00,  8.03195195e-01,\n",
-       "        -1.27080274e-02,  4.57644313e+00, -7.99751954e-01,  2.31933068e+00,\n",
-       "         1.61576260e+00,  3.42192651e+00,  1.28297225e+01,  1.48451243e+00,\n",
-       "        -6.54311689e-01,  9.13361999e-01,  5.43891159e+00,  2.54752295e+00,\n",
-       "         7.59215234e-01,  9.13361999e-01,  2.67002654e+00,  4.66068541e+00,\n",
-       "         2.94922783e+00,  4.56023090e-01, -1.22683684e+00, -1.02342457e+00,\n",
-       "         4.49442581e+00,  1.68528003e+00, -7.44319432e-01,  1.57301943e+01,\n",
-       "         3.37850947e+00, -1.81811077e-01,  3.67845287e+00, -1.18166437e+00,\n",
-       "         9.17282590e-01, -1.14924792e+00,  4.52859896e+00, -7.44319432e-01,\n",
-       "        -1.23336358e+00,  1.70479992e-01, -1.16987419e+00,  1.60749157e+00,\n",
-       "        -3.29898746e-01,  9.91446334e-01,  9.68563627e-01, -9.52163261e-01,\n",
-       "         2.27741944e+00, -8.81107789e-01, -3.43312759e-01, -7.31575332e-01,\n",
-       "        -1.21301592e+00, -1.00311771e+00, -9.34700088e-01, -1.20099196e+00,\n",
-       "         5.96482634e+00,  3.21028219e+00,  4.01599103e-01,  1.03479249e+00,\n",
-       "        -1.22502381e+00,  4.17627893e+00,  6.81238725e+00,  1.56303911e+00,\n",
-       "         8.84921031e-01,  1.65550869e+00,  7.61950403e+00, -3.70110729e-01,\n",
-       "        -1.15428619e+00,  5.24647927e+00, -8.38359149e-01, -8.01099961e-01,\n",
-       "         2.54147980e+00, -1.95307524e-01,  1.02115354e+00,  2.41186095e+00,\n",
-       "         5.44486226e-01, -6.93103726e-01, -4.23572062e-01, -1.19666267e+00,\n",
-       "         1.94368739e+00, -1.15022881e+00, -1.23025041e+00, -7.75041715e-01,\n",
-       "         1.08551333e+01,  3.69894764e+00, -1.14153259e+00,  2.12538929e+00,\n",
-       "         3.20345562e+00,  3.81482036e+00, -5.29817241e-01, -2.34645245e-01,\n",
-       "        -7.75985607e-01,  1.59357051e+00, -8.56782193e-01, -1.14153259e+00,\n",
-       "        -1.23025041e+00,  1.10290505e+00, -5.03354995e-01, -6.64404056e-01,\n",
-       "         3.06010759e+00, -1.00311771e+00,  1.76217077e+00,  2.26179505e+00,\n",
-       "        -1.20099196e+00,  2.48422135e-01, -2.49231929e-01, -2.69425527e-01,\n",
-       "        -3.98058280e-02,  3.67163497e+00, -6.01229434e-01,  2.41828891e+00,\n",
-       "         2.62335219e+00, -1.07199881e+00,  5.76637903e+00,  1.32956404e+00,\n",
-       "        -1.21523895e+00, -8.62889994e-01,  3.16043075e+00,  2.83488400e+00,\n",
-       "        -1.16602341e+00, -1.14250081e-01,  7.96385227e-01, -2.29022431e-01,\n",
-       "        -1.07487459e-01,  9.26696565e-01, -1.21751231e+00,  4.15239802e-02,\n",
-       "         2.45279157e+00,  2.65603678e-01, -9.11091144e-01, -1.34531219e-01,\n",
-       "        -1.07412629e+00, -3.50016098e-01,  3.69894764e+00, -1.16602341e+00,\n",
-       "        -9.94178750e-01, -1.94836942e-02,  2.31636210e+00,  1.43316141e-01,\n",
-       "        -7.05965552e-01,  3.50120240e+00,  5.98937591e-01,  4.21038504e+00,\n",
-       "         6.94246394e-01, -9.46366583e-01,  1.90996763e+00, -1.23327895e+00,\n",
-       "        -6.68899286e-02,  5.26820088e+00,  9.39410833e-01, -1.20540295e+00,\n",
-       "         6.46589214e-01,  9.05354181e-01,  4.79717654e+00,  4.70725442e+00,\n",
-       "        -2.08798122e-01,  4.83130197e+00, -8.71932218e-02,  1.24591801e+00,\n",
-       "         1.80907949e+00, -1.03703690e+00,  4.18691508e+00,  6.53397056e-01,\n",
-       "         3.16724482e+00,  2.42550432e+00, -1.22296550e+00, -1.08691603e+00,\n",
-       "         2.20723071e+00, -4.95204848e-01,  2.71205414e+00,  4.38507886e+00,\n",
-       "         9.31627833e-01,  1.91670841e+00,  2.56793606e+00,  2.53465737e+00,\n",
-       "         2.19359005e+00,  1.60749157e+00,  4.01587560e-01,  1.68900572e+00,\n",
-       "        -8.01099961e-01, -8.93160468e-01,  5.24069279e-01, -6.08707350e-01,\n",
-       "         1.01603669e+00,  9.18267005e-01,  4.31270977e+00,  1.79566426e+00,\n",
-       "        -2.29022431e-01, -1.22791510e+00,  7.69146202e-01,  1.36865109e+00,\n",
-       "         3.09229349e+00,  1.40954179e+00,  2.89473583e+00,  6.87437907e-01,\n",
-       "         4.78834940e+00,  9.09249208e-01,  4.57644313e+00, -9.44847463e-01,\n",
-       "        -1.34531219e-01, -3.16475336e-01,  9.69722596e-01,  1.02115354e+00,\n",
-       "         5.71210373e+00, -1.68309049e-01,  2.27543655e+00,  2.11276568e+00,\n",
-       "        -1.15827239e+00,  6.73821245e-01, -1.19978550e+00,  1.78896034e+00,\n",
-       "         1.71627451e+00,  2.84024968e+00,  3.26788729e-01,  4.02977598e+00,\n",
-       "        -9.78491963e-01,  7.07863674e-01,  1.85610469e+00, -5.36421006e-01,\n",
-       "        -1.07412629e+00,  9.39847640e-01, -6.33521731e-01,  7.01054984e-01,\n",
-       "         7.59215234e-01, -1.21751231e+00,  4.49009533e+00,  1.10352539e+00,\n",
-       "        -8.23381886e-01, -1.19200573e+00,  2.05181961e+00,  2.35046788e+00,\n",
-       "        -1.94836942e-02,  4.08401402e-01, -4.30240736e-01, -7.82283317e-01,\n",
-       "         1.86626529e+00,  4.83620483e+00,  3.27627800e+00, -1.30520463e-01,\n",
-       "        -1.13764814e+00,  9.39410833e-01,  1.62899345e+00, -3.70110729e-01,\n",
-       "        -2.22282589e-01, -8.68980486e-01, -1.14153259e+00, -7.31575332e-01,\n",
-       "        -1.07199881e+00, -1.04626596e+00,  3.43303768e+00,  1.31304121e+00,\n",
-       "         9.32599365e-01,  2.52010321e-01,  1.49132822e+00,  3.40577317e+00,\n",
-       "         5.71710829e-01,  1.54991330e+00,  3.33079997e+00, -1.23336358e+00,\n",
-       "         7.14672464e-01,  1.63447025e+00,  3.98195547e+00, -7.31575332e-01,\n",
-       "         2.38418283e-01, -6.15242975e-01, -9.78491963e-01,  1.40742732e+00,\n",
-       "         4.07759856e+00,  2.65603678e-01,  3.04460136e+00,  4.15239802e-02,\n",
-       "        -3.76803601e-01,  7.54683556e+00, -9.78491963e-01,  1.13015739e+00,\n",
-       "         1.76806304e+00,  1.95816214e+00, -1.10140232e+00, -1.14190798e+00,\n",
-       "         2.52010321e-01,  1.44361866e+00,  1.63447025e+00,  1.28227349e+00,\n",
-       "        -2.82878517e-01,  3.13190066e-01,  9.37002028e-01,  2.58241523e+00,\n",
-       "        -5.23208643e-01, -6.73744873e-01, -1.19060443e+00, -9.52163261e-01,\n",
-       "         1.55647325e+00,  1.05730129e+00, -5.29817241e-01,  1.87990185e+00,\n",
-       "         5.52086212e+00, -8.13577413e-01, -1.19978550e+00,  1.30068644e+00,\n",
-       "        -1.19376176e+00,  2.65746748e+00,  2.44596970e+00,  1.16159747e-01,\n",
-       "         7.21481352e-01,  4.17324992e+00,  9.24404976e-01, -1.14153259e+00])}"
+       "{'lppd': -210.8358205012861,\n",
+       " 'p_waic': 4.300418641142651,\n",
+       " 'waic': 430.27247828485747,\n",
+       " 'waic_se': 46.48406623386149}"
       ]
      },
-     "execution_count": 16,
+     "execution_count": 12,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -849,16 +705,16 @@
   {
    "cell_type": "code",
    "execution_count": 13,
-   "id": "behind-purple",
+   "id": "civil-heath",
    "metadata": {},
    "outputs": [
     {
      "data": {
       "text/plain": [
-       "{'lppd': -2632.987747986295,\n",
-       " 'p_waic': 52.546611787875065,\n",
-       " 'waic': 5371.06871954834,\n",
-       " 'waic_se': 94.00902560086969}"
+       "{'lppd': -2632.867582843026,\n",
+       " 'p_waic': 52.7245071254338,\n",
+       " 'waic': 5371.1841799369195,\n",
+       " 'waic_se': 93.96972430397454}"
       ]
      },
      "execution_count": 13,
@@ -872,7 +728,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "herbal-corrections",
+   "id": "prerequisite-shift",
    "metadata": {},
    "source": [
     "If you want to also see the point-wise WAIC, you can set `pointwise_waic` to `True`."
@@ -880,7 +736,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "extreme-republican",
+   "id": "behind-hopkins",
    "metadata": {},
    "source": [
     "## Save the results"
@@ -888,7 +744,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "internal-jersey",
+   "id": "stuck-satin",
    "metadata": {},
    "source": [
     "By default, the model fit results are saved in the same folder, using the `model_label` as filename. you can specify a different location using the `filename` argument."
@@ -896,8 +752,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 17,
-   "id": "delayed-transparency",
+   "execution_count": 14,
+   "id": "overhead-workstation",
    "metadata": {},
    "outputs": [
     {
@@ -914,8 +770,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 18,
-   "id": "arbitrary-corrections",
+   "execution_count": 15,
+   "id": "addressed-official",
    "metadata": {},
    "outputs": [
     {
@@ -932,7 +788,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "typical-dating",
+   "id": "integrated-suicide",
    "metadata": {},
    "source": [
     "## Re-load previously saved results"
@@ -940,8 +796,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 19,
-   "id": "willing-burning",
+   "execution_count": 16,
+   "id": "likely-metabolism",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -950,8 +806,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 20,
-   "id": "balanced-carrier",
+   "execution_count": 17,
+   "id": "historic-making",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -960,7 +816,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "cosmetic-meditation",
+   "id": "usual-effect",
    "metadata": {},
    "source": [
     "The data the model was fit on are stored in `data_info`:"
@@ -968,8 +824,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 22,
-   "id": "handmade-discretion",
+   "execution_count": 25,
+   "id": "agricultural-enhancement",
    "metadata": {},
    "outputs": [
     {
@@ -995,15 +851,15 @@
        "      <th></th>\n",
        "      <th>index</th>\n",
        "      <th>participant</th>\n",
-       "      <th>trial</th>\n",
-       "      <th>drift</th>\n",
-       "      <th>rel_sp</th>\n",
-       "      <th>threshold</th>\n",
-       "      <th>ndt</th>\n",
+       "      <th>block_label</th>\n",
+       "      <th>trial_block</th>\n",
+       "      <th>f_cor</th>\n",
+       "      <th>f_inc</th>\n",
+       "      <th>cor_option</th>\n",
+       "      <th>inc_option</th>\n",
+       "      <th>times_seen</th>\n",
        "      <th>rt</th>\n",
        "      <th>accuracy</th>\n",
-       "      <th>accuracy_neg</th>\n",
-       "      <th>accuracy_flipped</th>\n",
        "    </tr>\n",
        "  </thead>\n",
        "  <tbody>\n",
@@ -1012,70 +868,70 @@
        "      <td>0</td>\n",
        "      <td>1</td>\n",
        "      <td>1</td>\n",
-       "      <td>0.8</td>\n",
-       "      <td>0.5</td>\n",
-       "      <td>1.3</td>\n",
-       "      <td>0.23</td>\n",
-       "      <td>1.286</td>\n",
-       "      <td>0.0</td>\n",
-       "      <td>-1</td>\n",
-       "      <td>1.0</td>\n",
+       "      <td>1</td>\n",
+       "      <td>43</td>\n",
+       "      <td>39</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1.244082</td>\n",
+       "      <td>0</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>1</th>\n",
        "      <td>1</td>\n",
        "      <td>1</td>\n",
+       "      <td>1</td>\n",
        "      <td>2</td>\n",
-       "      <td>0.8</td>\n",
-       "      <td>0.5</td>\n",
-       "      <td>1.3</td>\n",
-       "      <td>0.23</td>\n",
-       "      <td>0.374</td>\n",
-       "      <td>0.0</td>\n",
-       "      <td>-1</td>\n",
-       "      <td>1.0</td>\n",
+       "      <td>60</td>\n",
+       "      <td>50</td>\n",
+       "      <td>4</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1.101821</td>\n",
+       "      <td>1</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>2</th>\n",
        "      <td>2</td>\n",
        "      <td>1</td>\n",
-       "      <td>3</td>\n",
-       "      <td>0.8</td>\n",
-       "      <td>0.5</td>\n",
-       "      <td>1.3</td>\n",
-       "      <td>0.23</td>\n",
-       "      <td>0.767</td>\n",
-       "      <td>1.0</td>\n",
        "      <td>1</td>\n",
-       "      <td>-0.0</td>\n",
+       "      <td>3</td>\n",
+       "      <td>44</td>\n",
+       "      <td>36</td>\n",
+       "      <td>4</td>\n",
+       "      <td>2</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1.029923</td>\n",
+       "      <td>0</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>3</th>\n",
        "      <td>3</td>\n",
        "      <td>1</td>\n",
-       "      <td>4</td>\n",
-       "      <td>0.8</td>\n",
-       "      <td>0.5</td>\n",
-       "      <td>1.3</td>\n",
-       "      <td>0.23</td>\n",
-       "      <td>1.187</td>\n",
-       "      <td>1.0</td>\n",
        "      <td>1</td>\n",
-       "      <td>-0.0</td>\n",
+       "      <td>4</td>\n",
+       "      <td>55</td>\n",
+       "      <td>55</td>\n",
+       "      <td>4</td>\n",
+       "      <td>3</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1.368007</td>\n",
+       "      <td>0</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>4</th>\n",
        "      <td>4</td>\n",
        "      <td>1</td>\n",
-       "      <td>5</td>\n",
-       "      <td>0.8</td>\n",
-       "      <td>0.5</td>\n",
-       "      <td>1.3</td>\n",
-       "      <td>0.23</td>\n",
-       "      <td>0.777</td>\n",
-       "      <td>1.0</td>\n",
        "      <td>1</td>\n",
-       "      <td>-0.0</td>\n",
+       "      <td>5</td>\n",
+       "      <td>52</td>\n",
+       "      <td>49</td>\n",
+       "      <td>4</td>\n",
+       "      <td>3</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1.039329</td>\n",
+       "      <td>1</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>...</th>\n",
@@ -1092,264 +948,108 @@
        "      <td>...</td>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th>395</th>\n",
-       "      <td>395</td>\n",
+       "      <th>6459</th>\n",
+       "      <td>6459</td>\n",
+       "      <td>27</td>\n",
+       "      <td>3</td>\n",
+       "      <td>76</td>\n",
+       "      <td>37</td>\n",
+       "      <td>36</td>\n",
+       "      <td>2</td>\n",
        "      <td>1</td>\n",
-       "      <td>396</td>\n",
-       "      <td>0.8</td>\n",
-       "      <td>0.5</td>\n",
-       "      <td>1.3</td>\n",
-       "      <td>0.23</td>\n",
-       "      <td>0.610</td>\n",
-       "      <td>1.0</td>\n",
+       "      <td>39</td>\n",
+       "      <td>1.875327</td>\n",
        "      <td>1</td>\n",
-       "      <td>-0.0</td>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th>396</th>\n",
-       "      <td>396</td>\n",
+       "      <th>6460</th>\n",
+       "      <td>6460</td>\n",
+       "      <td>27</td>\n",
+       "      <td>3</td>\n",
+       "      <td>77</td>\n",
+       "      <td>58</td>\n",
+       "      <td>41</td>\n",
+       "      <td>4</td>\n",
+       "      <td>2</td>\n",
+       "      <td>39</td>\n",
+       "      <td>1.696957</td>\n",
        "      <td>1</td>\n",
-       "      <td>397</td>\n",
-       "      <td>0.8</td>\n",
-       "      <td>0.5</td>\n",
-       "      <td>1.3</td>\n",
-       "      <td>0.23</td>\n",
-       "      <td>0.699</td>\n",
-       "      <td>1.0</td>\n",
-       "      <td>1</td>\n",
-       "      <td>-0.0</td>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th>397</th>\n",
-       "      <td>397</td>\n",
+       "      <th>6461</th>\n",
+       "      <td>6461</td>\n",
+       "      <td>27</td>\n",
+       "      <td>3</td>\n",
+       "      <td>78</td>\n",
+       "      <td>64</td>\n",
+       "      <td>49</td>\n",
+       "      <td>4</td>\n",
+       "      <td>3</td>\n",
+       "      <td>38</td>\n",
+       "      <td>2.059956</td>\n",
        "      <td>1</td>\n",
-       "      <td>398</td>\n",
-       "      <td>0.8</td>\n",
-       "      <td>0.5</td>\n",
-       "      <td>1.3</td>\n",
-       "      <td>0.23</td>\n",
-       "      <td>1.205</td>\n",
-       "      <td>1.0</td>\n",
-       "      <td>1</td>\n",
-       "      <td>-0.0</td>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th>398</th>\n",
-       "      <td>398</td>\n",
+       "      <th>6462</th>\n",
+       "      <td>6462</td>\n",
+       "      <td>27</td>\n",
+       "      <td>3</td>\n",
+       "      <td>79</td>\n",
+       "      <td>44</td>\n",
+       "      <td>37</td>\n",
+       "      <td>3</td>\n",
        "      <td>1</td>\n",
-       "      <td>399</td>\n",
-       "      <td>0.8</td>\n",
-       "      <td>0.5</td>\n",
-       "      <td>1.3</td>\n",
-       "      <td>0.23</td>\n",
-       "      <td>0.388</td>\n",
-       "      <td>0.0</td>\n",
-       "      <td>-1</td>\n",
-       "      <td>1.0</td>\n",
+       "      <td>39</td>\n",
+       "      <td>1.623731</td>\n",
+       "      <td>1</td>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th>399</th>\n",
-       "      <td>399</td>\n",
+       "      <th>6463</th>\n",
+       "      <td>6463</td>\n",
+       "      <td>27</td>\n",
+       "      <td>3</td>\n",
+       "      <td>80</td>\n",
+       "      <td>51</td>\n",
+       "      <td>51</td>\n",
+       "      <td>4</td>\n",
+       "      <td>3</td>\n",
+       "      <td>40</td>\n",
+       "      <td>1.115363</td>\n",
        "      <td>1</td>\n",
-       "      <td>400</td>\n",
-       "      <td>0.8</td>\n",
-       "      <td>0.5</td>\n",
-       "      <td>1.3</td>\n",
-       "      <td>0.23</td>\n",
-       "      <td>0.346</td>\n",
-       "      <td>1.0</td>\n",
-       "      <td>1</td>\n",
-       "      <td>-0.0</td>\n",
        "    </tr>\n",
        "  </tbody>\n",
        "</table>\n",
-       "<p>400 rows × 11 columns</p>\n",
+       "<p>6464 rows × 11 columns</p>\n",
        "</div>"
       ],
       "text/plain": [
-       "     index  participant  trial  drift  rel_sp  threshold   ndt     rt  \\\n",
-       "0        0            1      1    0.8     0.5        1.3  0.23  1.286   \n",
-       "1        1            1      2    0.8     0.5        1.3  0.23  0.374   \n",
-       "2        2            1      3    0.8     0.5        1.3  0.23  0.767   \n",
-       "3        3            1      4    0.8     0.5        1.3  0.23  1.187   \n",
-       "4        4            1      5    0.8     0.5        1.3  0.23  0.777   \n",
-       "..     ...          ...    ...    ...     ...        ...   ...    ...   \n",
-       "395    395            1    396    0.8     0.5        1.3  0.23  0.610   \n",
-       "396    396            1    397    0.8     0.5        1.3  0.23  0.699   \n",
-       "397    397            1    398    0.8     0.5        1.3  0.23  1.205   \n",
-       "398    398            1    399    0.8     0.5        1.3  0.23  0.388   \n",
-       "399    399            1    400    0.8     0.5        1.3  0.23  0.346   \n",
+       "      index  participant  block_label  trial_block  f_cor  f_inc  cor_option  \\\n",
+       "0         0            1            1            1     43     39           2   \n",
+       "1         1            1            1            2     60     50           4   \n",
+       "2         2            1            1            3     44     36           4   \n",
+       "3         3            1            1            4     55     55           4   \n",
+       "4         4            1            1            5     52     49           4   \n",
+       "...     ...          ...          ...          ...    ...    ...         ...   \n",
+       "6459   6459           27            3           76     37     36           2   \n",
+       "6460   6460           27            3           77     58     41           4   \n",
+       "6461   6461           27            3           78     64     49           4   \n",
+       "6462   6462           27            3           79     44     37           3   \n",
+       "6463   6463           27            3           80     51     51           4   \n",
        "\n",
-       "     accuracy  accuracy_neg  accuracy_flipped  \n",
-       "0         0.0            -1               1.0  \n",
-       "1         0.0            -1               1.0  \n",
-       "2         1.0             1              -0.0  \n",
-       "3         1.0             1              -0.0  \n",
-       "4         1.0             1              -0.0  \n",
-       "..        ...           ...               ...  \n",
-       "395       1.0             1              -0.0  \n",
-       "396       1.0             1              -0.0  \n",
-       "397       1.0             1              -0.0  \n",
-       "398       0.0            -1               1.0  \n",
-       "399       1.0             1              -0.0  \n",
+       "      inc_option  times_seen        rt  accuracy  \n",
+       "0              1           1  1.244082         0  \n",
+       "1              3           1  1.101821         1  \n",
+       "2              2           2  1.029923         0  \n",
+       "3              3           2  1.368007         0  \n",
+       "4              3           3  1.039329         1  \n",
+       "...          ...         ...       ...       ...  \n",
+       "6459           1          39  1.875327         1  \n",
+       "6460           2          39  1.696957         1  \n",
+       "6461           3          38  2.059956         1  \n",
+       "6462           1          39  1.623731         1  \n",
+       "6463           3          40  1.115363         1  \n",
        "\n",
-       "[400 rows x 11 columns]"
-      ]
-     },
-     "execution_count": 22,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "model_fit_ddm.data_info['data']"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "occupied-opportunity",
-   "metadata": {},
-   "source": [
-    "And different parameter information are stored in `parameter_info`:"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 25,
-   "id": "differential-antarctica",
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "{'hierarchical_levels': 2,\n",
-       " 'n_parameters_individual': 2,\n",
-       " 'n_parameters_trial': 0,\n",
-       " 'n_posterior_samples': 2000,\n",
-       " 'n_parameters_group': 4,\n",
-       " 'n_parameters_hierarchical': 58,\n",
-       " 'parameters_names': ['mu_alpha',\n",
-       "  'mu_sensitivity',\n",
-       "  'sd_alpha',\n",
-       "  'sd_sensitivity',\n",
-       "  'z_alpha[1]',\n",
-       "  'z_alpha[2]',\n",
-       "  'z_alpha[3]',\n",
-       "  'z_alpha[4]',\n",
-       "  'z_alpha[5]',\n",
-       "  'z_alpha[6]',\n",
-       "  'z_alpha[7]',\n",
-       "  'z_alpha[8]',\n",
-       "  'z_alpha[9]',\n",
-       "  'z_alpha[10]',\n",
-       "  'z_alpha[11]',\n",
-       "  'z_alpha[12]',\n",
-       "  'z_alpha[13]',\n",
-       "  'z_alpha[14]',\n",
-       "  'z_alpha[15]',\n",
-       "  'z_alpha[16]',\n",
-       "  'z_alpha[17]',\n",
-       "  'z_alpha[18]',\n",
-       "  'z_alpha[19]',\n",
-       "  'z_alpha[20]',\n",
-       "  'z_alpha[21]',\n",
-       "  'z_alpha[22]',\n",
-       "  'z_alpha[23]',\n",
-       "  'z_alpha[24]',\n",
-       "  'z_alpha[25]',\n",
-       "  'z_alpha[26]',\n",
-       "  'z_alpha[27]',\n",
-       "  'z_sensitivity[1]',\n",
-       "  'z_sensitivity[2]',\n",
-       "  'z_sensitivity[3]',\n",
-       "  'z_sensitivity[4]',\n",
-       "  'z_sensitivity[5]',\n",
-       "  'z_sensitivity[6]',\n",
-       "  'z_sensitivity[7]',\n",
-       "  'z_sensitivity[8]',\n",
-       "  'z_sensitivity[9]',\n",
-       "  'z_sensitivity[10]',\n",
-       "  'z_sensitivity[11]',\n",
-       "  'z_sensitivity[12]',\n",
-       "  'z_sensitivity[13]',\n",
-       "  'z_sensitivity[14]',\n",
-       "  'z_sensitivity[15]',\n",
-       "  'z_sensitivity[16]',\n",
-       "  'z_sensitivity[17]',\n",
-       "  'z_sensitivity[18]',\n",
-       "  'z_sensitivity[19]',\n",
-       "  'z_sensitivity[20]',\n",
-       "  'z_sensitivity[21]',\n",
-       "  'z_sensitivity[22]',\n",
-       "  'z_sensitivity[23]',\n",
-       "  'z_sensitivity[24]',\n",
-       "  'z_sensitivity[25]',\n",
-       "  'z_sensitivity[26]',\n",
-       "  'z_sensitivity[27]'],\n",
-       " 'group_parameters_names': ['mu_alpha',\n",
-       "  'mu_sensitivity',\n",
-       "  'sd_alpha',\n",
-       "  'sd_sensitivity'],\n",
-       " 'individual_parameters_names': ['alpha', 'sensitivity'],\n",
-       " 'group_parameters_names_transf': ['transf_mu_alpha', 'transf_mu_sensitivity'],\n",
-       " 'parameters_names_all': ['mu_alpha',\n",
-       "  'mu_sensitivity',\n",
-       "  'sd_alpha',\n",
-       "  'sd_sensitivity',\n",
-       "  'z_alpha[1]',\n",
-       "  'z_alpha[2]',\n",
-       "  'z_alpha[3]',\n",
-       "  'z_alpha[4]',\n",
-       "  'z_alpha[5]',\n",
-       "  'z_alpha[6]',\n",
-       "  'z_alpha[7]',\n",
-       "  'z_alpha[8]',\n",
-       "  'z_alpha[9]',\n",
-       "  'z_alpha[10]',\n",
-       "  'z_alpha[11]',\n",
-       "  'z_alpha[12]',\n",
-       "  'z_alpha[13]',\n",
-       "  'z_alpha[14]',\n",
-       "  'z_alpha[15]',\n",
-       "  'z_alpha[16]',\n",
-       "  'z_alpha[17]',\n",
-       "  'z_alpha[18]',\n",
-       "  'z_alpha[19]',\n",
-       "  'z_alpha[20]',\n",
-       "  'z_alpha[21]',\n",
-       "  'z_alpha[22]',\n",
-       "  'z_alpha[23]',\n",
-       "  'z_alpha[24]',\n",
-       "  'z_alpha[25]',\n",
-       "  'z_alpha[26]',\n",
-       "  'z_alpha[27]',\n",
-       "  'z_sensitivity[1]',\n",
-       "  'z_sensitivity[2]',\n",
-       "  'z_sensitivity[3]',\n",
-       "  'z_sensitivity[4]',\n",
-       "  'z_sensitivity[5]',\n",
-       "  'z_sensitivity[6]',\n",
-       "  'z_sensitivity[7]',\n",
-       "  'z_sensitivity[8]',\n",
-       "  'z_sensitivity[9]',\n",
-       "  'z_sensitivity[10]',\n",
-       "  'z_sensitivity[11]',\n",
-       "  'z_sensitivity[12]',\n",
-       "  'z_sensitivity[13]',\n",
-       "  'z_sensitivity[14]',\n",
-       "  'z_sensitivity[15]',\n",
-       "  'z_sensitivity[16]',\n",
-       "  'z_sensitivity[17]',\n",
-       "  'z_sensitivity[18]',\n",
-       "  'z_sensitivity[19]',\n",
-       "  'z_sensitivity[20]',\n",
-       "  'z_sensitivity[21]',\n",
-       "  'z_sensitivity[22]',\n",
-       "  'z_sensitivity[23]',\n",
-       "  'z_sensitivity[24]',\n",
-       "  'z_sensitivity[25]',\n",
-       "  'z_sensitivity[26]',\n",
-       "  'z_sensitivity[27]']}"
+       "[6464 rows x 11 columns]"
       ]
      },
      "execution_count": 25,
@@ -1358,7 +1058,95 @@
     }
    ],
    "source": [
-    "model_fit_rl.parameters_info"
+    "model_fit_rl.data_info['data']"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "close-transaction",
+   "metadata": {},
+   "source": [
+    "The priors in `priors`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "id": "intended-split",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "{'drift_priors': {'mu': 0.5, 'sd': 1},\n",
+       " 'threshold_priors': {'mu': 0, 'sd': 0.5},\n",
+       " 'ndt_priors': {'mu': 0, 'sd': 0.1}}"
+      ]
+     },
+     "execution_count": 22,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "model_fit_ddm.priors"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "id": "elegant-words",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "{'alpha_priors': {'mu_mu': -0.3, 'sd_mu': 0.1, 'mu_sd': 0, 'sd_sd': 0.1},\n",
+       " 'sensitivity_priors': {'mu_mu': -0.1, 'sd_mu': 0.1, 'mu_sd': 0, 'sd_sd': 0.1}}"
+      ]
+     },
+     "execution_count": 23,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "model_fit_rl.priors"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "material-makeup",
+   "metadata": {},
+   "source": [
+    "And different parameter information are stored in `parameter_info`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "id": "engaged-found",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "{'hierarchical_levels': 1,\n",
+       " 'n_parameters_individual': 3,\n",
+       " 'n_parameters_trial': 0,\n",
+       " 'n_posterior_samples': 2000,\n",
+       " 'parameters_names': ['drift', 'threshold', 'ndt'],\n",
+       " 'parameters_names_transf': ['transf_drift', 'transf_threshold', 'transf_ndt'],\n",
+       " 'parameters_names_all': ['drift', 'threshold', 'ndt']}"
+      ]
+     },
+     "execution_count": 24,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "model_fit_ddm.parameters_info"
    ]
   }
  ],

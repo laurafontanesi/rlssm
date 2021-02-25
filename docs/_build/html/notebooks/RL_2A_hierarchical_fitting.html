@@ -614,9 +614,9 @@ div.rendered_html tbody tr:hover {
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area stderr docutils container">
+<div class="output_area docutils container">
 <div class="highlight"><pre>
-INFO:pystan:COMPILING THE C++ CODE FOR MODEL anon_model_85e7d33dd046aaf5975b754dfee23d15 NOW.
+Using cached StanModel
 </pre></div></div>
 </div>
 </div>
@@ -628,9 +628,9 @@ INFO:pystan:COMPILING THE C++ CODE FOR MODEL anon_model_85e7d33dd046aaf5975b754d
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># sampling parameters</span>
-<span class="n">n_iter</span> <span class="o">=</span> <span class="mi">5000</span>
+<span class="n">n_iter</span> <span class="o">=</span> <span class="mi">3000</span>
+<span class="n">n_warmup</span> <span class="o">=</span> <span class="mi">1000</span>
 <span class="n">n_chains</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="n">n_thin</span> <span class="o">=</span> <span class="mi">1</span>
 
 <span class="c1"># learning parameters</span>
 <span class="n">K</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1"># n options in a learning block (participants see 2 at a time)</span>
@@ -647,11 +647,22 @@ INFO:pystan:COMPILING THE C++ CODE FOR MODEL anon_model_85e7d33dd046aaf5975b754d
     <span class="n">data</span><span class="p">,</span>
     <span class="n">K</span><span class="p">,</span>
     <span class="n">initial_value_learning</span><span class="p">,</span>
-    <span class="n">thin</span> <span class="o">=</span> <span class="n">n_thin</span><span class="p">,</span>
+    <span class="n">warmup</span> <span class="o">=</span> <span class="n">n_warmup</span><span class="p">,</span>
     <span class="nb">iter</span> <span class="o">=</span> <span class="n">n_iter</span><span class="p">,</span>
     <span class="n">chains</span> <span class="o">=</span> <span class="n">n_chains</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Fitting the model using the priors:
+sensitivity_priors {&#39;mu_mu&#39;: 1, &#39;sd_mu&#39;: 30, &#39;mu_sd&#39;: 0, &#39;sd_sd&#39;: 30}
+alpha_pos_priors {&#39;mu_mu&#39;: 0, &#39;sd_mu&#39;: 1, &#39;mu_sd&#39;: 0, &#39;sd_sd&#39;: 0.1}
+alpha_neg_priors {&#39;mu_mu&#39;: 0, &#39;sd_mu&#39;: 1, &#39;mu_sd&#39;: 0, &#39;sd_sd&#39;: 0.1}
+</pre></div></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -668,460 +679,454 @@ To run all diagnostics call pystan.check_hmc_diagnostics(fit)
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Checks MCMC diagnostics:
-n_eff / iter for parameter log_p_t[1] is 0.00023747030172105283!
+n_eff / iter for parameter log_p_t[1] is 0.0002799233707527157!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[2] is 0.00023747030172105283!
+n_eff / iter for parameter log_p_t[2] is 0.0002799233707527157!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[81] is 0.0002313787222847051!
+n_eff / iter for parameter log_p_t[81] is 0.0002819023696361508!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[161] is 0.00023348617734135585!
+n_eff / iter for parameter log_p_t[161] is 0.00028433848233607736!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[162] is 0.00023348617734135585!
+n_eff / iter for parameter log_p_t[162] is 0.00028433848233607736!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[241] is 0.00023964664705545727!
+n_eff / iter for parameter log_p_t[241] is 0.0002933653734114046!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[242] is 0.00023964664705545727!
+n_eff / iter for parameter log_p_t[242] is 0.0002933653734114046!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[320] is 0.0002344048901968685!
+n_eff / iter for parameter log_p_t[320] is 0.0002928140782404197!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[400] is 0.00023346145482911864!
+n_eff / iter for parameter log_p_t[400] is 0.00028898105267411957!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[480] is 0.00031411362774945185!
+n_eff / iter for parameter log_p_t[480] is 0.0002790395611894542!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[482] is 0.00031411362774945185!
+n_eff / iter for parameter log_p_t[482] is 0.0002790395611894542!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[560] is 0.00033195583747102383!
+n_eff / iter for parameter log_p_t[560] is 0.00028717534526783535!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[561] is 0.00033195583747102383!
+n_eff / iter for parameter log_p_t[561] is 0.00028717534526783535!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[640] is 0.00034870776213383474!
+n_eff / iter for parameter log_p_t[640] is 0.00028800993107425766!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[720] is 0.00020584030891033725!
+n_eff / iter for parameter log_p_t[720] is 0.0002576570694326876!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[723] is 0.00020584030891033725!
+n_eff / iter for parameter log_p_t[723] is 0.0002576570694326876!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[800] is 0.0002192570987477215!
+n_eff / iter for parameter log_p_t[800] is 0.00025343033893801493!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[801] is 0.0002192570987477215!
+n_eff / iter for parameter log_p_t[801] is 0.00025343033893801493!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[880] is 0.00022069063208916687!
+n_eff / iter for parameter log_p_t[880] is 0.0002539916221127828!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[881] is 0.00022069063208916687!
+n_eff / iter for parameter log_p_t[881] is 0.0002539916221127828!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[959] is 0.00020243641558292258!
+n_eff / iter for parameter log_p_t[959] is 0.0002546669394810881!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[1039] is 0.00020308664495786218!
+n_eff / iter for parameter log_p_t[1039] is 0.0002522257027637923!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[1041] is 0.00020308664495786218!
+n_eff / iter for parameter log_p_t[1041] is 0.0002522257027637923!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[1119] is 0.00020303371055687162!
+n_eff / iter for parameter log_p_t[1119] is 0.00025264916607589764!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[1199] is 0.00021093782470744835!
+n_eff / iter for parameter log_p_t[1199] is 0.0002632187948482939!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[1279] is 0.00023037061848270727!
+n_eff / iter for parameter log_p_t[1279] is 0.0002857366973637469!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[1281] is 0.00023037061848270727!
+n_eff / iter for parameter log_p_t[1281] is 0.0002857366973637469!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[1359] is 0.00023071617409731502!
+n_eff / iter for parameter log_p_t[1359] is 0.0002867847068497782!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[1439] is 0.00022160271228907806!
+n_eff / iter for parameter log_p_t[1439] is 0.00026986409994502706!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[1519] is 0.00022469930327223477!
+n_eff / iter for parameter log_p_t[1519] is 0.00027615916806837725!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[1520] is 0.00022469930327223477!
+n_eff / iter for parameter log_p_t[1520] is 0.00027615916806837725!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[1599] is 0.00022656886653641312!
+n_eff / iter for parameter log_p_t[1599] is 0.0002757065088419681!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[1679] is 0.00020553086543856268!
+n_eff / iter for parameter log_p_t[1679] is 0.00025656750207598834!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[1681] is 0.00020553086543856268!
+n_eff / iter for parameter log_p_t[1681] is 0.00025656750207598834!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[1682] is 0.00020735198086014402!
+n_eff / iter for parameter log_p_t[1682] is 0.0002578704495630675!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[1759] is 0.0002105895403550728!
+n_eff / iter for parameter log_p_t[1759] is 0.0002573090744724767!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[1839] is 0.00021201871642573158!
+n_eff / iter for parameter log_p_t[1839] is 0.00026016390719811827!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[1841] is 0.00021201871642573158!
+n_eff / iter for parameter log_p_t[1841] is 0.00026016390719811827!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[1919] is 0.00020583532185437686!
+n_eff / iter for parameter log_p_t[1919] is 0.00026006908560515305!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[1998] is 0.00020239394247168016!
+n_eff / iter for parameter log_p_t[1998] is 0.0002538633169948887!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[2078] is 0.00020247101586603336!
+n_eff / iter for parameter log_p_t[2078] is 0.0002546920004679544!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[2158] is 0.00022513477790795893!
+n_eff / iter for parameter log_p_t[2158] is 0.00026447678259718045!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[2237] is 0.00023906432193263445!
+n_eff / iter for parameter log_p_t[2237] is 0.00028661549004448225!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[2317] is 0.00023912992306449442!
+n_eff / iter for parameter log_p_t[2317] is 0.00029329505695239484!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[2318] is 0.00023912992306449442!
+n_eff / iter for parameter log_p_t[2318] is 0.00029329505695239484!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[2397] is 0.00020181794381728398!
+n_eff / iter for parameter log_p_t[2397] is 0.00025230405014892165!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[2477] is 0.00020573846087284733!
+n_eff / iter for parameter log_p_t[2477] is 0.000258199347568308!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[2556] is 0.00020597173552872758!
+n_eff / iter for parameter log_p_t[2556] is 0.00025732370268245514!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[2557] is 0.00020597173552872758!
+n_eff / iter for parameter log_p_t[2557] is 0.00025732370268245514!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[2636] is 0.0002054242048598645!
+n_eff / iter for parameter log_p_t[2636] is 0.00025649225036419247!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[2637] is 0.0002054242048598645!
+n_eff / iter for parameter log_p_t[2637] is 0.00025649225036419247!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[2714] is 0.00023286208557102706!
+n_eff / iter for parameter log_p_t[2714] is 0.0002892244128889484!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[2715] is 0.00023286208557102706!
+n_eff / iter for parameter log_p_t[2715] is 0.0002892244128889484!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[2794] is 0.00023346152925830701!
+n_eff / iter for parameter log_p_t[2794] is 0.00029108436032635!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[2796] is 0.00023346152925830701!
+n_eff / iter for parameter log_p_t[2796] is 0.00029108436032635!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[2874] is 0.00020064046581162734!
+n_eff / iter for parameter log_p_t[2874] is 0.00025163474046227075!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[2876] is 0.00020064046581162734!
+n_eff / iter for parameter log_p_t[2876] is 0.00025163474046227075!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[2954] is 0.00020391041478951314!
+n_eff / iter for parameter log_p_t[2954] is 0.00025423860534105853!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[3034] is 0.00020366316648175967!
+n_eff / iter for parameter log_p_t[3034] is 0.00025463877044963834!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[3113] is 0.00022105853526058628!
+n_eff / iter for parameter log_p_t[3113] is 0.00027726965694474894!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[3192] is 0.00020946299345349907!
+n_eff / iter for parameter log_p_t[3192] is 0.0002604614781349428!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[3193] is 0.00020946299345349907!
+n_eff / iter for parameter log_p_t[3193] is 0.0002604614781349428!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[3272] is 0.00020886110338365552!
+n_eff / iter for parameter log_p_t[3272] is 0.0002603904081417331!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[3352] is 0.00020343151073789586!
+n_eff / iter for parameter log_p_t[3352] is 0.0002539796207514904!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[3431] is 0.00022923085000981392!
+n_eff / iter for parameter log_p_t[3431] is 0.00028289585253427047!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[3511] is 0.00022779354964688018!
+n_eff / iter for parameter log_p_t[3511] is 0.0002793804305194759!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[3591] is 0.0002386722891792471!
+n_eff / iter for parameter log_p_t[3591] is 0.0002943408635524366!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[3671] is 0.0002755508086184896!
+n_eff / iter for parameter log_p_t[3671] is 0.00030998559877916523!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[3751] is 0.0003066844716582841!
+n_eff / iter for parameter log_p_t[3751] is 0.00032609440547733885!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[3754] is 0.0003066844716582841!
+n_eff / iter for parameter log_p_t[3754] is 0.00032609440547733885!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[3831] is 0.00023331680258585705!
+n_eff / iter for parameter log_p_t[3831] is 0.00027159280447714855!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[3833] is 0.00023331680258585705!
+n_eff / iter for parameter log_p_t[3833] is 0.00027159280447714855!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[3911] is 0.00023943540595961608!
+n_eff / iter for parameter log_p_t[3911] is 0.000288390500466947!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[3912] is 0.00023943540595961608!
+n_eff / iter for parameter log_p_t[3912] is 0.000288390500466947!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[3990] is 0.000239877083594941!
+n_eff / iter for parameter log_p_t[3990] is 0.00029506024089300583!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[4070] is 0.00020713355402489616!
+n_eff / iter for parameter log_p_t[4070] is 0.0002523347258812193!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[4148] is 0.00020756241015544642!
+n_eff / iter for parameter log_p_t[4148] is 0.0002534585361800773!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[4149] is 0.00020756241015544642!
+n_eff / iter for parameter log_p_t[4149] is 0.0002534585361800773!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[4228] is 0.0002086012202500429!
+n_eff / iter for parameter log_p_t[4228] is 0.00025337189705216206!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[4308] is 0.00020579064106531687!
+n_eff / iter for parameter log_p_t[4308] is 0.0002566227505211013!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[4309] is 0.00020579064106531687!
+n_eff / iter for parameter log_p_t[4309] is 0.0002566227505211013!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[4388] is 0.00022288493077958537!
+n_eff / iter for parameter log_p_t[4388] is 0.00027859591971088956!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[4389] is 0.00022288493077958537!
+n_eff / iter for parameter log_p_t[4389] is 0.00027859591971088956!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[4467] is 0.00022751548347654636!
+n_eff / iter for parameter log_p_t[4467] is 0.00028511605884223764!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[4469] is 0.00022751548347654636!
+n_eff / iter for parameter log_p_t[4469] is 0.00028511605884223764!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[4547] is 0.00020290002039964231!
+n_eff / iter for parameter log_p_t[4547] is 0.0002534676283603465!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[4548] is 0.00020269412586527825!
+n_eff / iter for parameter log_p_t[4548] is 0.0002536835417713571!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[4627] is 0.0002343085227568206!
+n_eff / iter for parameter log_p_t[4627] is 0.0002923034262924831!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[4707] is 0.00023205524401152534!
+n_eff / iter for parameter log_p_t[4707] is 0.000288888495804038!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[4787] is 0.00023132897808041114!
+n_eff / iter for parameter log_p_t[4787] is 0.00027456655996478544!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[4866] is 0.000504311352624081!
+n_eff / iter for parameter log_p_t[4866] is 0.0005843846163678089!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[4946] is 0.0005023575824719348!
+n_eff / iter for parameter log_p_t[4946] is 0.0006184909735879663!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[5026] is 0.00023246103920694167!
+n_eff / iter for parameter log_p_t[5026] is 0.00029052292610679144!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[5106] is 0.00024946490260224004!
+n_eff / iter for parameter log_p_t[5106] is 0.000282369896291408!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[5107] is 0.00024946490260224004!
+n_eff / iter for parameter log_p_t[5107] is 0.000282369896291408!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[5186] is 0.0002544114449851243!
+n_eff / iter for parameter log_p_t[5186] is 0.0002885248241135257!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[5266] is 0.0002599511820234745!
+n_eff / iter for parameter log_p_t[5266] is 0.00029973650879762083!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[5506] is 0.00021158354456150027!
+n_eff / iter for parameter log_p_t[5506] is 0.00026448368461714854!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[5586] is 0.00022031339985831565!
+n_eff / iter for parameter log_p_t[5586] is 0.0002753712344334487!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[5666] is 0.00022214885164697834!
+n_eff / iter for parameter log_p_t[5666] is 0.0002755102332460835!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[5667] is 0.00022214885164697834!
+n_eff / iter for parameter log_p_t[5667] is 0.0002755102332460835!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[5746] is 0.00022820188983931668!
+n_eff / iter for parameter log_p_t[5746] is 0.00028881669499148977!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[5825] is 0.00022464982211609511!
+n_eff / iter for parameter log_p_t[5825] is 0.00026916320961329964!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[5826] is 0.00022464982211609511!
+n_eff / iter for parameter log_p_t[5826] is 0.00026916320961329964!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[5905] is 0.0002403507697051144!
+n_eff / iter for parameter log_p_t[5905] is 0.00028162259159749027!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[5985] is 0.0002016890473765176!
+n_eff / iter for parameter log_p_t[5985] is 0.0002512452847019923!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[6065] is 0.00020280585765141313!
+n_eff / iter for parameter log_p_t[6065] is 0.0002533302667768849!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[6066] is 0.00020280585765141313!
+n_eff / iter for parameter log_p_t[6066] is 0.0002533302667768849!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[6145] is 0.00020278358501260357!
+n_eff / iter for parameter log_p_t[6145] is 0.0002534708183026826!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[6225] is 0.0002047322466638337!
+n_eff / iter for parameter log_p_t[6225] is 0.0002557946133421359!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[6226] is 0.0002047322466638337!
+n_eff / iter for parameter log_p_t[6226] is 0.0002557946133421359!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[6305] is 0.00020507551724218974!
+n_eff / iter for parameter log_p_t[6305] is 0.0002549113116325985!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[6306] is 0.00020507551724218974!
+n_eff / iter for parameter log_p_t[6306] is 0.0002549113116325985!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[6385] is 0.00020717422577068407!
+n_eff / iter for parameter log_p_t[6385] is 0.0002570547745447683!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_p_t[6386] is 0.00020717422577068407!
+n_eff / iter for parameter log_p_t[6386] is 0.0002570547745447683!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[1] is 0.0002717188067442273!
+n_eff / iter for parameter log_lik[1] is 0.0002895462601401754!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[2] is 0.00024069847654999968!
+n_eff / iter for parameter log_lik[2] is 0.00028309417836931125!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[81] is 0.0007752289206635788!
+n_eff / iter for parameter log_lik[81] is 0.000850863969263963!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[161] is 0.0002485251830632205!
+n_eff / iter for parameter log_lik[161] is 0.00029897267157371867!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[162] is 0.0008985037715956164!
+n_eff / iter for parameter log_lik[241] is 0.0003585685681734663!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[241] is 0.00038960525761118993!
+n_eff / iter for parameter log_lik[242] is 0.0003058031322026083!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[242] is 0.00025202905864908897!
+n_eff / iter for parameter log_lik[320] is 0.0005883790621372006!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[320] is 0.0006210833670392529!
+n_eff / iter for parameter log_lik[400] is 0.0008613829593741161!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[480] is 0.000324160835299159!
+n_eff / iter for parameter log_lik[480] is 0.00028519140669647957!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[482] is 0.000324160835299159!
+n_eff / iter for parameter log_lik[482] is 0.00028519140669647957!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[560] is 0.00035551596496669535!
+n_eff / iter for parameter log_lik[560] is 0.00029284292241305525!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[561] is 0.00035551596496669535!
+n_eff / iter for parameter log_lik[561] is 0.00029284292241305525!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[640] is 0.00033668661685869395!
+n_eff / iter for parameter log_lik[640] is 0.0003024469762478703!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[720] is 0.0002071380871059156!
+n_eff / iter for parameter log_lik[720] is 0.00025941825937871005!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[723] is 0.0002071380871059156!
+n_eff / iter for parameter log_lik[723] is 0.00025941825937871005!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[800] is 0.00022405268401520077!
+n_eff / iter for parameter log_lik[800] is 0.00025387584369178503!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[801] is 0.00022405268401520077!
+n_eff / iter for parameter log_lik[801] is 0.00025387584369178503!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[880] is 0.00022574620819173322!
+n_eff / iter for parameter log_lik[880] is 0.0002544769249979755!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[881] is 0.0002303208345372973!
+n_eff / iter for parameter log_lik[881] is 0.0002547060148446616!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[959] is 0.0002029748722172854!
+n_eff / iter for parameter log_lik[959] is 0.0002557340942152661!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[1039] is 0.0002033127021153906!
+n_eff / iter for parameter log_lik[1039] is 0.00025302801201130534!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[1041] is 0.00020374623122833388!
+n_eff / iter for parameter log_lik[1041] is 0.0002526787659215834!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[1119] is 0.00020367555758188396!
+n_eff / iter for parameter log_lik[1119] is 0.0002531652773571712!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[1199] is 0.00021472325377009348!
+n_eff / iter for parameter log_lik[1199] is 0.00026625950701907904!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[1279] is 0.0005038332661661523!
+n_eff / iter for parameter log_lik[1279] is 0.0007836897741624483!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[1281] is 0.00023878762552036545!
+n_eff / iter for parameter log_lik[1281] is 0.0003050155972152526!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[1359] is 0.00023929907816299875!
+n_eff / iter for parameter log_lik[1359] is 0.00030449284919127607!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[1439] is 0.0002318808263864851!
+n_eff / iter for parameter log_lik[1439] is 0.0002725203258587628!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[1520] is 0.00023476492748614736!
+n_eff / iter for parameter log_lik[1520] is 0.00028860699027276056!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[1679] is 0.0002063782029301045!
+n_eff / iter for parameter log_lik[1679] is 0.000257842670358539!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[1681] is 0.00020659320121636888!
+n_eff / iter for parameter log_lik[1681] is 0.00025813741796973383!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[1682] is 0.00020996091797449137!
+n_eff / iter for parameter log_lik[1682] is 0.0002598242200925619!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[1759] is 0.00021356543826448534!
+n_eff / iter for parameter log_lik[1759] is 0.0002595655856155212!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[1839] is 0.00021611354425077494!
+n_eff / iter for parameter log_lik[1839] is 0.00026240377972011435!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[1841] is 0.00021428142098976592!
+n_eff / iter for parameter log_lik[1841] is 0.0002624031109106839!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[1919] is 0.00020801471701365192!
+n_eff / iter for parameter log_lik[1919] is 0.00026209609263226424!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[1998] is 0.0002027388226817652!
+n_eff / iter for parameter log_lik[1998] is 0.0002559544936961811!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[2078] is 0.00020276431779711704!
+n_eff / iter for parameter log_lik[2078] is 0.0002552205600586139!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[2158] is 0.00024346187812806933!
+n_eff / iter for parameter log_lik[2158] is 0.00026609718079730375!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[2237] is 0.00034271604524504324!
+n_eff / iter for parameter log_lik[2237] is 0.0003126885306053587!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[2317] is 0.00040851870576252874!
+n_eff / iter for parameter log_lik[2317] is 0.00034566794652616514!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[2318] is 0.00040851870576252874!
+n_eff / iter for parameter log_lik[2318] is 0.00034566794652616514!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[2397] is 0.0002024408867540366!
+n_eff / iter for parameter log_lik[2397] is 0.0002530465912392863!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[2477] is 0.00020793930724189358!
+n_eff / iter for parameter log_lik[2477] is 0.0002595076377372196!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[2556] is 0.00020796796417868184!
+n_eff / iter for parameter log_lik[2556] is 0.0002591993818883274!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[2557] is 0.00020761567377076647!
+n_eff / iter for parameter log_lik[2557] is 0.0002595933872333637!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[2636] is 0.00020693810656010242!
+n_eff / iter for parameter log_lik[2636] is 0.00025706968481247974!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[2637] is 0.00020661873565699435!
+n_eff / iter for parameter log_lik[2637] is 0.00025787141365224956!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[2714] is 0.00027230502545483673!
+n_eff / iter for parameter log_lik[2714] is 0.0003189332008750418!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[2715] is 0.00023597871281733497!
+n_eff / iter for parameter log_lik[2715] is 0.0002931052248891832!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[2794] is 0.00023661164552857508!
+n_eff / iter for parameter log_lik[2794] is 0.0002950417038878458!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[2796] is 0.00027781890401992184!
+n_eff / iter for parameter log_lik[2796] is 0.0003266333883847532!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[2874] is 0.0002007783866865317!
+n_eff / iter for parameter log_lik[2874] is 0.0002519591560546632!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[2876] is 0.0002007783866865317!
+n_eff / iter for parameter log_lik[2876] is 0.0002519591560546632!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[2954] is 0.00020485911896576004!
+n_eff / iter for parameter log_lik[2954] is 0.00025508315877242215!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[3034] is 0.00020448742688892164!
+n_eff / iter for parameter log_lik[3034] is 0.00025604599114147954!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[3113] is 0.00022623891893834648!
+n_eff / iter for parameter log_lik[3113] is 0.00028016145755174624!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[3192] is 0.00021359016974708774!
+n_eff / iter for parameter log_lik[3192] is 0.00026636469365207263!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[3272] is 0.0002127367173195521!
+n_eff / iter for parameter log_lik[3272] is 0.0002656589602931239!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[3352] is 0.0002039129555157679!
+n_eff / iter for parameter log_lik[3352] is 0.00025448619410714757!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[3431] is 0.00024474431870239675!
+n_eff / iter for parameter log_lik[3431] is 0.0002950856015950594!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[3511] is 0.0005542949223588211!
+n_eff / iter for parameter log_lik[3591] is 0.0003196928626686715!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[3591] is 0.00025259663994892713!
+n_eff / iter for parameter log_lik[3671] is 0.00034274689881884336!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[3671] is 0.00030949056088650027!
+n_eff / iter for parameter log_lik[3751] is 0.0003751029011653509!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[3751] is 0.0003613503338579131!
+n_eff / iter for parameter log_lik[3754] is 0.0003751029011653509!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[3754] is 0.0003613503338579131!
+n_eff / iter for parameter log_lik[3831] is 0.0002783827420896341!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[3831] is 0.0002620110567599813!
+n_eff / iter for parameter log_lik[3833] is 0.00027419950119481035!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[3833] is 0.0002363565815614494!
+n_eff / iter for parameter log_lik[3911] is 0.00031617642764140015!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[3911] is 0.00033380152573460315!
+n_eff / iter for parameter log_lik[3912] is 0.00031617642764140015!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[3912] is 0.00033380152573460315!
+n_eff / iter for parameter log_lik[3990] is 0.00030804203577151977!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[3990] is 0.00025207821642711774!
+n_eff / iter for parameter log_lik[4070] is 0.0002536193865679765!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[4070] is 0.00020836447261635355!
+n_eff / iter for parameter log_lik[4148] is 0.00025472481316754167!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[4148] is 0.00020924127597563694!
+n_eff / iter for parameter log_lik[4149] is 0.00025472481316754167!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[4149] is 0.00020924127597563694!
+n_eff / iter for parameter log_lik[4228] is 0.0002540357632675728!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[4228] is 0.00021085310446321927!
+n_eff / iter for parameter log_lik[4308] is 0.0002579540101053987!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[4308] is 0.00020719901968219636!
+n_eff / iter for parameter log_lik[4309] is 0.00025852734957825836!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[4309] is 0.00020682947162614095!
+n_eff / iter for parameter log_lik[4388] is 0.00028419260305609075!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[4388] is 0.00023428665951592356!
+n_eff / iter for parameter log_lik[4389] is 0.00028419260305609075!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[4389] is 0.00023428665951592356!
+n_eff / iter for parameter log_lik[4467] is 0.000307490079702458!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[4467] is 0.0002587223137716281!
+n_eff / iter for parameter log_lik[4469] is 0.00028868561145338977!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[4469] is 0.00023385213101419406!
+n_eff / iter for parameter log_lik[4547] is 0.00025425243986929914!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[4547] is 0.00020341382188097322!
+n_eff / iter for parameter log_lik[4548] is 0.00025441068124249796!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[4548] is 0.00020307221838449007!
+n_eff / iter for parameter log_lik[4627] is 0.0005581328657346797!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[4627] is 0.0004146674485020371!
+n_eff / iter for parameter log_lik[4707] is 0.000640233469688095!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[4707] is 0.0004239159561579698!
+n_eff / iter for parameter log_lik[4866] is 0.0007301899608953368!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[4866] is 0.0005104303199887707!
+n_eff / iter for parameter log_lik[4946] is 0.000748622572530409!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[4946] is 0.0005763216126261141!
+n_eff / iter for parameter log_lik[5026] is 0.0006601898278964!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[5026] is 0.00045105513400851783!
+n_eff / iter for parameter log_lik[5186] is 0.00030745490873915183!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[5186] is 0.00027635171213632944!
+n_eff / iter for parameter log_lik[5346] is 0.00045597346673577663!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[5346] is 0.00029827741530953357!
+n_eff / iter for parameter log_lik[5506] is 0.0002673484013989123!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[5506] is 0.00021291761323229014!
+n_eff / iter for parameter log_lik[5586] is 0.0002883322867776842!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[5586] is 0.00022990457582431522!
+n_eff / iter for parameter log_lik[5746] is 0.00030776131025889733!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[5666] is 0.0008054498083579704!
+n_eff / iter for parameter log_lik[5825] is 0.0002799511307667!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[5667] is 0.0008054498083579704!
+n_eff / iter for parameter log_lik[5905] is 0.00029768095390328013!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[5746] is 0.0002420368676229473!
+n_eff / iter for parameter log_lik[5985] is 0.0002522173093026784!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[5825] is 0.00023503207865233942!
+n_eff / iter for parameter log_lik[6065] is 0.0002547226821837275!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[5905] is 0.00025830711702322937!
+n_eff / iter for parameter log_lik[6066] is 0.0002547226821837275!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[5985] is 0.0002026449794911374!
+n_eff / iter for parameter log_lik[6145] is 0.0002550326025799712!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[6065] is 0.00020419079193442614!
+n_eff / iter for parameter log_lik[6225] is 0.00025701382458317594!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[6066] is 0.00020419079193442614!
+n_eff / iter for parameter log_lik[6226] is 0.00025701382458317594!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[6145] is 0.0002037927353078551!
+n_eff / iter for parameter log_lik[6305] is 0.0002555814397782251!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[6225] is 0.0002057560693096832!
+n_eff / iter for parameter log_lik[6306] is 0.0002555814397782251!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[6226] is 0.0002057560693096832!
+n_eff / iter for parameter log_lik[6385] is 0.0002589668002955581!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[6305] is 0.0002056740453611895!
-E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[6306] is 0.0002056740453611895!
-E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[6385] is 0.0002081235601695553!
-E-BFMI below 0.2 indicates you may need to reparameterize your model
-n_eff / iter for parameter log_lik[6386] is 0.00020815717284333176!
+n_eff / iter for parameter log_lik[6386] is 0.00025913330121181665!
 E-BFMI below 0.2 indicates you may need to reparameterize your model
 n_eff / iter below 0.001 indicates that the effective sample size has likely been overestimated
-0.0 of 5000 iterations ended with a divergence (0.0%)
-0 of 5000 iterations saturated the maximum tree depth of 10 (0.0%)
+0.0 of 4000 iterations ended with a divergence (0.0%)
+0 of 4000 iterations saturated the maximum tree depth of 10 (0.0%)
 E-BFMI indicated no pathological behavior
 </pre></div></div>
 </div>
 <div class="section" id="get-Rhat">
 <h3>get Rhat<a class="headerlink" href="#get-Rhat" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1130,7 +1135,7 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1162,31 +1167,31 @@ E-BFMI indicated no pathological behavior
     </tr>
     <tr>
       <th>mean</th>
-      <td>1.001652</td>
+      <td>1.000126</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>0.003058</td>
+      <td>0.000572</td>
     </tr>
     <tr>
       <th>min</th>
-      <td>0.999611</td>
+      <td>0.999518</td>
     </tr>
     <tr>
       <th>25%</th>
-      <td>0.999975</td>
+      <td>0.999702</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>1.000402</td>
+      <td>0.999932</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>1.002264</td>
+      <td>1.000346</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>1.017657</td>
+      <td>1.001978</td>
     </tr>
   </tbody>
 </table>
@@ -1210,10 +1215,10 @@ E-BFMI indicated no pathological behavior
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;lppd&#39;: -2568.4317960879453,
- &#39;p_waic&#39;: 64.246543173176,
- &#39;waic&#39;: 5265.356678522243,
- &#39;waic_se&#39;: 90.23490325898337}
+{&#39;lppd&#39;: -2585.9186822018128,
+ &#39;p_waic&#39;: 49.06740318618709,
+ &#39;waic&#39;: 5269.972170776,
+ &#39;waic_se&#39;: 90.34698762773861}
 </pre></div></div>
 </div>
 </div>
@@ -1278,195 +1283,195 @@ E-BFMI indicated no pathological behavior
   <tbody>
     <tr>
       <th>count</th>
-      <td>5000.00000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
       <td>...</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
     </tr>
     <tr>
       <th>mean</th>
-      <td>0.50000</td>
-      <td>1249.500000</td>
-      <td>0.066724</td>
-      <td>0.244974</td>
-      <td>0.361721</td>
-      <td>0.038006</td>
-      <td>0.010173</td>
-      <td>0.048696</td>
-      <td>0.146821</td>
-      <td>0.134911</td>
+      <td>0.500000</td>
+      <td>999.500000</td>
+      <td>0.059391</td>
+      <td>0.240970</td>
+      <td>0.337773</td>
+      <td>0.042806</td>
+      <td>0.012892</td>
+      <td>0.070399</td>
+      <td>0.101971</td>
+      <td>0.102206</td>
       <td>...</td>
-      <td>0.136067</td>
-      <td>0.320794</td>
-      <td>0.367682</td>
-      <td>0.793641</td>
-      <td>0.591713</td>
-      <td>0.961189</td>
-      <td>0.420030</td>
-      <td>0.657458</td>
-      <td>0.092742</td>
-      <td>0.252568</td>
+      <td>0.084429</td>
+      <td>0.312524</td>
+      <td>0.372647</td>
+      <td>0.767712</td>
+      <td>0.588902</td>
+      <td>0.901913</td>
+      <td>0.426767</td>
+      <td>0.606579</td>
+      <td>0.083444</td>
+      <td>0.250021</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>0.50005</td>
-      <td>721.759958</td>
-      <td>0.018311</td>
-      <td>0.046023</td>
-      <td>0.056664</td>
-      <td>0.023549</td>
-      <td>0.004139</td>
-      <td>0.056156</td>
-      <td>0.084688</td>
-      <td>0.067579</td>
+      <td>0.500063</td>
+      <td>577.422379</td>
+      <td>0.011054</td>
+      <td>0.034860</td>
+      <td>0.049276</td>
+      <td>0.021579</td>
+      <td>0.005417</td>
+      <td>0.041293</td>
+      <td>0.045829</td>
+      <td>0.042308</td>
       <td>...</td>
-      <td>0.142427</td>
-      <td>0.083155</td>
-      <td>0.059834</td>
-      <td>0.210083</td>
-      <td>0.127341</td>
-      <td>0.207392</td>
-      <td>0.084830</td>
-      <td>0.172396</td>
-      <td>0.048833</td>
-      <td>0.052704</td>
+      <td>0.054155</td>
+      <td>0.074492</td>
+      <td>0.058519</td>
+      <td>0.176125</td>
+      <td>0.110758</td>
+      <td>0.197530</td>
+      <td>0.076603</td>
+      <td>0.147913</td>
+      <td>0.020596</td>
+      <td>0.050787</td>
     </tr>
     <tr>
       <th>min</th>
-      <td>0.00000</td>
       <td>0.000000</td>
-      <td>0.024354</td>
-      <td>0.109829</td>
-      <td>0.194459</td>
-      <td>0.004458</td>
-      <td>0.002260</td>
-      <td>0.001171</td>
-      <td>0.016571</td>
-      <td>0.019734</td>
+      <td>0.000000</td>
+      <td>0.029233</td>
+      <td>0.130741</td>
+      <td>0.208916</td>
+      <td>0.007275</td>
+      <td>0.002957</td>
+      <td>0.001847</td>
+      <td>0.023123</td>
+      <td>0.023433</td>
       <td>...</td>
-      <td>0.013190</td>
-      <td>0.141832</td>
-      <td>0.216083</td>
-      <td>0.359327</td>
-      <td>0.321128</td>
-      <td>0.452598</td>
-      <td>0.223012</td>
-      <td>0.259511</td>
-      <td>0.022542</td>
-      <td>0.127103</td>
+      <td>0.020625</td>
+      <td>0.133664</td>
+      <td>0.207507</td>
+      <td>0.357291</td>
+      <td>0.300730</td>
+      <td>0.443730</td>
+      <td>0.240316</td>
+      <td>0.218562</td>
+      <td>0.023674</td>
+      <td>0.138294</td>
     </tr>
     <tr>
       <th>25%</th>
-      <td>0.00000</td>
-      <td>624.750000</td>
-      <td>0.053892</td>
-      <td>0.213485</td>
-      <td>0.322546</td>
-      <td>0.023834</td>
-      <td>0.007603</td>
-      <td>0.003617</td>
-      <td>0.088741</td>
-      <td>0.086015</td>
+      <td>0.000000</td>
+      <td>499.750000</td>
+      <td>0.051704</td>
+      <td>0.216983</td>
+      <td>0.303607</td>
+      <td>0.028721</td>
+      <td>0.009236</td>
+      <td>0.046246</td>
+      <td>0.069185</td>
+      <td>0.072545</td>
       <td>...</td>
-      <td>0.059877</td>
-      <td>0.259763</td>
-      <td>0.327552</td>
-      <td>0.654118</td>
-      <td>0.505373</td>
-      <td>0.816957</td>
-      <td>0.362855</td>
-      <td>0.536331</td>
-      <td>0.069057</td>
-      <td>0.217340</td>
+      <td>0.059548</td>
+      <td>0.258165</td>
+      <td>0.331700</td>
+      <td>0.651809</td>
+      <td>0.509775</td>
+      <td>0.760999</td>
+      <td>0.375488</td>
+      <td>0.501393</td>
+      <td>0.069679</td>
+      <td>0.216377</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>0.50000</td>
-      <td>1249.500000</td>
-      <td>0.064572</td>
-      <td>0.240162</td>
-      <td>0.355767</td>
-      <td>0.032948</td>
-      <td>0.009383</td>
-      <td>0.031871</td>
-      <td>0.126847</td>
-      <td>0.121251</td>
+      <td>0.500000</td>
+      <td>999.500000</td>
+      <td>0.058487</td>
+      <td>0.238924</td>
+      <td>0.333174</td>
+      <td>0.037555</td>
+      <td>0.011515</td>
+      <td>0.066096</td>
+      <td>0.093490</td>
+      <td>0.094744</td>
       <td>...</td>
-      <td>0.078173</td>
-      <td>0.309836</td>
-      <td>0.360764</td>
-      <td>0.754539</td>
-      <td>0.572355</td>
-      <td>0.938055</td>
-      <td>0.408312</td>
-      <td>0.637224</td>
-      <td>0.082764</td>
-      <td>0.245234</td>
+      <td>0.072125</td>
+      <td>0.302820</td>
+      <td>0.366789</td>
+      <td>0.740668</td>
+      <td>0.575615</td>
+      <td>0.876022</td>
+      <td>0.417441</td>
+      <td>0.592633</td>
+      <td>0.081530</td>
+      <td>0.243665</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>1.00000</td>
-      <td>1874.250000</td>
-      <td>0.076803</td>
-      <td>0.271523</td>
-      <td>0.394753</td>
-      <td>0.045360</td>
-      <td>0.011671</td>
-      <td>0.080263</td>
-      <td>0.181019</td>
-      <td>0.168311</td>
+      <td>1.000000</td>
+      <td>1499.250000</td>
+      <td>0.066049</td>
+      <td>0.263020</td>
+      <td>0.366492</td>
+      <td>0.051156</td>
+      <td>0.015136</td>
+      <td>0.091792</td>
+      <td>0.123847</td>
+      <td>0.124971</td>
       <td>...</td>
-      <td>0.150494</td>
-      <td>0.368362</td>
-      <td>0.400960</td>
-      <td>0.881530</td>
-      <td>0.658451</td>
-      <td>1.081726</td>
-      <td>0.463639</td>
-      <td>0.755038</td>
-      <td>0.101191</td>
-      <td>0.279548</td>
+      <td>0.088098</td>
+      <td>0.354502</td>
+      <td>0.407251</td>
+      <td>0.849611</td>
+      <td>0.651033</td>
+      <td>1.016270</td>
+      <td>0.469168</td>
+      <td>0.698397</td>
+      <td>0.095357</td>
+      <td>0.274589</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>1.00000</td>
-      <td>2499.000000</td>
-      <td>0.175701</td>
-      <td>0.488028</td>
-      <td>0.655635</td>
-      <td>0.336519</td>
-      <td>0.056567</td>
-      <td>0.606490</td>
-      <td>0.750089</td>
-      <td>0.588811</td>
+      <td>1.000000</td>
+      <td>1999.000000</td>
+      <td>0.112444</td>
+      <td>0.375415</td>
+      <td>0.593196</td>
+      <td>0.202651</td>
+      <td>0.050444</td>
+      <td>0.455474</td>
+      <td>0.370728</td>
+      <td>0.396222</td>
       <td>...</td>
-      <td>1.598757</td>
-      <td>0.738939</td>
-      <td>1.068068</td>
-      <td>2.026769</td>
-      <td>1.952079</td>
-      <td>2.066180</td>
-      <td>1.350689</td>
-      <td>1.889106</td>
-      <td>1.253123</td>
-      <td>0.633065</td>
+      <td>0.720152</td>
+      <td>0.625586</td>
+      <td>0.699467</td>
+      <td>2.335755</td>
+      <td>1.317175</td>
+      <td>2.048247</td>
+      <td>0.975525</td>
+      <td>1.537778</td>
+      <td>0.264362</td>
+      <td>0.748396</td>
     </tr>
   </tbody>
 </table>
@@ -1598,81 +1603,81 @@ E-BFMI indicated no pathological behavior
   <tbody>
     <tr>
       <th>1</th>
-      <td>1</td>
-      <td>1</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
+      <td>1</td>
       <td>0</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>...</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
+      <td>0</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>2</th>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
-      <td>1</td>
       <td>1</td>
       <td>0</td>
       <td>0</td>
-      <td>1</td>
       <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>1</td>
       <td>...</td>
       <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0</td>
       <td>1</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
-      <td>0</td>
       <td>1</td>
       <td>0</td>
+      <td>0</td>
+      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>...</td>
       <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>4</th>
       <td>1</td>
       <td>0</td>
-      <td>0</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
@@ -1684,27 +1689,28 @@ E-BFMI indicated no pathological behavior
       <td>1</td>
       <td>1</td>
       <td>1</td>
+      <td>0</td>
       <td>1</td>
+      <td>0</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
     </tr>
     <tr>
       <th>5</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
       <td>1</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
-      <td>0</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
       <td>...</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
@@ -1712,8 +1718,7 @@ E-BFMI indicated no pathological behavior
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
+      <td>0</td>
       <td>1</td>
     </tr>
     <tr>
@@ -1743,22 +1748,22 @@ E-BFMI indicated no pathological behavior
     <tr>
       <th>496</th>
       <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
+      <td>1</td>
       <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>...</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
-      <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
@@ -1767,45 +1772,45 @@ E-BFMI indicated no pathological behavior
     <tr>
       <th>497</th>
       <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
       <td>1</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
       <td>...</td>
-      <td>0</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>1</td>
       <td>1</td>
     </tr>
     <tr>
       <th>498</th>
       <td>0</td>
-      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>0</td>
-      <td>1</td>
-      <td>1</td>
       <td>0</td>
       <td>1</td>
-      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>...</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
@@ -1815,13 +1820,13 @@ E-BFMI indicated no pathological behavior
     <tr>
       <th>499</th>
       <td>0</td>
+      <td>0</td>
+      <td>1</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
-      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>...</td>
@@ -1831,19 +1836,19 @@ E-BFMI indicated no pathological behavior
       <td>0</td>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>500</th>
       <td>1</td>
-      <td>0</td>
-      <td>0</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>0</td>
+      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
@@ -1852,10 +1857,10 @@ E-BFMI indicated no pathological behavior
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
       <td>1</td>
-      <td>0</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
@@ -1908,23 +1913,23 @@ E-BFMI indicated no pathological behavior
   <tbody>
     <tr>
       <th>1</th>
-      <td>0.805693</td>
+      <td>0.793162</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.804301</td>
+      <td>0.798886</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.789759</td>
+      <td>0.796101</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.802754</td>
+      <td>0.796411</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.803218</td>
+      <td>0.795173</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1932,23 +1937,23 @@ E-BFMI indicated no pathological behavior
     </tr>
     <tr>
       <th>496</th>
-      <td>0.797184</td>
+      <td>0.799041</td>
     </tr>
     <tr>
       <th>497</th>
-      <td>0.790068</td>
+      <td>0.802599</td>
     </tr>
     <tr>
       <th>498</th>
-      <td>0.803991</td>
+      <td>0.803837</td>
     </tr>
     <tr>
       <th>499</th>
-      <td>0.800124</td>
+      <td>0.797494</td>
     </tr>
     <tr>
       <th>500</th>
-      <td>0.793936</td>
+      <td>0.799350</td>
     </tr>
   </tbody>
 </table>
@@ -1984,7 +1989,7 @@ E-BFMI indicated no pathological behavior
 <div class="section" id="Grouped">
 <h3>Grouped<a class="headerlink" href="#Grouped" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1993,7 +1998,7 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -2008,7 +2013,7 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -2017,7 +2022,7 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -2058,23 +2063,23 @@ E-BFMI indicated no pathological behavior
       <th rowspan="5" valign="top">1</th>
       <th rowspan="5" valign="top">AB</th>
       <th>1</th>
-      <td>0.555556</td>
+      <td>0.619048</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.555556</td>
+      <td>0.587302</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.603175</td>
+      <td>0.523810</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.507937</td>
+      <td>0.523810</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.507937</td>
+      <td>0.523810</td>
     </tr>
     <tr>
       <th>...</th>
@@ -2088,23 +2093,23 @@ E-BFMI indicated no pathological behavior
       <th rowspan="5" valign="top">8</th>
       <th rowspan="5" valign="top">CD</th>
       <th>496</th>
-      <td>0.777778</td>
-    </tr>
-    <tr>
-      <th>497</th>
-      <td>0.722222</td>
-    </tr>
-    <tr>
-      <th>498</th>
       <td>0.833333</td>
     </tr>
     <tr>
+      <th>497</th>
+      <td>0.703704</td>
+    </tr>
+    <tr>
+      <th>498</th>
+      <td>0.685185</td>
+    </tr>
+    <tr>
       <th>499</th>
-      <td>0.722222</td>
+      <td>0.740741</td>
     </tr>
     <tr>
       <th>500</th>
-      <td>0.777778</td>
+      <td>0.814815</td>
     </tr>
   </tbody>
 </table>
@@ -2112,7 +2117,7 @@ E-BFMI indicated no pathological behavior
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>

@@ -2,7 +2,7 @@
  "cells": [
   {
    "cell_type": "markdown",
-   "id": "aggressive-teens",
+   "id": "considered-modification",
    "metadata": {},
    "source": [
     "# How to initialize a model"
@@ -10,7 +10,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "governmental-newman",
+   "id": "attempted-favorite",
    "metadata": {},
    "source": [
     "To initialize a model, you can use one of the following model classes:\n",
@@ -28,20 +28,20 @@
   },
   {
    "cell_type": "markdown",
-   "id": "recognized-lawsuit",
+   "id": "bacterial-justice",
    "metadata": {},
    "source": [
     "All these classes have 1 non-default argument: `hierarchical_levels`. This should be set to 1 for model fits on individual data, and 2 for model fits on group data.\n",
     "\n",
     "Additional arguments can be specified in order to \"turn on and off\" different model mechanisms that are implemented.\n",
     "\n",
-    "For example, let's say I want to specify a **DDM for 1 subject**:"
+    "For example, let's say I want to specify a **RLDDM for 1 subject**:"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 1,
-   "id": "bulgarian-canyon",
+   "id": "russian-syndrome",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -51,7 +51,7 @@
   {
    "cell_type": "code",
    "execution_count": 2,
-   "id": "tutorial-tracy",
+   "id": "sporting-journal",
    "metadata": {},
    "outputs": [
     {
@@ -63,19 +63,30 @@
     }
    ],
    "source": [
-    "model = rlssm.DDModel(hierarchical_levels=1)"
+    "model = rlssm.RLDDModel(hierarchical_levels=1)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "marine-location",
+   "metadata": {},
+   "source": [
+    "After initialization, you can inspect the model's default priors. You can change these when you fit the model."
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 3,
-   "id": "certain-houston",
+   "id": "rocky-opera",
    "metadata": {},
    "outputs": [
     {
      "data": {
       "text/plain": [
-       "'DDM'"
+       "{'alpha_priors': {'mu': 0, 'sd': 1},\n",
+       " 'drift_scaling_priors': {'mu': 1, 'sd': 50},\n",
+       " 'threshold_priors': {'mu': 1, 'sd': 5},\n",
+       " 'ndt_priors': {'mu': 1, 'sd': 1}}"
       ]
      },
      "execution_count": 3,
@@ -84,12 +95,12 @@
     }
    ],
    "source": [
-    "model.model_label # check model label"
+    "model.priors"
    ]
   },
   {
    "cell_type": "markdown",
-   "id": "whole-lexington",
+   "id": "previous-adjustment",
    "metadata": {},
    "source": [
     "Note that, if this is the first time that you initialize this type of model, it's going to take some time to compile it. Otherwise, the cashed model will be automatically loaded.\n",
@@ -100,7 +111,7 @@
   {
    "cell_type": "code",
    "execution_count": 4,
-   "id": "forty-hydrogen",
+   "id": "quick-thinking",
    "metadata": {},
    "outputs": [
     {
@@ -120,13 +131,18 @@
   {
    "cell_type": "code",
    "execution_count": 5,
-   "id": "adaptive-embassy",
+   "id": "blind-objective",
    "metadata": {},
    "outputs": [
     {
      "data": {
       "text/plain": [
-       "'DDM_driftvar_spvar'"
+       "{'threshold_priors': {'mu': 0, 'sd': 5},\n",
+       " 'ndt_priors': {'mu': 0, 'sd': 5},\n",
+       " 'drift_trialmu_priors': {'mu': 1, 'sd': 5},\n",
+       " 'drift_trialsd_priors': {'mu': 0, 'sd': 5},\n",
+       " 'rel_sp_trialmu_priors': {'mu': 0, 'sd': 0.8},\n",
+       " 'rel_sp_trialsd_priors': {'mu': 0, 'sd': 0.5}}"
       ]
      },
      "execution_count": 5,
@@ -135,21 +151,21 @@
     }
    ],
    "source": [
-    "model_complex.model_label # check model label"
+    "model_complex.priors"
    ]
   },
   {
    "cell_type": "markdown",
-   "id": "excellent-tender",
+   "id": "swiss-windows",
    "metadata": {},
    "source": [
-    "You can check what are the possible mechanisms for each class in the API reference guide, or by typing:"
+    "You can check what are the possible mechanisms for each class in the [API reference](https://rlssm.readthedocs.io/en/latest/models/model_classes.html) guide, or by typing:"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 6,
-   "id": "ordinary-controversy",
+   "id": "metropolitan-married",
    "metadata": {},
    "outputs": [
     {
