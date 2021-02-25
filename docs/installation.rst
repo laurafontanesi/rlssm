@@ -21,7 +21,7 @@ If you have Andaconda or miniconda installed and you would like to create a sepa
 
 	conda create --n stanenv python=3 pandas scipy seaborn pystan=2.19
 	conda activate stanenv
-	python setup.py install
+	pip install rlssm
 
 Check if the compiler is working::
 
@@ -46,7 +46,7 @@ Copy the two clangs and modify the following::
 Install pystan and rlssm and test again whether the compiler works::
 
 	conda install -c conda-forge pystan=2.19
-	python setup.py install
+	pip install rlssm
 	python tests/test_compiler.py
 
 If you are experiencing other issues with the compiler, check the `pystan documentation`_.

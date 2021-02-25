@@ -223,7 +223,7 @@
 <p>If you have Andaconda or miniconda installed and you would like to create a separate environment for the rlssm package, do the following:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">--</span><span class="n">n</span> <span class="n">stanenv</span> <span class="n">python</span><span class="o">=</span><span class="mi">3</span> <span class="n">pandas</span> <span class="n">scipy</span> <span class="n">seaborn</span> <span class="n">pystan</span><span class="o">=</span><span class="mf">2.19</span>
 <span class="n">conda</span> <span class="n">activate</span> <span class="n">stanenv</span>
-<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">rlssm</span>
 </pre></div>
 </div>
 <p>Check if the compiler is working:</p>
@@ -248,7 +248,7 @@
 </div>
 <p>Install pystan and rlssm and test again whether the compiler works:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">pystan</span><span class="o">=</span><span class="mf">2.19</span>
-<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">rlssm</span>
 <span class="n">python</span> <span class="n">tests</span><span class="o">/</span><span class="n">test_compiler</span><span class="o">.</span><span class="n">py</span>
 </pre></div>
 </div>
