@@ -1,7 +1,7 @@
 Installation 
 ============
 
-For now, you can simply install the rlssm package using ``python setup.py install``, after downloading or cloning rlssm from `GitHub`_.
+You can install the rlssm package using ``pip install rlssm``, or get it directly from `GitHub`_.
 
 Make sure you have the dependecies installed first.
 
