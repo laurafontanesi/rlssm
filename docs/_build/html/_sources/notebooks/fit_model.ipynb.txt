@@ -2,7 +2,7 @@
  "cells": [
   {
    "cell_type": "markdown",
-   "id": "opening-sapphire",
+   "id": "prepared-local",
    "metadata": {},
    "source": [
     "# How to fit a model"
@@ -10,7 +10,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "reported-hindu",
+   "id": "short-sauce",
    "metadata": {},
    "source": [
     "To fit a model, there are 3 main things to specify:\n",
@@ -33,7 +33,7 @@
   {
    "cell_type": "code",
    "execution_count": 28,
-   "id": "direct-testing",
+   "id": "attempted-kitty",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -42,7 +42,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "breathing-congress",
+   "id": "deadly-option",
    "metadata": {},
    "source": [
     "## Non-learning example (non-hierarchical, simulated data)"
@@ -51,7 +51,7 @@
   {
    "cell_type": "code",
    "execution_count": 2,
-   "id": "employed-guatemala",
+   "id": "economic-recovery",
    "metadata": {},
    "outputs": [
     {
@@ -69,7 +69,7 @@
   {
    "cell_type": "code",
    "execution_count": 3,
-   "id": "further-delight",
+   "id": "classical-sherman",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -84,7 +84,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "overhead-venue",
+   "id": "enormous-sharp",
    "metadata": {},
    "source": [
     "For the simple, non-hierarchical DDM, it is only necessary to have `rt` and `accuracy` columns:\n",
@@ -97,7 +97,7 @@
   {
    "cell_type": "code",
    "execution_count": 4,
-   "id": "immediate-harvey",
+   "id": "approximate-retro",
    "metadata": {},
    "outputs": [
     {
@@ -213,7 +213,7 @@
   {
    "cell_type": "code",
    "execution_count": 8,
-   "id": "cordless-wagon",
+   "id": "neural-vanilla",
    "metadata": {},
    "outputs": [
     {
@@ -261,7 +261,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "liquid-johns",
+   "id": "closing-hours",
    "metadata": {},
    "source": [
     "## Learning example (hierarchical, real data)"
@@ -270,7 +270,7 @@
   {
    "cell_type": "code",
    "execution_count": 21,
-   "id": "occasional-arlington",
+   "id": "worst-asbestos",
    "metadata": {},
    "outputs": [
     {
@@ -288,7 +288,7 @@
   {
    "cell_type": "code",
    "execution_count": 6,
-   "id": "finished-lobby",
+   "id": "exterior-lighter",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -302,7 +302,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "loaded-longer",
+   "id": "single-collar",
    "metadata": {},
    "source": [
     "Since this learning model is only fit on choices, `rt` are not required.\n",
@@ -335,7 +335,7 @@
   {
    "cell_type": "code",
    "execution_count": 7,
-   "id": "interesting-roller",
+   "id": "major-television",
    "metadata": {},
    "outputs": [
     {
@@ -469,7 +469,7 @@
   {
    "cell_type": "code",
    "execution_count": 9,
-   "id": "sharing-meditation",
+   "id": "further-appraisal",
    "metadata": {},
    "outputs": [
     {
@@ -507,7 +507,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "offshore-cover",
+   "id": "assigned-enhancement",
    "metadata": {},
    "source": [
     "## Diagnostics"
@@ -515,10 +515,10 @@
   },
   {
    "cell_type": "markdown",
-   "id": "fitted-trial",
+   "id": "advised-inspiration",
    "metadata": {},
    "source": [
-    "As you can see, the MCMC diagnostics are already printed by default (if you do not want this, you can set `print_diagnostics` to `False`). I refer to https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html for an excellent explanations of what these diagnostics actually mean and how to assess them.\n",
+    "As you can see, the MCMC diagnostics are already printed by default (if you do not want this, you can set `print_diagnostics` to `False`). I refer to https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html for an excellent explanation of what these diagnostics actually mean and how to assess them.\n",
     "\n",
     "On top of these, you can also check the convergence of the chains and the WAIC:"
    ]
@@ -526,7 +526,7 @@
   {
    "cell_type": "code",
    "execution_count": 10,
-   "id": "advised-medium",
+   "id": "meaning-hardwood",
    "metadata": {},
    "outputs": [
     {
@@ -593,7 +593,7 @@
   {
    "cell_type": "code",
    "execution_count": 11,
-   "id": "loving-anthony",
+   "id": "latin-closing",
    "metadata": {},
    "outputs": [
     {
@@ -681,7 +681,7 @@
   {
    "cell_type": "code",
    "execution_count": 12,
-   "id": "involved-captain",
+   "id": "entire-digit",
    "metadata": {},
    "outputs": [
     {
@@ -705,7 +705,7 @@
   {
    "cell_type": "code",
    "execution_count": 13,
-   "id": "civil-heath",
+   "id": "advised-phenomenon",
    "metadata": {},
    "outputs": [
     {
@@ -728,7 +728,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "prerequisite-shift",
+   "id": "metropolitan-prince",
    "metadata": {},
    "source": [
     "If you want to also see the point-wise WAIC, you can set `pointwise_waic` to `True`."
@@ -736,7 +736,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "behind-hopkins",
+   "id": "conceptual-count",
    "metadata": {},
    "source": [
     "## Save the results"
@@ -744,7 +744,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "stuck-satin",
+   "id": "communist-scotland",
    "metadata": {},
    "source": [
     "By default, the model fit results are saved in the same folder, using the `model_label` as filename. you can specify a different location using the `filename` argument."
@@ -753,7 +753,7 @@
   {
    "cell_type": "code",
    "execution_count": 14,
-   "id": "overhead-workstation",
+   "id": "direct-exercise",
    "metadata": {},
    "outputs": [
     {
@@ -771,7 +771,7 @@
   {
    "cell_type": "code",
    "execution_count": 15,
-   "id": "addressed-official",
+   "id": "adequate-murray",
    "metadata": {},
    "outputs": [
     {
@@ -788,7 +788,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "integrated-suicide",
+   "id": "existing-friendship",
    "metadata": {},
    "source": [
     "## Re-load previously saved results"
@@ -797,7 +797,7 @@
   {
    "cell_type": "code",
    "execution_count": 16,
-   "id": "likely-metabolism",
+   "id": "framed-lemon",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -807,7 +807,7 @@
   {
    "cell_type": "code",
    "execution_count": 17,
-   "id": "historic-making",
+   "id": "pending-herald",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -816,7 +816,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "usual-effect",
+   "id": "corresponding-intensity",
    "metadata": {},
    "source": [
     "The data the model was fit on are stored in `data_info`:"
@@ -825,7 +825,7 @@
   {
    "cell_type": "code",
    "execution_count": 25,
-   "id": "agricultural-enhancement",
+   "id": "proper-piece",
    "metadata": {},
    "outputs": [
     {
@@ -1063,16 +1063,16 @@
   },
   {
    "cell_type": "markdown",
-   "id": "close-transaction",
+   "id": "stock-beach",
    "metadata": {},
    "source": [
-    "The priors in `priors`:"
+    "The priors are stored in `priors`:"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 22,
-   "id": "intended-split",
+   "id": "continuous-multimedia",
    "metadata": {},
    "outputs": [
     {
@@ -1095,7 +1095,7 @@
   {
    "cell_type": "code",
    "execution_count": 23,
-   "id": "elegant-words",
+   "id": "aboriginal-highland",
    "metadata": {},
    "outputs": [
     {
@@ -1116,7 +1116,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "material-makeup",
+   "id": "secret-specification",
    "metadata": {},
    "source": [
     "And different parameter information are stored in `parameter_info`:"
@@ -1125,7 +1125,7 @@
   {
    "cell_type": "code",
    "execution_count": 24,
-   "id": "engaged-found",
+   "id": "complimentary-teddy",
    "metadata": {},
    "outputs": [
     {
@@ -1147,6 +1147,38 @@
    ],
    "source": [
     "model_fit_ddm.parameters_info"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 30,
+   "id": "fewer-highway",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "{'lppd': -2632.867582843026,\n",
+       " 'p_waic': 52.7245071254338,\n",
+       " 'waic': 5371.1841799369195,\n",
+       " 'waic_se': 93.96972430397454}"
+      ]
+     },
+     "execution_count": 30,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "model_fit_rl.waic"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "atmospheric-electric",
+   "metadata": {},
+   "source": [
+    "And, of course, you can inspect the model's posteriors, see [How to inspect a model](https://rlssm.readthedocs.io/en/latest/notebooks/inspect_model.html) for more details on this."
    ]
   }
  ],

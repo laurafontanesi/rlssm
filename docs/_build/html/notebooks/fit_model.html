@@ -872,7 +872,7 @@ To run all diagnostics call pystan.check_hmc_diagnostics(fit)
 </div>
 <div class="section" id="Diagnostics">
 <h2>Diagnostics<a class="headerlink" href="#Diagnostics" title="Permalink to this headline">¶</a></h2>
-<p>As you can see, the MCMC diagnostics are already printed by default (if you do not want this, you can set <code class="docutils literal notranslate"><span class="pre">print_diagnostics</span></code> to <code class="docutils literal notranslate"><span class="pre">False</span></code>). I refer to <a class="reference external" href="https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html">https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html</a> for an excellent explanations of what these diagnostics actually mean and how to assess them.</p>
+<p>As you can see, the MCMC diagnostics are already printed by default (if you do not want this, you can set <code class="docutils literal notranslate"><span class="pre">print_diagnostics</span></code> to <code class="docutils literal notranslate"><span class="pre">False</span></code>). I refer to <a class="reference external" href="https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html">https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html</a> for an excellent explanation of what these diagnostics actually mean and how to assess them.</p>
 <p>On top of these, you can also check the convergence of the chains and the WAIC:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
@@ -1310,7 +1310,7 @@ Saving file as: /Users/laurafontanesi/git/rlssm/docs/notebooks/hierRL_2A.pkl
 <p>6464 rows × 11 columns</p>
 </div></div>
 </div>
-<p>The priors in <code class="docutils literal notranslate"><span class="pre">priors</span></code>:</p>
+<p>The priors are stored in <code class="docutils literal notranslate"><span class="pre">priors</span></code>:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
@@ -1375,6 +1375,28 @@ Saving file as: /Users/laurafontanesi/git/rlssm/docs/notebooks/hierRL_2A.pkl
  &#39;parameters_names_all&#39;: [&#39;drift&#39;, &#39;threshold&#39;, &#39;ndt&#39;]}
 </pre></div></div>
 </div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model_fit_rl</span><span class="o">.</span><span class="n">waic</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;lppd&#39;: -2632.867582843026,
+ &#39;p_waic&#39;: 52.7245071254338,
+ &#39;waic&#39;: 5371.1841799369195,
+ &#39;waic_se&#39;: 93.96972430397454}
+</pre></div></div>
+</div>
+<p>And, of course, you can inspect the model’s posteriors, see <a class="reference external" href="https://rlssm.readthedocs.io/en/latest/notebooks/inspect_model.html">How to inspect a model</a> for more details on this.</p>
 </div>
 </div>
 
