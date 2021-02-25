@@ -19,7 +19,7 @@ The RLDDMs (combinations of RL and DDM, diffusion decision model) are based on t
 
 * Fontanesi, L., Palminteri, S. & Lebreton, M. Cogn Affect Behav Neurosci (2019), `RLDDM paper 2`_
 
-For a more in-depth explanation of the model's cognitive mechanisms and theories, please refer to **INSERT PREPRINT HERE**.
+For a more in-depth explanation of the model's cognitive mechanisms and theories, please refer to https://osf.io/fbpmh/.
 
 .. _manual: https://mc-stan.org/docs/2_19/functions-reference/wiener-first-passage-time-distribution.html
 .. _RDM paper: https://doi.org/10.3758/s13423-020-01719-6
