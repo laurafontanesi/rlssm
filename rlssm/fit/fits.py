@@ -2,15 +2,12 @@ from __future__ import absolute_import, division, print_function
 import os
 import re
 import pickle
-import warnings
 import numpy as np
 import pandas as pd
 import seaborn as sns
-import matplotlib.pyplot as plt
-from rlssm import plotting
-from .utils import list_individual_variables
-from .stan_utility import check_all_diagnostics
-from .random import random_ddm, random_rdm_2A
+from rlssm.plot import plotting
+from rlssm.utility.stan_utility import check_all_diagnostics
+
 
 class FittedModel(object):
     def __init__(self,

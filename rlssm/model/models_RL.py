@@ -1,8 +1,7 @@
 from __future__ import absolute_import, division, print_function
-import numpy as np
 import pandas as pd
 from .models import Model
-from .fits_RL import RLFittedModel_2A
+from rlssm.fit.fits_RL import RLFittedModel_2A
 
 
 class RLModel_2A(Model):

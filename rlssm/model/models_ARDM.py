@@ -1,11 +1,11 @@
 from __future__ import absolute_import, division, print_function
-import numpy as np
 import pandas as pd
 from .models import Model
-from .fits_race import raceFittedModel_2A
+from rlssm.fit.fits_race import raceFittedModel_2A
 
-class LBAModel_2A(Model):
-    """LBAModel_2A allows to specify a linear ballistic accumulator model for 2 alternatives.
+
+class ARDModel_2A(Model):
+    """ARDModel_2A allows to specify a advantage race diffusion model for 2 alternatives.
 
     When initializing the model, you should specify whether the model is hierarchical or not.
 
@@ -14,7 +14,7 @@ class LBAModel_2A(Model):
 
     """
     def __init__(self, hierarchical_levels):
-        """Initialize a LBAModel_2A object.
+        """Initialize a ARDModel_2A object.
 
         Note
         ----
@@ -44,27 +44,29 @@ class LBAModel_2A(Model):
             The compiled stan model.
 
         """
+        super().__init__(hierarchical_levels, "ARDM_2A")
 
-        super().__init__(hierarchical_levels, "LBA_2A")
 
         # Define the model parameters
-        self.n_parameters_individual = 5 # k, A, tau, drift_cor, drift_inc
+        self.n_parameters_individual = 5 # non-decision time, threshold, v0, ws, wd
         self.n_parameters_trial = 0
 
         # Define default priors
         if self.hierarchical_levels == 1:
             self.priors = dict(
-                drift_priors={'mu':1, 'sd':5},
-                k_priors={'mu':1, 'sd':1},
-                A_priors={'mu':0.3, 'sd':1},
-                tau_priors={'mu':0, 'sd':1},
+                threshold_priors={'mu':0, 'sd':5},
+                ndt_priors={'mu':0, 'sd':5},
+                v0_priors={'mu':9, 'sd':2},
+                ws_priors={'mu':0, 'sd':2},
+                wd_priors={'mu':3, 'sd':3}
                 )
         else:
             self.priors = dict(
-                drift_priors={'mu_mu':2, 'sd_mu':3, 'mu_sd':1, 'sd_sd':1},
-                k_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
-                A_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
-                tau_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
+                threshold_priors={'mu_mu':1, 'sd_mu':3, 'mu_sd':0, 'sd_sd':3},
+                ndt_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
+                v0_priors={'mu_mu':9, 'sd_mu':3, 'mu_sd':2, 'sd_sd':1},
+                ws_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':2, 'sd_sd':1},
+                wd_priors={'mu_mu':3, 'sd_mu':1, 'mu_sd':3, 'sd_sd':1}
                 )
 
         # Set up model label and priors for mechanisms
@@ -77,10 +79,11 @@ class LBAModel_2A(Model):
 
     def fit(self,
             data,
-            k_priors=None,
-            A_priors=None,
-            tau_priors=None,
-            drift_priors=None,
+            threshold_priors=None,
+            ndt_priors=None,
+            v0_priors=None,
+            ws_priors=None,
+            wd_priors=None,
             include_rhat=True,
             include_waic=True,
             pointwise_waic=False,
@@ -119,23 +122,28 @@ class LBAModel_2A(Model):
             By default there is no bias, so the starting point is .5.
             Should be between 0 and 1.
 
-        k_priors : dict, optional
-            Priors for the k parameter.
+        threshold_priors : dict, optional
+            Priors for the threshold parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        A_priors : dict, optional
-            Priors for the A parameter.
-            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
-            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
-
-        tau_priors : dict, optional
+        ndt_priors : dict, optional
             Priors for the non decision time parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        drift_priors : dict, optional
-            Priors for the drift-rate parameter.
+        v0_priors : dict, optional
+            Priors for the v0 parameter.
+            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
+
+        ws_priors : dict, optional
+            Priors for the ws parameter.
+            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
+
+        wd_priors : dict, optional
+            Priors for the wd parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
@@ -168,19 +176,23 @@ class LBAModel_2A(Model):
         data['accuracy_rescale'] = 2
         data.loc[data.accuracy == 1, 'accuracy_rescale'] = 1
 
-        # change default priors:
-        if k_priors is not None:
-            self.priors['k_priors'] = k_priors
-        if A_priors is not None:
-            self.priors['A_priors'] = A_priors
-        if tau_priors is not None:
-            self.priors['tau_priors'] = tau_priors
-        if drift_priors is not None:
-            self.priors['drift_priors'] = drift_priors
-
         data_dict = {'N': N,
                      'rt': data['rt'].values,
-                     'accuracy': data['accuracy_rescale'].values.astype(int)}
+                     'accuracy': data['accuracy_rescale'].values.astype(int),
+                     'S_cor': data['S_cor'].values,
+                     'S_inc': data['S_inc'].values}
+
+        # change default priors:
+        if threshold_priors is not None:
+            self.priors['threshold_priors'] = threshold_priors
+        if ndt_priors is not None:
+            self.priors['ndt_priors'] = ndt_priors
+        if v0_priors is not None:
+            self.priors['v0_priors'] = v0_priors
+        if ws_priors is not None:
+            self.priors['ws_priors'] = ws_priors
+        if wd_priors is not None:
+            self.priors['wd_priors'] = wd_priors
 
         if self.hierarchical_levels == 2:
             keys_priors = ["mu_mu", "sd_mu", "mu_sd", "sd_sd"]
@@ -189,6 +201,8 @@ class LBAModel_2A(Model):
                               'participant': data['participant'].values.astype(int)})
         else:
             keys_priors = ["mu", "sd"]
+
+        # Add data for mechanisms:
 
         # Add priors:
         print("Fitting the model using the priors:")
@@ -199,15 +213,15 @@ class LBAModel_2A(Model):
         # start sampling...
         fitted_model = self.compiled_model.sampling(data_dict, **kwargs)
 
-        fitted_model = raceFittedModel_2A(stan_model=fitted_model,
-                                          data=data,
-                                          hierarchical_levels=self.hierarchical_levels,
-                                          model_label=self.model_label,
-                                          family=self.family,
-                                          n_parameters_individual=self.n_parameters_individual,
-                                          n_parameters_trial=self.n_parameters_trial,
-                                          print_diagnostics=print_diagnostics,
-                                          priors=self.priors)
+        fitted_model = raceFittedModel_2A(fitted_model,
+                                                      data,
+                                                      self.hierarchical_levels,
+                                                      self.model_label,
+                                                      self.family,
+                                                      self.n_parameters_individual,
+                                                      self.n_parameters_trial,
+                                                      print_diagnostics,
+                                                      self.priors)
 
         res = fitted_model.extract_results(include_rhat,
                                            include_waic,
@@ -216,9 +230,9 @@ class LBAModel_2A(Model):
 
         return res
 
-class RLLBAModel_2A(Model):
-    """RLLBAModel_2A allows to specify a combination of reinforcement learning
-    and linear ballistic accumulator models.
+class RLARDModel_2A(Model):
+    """RLARDModel_2A allows to specify a combination of reinforcement learning
+    and advantage race diffusion decision models.
 
     When initializing the model, you should specify whether the model is hierarchical or not.
     Additionally, you can specify the mechanisms that you wish to include or exclude.
@@ -227,10 +241,8 @@ class RLLBAModel_2A(Model):
     After initializing the model, it can be fitted to a particular dataset using pystan.
 
     """
-    def __init__(self, hierarchical_levels,
-                 separate_learning_rates=False,
-                 nonlinear_mapping=False):
-        """Initialize a RLLBAModel_2A object.
+    def __init__(self, hierarchical_levels, separate_learning_rates=False):
+        """Initialize a RLARDModel_2A object.
 
         Note
         ----
@@ -247,10 +259,6 @@ class RLLBAModel_2A(Model):
              By default, there is only one learning rate.
              If set to True, separate learning rates are estimated
              for positive and negative prediction errors.
-
-        nonlinear_mapping : bool, default False
-             By default, the mapping between value differences and drift-rate is linear.
-             If set to True, a non-linear mapping function is estimated.
 
         Attributes
         ----------
@@ -270,36 +278,35 @@ class RLLBAModel_2A(Model):
             The compiled stan model.
 
         """
-        super().__init__(hierarchical_levels, "RLLBA_2A")
+        super().__init__(hierarchical_levels, "RLARDM_2A")
 
         self.separate_learning_rates = separate_learning_rates
-        self.nonlinear_mapping = nonlinear_mapping
 
-        self.n_parameters_individual = 5 # k, A, tau, scaling, learning rate
+        self.n_parameters_individual = 6 # non-decision time, threshold, v0, ws, wd, learning rate
         self.n_parameters_trial = 0
 
         # Define default priors
         if self.hierarchical_levels == 1:
             self.priors = dict(
-                k_priors={'mu':1, 'sd':1},
-                A_priors={'mu':0.3, 'sd':1},
-                tau_priors={'mu':0, 'sd':1},
+                threshold_priors={'mu':0, 'sd':5},
+                ndt_priors={'mu':0, 'sd':5},
                 alpha_priors={'mu':0, 'sd':1},
                 alpha_pos_priors={'mu':0, 'sd':1},
                 alpha_neg_priors={'mu':0, 'sd':1},
-                drift_scaling_priors={'mu':0, 'sd':0.5},
-                utility_priors={'mu':0, 'sd':2}
+                v0_priors={'mu':9, 'sd':2},
+                ws_priors={'mu':0, 'sd':2},
+                wd_priors={'mu':3, 'sd':3}
                 )
         else:
             self.priors = dict(
-                k_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
-                A_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
-                tau_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
+                threshold_priors={'mu_mu':1, 'sd_mu':3, 'mu_sd':0, 'sd_sd':3},
+                ndt_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
                 alpha_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1},
                 alpha_pos_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1},
                 alpha_neg_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1},
-                drift_scaling_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
-                utility_priors={'mu_mu':0, 'sd_mu':0.1, 'mu_sd':0, 'sd_sd':2}
+                v0_priors={'mu_mu':9, 'sd_mu':3, 'mu_sd':2, 'sd_sd':1},
+                ws_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':2, 'sd_sd':1},
+                wd_priors={'mu_mu':3, 'sd_mu':1, 'mu_sd':3, 'sd_sd':1}
                 )
 
         # Set up model label and priors for mechanisms
@@ -311,11 +318,6 @@ class RLLBAModel_2A(Model):
             del self.priors['alpha_pos_priors']
             del self.priors['alpha_neg_priors']
 
-        if self.nonlinear_mapping:
-            self.model_label += '_nonlin'
-            self.n_parameters_individual += 1 # utility
-        del self.priors['utility_priors']
-
         # Set the stan model path
         self._set_model_path()
 
@@ -326,12 +328,12 @@ class RLLBAModel_2A(Model):
             data,
             K,
             initial_value_learning,
-            k_priors=None,
-            A_priors=None,
-            tau_priors=None,
-            utility_priors=None,
+            threshold_priors=None,
+            ndt_priors=None,
+            v0_priors=None,
+            ws_priors=None,
+            wd_priors=None,
             alpha_priors=None,
-            drift_scaling_priors=None,
             alpha_pos_priors=None,
             alpha_neg_priors=None,
             include_rhat=True,
@@ -393,34 +395,33 @@ class RLLBAModel_2A(Model):
 
         Other Parameters
         ----------------
+        threshold_priors : dict, optional
+            Priors for the threshold parameter.
+            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
         alpha_priors : dict, optional
             Priors for the learning rate parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        drift_scaling_priors : dict, optional
-            Priors for the drift scaling parameter.
+        v0_priors : dict, optional
+            Priors for the v0 parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        k_priors : dict, optional
-            Priors for the k parameter.
+        ws_priors : dict, optional
+            Priors for the ws parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        A_priors : dict, optional
-            Priors for the A parameter.
+        wd_priors : dict, optional
+            Priors for the wd parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        tau_priors : dict, optional
-            Priors for the tau parameter.
-            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
-            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
-
-        utility_priors : dict, optional
-            Priors for the utility time parameter.
+        ndt_priors : dict, optional
+            Priors for the non decision time parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
@@ -465,35 +466,35 @@ class RLLBAModel_2A(Model):
         data['accuracy_rescale'] = 2
         data.loc[data.accuracy == 1, 'accuracy_rescale'] = 1
 
+        data_dict = {'N': N,
+                         'K': K,
+                         'trial_block': data['trial_block'].values.astype(int),
+                         'f_cor': data['f_cor'].values,
+                         'f_inc': data['f_inc'].values,
+                         'cor_option': data['cor_option'].values.astype(int),
+                         'inc_option': data['inc_option'].values.astype(int),
+                         'block_label': data['block_label'].values.astype(int),
+                         'rt': data['rt'].values,
+                         'accuracy': data['accuracy_rescale'].values.astype(int),
+                         'initial_value': initial_value_learning}
+
         # change default priors:
-        if k_priors is not None:
-            self.priors['k_priors'] = k_priors
-        if A_priors is not None:
-            self.priors['A_priors'] = A_priors
-        if tau_priors is not None:
-            self.priors['tau_priors'] = tau_priors
-        if drift_scaling_priors is not None:
-            self.priors['drift_scaling_priors'] = drift_scaling_priors
-        if utility_priors is not None:
-            self.priors['utility_priors'] = utility_priors
+        if threshold_priors is not None:
+            self.priors['threshold_priors'] = threshold_priors
+        if ndt_priors is not None:
+            self.priors['ndt_priors'] = ndt_priors
+        if v0_priors is not None:
+            self.priors['v0_priors'] = v0_priors
+        if ws_priors is not None:
+            self.priors['ws_priors'] = ws_priors
+        if wd_priors is not None:
+            self.priors['wd_priors'] = wd_priors
         if alpha_priors is not None:
             self.priors['alpha_priors'] = alpha_priors
         if alpha_pos_priors is not None:
             self.priors['alpha_pos_priors'] = alpha_pos_priors
         if alpha_neg_priors is not None:
             self.priors['alpha_neg_priors'] = alpha_neg_priors
-
-        data_dict = {'N': N,
-                     'K': K,
-                     'trial_block': data['trial_block'].values.astype(int),
-                     'f_cor': data['f_cor'].values,
-                     'f_inc': data['f_inc'].values,
-                     'cor_option': data['cor_option'].values.astype(int),
-                     'inc_option': data['inc_option'].values.astype(int),
-                     'block_label': data['block_label'].values.astype(int),
-                     'rt': data['rt'].values,
-                     'accuracy': data['accuracy_rescale'].values.astype(int),
-                     'initial_value': initial_value_learning}
 
         if self.hierarchical_levels == 2:
             keys_priors = ["mu_mu", "sd_mu", "mu_sd", "sd_sd"]
@@ -514,15 +515,15 @@ class RLLBAModel_2A(Model):
         # start sampling...
         fitted_model = self.compiled_model.sampling(data_dict, **kwargs)
 
-        fitted_model = raceFittedModel_2A(stan_model=fitted_model,
-                                          data=data,
-                                          hierarchical_levels=self.hierarchical_levels,
-                                          model_label=self.model_label,
-                                          family=self.family,
-                                          n_parameters_individual=self.n_parameters_individual,
-                                          n_parameters_trial=self.n_parameters_trial,
-                                          print_diagnostics=print_diagnostics,
-                                          priors=self.priors)
+        fitted_model = raceFittedModel_2A(fitted_model,
+                                      data,
+                                      self.hierarchical_levels,
+                                      self.model_label,
+                                      self.family,
+                                      self.n_parameters_individual,
+                                      self.n_parameters_trial,
+                                      print_diagnostics,
+                                      self.priors)
 
         res = fitted_model.extract_results(include_rhat,
                                            include_waic,

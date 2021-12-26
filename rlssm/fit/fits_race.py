@@ -1,16 +1,12 @@
 from __future__ import absolute_import, division, print_function
-import os
-import re
-import pickle
 import warnings
 import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-from rlssm import plotting
-from .utils import list_individual_variables
-from .stan_utility import check_all_diagnostics
-from .random import random_rdm_2A, random_rdm_nA, random_lba_2A
+from ..plot import plotting
+from rlssm.utility.utils import list_individual_variables
+from rlssm.random.random import random_rdm_2A, random_lba_2A
 from .fits import FittedModel, ModelResults
 
 class raceFittedModel_2A(FittedModel):

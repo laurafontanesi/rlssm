@@ -1,7 +1,7 @@
 # Reinforcement learning data
 import pandas as pd
 
-from rlssm.random import simulate_hier_rlddm_2A, generate_task_design_fontanesi
+from rlssm.random.random import simulate_hier_rlddm_2A, generate_task_design_fontanesi
 
 dm = generate_task_design_fontanesi(n_trials_block=80,
                                     n_blocks=3,

@@ -1,12 +1,9 @@
-import rlssm
 import pandas as pd
-import pandas as pd
-import numpy as np
 
 ## Reinforcement learning data
-from rlssm.random import generate_task_design_fontanesi, simulate_rl_2A, simulate_hier_rl_2A
-from rlssm.random import simulate_rlddm_2A, simulate_hier_rlddm_2A
-from rlssm.random import simulate_rlrdm_2A
+from rlssm.random.random import generate_task_design_fontanesi, simulate_rl_2A, simulate_hier_rl_2A
+from rlssm.random.random import simulate_rlddm_2A, simulate_hier_rlddm_2A
+from rlssm.random.random import simulate_rlrdm_2A
 
 ## NON HIER DATA, 2 alternatives
 dm = generate_task_design_fontanesi(n_trials_block=80,
@@ -117,7 +114,7 @@ print(pd.unique(data.alpha_pos))
 print(pd.unique(data.alpha_neg))
 
 ## Sequential sampling models data
-from rlssm.random import simulate_ddm, simulate_hier_ddm
+from rlssm.random.random import simulate_ddm, simulate_hier_ddm
 
 ## NON HIER DATA, 2 alternatives
 data = simulate_ddm(

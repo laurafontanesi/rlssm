@@ -1,8 +1,7 @@
 from __future__ import absolute_import, division, print_function
 import os
 import numpy as np
-import pandas as pd
-from .stan_utility import compile_model
+from rlssm.utility.stan_utility import compile_model
 
 __dir__ = os.path.abspath(os.path.dirname(__file__))
 
@@ -45,7 +44,7 @@ class Model(object):
         """Sets the stan model path.
 
         """
-        stan_model_path = os.path.join(__dir__, 'stan_models', '{}.stan'.format(self.model_label))
+        stan_model_path = os.path.join(__dir__, '../stan_models', '{}.stan'.format(self.model_label))
         #stan_model_path = os.path.join(rlddm.__path__[0], 'stan_models', '{}.stan'.format(self.model_label))
         if not os.path.exists(stan_model_path):
             raise ValueError("Model {}, in {}, has not been implemented yet.".format(self.model_label, __dir__))

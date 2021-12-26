@@ -1,15 +1,9 @@
 from __future__ import absolute_import, division, print_function
-import os
-import re
-import pickle
 import warnings
 import numpy as np
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-from rlssm import plotting
-from .utils import list_individual_variables
-from .stan_utility import check_all_diagnostics
+from ..plot import plotting
+from rlssm.utility.utils import list_individual_variables
 from .fits import FittedModel, ModelResults
 
 class RLFittedModel_2A(FittedModel):

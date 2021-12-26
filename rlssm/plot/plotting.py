@@ -2,7 +2,7 @@ import seaborn as sns
 from scipy.stats import gaussian_kde
 import matplotlib.pyplot as plt
 import numpy as np
-from .utils import hdi, bci
+from rlssm.utility.utils import hdi, bci
 
 def plot_posterior(x,
                    ax=None,

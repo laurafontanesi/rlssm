@@ -1,7 +1,7 @@
 # Reinforcement learning data
 # HIER DATA, 2 alternatives
 
-from rlssm.random import generate_task_design_fontanesi, simulate_rl_2A
+from rlssm.random.random import generate_task_design_fontanesi, simulate_rl_2A
 
 dm = generate_task_design_fontanesi(n_trials_block=80,
                                     n_blocks=3,
