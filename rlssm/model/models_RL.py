@@ -1,6 +1,7 @@
 from __future__ import absolute_import, division, print_function
 import pandas as pd
-from .models import Model
+
+from rlssm.model.models import Model
 from rlssm.fit.fits_RL import RLFittedModel_2A
 
 

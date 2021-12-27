@@ -5,6 +5,7 @@ import pickle
 import numpy as np
 import pandas as pd
 import seaborn as sns
+
 from rlssm.plot import plotting
 from rlssm.utility.stan_utility import check_all_diagnostics
 

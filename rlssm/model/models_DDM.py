@@ -1,7 +1,7 @@
 from __future__ import absolute_import, division, print_function
 import pandas as pd
 
-from rlssm import Model
+from rlssm.model.models import Model
 from rlssm.fit.fits_DDM import DDMFittedModel
 
 

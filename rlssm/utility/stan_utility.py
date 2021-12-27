@@ -1,12 +1,14 @@
 # Code mostly taken from M. Betancourt and can be retrieved at
 # https://github.com/betanalpha/jupyter_case_studies/blob/master/principled_bayesian_workflow/stan_utility.py
-
+import os.path
 import pickle
 from math import isnan
 from math import isinf
 from hashlib import md5
 import pystan
 import numpy
+
+__dir__ = os.path.abspath(os.path.dirname(__file__))
 
 
 def check_div(fit):
@@ -224,16 +226,19 @@ def compile_model(filename, model_name=None):
     with open(filename) as f:
         model_code = f.read()
         code_hash = md5(model_code.encode('ascii')).hexdigest()
+        path_pkl_fldr = os.path.join(os.path.dirname(os.path.dirname(__dir__)), "pkl_files")
+        if not os.path.exists(path_pkl_fldr):
+            os.makedirs(path_pkl_fldr)
         if model_name is None:
-            cache_fn = 'cached-model-{}.pkl'.format(code_hash)
+            cache_fn = os.path.join(path_pkl_fldr, f"cached-model-{code_hash}.pkl")
         else:
-            cache_fn = 'cached-{}-{}.pkl'.format(model_name, code_hash)
+            cache_fn = os.path.join(path_pkl_fldr, f"cached-{model_name}-{code_hash}.pkl")
         try:
             sm = pickle.load(open(cache_fn, 'rb'))
         except:
             sm = pystan.StanModel(model_code=model_code)
-            with open(cache_fn, 'wb') as f:
-                pickle.dump(sm, f)
+            with open(cache_fn, 'wb') as f1:
+                pickle.dump(sm, f1)
         else:
             print("Using cached StanModel")
         return sm

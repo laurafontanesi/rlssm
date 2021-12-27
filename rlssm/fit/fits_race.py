@@ -4,11 +4,12 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-from ..plot import plotting
+
+from rlssm.fit.fits import FittedModel, ModelResults
+from rlssm.plot import plotting
+from rlssm.random.random_LBA import random_lba_2A
+from rlssm.random.random_RDM import random_rdm_2A
 from rlssm.utility.utils import list_individual_variables
-from .fits import FittedModel, ModelResults
-from ..random.random_LBA import random_lba_2A
-from ..random.random_RDM import random_rdm_2A
 
 
 class raceFittedModel_2A(FittedModel):

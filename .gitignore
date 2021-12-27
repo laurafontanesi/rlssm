@@ -6,5 +6,7 @@ dist/
 build/
 
 # pystan cashed models
+/pkl_files
 cached*.pkl
 *.pkl
+/tests/andrei_tests.py

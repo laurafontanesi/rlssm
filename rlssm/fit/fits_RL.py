@@ -2,9 +2,10 @@ from __future__ import absolute_import, division, print_function
 import warnings
 import numpy as np
 import pandas as pd
-from ..plot import plotting
+
+from rlssm.fit.fits import FittedModel, ModelResults
+from rlssm.plot import plotting
 from rlssm.utility.utils import list_individual_variables
-from .fits import FittedModel, ModelResults
 
 
 class RLFittedModel_2A(FittedModel):

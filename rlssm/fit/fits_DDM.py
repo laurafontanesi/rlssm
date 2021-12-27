@@ -4,10 +4,11 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-from ..plot import plotting
+
+from rlssm.fit.fits import FittedModel, ModelResults
+from rlssm.random.random_DDM import random_ddm
 from rlssm.utility.utils import list_individual_variables
-from .fits import FittedModel, ModelResults
-from ..random.random_DDM import random_ddm
+from rlssm.plot import plotting
 
 
 class DDMFittedModel(FittedModel):
