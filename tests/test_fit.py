@@ -1,6 +1,7 @@
-import rlssm
 import pandas as pd
 import os
+
+from rlssm import DDModel
 
 data_path = os.path.join(os.getcwd(), os.pardir, 'data', 'data_experiment.csv')
 data = pd.read_csv(data_path, index_col=0)
@@ -11,7 +12,7 @@ data['block_label'] += 1
 
 print(data)
 
-model = rlssm.DDModel(hierarchical_levels=1)
+model = DDModel(hierarchical_levels=1)
 
 # sampling parameters
 n_iter = 1000

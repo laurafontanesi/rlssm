@@ -1,6 +1,7 @@
 # Reinforcement learning data
 # NON HIER DATA, 2 alternatives
-from rlssm.random.random import simulate_rlrdm_2A, generate_task_design_fontanesi
+from rlssm.random.random_RL_RDM import simulate_rlrdm_2A
+from rlssm.random.random_common import generate_task_design_fontanesi
 
 dm = generate_task_design_fontanesi(n_trials_block=80,
                                     n_blocks=3,
@@ -16,5 +17,5 @@ data = simulate_rlrdm_2A(task_design=dm,
                          gen_ndt=.23,
                          initial_value_learning=0)
 
-print("RL + RDM for non hier data; simulate_rlrdm_2A works")
+print("RL_2A + RDM_2A for non hier data; simulate_rlrdm_2A works")
 print(data)

@@ -20,10 +20,10 @@
     "# load non-hierarchical DDM fit:\n",
     "model_fit_ddm = rlssm.load_model_results('/Users/laurafontanesi/git/rlssm/docs/notebooks/DDM.pkl')\n",
     "\n",
-    "# load non-hierarchical LBA fit:\n",
+    "# load non-hierarchical LBA_2A fit:\n",
     "model_fit_lba = rlssm.load_model_results('/Users/laurafontanesi/git/rlssm/docs/notebooks/LBA_2A.pkl')\n",
     "\n",
-    "# load hierarchical RL fit:\n",
+    "# load hierarchical RL_2A fit:\n",
     "model_fit_rl = rlssm.load_model_results('/Users/laurafontanesi/git/rlssm/docs/notebooks/hierRL_2A.pkl')"
    ]
   },
@@ -650,7 +650,7 @@
     }
    ],
    "source": [
-    "model_fit_lba.trial_samples.keys() # for the LBA"
+    "model_fit_lba.trial_samples.keys() # for the LBA_2A"
    ]
   },
   {

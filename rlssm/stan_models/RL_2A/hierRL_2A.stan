@@ -10,7 +10,7 @@ data {
 	int<lower=1, upper=K> inc_option[N];			// incorrect option
 	int<lower=1> block_label[N];					// block label
 	int<lower=-1,upper=1> accuracy[N];				// accuracy (0, 1)
-	real initial_value;								// intial value for learning in the first block
+	real initial_value;								// initial value for learning in the first block
 	vector[4] alpha_priors;							// mean and sd of the mu_alpha prior and sd_alpha prior
 	vector[4] sensitivity_priors;					// mean and sd of the mu_sensitivity prior and sd_sensitivity prior
 }

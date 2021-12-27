@@ -8,6 +8,7 @@ from hashlib import md5
 import pystan
 import numpy
 
+
 def check_div(fit):
     """Check transitions that ended with a divergence.
 
@@ -25,6 +26,7 @@ def check_div(fit):
     print('{} of {} iterations ended with a divergence ({}%)'.format(n, N, 100 * n / N))
     if n > 0:
         print('  Try running with larger adapt_delta to remove the divergences')
+
 
 def check_treedepth(fit, max_depth=10):
     """Check transitions that ended prematurely due to maximum tree depth limit.
@@ -48,6 +50,7 @@ def check_treedepth(fit, max_depth=10):
     if n > 0:
         print('Run again with max_depth set to a larger value to avoid saturation')
 
+
 def check_energy(fit):
     """Checks the energy Bayesian fraction of missing information (E-BFMI).
 
@@ -62,7 +65,7 @@ def check_energy(fit):
     no_warning = True
     for chain_num, s in enumerate(sampler_params):
         energies = s['energy__']
-        numer = sum((energies[i] - energies[i - 1])**2 for i in range(1, len(energies))) / len(energies)
+        numer = sum((energies[i] - energies[i - 1]) ** 2 for i in range(1, len(energies))) / len(energies)
         denom = numpy.var(energies)
         if numer / denom < 0.2:
             print('Chain {}: E-BFMI = {}'.format(chain_num, numer / denom))
@@ -71,6 +74,7 @@ def check_energy(fit):
         print('E-BFMI indicated no pathological behavior')
     else:
         print('  E-BFMI below 0.2 indicates you may need to reparameterize your model')
+
 
 def check_n_eff(fit):
     """Checks the effective sample size per iteration.
@@ -99,6 +103,7 @@ def check_n_eff(fit):
     else:
         print('n_eff / iter below 0.001 indicates that the effective sample size has likely been overestimated')
 
+
 def check_rhat(fit):
     """Checks the potential scale reduction factors.
 
@@ -123,6 +128,7 @@ def check_rhat(fit):
     else:
         print('Rhat above 1.01 indicates that the chains very likely have not mixed')
 
+
 def check_all_diagnostics(fit):
     """Checks all MCMC diagnostics, apart from rhat convergence.
 
@@ -139,6 +145,7 @@ def check_all_diagnostics(fit):
     check_treedepth(fit)
     check_energy(fit)
 
+
 def _by_chain(unpermuted_extraction):
     num_chains = len(unpermuted_extraction[0])
     result = [[] for _ in range(num_chains)]
@@ -147,12 +154,13 @@ def _by_chain(unpermuted_extraction):
             result[c].append(unpermuted_extraction[i][c])
     return numpy.array(result)
 
+
 def _shaped_ordered_params(fit):
     # flattened, unpermuted, by (iteration, chain)
     ef = fit.extract(permuted=False, inc_warmup=False)
     ef = _by_chain(ef)
     ef = ef.reshape(-1, len(ef[0][0]))
-    ef = ef[:, 0:len(fit.flatnames)] # drop lp__
+    ef = ef[:, 0:len(fit.flatnames)]  # drop lp__
     shaped = {}
     idx = 0
     for dim, param_name in zip(fit.par_dims, fit.extract().keys()):
@@ -161,6 +169,7 @@ def _shaped_ordered_params(fit):
         shaped[param_name].reshape(*([-1] + dim))
         idx += length
     return shaped
+
 
 def partition_div(fit):
     """Returns parameter arrays separated into divergent and non-divergent transitions.
@@ -187,6 +196,7 @@ def partition_div(fit):
     nondiv_params = dict((key, params[key][div == 0]) for key in params)
     div_params = dict((key, params[key][div == 1]) for key in params)
     return nondiv_params, div_params
+
 
 def compile_model(filename, model_name=None):
     """This will automatically cache models -

@@ -1,6 +1,7 @@
 from __future__ import absolute_import, division, print_function
 import pandas as pd
-from .models import Model
+
+from rlssm import Model
 from rlssm.fit.fits_DDM import DDMFittedModel
 
 
@@ -14,6 +15,7 @@ class DDModel(Model):
     After initializing the model, it can be fitted to a particular dataset using pystan.
 
     """
+
     def __init__(self,
                  hierarchical_levels,
                  starting_point_bias=False,
@@ -97,34 +99,34 @@ class DDModel(Model):
         # Define default priors
         if self.hierarchical_levels == 1:
             self.priors = dict(
-                drift_priors={'mu':1, 'sd':5},
-                threshold_priors={'mu':0, 'sd':5},
-                ndt_priors={'mu':0, 'sd':5},
-                rel_sp_priors={'mu':0, 'sd':.8},
-                drift_trialmu_priors={'mu':1, 'sd':5},
-                drift_trialsd_priors={'mu':0, 'sd':5},
-                rel_sp_trialmu_priors={'mu':0, 'sd':.8},
-                rel_sp_trialsd_priors={'mu':0, 'sd':.5},
-                beta_trialmu_priors={'mu':0, 'sd':10},
-                beta_trialsd_priors={'mu':0, 'sd':10},
-                regression_coefficients_priors={'mu':0, 'sd':5},
+                drift_priors={'mu': 1, 'sd': 5},
+                threshold_priors={'mu': 0, 'sd': 5},
+                ndt_priors={'mu': 0, 'sd': 5},
+                rel_sp_priors={'mu': 0, 'sd': .8},
+                drift_trialmu_priors={'mu': 1, 'sd': 5},
+                drift_trialsd_priors={'mu': 0, 'sd': 5},
+                rel_sp_trialmu_priors={'mu': 0, 'sd': .8},
+                rel_sp_trialsd_priors={'mu': 0, 'sd': .5},
+                beta_trialmu_priors={'mu': 0, 'sd': 10},
+                beta_trialsd_priors={'mu': 0, 'sd': 10},
+                regression_coefficients_priors={'mu': 0, 'sd': 5},
                 corr_matrix_prior=1
-                )
+            )
         else:
             self.priors = dict(
-                drift_priors={'mu_mu':1, 'sd_mu':5, 'mu_sd':0, 'sd_sd':5},
-                threshold_priors={'mu_mu':1, 'sd_mu':3, 'mu_sd':0, 'sd_sd':3},
-                ndt_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
-                rel_sp_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
-                drift_trialmu_priors={'mu_mu':1, 'sd_mu':5, 'mu_sd':0, 'sd_sd':5},
-                drift_trialsd_priors={'mu':0, 'sd':3},
-                rel_sp_trialmu_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
-                rel_sp_trialsd_priors={'mu':0, 'sd':3},
-                beta_trialmu_priors={'mu':0, 'sd':10},
-                beta_trialsd_priors={'mu':0, 'sd':10},
-                regression_coefficients_priors={'mu':0, 'sd':5},
+                drift_priors={'mu_mu': 1, 'sd_mu': 5, 'mu_sd': 0, 'sd_sd': 5},
+                threshold_priors={'mu_mu': 1, 'sd_mu': 3, 'mu_sd': 0, 'sd_sd': 3},
+                ndt_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                rel_sp_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                drift_trialmu_priors={'mu_mu': 1, 'sd_mu': 5, 'mu_sd': 0, 'sd_sd': 5},
+                drift_trialsd_priors={'mu': 0, 'sd': 3},
+                rel_sp_trialmu_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                rel_sp_trialsd_priors={'mu': 0, 'sd': 3},
+                beta_trialmu_priors={'mu': 0, 'sd': 10},
+                beta_trialsd_priors={'mu': 0, 'sd': 10},
+                regression_coefficients_priors={'mu': 0, 'sd': 5},
                 corr_matrix_prior=1
-                )
+            )
 
         # Set up model label and priors for mechanisms
         if self.starting_point_bias:
@@ -333,12 +335,12 @@ class DDModel(Model):
 
         """
         data.reset_index(inplace=True)
-        N = data.shape[0] # n observations
+        N = data.shape[0]  # n observations
 
         # transform data variables
         data['accuracy_neg'] = -1
         data.loc[data.accuracy == 1, 'accuracy_neg'] = 1
-        data['accuracy_flipped'] = -(data['accuracy']-1)
+        data['accuracy_flipped'] = -(data['accuracy'] - 1)
 
         # change default priors:
         if drift_priors is not None:
@@ -373,8 +375,8 @@ class DDModel(Model):
 
         if self.hierarchical_levels == 2:
             keys_priors = ["mu_mu", "sd_mu", "mu_sd", "sd_sd"]
-            L = len(pd.unique(data.participant)) # n subjects (levels)
-            data_dict.update({'L': L, 
+            L = len(pd.unique(data.participant))  # n subjects (levels)
+            data_dict.update({'L': L,
                               'participant': data['participant'].values.astype(int)})
         else:
             keys_priors = ["mu", "sd"]
@@ -428,6 +430,7 @@ class DDModel(Model):
 
         return res
 
+
 class RLDDModel(Model):
     """RLDDModel allows to specify a combination of reinforcement learning
     and diffusion decision models.
@@ -439,6 +442,7 @@ class RLDDModel(Model):
     After initializing the model, it can be fitted to a particular dataset using pystan.
 
     """
+
     def __init__(self,
                  hierarchical_levels,
                  nonlinear_mapping=False,
@@ -502,26 +506,26 @@ class RLDDModel(Model):
         # Define default priors
         if self.hierarchical_levels == 1:
             self.priors = dict(
-                alpha_priors={'mu':0, 'sd':1},
-                alpha_pos_priors={'mu':0, 'sd':1},
-                alpha_neg_priors={'mu':0, 'sd':1},
-                drift_scaling_priors={'mu':1, 'sd':50},
-                drift_asymptote_priors={'mu':1, 'sd':50},
-                threshold_priors={'mu':1, 'sd':5},
-                threshold_modulation_priors={'mu':0, 'sd':10},
-                ndt_priors={'mu':1, 'sd':1}
-                )
+                alpha_priors={'mu': 0, 'sd': 1},
+                alpha_pos_priors={'mu': 0, 'sd': 1},
+                alpha_neg_priors={'mu': 0, 'sd': 1},
+                drift_scaling_priors={'mu': 1, 'sd': 50},
+                drift_asymptote_priors={'mu': 1, 'sd': 50},
+                threshold_priors={'mu': 1, 'sd': 5},
+                threshold_modulation_priors={'mu': 0, 'sd': 10},
+                ndt_priors={'mu': 1, 'sd': 1}
+            )
         else:
             self.priors = dict(
-                alpha_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1},
-                alpha_pos_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1},
-                alpha_neg_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1},
-                drift_scaling_priors={'mu_mu':1, 'sd_mu':30, 'mu_sd':0, 'sd_sd':30},
-                drift_asymptote_priors={'mu_mu':1, 'sd_mu':30, 'mu_sd':0, 'sd_sd':30},
-                threshold_priors={'mu_mu':1, 'sd_mu':3, 'mu_sd':0, 'sd_sd':3},
-                threshold_modulation_priors={'mu_mu':0, 'sd_mu':10, 'mu_sd':0, 'sd_sd':10},
-                ndt_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1}
-                )
+                alpha_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},
+                alpha_pos_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},
+                alpha_neg_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},
+                drift_scaling_priors={'mu_mu': 1, 'sd_mu': 30, 'mu_sd': 0, 'sd_sd': 30},
+                drift_asymptote_priors={'mu_mu': 1, 'sd_mu': 30, 'mu_sd': 0, 'sd_sd': 30},
+                threshold_priors={'mu_mu': 1, 'sd_mu': 3, 'mu_sd': 0, 'sd_sd': 3},
+                threshold_modulation_priors={'mu_mu': 0, 'sd_mu': 10, 'mu_sd': 0, 'sd_sd': 10},
+                ndt_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1}
+            )
 
         if self.nonlinear_mapping:
             self.model_label += '_nonlin'
@@ -687,7 +691,7 @@ class RLDDModel(Model):
 
         """
         data.reset_index(inplace=True)
-        N = data.shape[0] # n observations
+        N = data.shape[0]  # n observations
 
         # transform data variables
         data['accuracy_neg'] = -1
@@ -726,8 +730,8 @@ class RLDDModel(Model):
 
         if self.hierarchical_levels == 2:
             keys_priors = ["mu_mu", "sd_mu", "mu_sd", "sd_sd"]
-            L = len(pd.unique(data.participant)) # n subjects (levels)
-            data_dict.update({'L': L, 
+            L = len(pd.unique(data.participant))  # n subjects (levels)
+            data_dict.update({'L': L,
                               'participant': data['participant'].values.astype(int)})
         else:
             keys_priors = ["mu", "sd"]

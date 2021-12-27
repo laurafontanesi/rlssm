@@ -1,5 +1,5 @@
 # Sequential sampling models data
-from rlssm.random.random import simulate_hier_ddm
+from rlssm.random.random_DDM import simulate_hier_ddm
 
 data = simulate_hier_ddm(n_trials=100,
                          n_participants=30,

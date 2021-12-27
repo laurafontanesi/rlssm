@@ -29,20 +29,22 @@ class FittedModel(object):
         if print_diagnostics:
             check_all_diagnostics(self.stan_model)
 
-        self.data_info = {'N': data.shape[0], 'data':data}
+        self.data_info = {'N': data.shape[0], 'data': data}
 
         n_samples_after_warmup = self.stan_model.stan_args[0]['iter'] - self.stan_model.stan_args[0]['warmup']
-        n_posterior_samples = n_samples_after_warmup / self.stan_model.stan_args[0]['thin']*len(self.stan_model.stan_args)
+        n_posterior_samples = n_samples_after_warmup / self.stan_model.stan_args[0]['thin'] * len(
+            self.stan_model.stan_args)
 
         self.parameters_info = {'hierarchical_levels': hierarchical_levels,
-                                'n_parameters_individual':n_parameters_individual,
+                                'n_parameters_individual': n_parameters_individual,
                                 'n_parameters_trial': n_parameters_trial,
                                 'n_posterior_samples': int(n_posterior_samples)}
 
         if self.parameters_info['hierarchical_levels'] == 2:
             self.data_info.update({'L': len(pd.unique(data.participant))})
-            self.parameters_info.update({'n_parameters_group': n_parameters_individual*2,
-                                         'n_parameters_hierarchical': n_parameters_individual*2 + n_parameters_individual*self.data_info['L']})
+            self.parameters_info.update({'n_parameters_group': n_parameters_individual * 2,
+                                         'n_parameters_hierarchical': n_parameters_individual * 2 + n_parameters_individual *
+                                                                      self.data_info['L']})
 
             r = re.compile("transf_.+")
             parameters_names_transf = list(filter(r.match, self.stan_model.flatnames))
@@ -53,7 +55,7 @@ class FittedModel(object):
             r = re.compile("sd_.+")
             group_parameters_sd = list(filter(r.match, self.stan_model.flatnames))
 
-            group_parameters_names_transf = parameters_names_transf + group_parameters_sd # add transformed par names for plotting
+            group_parameters_names_transf = parameters_names_transf + group_parameters_sd  # add transformed par names for plotting
             group_parameters_names = group_parameters_mu + group_parameters_sd
 
             r = re.compile("z_.+_trial.+")
@@ -67,11 +69,12 @@ class FittedModel(object):
             parameters_names = group_parameters_names + individual_deviations
             parameters_names_all = parameters_names + trials_deviations
 
-            self.parameters_info.update({'parameters_names': parameters_names, # group parameters and individual deviations
-                                         'group_parameters_names': group_parameters_names, # group parameters
-                                         'individual_parameters_names': individual_parameters_names, # names of individual parameters
-                                         'group_parameters_names_transf': parameters_names_transf, # group parameters for plotting
-                                         'parameters_names_all': parameters_names_all}) # all parameters for the rhat calculations
+            self.parameters_info.update(
+                {'parameters_names': parameters_names,  # group parameters and individual deviations
+                 'group_parameters_names': group_parameters_names,  # group parameters
+                 'individual_parameters_names': individual_parameters_names,  # names of individual parameters
+                 'group_parameters_names_transf': parameters_names_transf,  # group parameters for plotting
+                 'parameters_names_all': parameters_names_all})  # all parameters for the rhat calculations
 
         else:
             self.data_info.update({'L': 1})
@@ -83,8 +86,9 @@ class FittedModel(object):
             parameters_names_all = parameters_names + list(filter(r.match, self.stan_model.flatnames))
 
             self.parameters_info.update({'parameters_names': parameters_names})
-            self.parameters_info.update({'parameters_names_transf': parameters_names_transf}) # add transformed par names for plotting
-            self.parameters_info.update({'parameters_names_all': parameters_names_all}) # for the rhat calculations
+            self.parameters_info.update(
+                {'parameters_names_transf': parameters_names_transf})  # add transformed par names for plotting
+            self.parameters_info.update({'parameters_names_all': parameters_names_all})  # for the rhat calculations
 
     def get_rhat(self):
         """Extracts rhat from stan model's summary as a pandas dataframe.
@@ -125,32 +129,32 @@ class FittedModel(object):
             pointwise_waic (when `pointwise` is True).
 
         """
-        log_likelihood = self.stan_model['log_lik'] # n_samples X N observations
+        log_likelihood = self.stan_model['log_lik']  # n_samples X N observations
         likelihood = np.exp(log_likelihood)
 
-        mean_l = np.mean(likelihood, axis=0) # N observations
+        mean_l = np.mean(likelihood, axis=0)  # N observations
 
         pointwise_lppd = np.log(mean_l)
         lppd = np.sum(pointwise_lppd)
 
-        pointwise_var_l = np.var(log_likelihood, axis=0) # N observations
+        pointwise_var_l = np.var(log_likelihood, axis=0)  # N observations
         var_l = np.sum(pointwise_var_l)
 
-        pointwise_waic = - 2*pointwise_lppd +  2*pointwise_var_l
-        waic = -2*lppd + 2*var_l
+        pointwise_waic = - 2 * pointwise_lppd + 2 * pointwise_var_l
+        waic = -2 * lppd + 2 * var_l
         waic_se = np.sqrt(self.data_info['N'] * np.var(pointwise_waic))
 
         if pointwise:
-            out = {'lppd':lppd,
-                   'p_waic':var_l,
-                   'waic':waic,
-                   'waic_se':waic_se,
-                   'pointwise_waic':pointwise_waic}
+            out = {'lppd': lppd,
+                   'p_waic': var_l,
+                   'waic': waic,
+                   'waic_se': waic_se,
+                   'pointwise_waic': pointwise_waic}
         else:
-            out = {'lppd':lppd,
-                   'p_waic':var_l,
-                   'waic':waic,
-                   'waic_se':waic_se}
+            out = {'lppd': lppd,
+                   'p_waic': var_l,
+                   'waic': waic,
+                   'waic_se': waic_se}
         return out
 
     def get_last_values(self):
@@ -170,6 +174,7 @@ class FittedModel(object):
         starting_points = samplesChains[samplesChains['draw'] == max(samplesChains['draw'])]
 
         return starting_points
+
 
 class ModelResults(object):
     def __init__(self,
@@ -217,11 +222,11 @@ class ModelResults(object):
 
         """
 
-        dir_path = os.getcwd()#os.path.dirname(os.path.realpath(__file__))
+        dir_path = os.getcwd()  # os.path.dirname(os.path.realpath(__file__))
 
         if filename is None:
-            filename = os.path.join(dir_path, '{}.pkl'.format(self.model_label))
-            print("Saving file as: {}".format(filename))
+            filename = os.path.join(dir_path, f"{self.model_label}.pkl")
+            print(f"Saving file as: {filename}")
 
         with open(filename, 'wb') as f:
             pickle.dump(self, f)

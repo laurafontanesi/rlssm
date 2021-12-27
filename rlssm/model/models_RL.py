@@ -14,6 +14,7 @@ class RLModel_2A(Model):
     After initializing the model, it can be fitted to a particular dataset using pystan.
 
     """
+
     def __init__(self,
                  hierarchical_levels,
                  increasing_sensitivity=False,
@@ -71,22 +72,22 @@ class RLModel_2A(Model):
         # Define default priors
         if self.hierarchical_levels == 1:
             self.priors = dict(
-                alpha_priors={'mu':0, 'sd':1},
-                sensitivity_priors={'mu':1, 'sd':50},
-                consistency_priors={'mu':1, 'sd':50},
-                scaling_priors={'mu':1, 'sd':50},
-                alpha_pos_priors={'mu':0, 'sd':1},
-                alpha_neg_priors={'mu':0, 'sd':1}
-                )
+                alpha_priors={'mu': 0, 'sd': 1},
+                sensitivity_priors={'mu': 1, 'sd': 50},
+                consistency_priors={'mu': 1, 'sd': 50},
+                scaling_priors={'mu': 1, 'sd': 50},
+                alpha_pos_priors={'mu': 0, 'sd': 1},
+                alpha_neg_priors={'mu': 0, 'sd': 1}
+            )
         else:
             self.priors = dict(
-                alpha_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1},
-                sensitivity_priors={'mu_mu':1, 'sd_mu':30, 'mu_sd':0, 'sd_sd':30},
-                consistency_priors={'mu_mu':1, 'sd_mu':30, 'mu_sd':0, 'sd_sd':30},
-                scaling_priors={'mu_mu':1, 'sd_mu':30, 'mu_sd':0, 'sd_sd':30},
-                alpha_pos_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1},
-                alpha_neg_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1}
-                )
+                alpha_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},
+                sensitivity_priors={'mu_mu': 1, 'sd_mu': 30, 'mu_sd': 0, 'sd_sd': 30},
+                consistency_priors={'mu_mu': 1, 'sd_mu': 30, 'mu_sd': 0, 'sd_sd': 30},
+                scaling_priors={'mu_mu': 1, 'sd_mu': 30, 'mu_sd': 0, 'sd_sd': 30},
+                alpha_pos_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},
+                alpha_neg_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1}
+            )
 
         # Set up model label and priors for mechanisms
         if increasing_sensitivity:
@@ -238,8 +239,8 @@ class RLModel_2A(Model):
             Additional arguments to pystan.StanModel.sampling().
 
         """
-        data.reset_index(inplace=True) # reset index
-        N = data.shape[0] # n observations
+        data.reset_index(inplace=True)  # reset index
+        N = data.shape[0]  # n observations
 
         # change default priors:
         if alpha_priors is not None:
@@ -268,15 +269,15 @@ class RLModel_2A(Model):
 
         if self.hierarchical_levels == 2:
             keys_priors = ["mu_mu", "sd_mu", "mu_sd", "sd_sd"]
-            L = len(pd.unique(data.participant)) # n subjects (levels)
-            data_dict.update({'L': L, 
+            L = len(pd.unique(data.participant))  # n subjects (levels)
+            data_dict.update({'L': L,
                               'participant': data['participant'].values.astype(int)})
         else:
             keys_priors = ["mu", "sd"]
 
         # Add data for mechanisms:
         if self.increasing_sensitivity:
-                    data_dict.update({'times_seen': data['times_seen'].values})
+            data_dict.update({'times_seen': data['times_seen'].values})
 
         # Add priors:
         print("Fitting the model using the priors:")

@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from rlssm.utility.utils import hdi, bci
 
+
 def plot_posterior(x,
                    ax=None,
                    gridsize=100,
@@ -72,7 +73,7 @@ def plot_posterior(x,
         ax = plt.gca()
 
     if intervals_kws is None:
-        intervals_kws = {'alpha':.5}
+        intervals_kws = {'alpha': .5}
 
     density = gaussian_kde(x, bw_method='scott')
     xd = np.linspace(min_x, max_x, gridsize)
@@ -92,6 +93,7 @@ def plot_posterior(x,
                         color=color,
                         **intervals_kws)
     return ax
+
 
 def plot_mean_prediction(predictions,
                          data,
@@ -115,6 +117,7 @@ def plot_mean_prediction(predictions,
                    **kwargs)
     return ax
 
+
 def plot_grouped_mean_prediction(x,
                                  y_data,
                                  y_predictions,
@@ -135,7 +138,7 @@ def plot_grouped_mean_prediction(x,
         ax = plt.gca()
 
     if intervals_kws is None:
-        intervals_kws = {'alpha':.5}
+        intervals_kws = {'alpha': .5}
 
     if hue is None:
         if x_order is None:
@@ -167,8 +170,8 @@ def plot_grouped_mean_prediction(x,
                             **intervals_kws)
         ax.set_xlabel(x)
         ax.set_ylabel(y_predictions)
-        #x_ = range(len(x_order))
-        #plt.xticks(x_, x_order)
+        # x_ = range(len(x_order))
+        # plt.xticks(x_, x_order)
     else:
         if hue_order is None:
             hue_order = np.array(predictions.index.get_level_values(hue).unique())
@@ -181,22 +184,24 @@ def plot_grouped_mean_prediction(x,
 
         for i, cond in enumerate(hue_order):
             if show_data:
-                data_mean = [np.mean(data.loc[np.logical_and(data[x] == j, data[hue] == cond), y_data]) for j in x_order]
+                data_mean = [np.mean(data.loc[np.logical_and(data[x] == j, data[hue] == cond), y_data]) for j in
+                             x_order]
                 ax.plot(x_order,
                         data_mean,
                         color=palette[i],
                         label="Mean data (%s)" % hue_labels[i])
 
-
             if show_intervals is not None:
                 if np.sum(show_intervals == np.array(['BCI', 'HDI'])) < 1:
                     raise ValueError("must be either None, BCI, or HDI")
                 if show_intervals == 'BCI':
-                    low_high = [bci(predictions.loc[(j, cond, slice(None)), y_predictions], alpha_intervals) for j in x_order]
+                    low_high = [bci(predictions.loc[(j, cond, slice(None)), y_predictions], alpha_intervals) for j in
+                                x_order]
                     low = np.array(low_high)[:, 0]
                     high = np.array(low_high)[:, 1]
                 else:
-                    low_high = [hdi(predictions.loc[(j, cond, slice(None)), y_predictions], alpha_intervals) for j in x_order]
+                    low_high = [hdi(predictions.loc[(j, cond, slice(None)), y_predictions], alpha_intervals) for j in
+                                x_order]
                     low = np.array(low_high)[:, 0]
                     high = np.array(low_high)[:, 1]
 
@@ -210,9 +215,10 @@ def plot_grouped_mean_prediction(x,
         ax.legend(bbox_to_anchor=(1, 1))
         ax.set_xlabel(x)
         ax.set_ylabel(y_predictions)
-        #x_ = range(len(x_order))
-        #plt.xticks(x_, x_order)
+        # x_ = range(len(x_order))
+        # plt.xticks(x_, x_order)
         return ax
+
 
 def plot_quantiles_prediction(predictions,
                               data,
@@ -229,7 +235,7 @@ def plot_quantiles_prediction(predictions,
     if quantiles is None:
         quantiles = [.1, .3, .5, .7, .9]
 
-    percentiles = np.array(quantiles)*100
+    percentiles = np.array(quantiles) * 100
 
     if model == 'ddm':
         columns_up = ['quant_{}_rt_up'.format(int(p)) for p in percentiles]
@@ -239,9 +245,9 @@ def plot_quantiles_prediction(predictions,
         columns_low = ['quant_{}_rt_incorrect'.format(int(p)) for p in percentiles]
 
     if scatter_kws is None:
-        scatter_kws = {'marker':'x', 'lw':3, 's': 100}
+        scatter_kws = {'marker': 'x', 'lw': 3, 's': 100}
     if intervals_kws is None:
-        intervals_kws = {'alpha':.2}
+        intervals_kws = {'alpha': .2}
 
     fig, axes = plt.subplots(1, 2, figsize=figsize)
 
@@ -309,6 +315,7 @@ def plot_quantiles_prediction(predictions,
     sns.despine()
     return fig
 
+
 def plot_grouped_quantiles_prediction(predictions,
                                       data,
                                       model,
@@ -325,11 +332,10 @@ def plot_grouped_quantiles_prediction(predictions,
                                       jitter=.05,
                                       scatter_kws=None,
                                       intervals_kws=None):
-
     if quantiles is None:
         quantiles = [.1, .3, .5, .7, .9]
 
-    percentiles = np.array(quantiles)*100
+    percentiles = np.array(quantiles) * 100
 
     if model == 'ddm':
         columns_up = ['quant_{}_rt_up'.format(int(p)) for p in percentiles]
@@ -338,22 +344,21 @@ def plot_grouped_quantiles_prediction(predictions,
         columns_up = ['quant_{}_rt_correct'.format(int(p)) for p in percentiles]
         columns_low = ['quant_{}_rt_incorrect'.format(int(p)) for p in percentiles]
 
-
     if hue_order is None:
         hue_order = np.array(predictions.index.get_level_values(grouping_var).unique())
     if hue_labels is None:
         hue_labels = hue_order
 
     n_levels = len(hue_order)
-    wide = jitter*(n_levels-1)
-    jitter_levels = np.linspace(-wide/2, wide/2, n_levels)
+    wide = jitter * (n_levels - 1)
+    jitter_levels = np.linspace(-wide / 2, wide / 2, n_levels)
 
     if palette is None:
         palette = sns.color_palette(n_colors=n_levels)
     if intervals_kws is None:
-        intervals_kws = {'alpha':.2}
+        intervals_kws = {'alpha': .2}
     if scatter_kws is None:
-        scatter_kws = {'marker':'x', 'lw':3, 's': 100}
+        scatter_kws = {'marker': 'x', 'lw': 3, 's': 100}
 
     fig, axes = plt.subplots(1, 2, figsize=figsize)
 
@@ -363,7 +368,8 @@ def plot_grouped_quantiles_prediction(predictions,
             q_data_up = [np.nanpercentile(data.loc[np.logical_and(data[grouping_var] == l,
                                                                   data.accuracy == 1), 'rt'], q=x) for x in percentiles]
             q_data_low = [np.nanpercentile(data.loc[np.logical_and(data[grouping_var] == l,
-                                                                   data.accuracy == 0), 'rt'], q=x) for x in percentiles]
+                                                                   data.accuracy == 0), 'rt'], q=x) for x in
+                          percentiles]
 
             # Data
             axes[0].scatter(quantiles + jitter_levels[j],
@@ -384,11 +390,15 @@ def plot_grouped_quantiles_prediction(predictions,
             if np.sum(show_intervals == np.array(['BCI', 'HDI'])) < 1:
                 raise ValueError("must be either None, BCI, or HDI")
             if show_intervals == 'BCI':
-                q_pred_up = np.array([bci(predictions.loc[(l, slice(None)), x], alpha=alpha_intervals) for x in columns_up])
-                q_pred_low = np.array([bci(predictions.loc[(l, slice(None)), x], alpha=alpha_intervals) for x in columns_low])
+                q_pred_up = np.array(
+                    [bci(predictions.loc[(l, slice(None)), x], alpha=alpha_intervals) for x in columns_up])
+                q_pred_low = np.array(
+                    [bci(predictions.loc[(l, slice(None)), x], alpha=alpha_intervals) for x in columns_low])
             else:
-                q_pred_up = np.array([hdi(predictions.loc[(l, slice(None)), x], alpha=alpha_intervals) for x in columns_up])
-                q_pred_low = np.array([hdi(predictions.loc[(l, slice(None)), x], alpha=alpha_intervals) for x in columns_low])
+                q_pred_up = np.array(
+                    [hdi(predictions.loc[(l, slice(None)), x], alpha=alpha_intervals) for x in columns_up])
+                q_pred_low = np.array(
+                    [hdi(predictions.loc[(l, slice(None)), x], alpha=alpha_intervals) for x in columns_low])
 
             if np.sum(kind == np.array(['lines', 'shades'])) < 1:
                 raise ValueError("must be either lines or shades")

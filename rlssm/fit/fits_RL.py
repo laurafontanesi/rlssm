@@ -6,6 +6,7 @@ from ..plot import plotting
 from rlssm.utility.utils import list_individual_variables
 from .fits import FittedModel, ModelResults
 
+
 class RLFittedModel_2A(FittedModel):
     def extract_results(self, include_rhat, include_waic, pointwise_waic, include_last_values):
         if include_rhat:
@@ -53,15 +54,17 @@ class RLFittedModel_2A(FittedModel):
                                 trial_samples)
         return res
 
+
 class RLModelResults_2A(ModelResults):
     """RLModelResults allows to perform various model checks
-    on fitted RL models.
+    on fitted RL_2A models.
 
     In particular, this can be used to to visualize the estimated
     posterior distributions and to calculate and visualize the
     estimated posterior predictives distributions.
 
     """
+
     def get_posterior_predictives(self, n_posterior_predictives=500):
         """Calculates posterior predictives of choices.
 
@@ -115,12 +118,11 @@ class RLModelResults_2A(ModelResults):
         pp_acc = self.get_posterior_predictives(n_posterior_predictives)
 
         out = pd.DataFrame(pp_acc,
-                           index=pd.Index(np.arange(1, len(pp_acc)+1), name='sample'),
+                           index=pd.Index(np.arange(1, len(pp_acc) + 1), name='sample'),
                            columns=pd.MultiIndex.from_product((['accuracy'],
-                                                               np.arange(pp_acc.shape[1])+1),
+                                                               np.arange(pp_acc.shape[1]) + 1),
                                                               names=['variable', 'trial']))
         return out
-
 
     def get_posterior_predictives_summary(self, n_posterior_predictives=500):
         """Calculates summary of posterior predictives of choices.
@@ -257,7 +259,7 @@ class RLModelResults_2A(ModelResults):
         """
 
         data_copy = self.data_info['data'].copy()
-        data_copy['trial'] = np.arange(1, self.data_info['N']+ 1)
+        data_copy['trial'] = np.arange(1, self.data_info['N'] + 1)
         data_copy.set_index('trial', inplace=True)
 
         pp = self.get_posterior_predictives_df(n_posterior_predictives=n_posterior_predictives)

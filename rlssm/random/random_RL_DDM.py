@@ -2,20 +2,27 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-from rlssm.random.random_common import _simulate_delta_rule_2A, _soft_max_2A
+# RL_2A + DDM
+from rlssm.random.random_DDM import random_ddm
+from rlssm.random.random_RL import _simulate_delta_rule_2A
 
 
-def simulate_rl_2A(task_design,
-                   gen_alpha,
-                   gen_sensitivity,
-                   initial_value_learning=0):
-    """Simulates behavior (accuracy) according to a RL_2A model,
+def simulate_rlddm_2A(task_design,
+                      gen_alpha,
+                      gen_drift_scaling,
+                      gen_threshold,
+                      gen_ndt,
+                      initial_value_learning=0,
+                      **kwargs):
+    """Simulates behavior (rt and accuracy) according to a RLDDM model,
 
     where the learning component is the Q learning
-    (delta learning rule) and the choice rule is the softmax.
+    (delta learning rule) and the choice rule is the DDM.
 
-    This function is to simulate data for, for example, parameter recovery.
     Simulates data for one participant.
+
+    In this parametrization, it is assumed that 0 is the lower threshold,
+    and the diffusion process starts halfway through the threshold value.
 
     Note
     ----
@@ -43,21 +50,33 @@ def simulate_rl_2A(task_design,
         If a list of 2 values is provided then 2 separate learning rates
         for positive and negative prediction error are used.
 
-    gen_sensitivity : float
-        The generating sensitivity parameter for the soft_max choice rule.
-        It should be a value higher than 0
-        (the higher, the more sensitivity to value differences).
+    gen_drift_scaling : float
+        Drift-rate scaling of the RLDDM.
+
+    gen_threshold : float
+        Threshold of the diffusion decision model.
+        Should be positive.
+
+    gen_ndt : float
+        Non decision time of the diffusion decision model, in seconds.
+        Should be positive.
 
     initial_value_learning : float
         The initial value for Q learning.
+
+    Other Parameters
+    ----------------
+
+    **kwargs
+        Additional arguments to rlssm.random.random_ddm().
 
     Returns
     -------
 
     data : DataFrame
         `pandas.DataFrame`, that is the task_design, plus:
-        'Q_cor', 'Q_inc', 'alpha', 'sensitivity',
-        'p_cor', and 'accuracy'.
+        'Q_cor', 'Q_inc', 'drift', 'alpha', 'drift_scaling',
+        'threshold', 'ndt', 'rt', and 'accuracy'.
 
     """
     data = task_design.copy()
@@ -87,28 +106,46 @@ def simulate_rl_2A(task_design,
     else:
         raise TypeError("The gen_alpha should be either a list or a float/int.")
 
-    data['sensitivity'] = gen_sensitivity
-    data['p_cor'] = data.apply(_soft_max_2A, axis=1)
-    data['accuracy'] = stats.bernoulli.rvs(data['p_cor'].values)  # simulate choices
+    data['drift_scaling'] = gen_drift_scaling
+    data['threshold'] = gen_threshold
+    data['ndt'] = gen_ndt
+    data['drift'] = gen_drift_scaling * (data['Q_cor'] - data['Q_inc'])
+
+    # simulate responses
+    rt, acc = random_ddm(data['drift'], data['threshold'], data['ndt'], .5, **kwargs)
+    data['rt'] = rt
+    data['accuracy'] = acc
 
     data = data.set_index(['participant', 'block_label', 'trial_block'])
     return data
 
 
-def simulate_hier_rl_2A(task_design,
-                        gen_mu_alpha, gen_sd_alpha,
-                        gen_mu_sensitivity, gen_sd_sensitivity,
-                        initial_value_learning=0):
-    """Simulates behavior (accuracy) according to a RL_2A model,
+def simulate_hier_rlddm_2A(task_design,
+                           gen_mu_alpha, gen_sd_alpha,
+                           gen_mu_drift_scaling, gen_sd_drift_scaling,
+                           gen_mu_threshold, gen_sd_threshold,
+                           gen_mu_ndt, gen_sd_ndt,
+                           initial_value_learning=0,
+                           **kwargs):
+    """Simulates behavior (rt and accuracy) according to a RLDDM model,
+
     where the learning component is the Q learning
-    (delta learning rule) and the choice rule is the softmax.
+    (delta learning rule) and the choice rule is the DDM.
 
     Simulates hierarchical data for a group of participants.
+
+    In this parametrization, it is assumed that 0 is the lower threshold,
+    and the diffusion process starts halfway through the threshold value.
+
     The individual parameters have the following distributions:
 
     - alpha ~ Phi(normal(gen_mu_alpha, gen_sd_alpha))
 
-    - sensitivity ~ log(1 + exp(normal(gen_mu_sensitivity, gen_sd_sensitivity)))
+    - drift_scaling ~ log(1 + exp(normal(gen_mu_drift, gen_sd_drift)))
+
+    - threshold ~ log(1 + exp(normal(gen_mu_threshold, gen_sd_threshold)))
+
+    - ndt ~ log(1 + exp(normal(gen_mu_ndt, gen_sd_ndt)))
 
     When 2 learning rates are estimated:
 
@@ -146,28 +183,47 @@ def simulate_hier_rl_2A(task_design,
         If a list of 2 values is provided then 2 separate learning rates
         for positive and negative prediction error are used.
 
-    gen_mu_sensitivity : float
-        The generating group mean of the sensitivity parameter
-        for the soft_max choice rule.
+    gen_mu_drift_scaling : float
+        Group-mean of the drift-rate
+        scaling of the RLDDM.
 
-    gen_sd_sensitivity : float
-        The generating group SD of the sensitivity parameter
-        for the soft_max choice rule.
+    gen_sd_drift_scaling: float
+        Group-standard deviation of the drift-rate
+        scaling of the RLDDM.
+
+    gen_mu_threshold : float
+        Group-mean of the threshold of the RLDDM.
+
+    gen_sd_threshold: float
+        Group-standard deviation of the threshold
+        of the RLDDM.
+
+    gen_mu_ndt : float
+        Group-mean of the non decision time of the RLDDM.
+
+    gen_sd_ndt : float
+        Group-standard deviation of the non decision time
+        of the RLDDM.
 
     initial_value_learning : float
         The initial value for Q learning.
+
+    Other Parameters
+    ----------------
+
+    **kwargs
+        Additional arguments to rlssm.random.random_ddm().
 
     Returns
     -------
 
     data : DataFrame
         `pandas.DataFrame`, that is the task_design, plus:
-        'Q_cor', 'Q_inc', 'alpha', 'sensitivity',
-        'p_cor', and 'accuracy'.
+        'Q_cor', 'Q_inc', 'drift', 'alpha', 'drift_scaling',
+        'threshold', 'ndt', 'rt', and 'accuracy'.
 
     """
     data = task_design.copy()
-
     participants = pd.unique(data["participant"])
     n_participants = len(participants)
     if n_participants < 2:
@@ -179,15 +235,16 @@ def simulate_hier_rl_2A(task_design,
     if (type(gen_mu_alpha) == float) | (type(gen_mu_alpha) == int):
         parameters = pd.DataFrame(
             {'alpha': stats.norm.cdf(np.random.normal(gen_mu_alpha, gen_sd_alpha, n_participants)),
-             'sensitivity': np.log(
-                 1 + np.exp(np.random.normal(gen_mu_sensitivity, gen_sd_sensitivity, n_participants)))},
+             'drift_scaling': np.log(
+                 1 + np.exp(np.random.normal(gen_mu_drift_scaling, gen_sd_drift_scaling, n_participants))),
+             'threshold': np.log(1 + np.exp(np.random.normal(gen_mu_threshold, gen_sd_threshold, n_participants))),
+             'ndt': np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants)))},
             index=participants)
         data = pd.concat([data.set_index('participant'), parameters], axis=1, ignore_index=False).reset_index().rename(
             columns={'index': 'participant'})
-
-        data = pd.concat([data, _simulate_delta_rule_2A(task_design=task_design,
-                                                        alpha=parameters.alpha.values,
-                                                        initial_value_learning=initial_value_learning)],
+        data = pd.concat([data, _simulate_delta_rule_2A(task_design,
+                                                        parameters.alpha.values,
+                                                        initial_value_learning)],
                          axis=1)
 
     elif type(gen_mu_alpha) is list:
@@ -197,8 +254,10 @@ def simulate_hier_rl_2A(task_design,
             parameters = pd.DataFrame(
                 {'alpha_pos': stats.norm.cdf(np.random.normal(gen_mu_alpha[0], gen_sd_alpha[0], n_participants)),
                  'alpha_neg': stats.norm.cdf(np.random.normal(gen_mu_alpha[1], gen_sd_alpha[1], n_participants)),
-                 'sensitivity': np.log(
-                     1 + np.exp(np.random.normal(gen_mu_sensitivity, gen_sd_sensitivity, n_participants)))},
+                 'drift_scaling': np.log(
+                     1 + np.exp(np.random.normal(gen_mu_drift_scaling, gen_sd_drift_scaling, n_participants))),
+                 'threshold': np.log(1 + np.exp(np.random.normal(gen_mu_threshold, gen_sd_threshold, n_participants))),
+                 'ndt': np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants)))},
                 index=participants)
             data = pd.concat([data.set_index('participant'), parameters], axis=1,
                              ignore_index=False).reset_index().rename(columns={'index': 'participant'})
@@ -216,8 +275,12 @@ def simulate_hier_rl_2A(task_design,
     else:
         raise TypeError("The gen_alpha should be either a list or a float/int.")
 
-    data['p_cor'] = data.apply(_soft_max_2A, axis=1)
-    data['accuracy'] = stats.bernoulli.rvs(data['p_cor'].values)  # simulate choices
+    data['drift'] = data['drift_scaling'] * (data['Q_cor'] - data['Q_inc'])
+
+    # simulate responses
+    rt, acc = random_ddm(data['drift'], data['threshold'], data['ndt'], .5, **kwargs)
+    data['rt'] = rt
+    data['accuracy'] = acc
 
     data = data.set_index(['participant', 'block_label', 'trial_block'])
     return data

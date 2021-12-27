@@ -4,7 +4,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "# Fit a RL model on individual data"
+    "# Fit a RL_2A model on individual data"
    ]
   },
   {

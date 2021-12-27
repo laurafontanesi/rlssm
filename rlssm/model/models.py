@@ -5,10 +5,12 @@ from rlssm.utility.stan_utility import compile_model
 
 __dir__ = os.path.abspath(os.path.dirname(__file__))
 
+
 class Model(object):
     """General model class.
 
     """
+
     def __init__(self, hierarchical_levels, family):
         """Initialize a Model object.
 
@@ -18,7 +20,7 @@ class Model(object):
             Set to 1 for individual data and to 2 for grouped data.
 
         family : str
-            Model family. At the moment either "RL", "DDM", "RDM", or "RLDDM" "RLRDM".
+            Model family. At the moment either "RL_2A", "DDM", "RDM_2A", or "RLDDM" "RLRDM".
 
         Attributes
         ----------
@@ -44,15 +46,16 @@ class Model(object):
         """Sets the stan model path.
 
         """
-        stan_model_path = os.path.join(__dir__, '../stan_models', '{}.stan'.format(self.model_label))
-        #stan_model_path = os.path.join(rlddm.__path__[0], 'stan_models', '{}.stan'.format(self.model_label))
+        stan_model_path = os.path.join(os.path.dirname(__dir__), "stan_models",
+                                       f"{self.family}", f"{self.model_label}.stan")
+        # stan_model_path = os.path.join(__dir__, '../stan_models', f'{self.model_label}.stan')
+        # stan_model_path = os.path.join(rlddm.__path__[0], 'stan_models', '{}.stan'.format(self.model_label))
         if not os.path.exists(stan_model_path):
-            raise ValueError("Model {}, in {}, has not been implemented yet.".format(self.model_label, __dir__))
+            raise ValueError(f"Model {self.model_label}, in {__dir__}, has not been implemented yet.")
         self.stan_model_path = stan_model_path
 
     def _compile_stan_model(self):
         """Compiles the stan model.
 
         """
-        self.compiled_model = compile_model(filename=self.stan_model_path,
-                                            model_name=self.model_label)
+        self.compiled_model = compile_model(filename=self.stan_model_path, model_name=self.model_label)

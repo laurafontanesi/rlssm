@@ -6,30 +6,32 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from ..plot import plotting
 from rlssm.utility.utils import list_individual_variables
-from rlssm.random.random import random_rdm_2A, random_lba_2A
 from .fits import FittedModel, ModelResults
+from ..random.random_LBA import random_lba_2A
+from ..random.random_RDM import random_rdm_2A
+
 
 class raceFittedModel_2A(FittedModel):
     def __init__(self,
-                  stan_model,
-                  data,
-                  hierarchical_levels,
-                  model_label,
-                  family,
-                  n_parameters_individual,
-                  n_parameters_trial,
-                  print_diagnostics,
-                  priors):
+                 stan_model,
+                 data,
+                 hierarchical_levels,
+                 model_label,
+                 family,
+                 n_parameters_individual,
+                 n_parameters_trial,
+                 print_diagnostics,
+                 priors):
         self.family = family
         super().__init__(stan_model,
-                             data,
-                             hierarchical_levels,
-                             model_label,
-                             family,
-                             n_parameters_individual,
-                             n_parameters_trial,
-                             print_diagnostics,
-                             priors)
+                         data,
+                         hierarchical_levels,
+                         model_label,
+                         family,
+                         n_parameters_individual,
+                         n_parameters_trial,
+                         print_diagnostics,
+                         priors)
 
     def extract_results(self, include_rhat, include_waic, pointwise_waic, include_last_values):
         if include_rhat:
@@ -65,29 +67,30 @@ class raceFittedModel_2A(FittedModel):
 
         # trial parameters
         f_label = self.family.split('_')[0]
-        if f_label == 'LBA' or f_label == 'ALBA' or f_label == 'RLLBA' or f_label == 'RLALBA':
+        if f_label == 'LBA_2A' or f_label == 'ALBA_2A' or f_label == 'RLLBA' or f_label == 'RLALBA':
             trial_samples = self.stan_model.extract(['k_t',
-                                                                      'A_t',
-                                                                      'tau_t',
-                                                                      'drift_cor_t',
-                                                                      'drift_inc_t'])
+                                                     'A_t',
+                                                     'tau_t',
+                                                     'drift_cor_t',
+                                                     'drift_inc_t'])
         else:
             trial_samples = self.stan_model.extract(['drift_cor_t',
-                                                                     'drift_inc_t',
-                                                                     'threshold_t',
-                                                                     'ndt_t'])
+                                                     'drift_inc_t',
+                                                     'threshold_t',
+                                                     'ndt_t'])
 
         res = raceModelResults_2A(self.model_label,
-                                             self.data_info,
-                                             self.parameters_info,
-                                             self.priors,
-                                             rhat,
-                                             waic,
-                                             last_values,
-                                             samples,
-                                             trial_samples,
-                                             self.family)
+                                  self.data_info,
+                                  self.parameters_info,
+                                  self.priors,
+                                  rhat,
+                                  waic,
+                                  last_values,
+                                  samples,
+                                  trial_samples,
+                                  self.family)
         return res
+
 
 class raceModelResults_2A(ModelResults):
     def __init__(self,
@@ -121,7 +124,7 @@ class raceModelResults_2A(ModelResults):
             n_posterior_predictives = self.parameters_info['n_posterior_samples']
 
         f_label = self.family.split('_')[0]
-        if f_label == 'LBA' or f_label == 'ALBA' or f_label == 'RLLBA' or f_label == 'RLALBA':
+        if f_label == 'LBA_2A' or f_label == 'ALBA_2A' or f_label == 'RLLBA' or f_label == 'RLALBA':
             k_t = self.trial_samples['k_t'][:n_posterior_predictives, :]
             A_t = self.trial_samples['A_t'][:n_posterior_predictives, :]
             tau_t = self.trial_samples['tau_t'][:n_posterior_predictives, :]
@@ -175,14 +178,14 @@ class raceModelResults_2A(ModelResults):
         pp_rt, pp_acc = self.get_posterior_predictives(n_posterior_predictives, **kwargs)
 
         tmp1 = pd.DataFrame(pp_rt,
-                            index=pd.Index(np.arange(1, len(pp_rt)+1), name='sample'),
+                            index=pd.Index(np.arange(1, len(pp_rt) + 1), name='sample'),
                             columns=pd.MultiIndex.from_product((['rt'],
-                                                                np.arange(pp_rt.shape[1])+1),
+                                                                np.arange(pp_rt.shape[1]) + 1),
                                                                names=['variable', 'trial']))
         tmp2 = pd.DataFrame(pp_acc,
-                            index=pd.Index(np.arange(1, len(pp_acc)+1), name='sample'),
+                            index=pd.Index(np.arange(1, len(pp_acc) + 1), name='sample'),
                             columns=pd.MultiIndex.from_product((['accuracy'],
-                                                                np.arange(pp_acc.shape[1])+1),
+                                                                np.arange(pp_acc.shape[1]) + 1),
                                                                names=['variable', 'trial']))
         out = pd.concat((tmp1, tmp2), axis=1)
         return out
@@ -247,13 +250,13 @@ class raceModelResults_2A(ModelResults):
                             'skewness': pp['rt'].skew(axis=1, skipna=True)})
 
         pp_rt_inc = pp['rt'][pp['accuracy'] == 0]
-        pp_rt_cor = pp['rt'][pp['accuracy'] == 1] 
+        pp_rt_cor = pp['rt'][pp['accuracy'] == 1]
 
         q_inc = pp_rt_inc.quantile(q=quantiles, axis=1).T
         q_cor = pp_rt_cor.quantile(q=quantiles, axis=1).T
 
-        q_inc.columns = ['quant_{}_rt_incorrect'.format(int(c*100)) for c in q_inc.columns]
-        q_cor.columns = ['quant_{}_rt_correct'.format(int(c*100)) for c in q_cor.columns]
+        q_inc.columns = ['quant_{}_rt_incorrect'.format(int(c * 100)) for c in q_inc.columns]
+        q_cor.columns = ['quant_{}_rt_correct'.format(int(c * 100)) for c in q_cor.columns]
 
         out = pd.concat([tmp, q_inc, q_cor], axis=1)
 
@@ -492,7 +495,7 @@ class raceModelResults_2A(ModelResults):
             quantiles = [.1, .3, .5, .7, .9]
 
         data_copy = self.data_info['data'].copy()
-        data_copy['trial'] = np.arange(1, self.data_info['N']+ 1)
+        data_copy['trial'] = np.arange(1, self.data_info['N'] + 1)
         data_copy.set_index('trial', inplace=True)
 
         pp = self.get_posterior_predictives_df(n_posterior_predictives=n_posterior_predictives,
@@ -518,19 +521,21 @@ class raceModelResults_2A(ModelResults):
         tmp_accuracy.set_index(list(np.append(grouping_vars, 'trial')), inplace=True)
         tmp_rt.set_index(list(np.append(grouping_vars, 'trial')), inplace=True)
 
-        pp_rt_low = tmp_rt[tmp_accuracy == 0] # lower boundary (usually incorrect)
-        pp_rt_up = tmp_rt[tmp_accuracy == 1] # upper boundary (usually correct)
+        pp_rt_low = tmp_rt[tmp_accuracy == 0]  # lower boundary (usually incorrect)
+        pp_rt_up = tmp_rt[tmp_accuracy == 1]  # upper boundary (usually correct)
 
         for q in quantiles:
-            new_col = 'quant_{}_rt_incorrect'.format(int(q*100))
+            new_col = 'quant_{}_rt_incorrect'.format(int(q * 100))
 
             out[new_col] = pp_rt_low.reset_index().groupby(grouping_vars).quantile(q).drop('trial',
-                                                                                           axis=1).stack().to_frame('quant')
+                                                                                           axis=1).stack().to_frame(
+                'quant')
 
-            new_col = 'quant_{}_rt_correct'.format(int(q*100))
+            new_col = 'quant_{}_rt_correct'.format(int(q * 100))
 
             out[new_col] = pp_rt_up.reset_index().groupby(grouping_vars).quantile(q).drop('trial',
-                                                                                          axis=1).stack().to_frame('quant')
+                                                                                          axis=1).stack().to_frame(
+                'quant')
 
         out.index.rename(np.append(grouping_vars, 'sample'), inplace=True)
 

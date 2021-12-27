@@ -1,7 +1,6 @@
 # Sequential sampling models data
 # NON HIER DATA, 2 alternatives
-
-from rlssm.random.random import simulate_ddm
+from rlssm.random.random_DDM import simulate_ddm
 
 data = simulate_ddm(
     n_trials=300,

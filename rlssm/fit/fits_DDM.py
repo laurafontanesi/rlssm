@@ -6,8 +6,9 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from ..plot import plotting
 from rlssm.utility.utils import list_individual_variables
-from rlssm.random.random import random_ddm
 from .fits import FittedModel, ModelResults
+from ..random.random_DDM import random_ddm
+
 
 class DDMFittedModel(FittedModel):
     def __init__(self,
@@ -99,6 +100,7 @@ class DDMFittedModel(FittedModel):
                              self.starting_point_variability)
         return res
 
+
 class DDModelResults(ModelResults):
     """DDModelResults allows to perform various model checks
     on fitted DDM and RLDDM models.
@@ -108,6 +110,7 @@ class DDModelResults(ModelResults):
     estimated posterior predictives distributions.
 
     """
+
     def __init__(self,
                  model_label,
                  data_info,
@@ -228,14 +231,14 @@ class DDModelResults(ModelResults):
         pp_rt, pp_acc = self.get_posterior_predictives(n_posterior_predictives, **kwargs)
 
         tmp1 = pd.DataFrame(pp_rt,
-                            index=pd.Index(np.arange(1, len(pp_rt)+1), name='sample'),
+                            index=pd.Index(np.arange(1, len(pp_rt) + 1), name='sample'),
                             columns=pd.MultiIndex.from_product((['rt'],
-                                                                np.arange(pp_rt.shape[1])+1),
+                                                                np.arange(pp_rt.shape[1]) + 1),
                                                                names=['variable', 'trial']))
         tmp2 = pd.DataFrame(pp_acc,
-                            index=pd.Index(np.arange(1, len(pp_acc)+1), name='sample'),
+                            index=pd.Index(np.arange(1, len(pp_acc) + 1), name='sample'),
                             columns=pd.MultiIndex.from_product((['accuracy'],
-                                                                np.arange(pp_acc.shape[1])+1),
+                                                                np.arange(pp_acc.shape[1]) + 1),
                                                                names=['variable', 'trial']))
         out = pd.concat((tmp1, tmp2), axis=1)
         return out
@@ -299,14 +302,14 @@ class DDModelResults(ModelResults):
                             'mean_rt': pp['rt'].mean(axis=1),
                             'skewness': pp['rt'].skew(axis=1, skipna=True)})
 
-        pp_rt_low = pp['rt'][pp['accuracy'] == 0] # lower boundary (usually incorrect)
-        pp_rt_up = pp['rt'][pp['accuracy'] == 1] # upper boundary (usually correct)
+        pp_rt_low = pp['rt'][pp['accuracy'] == 0]  # lower boundary (usually incorrect)
+        pp_rt_up = pp['rt'][pp['accuracy'] == 1]  # upper boundary (usually correct)
 
         q_low = pp_rt_low.quantile(q=quantiles, axis=1).T
         q_up = pp_rt_up.quantile(q=quantiles, axis=1).T
 
-        q_low.columns = ['quant_{}_rt_low'.format(int(c*100)) for c in q_low.columns]
-        q_up.columns = ['quant_{}_rt_up'.format(int(c*100)) for c in q_up.columns]
+        q_low.columns = ['quant_{}_rt_low'.format(int(c * 100)) for c in q_low.columns]
+        q_up.columns = ['quant_{}_rt_up'.format(int(c * 100)) for c in q_up.columns]
 
         out = pd.concat([tmp, q_low, q_up], axis=1)
 
@@ -545,7 +548,7 @@ class DDModelResults(ModelResults):
             quantiles = [.1, .3, .5, .7, .9]
 
         data_copy = self.data_info['data'].copy()
-        data_copy['trial'] = np.arange(1, self.data_info['N']+ 1)
+        data_copy['trial'] = np.arange(1, self.data_info['N'] + 1)
         data_copy.set_index('trial', inplace=True)
 
         pp = self.get_posterior_predictives_df(n_posterior_predictives=n_posterior_predictives,
@@ -571,19 +574,21 @@ class DDModelResults(ModelResults):
         tmp_accuracy.set_index(list(np.append(grouping_vars, 'trial')), inplace=True)
         tmp_rt.set_index(list(np.append(grouping_vars, 'trial')), inplace=True)
 
-        pp_rt_low = tmp_rt[tmp_accuracy == 0] # lower boundary (usually incorrect)
-        pp_rt_up = tmp_rt[tmp_accuracy == 1] # upper boundary (usually correct)
+        pp_rt_low = tmp_rt[tmp_accuracy == 0]  # lower boundary (usually incorrect)
+        pp_rt_up = tmp_rt[tmp_accuracy == 1]  # upper boundary (usually correct)
 
         for q in quantiles:
-            new_col = 'quant_{}_rt_low'.format(int(q*100))
+            new_col = 'quant_{}_rt_low'.format(int(q * 100))
 
             out[new_col] = pp_rt_low.reset_index().groupby(grouping_vars).quantile(q).drop('trial',
-                                                                                           axis=1).stack().to_frame('quant')
+                                                                                           axis=1).stack().to_frame(
+                'quant')
 
-            new_col = 'quant_{}_rt_up'.format(int(q*100))
+            new_col = 'quant_{}_rt_up'.format(int(q * 100))
 
             out[new_col] = pp_rt_up.reset_index().groupby(grouping_vars).quantile(q).drop('trial',
-                                                                                          axis=1).stack().to_frame('quant')
+                                                                                          axis=1).stack().to_frame(
+                'quant')
 
         out.index.rename(np.append(grouping_vars, 'sample'), inplace=True)
 

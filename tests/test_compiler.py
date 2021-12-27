@@ -1,6 +1,6 @@
-import rlssm
+from rlssm import DDModel, load_example_dataset
 
-model = rlssm.DDModel(hierarchical_levels=2)
-data = rlssm.load_example_dataset(hierarchical_levels=1)
+model = DDModel(hierarchical_levels=2)
+data = load_example_dataset(hierarchical_levels=1)
 
 print("done")

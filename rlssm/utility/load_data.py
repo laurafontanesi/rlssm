@@ -4,6 +4,7 @@ import pandas as pd
 
 __dir__ = os.path.abspath(os.path.dirname(__file__))
 
+
 def load_example_dataset(hierarchical_levels, n_alternatives=2):
     """Load example dataset for testing and tutorials.
 
@@ -27,7 +28,7 @@ def load_example_dataset(hierarchical_levels, n_alternatives=2):
             # Select 1 random participant
             pp = np.random.choice(pd.unique(data.participant))
             data = data[data.participant == pp].reset_index(drop=True)
-            
+
         return data
 
     else:

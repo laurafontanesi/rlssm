@@ -3,6 +3,7 @@ import pandas as pd
 from .models import Model
 from rlssm.fit.fits_race import raceFittedModel_2A
 
+
 class LBAModel_2A(Model):
     """LBAModel_2A allows to specify a linear ballistic accumulator model for 2 alternatives.
 
@@ -12,6 +13,7 @@ class LBAModel_2A(Model):
     After initializing the model, it can be fitted to a particular dataset using pystan.
 
     """
+
     def __init__(self, hierarchical_levels):
         """Initialize a LBAModel_2A object.
 
@@ -47,24 +49,24 @@ class LBAModel_2A(Model):
         super().__init__(hierarchical_levels, "LBA_2A")
 
         # Define the model parameters
-        self.n_parameters_individual = 5 # k, A, tau, drift_cor, drift_inc
+        self.n_parameters_individual = 5  # k, A, tau, drift_cor, drift_inc
         self.n_parameters_trial = 0
 
         # Define default priors
         if self.hierarchical_levels == 1:
             self.priors = dict(
-                drift_priors={'mu':1, 'sd':5},
-                k_priors={'mu':1, 'sd':1},
-                A_priors={'mu':0.3, 'sd':1},
-                tau_priors={'mu':0, 'sd':1},
-                )
+                drift_priors={'mu': 1, 'sd': 5},
+                k_priors={'mu': 1, 'sd': 1},
+                A_priors={'mu': 0.3, 'sd': 1},
+                tau_priors={'mu': 0, 'sd': 1},
+            )
         else:
             self.priors = dict(
-                drift_priors={'mu_mu':2, 'sd_mu':3, 'mu_sd':1, 'sd_sd':1},
-                k_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
-                A_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
-                tau_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
-                )
+                drift_priors={'mu_mu': 2, 'sd_mu': 3, 'mu_sd': 1, 'sd_sd': 1},
+                k_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                A_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                tau_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+            )
 
         # Set up model label and priors for mechanisms
 
@@ -162,7 +164,7 @@ class LBAModel_2A(Model):
 
         """
         data.reset_index(inplace=True)
-        N = data.shape[0] # n observations
+        N = data.shape[0]  # n observations
 
         data['accuracy_rescale'] = 2
         data.loc[data.accuracy == 1, 'accuracy_rescale'] = 1
@@ -183,8 +185,8 @@ class LBAModel_2A(Model):
 
         if self.hierarchical_levels == 2:
             keys_priors = ["mu_mu", "sd_mu", "mu_sd", "sd_sd"]
-            L = len(pd.unique(data.participant)) # n subjects (levels)
-            data_dict.update({'L': L, 
+            L = len(pd.unique(data.participant))  # n subjects (levels)
+            data_dict.update({'L': L,
                               'participant': data['participant'].values.astype(int)})
         else:
             keys_priors = ["mu", "sd"]
@@ -215,6 +217,7 @@ class LBAModel_2A(Model):
 
         return res
 
+
 class RLLBAModel_2A(Model):
     """RLLBAModel_2A allows to specify a combination of reinforcement learning
     and linear ballistic accumulator models.
@@ -226,6 +229,7 @@ class RLLBAModel_2A(Model):
     After initializing the model, it can be fitted to a particular dataset using pystan.
 
     """
+
     def __init__(self, hierarchical_levels,
                  separate_learning_rates=False,
                  nonlinear_mapping=False):
@@ -274,32 +278,32 @@ class RLLBAModel_2A(Model):
         self.separate_learning_rates = separate_learning_rates
         self.nonlinear_mapping = nonlinear_mapping
 
-        self.n_parameters_individual = 5 # k, A, tau, scaling, learning rate
+        self.n_parameters_individual = 5  # k, A, tau, scaling, learning rate
         self.n_parameters_trial = 0
 
         # Define default priors
         if self.hierarchical_levels == 1:
             self.priors = dict(
-                k_priors={'mu':1, 'sd':1},
-                A_priors={'mu':0.3, 'sd':1},
-                tau_priors={'mu':0, 'sd':1},
-                alpha_priors={'mu':0, 'sd':1},
-                alpha_pos_priors={'mu':0, 'sd':1},
-                alpha_neg_priors={'mu':0, 'sd':1},
-                drift_scaling_priors={'mu':0, 'sd':0.5},
-                utility_priors={'mu':0, 'sd':2}
-                )
+                k_priors={'mu': 1, 'sd': 1},
+                A_priors={'mu': 0.3, 'sd': 1},
+                tau_priors={'mu': 0, 'sd': 1},
+                alpha_priors={'mu': 0, 'sd': 1},
+                alpha_pos_priors={'mu': 0, 'sd': 1},
+                alpha_neg_priors={'mu': 0, 'sd': 1},
+                drift_scaling_priors={'mu': 0, 'sd': 0.5},
+                utility_priors={'mu': 0, 'sd': 2}
+            )
         else:
             self.priors = dict(
-                k_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
-                A_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
-                tau_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
-                alpha_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1},
-                alpha_pos_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1},
-                alpha_neg_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1},
-                drift_scaling_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
-                utility_priors={'mu_mu':0, 'sd_mu':0.1, 'mu_sd':0, 'sd_sd':2}
-                )
+                k_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                A_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                tau_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                alpha_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},
+                alpha_pos_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},
+                alpha_neg_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},
+                drift_scaling_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                utility_priors={'mu_mu': 0, 'sd_mu': 0.1, 'mu_sd': 0, 'sd_sd': 2}
+            )
 
         # Set up model label and priors for mechanisms
         if separate_learning_rates:
@@ -312,7 +316,7 @@ class RLLBAModel_2A(Model):
 
         if self.nonlinear_mapping:
             self.model_label += '_nonlin'
-            self.n_parameters_individual += 1 # utility
+            self.n_parameters_individual += 1  # utility
         del self.priors['utility_priors']
 
         # Set the stan model path
@@ -459,7 +463,7 @@ class RLLBAModel_2A(Model):
 
         """
         data.reset_index(inplace=True)
-        N = data.shape[0] # n observations
+        N = data.shape[0]  # n observations
 
         data['accuracy_rescale'] = 2
         data.loc[data.accuracy == 1, 'accuracy_rescale'] = 1
@@ -496,8 +500,8 @@ class RLLBAModel_2A(Model):
 
         if self.hierarchical_levels == 2:
             keys_priors = ["mu_mu", "sd_mu", "mu_sd", "sd_sd"]
-            L = len(pd.unique(data.participant)) # n subjects (levels)
-            data_dict.update({'L': L, 
+            L = len(pd.unique(data.participant))  # n subjects (levels)
+            data_dict.update({'L': L,
                               'participant': data['participant'].values.astype(int)})
         else:
             keys_priors = ["mu", "sd"]

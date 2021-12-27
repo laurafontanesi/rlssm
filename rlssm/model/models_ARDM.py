@@ -1,6 +1,7 @@
 from __future__ import absolute_import, division, print_function
 import pandas as pd
-from .models import Model
+
+from rlssm import Model
 from rlssm.fit.fits_race import raceFittedModel_2A
 
 
@@ -13,6 +14,7 @@ class ARDModel_2A(Model):
     After initializing the model, it can be fitted to a particular dataset using pystan.
 
     """
+
     def __init__(self, hierarchical_levels):
         """Initialize a ARDModel_2A object.
 
@@ -46,28 +48,27 @@ class ARDModel_2A(Model):
         """
         super().__init__(hierarchical_levels, "ARDM_2A")
 
-
         # Define the model parameters
-        self.n_parameters_individual = 5 # non-decision time, threshold, v0, ws, wd
+        self.n_parameters_individual = 5  # non-decision time, threshold, v0, ws, wd
         self.n_parameters_trial = 0
 
         # Define default priors
         if self.hierarchical_levels == 1:
             self.priors = dict(
-                threshold_priors={'mu':0, 'sd':5},
-                ndt_priors={'mu':0, 'sd':5},
-                v0_priors={'mu':9, 'sd':2},
-                ws_priors={'mu':0, 'sd':2},
-                wd_priors={'mu':3, 'sd':3}
-                )
+                threshold_priors={'mu': 0, 'sd': 5},
+                ndt_priors={'mu': 0, 'sd': 5},
+                v0_priors={'mu': 9, 'sd': 2},
+                ws_priors={'mu': 0, 'sd': 2},
+                wd_priors={'mu': 3, 'sd': 3}
+            )
         else:
             self.priors = dict(
-                threshold_priors={'mu_mu':1, 'sd_mu':3, 'mu_sd':0, 'sd_sd':3},
-                ndt_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
-                v0_priors={'mu_mu':9, 'sd_mu':3, 'mu_sd':2, 'sd_sd':1},
-                ws_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':2, 'sd_sd':1},
-                wd_priors={'mu_mu':3, 'sd_mu':1, 'mu_sd':3, 'sd_sd':1}
-                )
+                threshold_priors={'mu_mu': 1, 'sd_mu': 3, 'mu_sd': 0, 'sd_sd': 3},
+                ndt_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                v0_priors={'mu_mu': 9, 'sd_mu': 3, 'mu_sd': 2, 'sd_sd': 1},
+                ws_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 2, 'sd_sd': 1},
+                wd_priors={'mu_mu': 3, 'sd_mu': 1, 'mu_sd': 3, 'sd_sd': 1}
+            )
 
         # Set up model label and priors for mechanisms
 
@@ -171,7 +172,7 @@ class ARDModel_2A(Model):
 
         """
         data.reset_index(inplace=True)
-        N = data.shape[0] # n observations
+        N = data.shape[0]  # n observations
 
         data['accuracy_rescale'] = 2
         data.loc[data.accuracy == 1, 'accuracy_rescale'] = 1
@@ -196,8 +197,8 @@ class ARDModel_2A(Model):
 
         if self.hierarchical_levels == 2:
             keys_priors = ["mu_mu", "sd_mu", "mu_sd", "sd_sd"]
-            L = len(pd.unique(data.participant)) # n subjects (levels)
-            data_dict.update({'L': L, 
+            L = len(pd.unique(data.participant))  # n subjects (levels)
+            data_dict.update({'L': L,
                               'participant': data['participant'].values.astype(int)})
         else:
             keys_priors = ["mu", "sd"]
@@ -214,14 +215,14 @@ class ARDModel_2A(Model):
         fitted_model = self.compiled_model.sampling(data_dict, **kwargs)
 
         fitted_model = raceFittedModel_2A(fitted_model,
-                                                      data,
-                                                      self.hierarchical_levels,
-                                                      self.model_label,
-                                                      self.family,
-                                                      self.n_parameters_individual,
-                                                      self.n_parameters_trial,
-                                                      print_diagnostics,
-                                                      self.priors)
+                                          data,
+                                          self.hierarchical_levels,
+                                          self.model_label,
+                                          self.family,
+                                          self.n_parameters_individual,
+                                          self.n_parameters_trial,
+                                          print_diagnostics,
+                                          self.priors)
 
         res = fitted_model.extract_results(include_rhat,
                                            include_waic,
@@ -229,6 +230,7 @@ class ARDModel_2A(Model):
                                            include_last_values)
 
         return res
+
 
 class RLARDModel_2A(Model):
     """RLARDModel_2A allows to specify a combination of reinforcement learning
@@ -241,6 +243,7 @@ class RLARDModel_2A(Model):
     After initializing the model, it can be fitted to a particular dataset using pystan.
 
     """
+
     def __init__(self, hierarchical_levels, separate_learning_rates=False):
         """Initialize a RLARDModel_2A object.
 
@@ -282,32 +285,32 @@ class RLARDModel_2A(Model):
 
         self.separate_learning_rates = separate_learning_rates
 
-        self.n_parameters_individual = 6 # non-decision time, threshold, v0, ws, wd, learning rate
+        self.n_parameters_individual = 6  # non-decision time, threshold, v0, ws, wd, learning rate
         self.n_parameters_trial = 0
 
         # Define default priors
         if self.hierarchical_levels == 1:
             self.priors = dict(
-                threshold_priors={'mu':0, 'sd':5},
-                ndt_priors={'mu':0, 'sd':5},
-                alpha_priors={'mu':0, 'sd':1},
-                alpha_pos_priors={'mu':0, 'sd':1},
-                alpha_neg_priors={'mu':0, 'sd':1},
-                v0_priors={'mu':9, 'sd':2},
-                ws_priors={'mu':0, 'sd':2},
-                wd_priors={'mu':3, 'sd':3}
-                )
+                threshold_priors={'mu': 0, 'sd': 5},
+                ndt_priors={'mu': 0, 'sd': 5},
+                alpha_priors={'mu': 0, 'sd': 1},
+                alpha_pos_priors={'mu': 0, 'sd': 1},
+                alpha_neg_priors={'mu': 0, 'sd': 1},
+                v0_priors={'mu': 9, 'sd': 2},
+                ws_priors={'mu': 0, 'sd': 2},
+                wd_priors={'mu': 3, 'sd': 3}
+            )
         else:
             self.priors = dict(
-                threshold_priors={'mu_mu':1, 'sd_mu':3, 'mu_sd':0, 'sd_sd':3},
-                ndt_priors={'mu_mu':1, 'sd_mu':1, 'mu_sd':0, 'sd_sd':1},
-                alpha_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1},
-                alpha_pos_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1},
-                alpha_neg_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':0, 'sd_sd':.1},
-                v0_priors={'mu_mu':9, 'sd_mu':3, 'mu_sd':2, 'sd_sd':1},
-                ws_priors={'mu_mu':0, 'sd_mu':1, 'mu_sd':2, 'sd_sd':1},
-                wd_priors={'mu_mu':3, 'sd_mu':1, 'mu_sd':3, 'sd_sd':1}
-                )
+                threshold_priors={'mu_mu': 1, 'sd_mu': 3, 'mu_sd': 0, 'sd_sd': 3},
+                ndt_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                alpha_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},
+                alpha_pos_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},
+                alpha_neg_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},
+                v0_priors={'mu_mu': 9, 'sd_mu': 3, 'mu_sd': 2, 'sd_sd': 1},
+                ws_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 2, 'sd_sd': 1},
+                wd_priors={'mu_mu': 3, 'sd_mu': 1, 'mu_sd': 3, 'sd_sd': 1}
+            )
 
         # Set up model label and priors for mechanisms
         if separate_learning_rates:
@@ -461,22 +464,22 @@ class RLARDModel_2A(Model):
 
         """
         data.reset_index(inplace=True)
-        N = data.shape[0] # n observations
+        N = data.shape[0]  # n observations
 
         data['accuracy_rescale'] = 2
         data.loc[data.accuracy == 1, 'accuracy_rescale'] = 1
 
         data_dict = {'N': N,
-                         'K': K,
-                         'trial_block': data['trial_block'].values.astype(int),
-                         'f_cor': data['f_cor'].values,
-                         'f_inc': data['f_inc'].values,
-                         'cor_option': data['cor_option'].values.astype(int),
-                         'inc_option': data['inc_option'].values.astype(int),
-                         'block_label': data['block_label'].values.astype(int),
-                         'rt': data['rt'].values,
-                         'accuracy': data['accuracy_rescale'].values.astype(int),
-                         'initial_value': initial_value_learning}
+                     'K': K,
+                     'trial_block': data['trial_block'].values.astype(int),
+                     'f_cor': data['f_cor'].values,
+                     'f_inc': data['f_inc'].values,
+                     'cor_option': data['cor_option'].values.astype(int),
+                     'inc_option': data['inc_option'].values.astype(int),
+                     'block_label': data['block_label'].values.astype(int),
+                     'rt': data['rt'].values,
+                     'accuracy': data['accuracy_rescale'].values.astype(int),
+                     'initial_value': initial_value_learning}
 
         # change default priors:
         if threshold_priors is not None:
@@ -498,8 +501,8 @@ class RLARDModel_2A(Model):
 
         if self.hierarchical_levels == 2:
             keys_priors = ["mu_mu", "sd_mu", "mu_sd", "sd_sd"]
-            L = len(pd.unique(data.participant)) # n subjects (levels)
-            data_dict.update({'L': L, 
+            L = len(pd.unique(data.participant))  # n subjects (levels)
+            data_dict.update({'L': L,
                               'participant': data['participant'].values.astype(int)})
         else:
             keys_priors = ["mu", "sd"]
@@ -516,14 +519,14 @@ class RLARDModel_2A(Model):
         fitted_model = self.compiled_model.sampling(data_dict, **kwargs)
 
         fitted_model = raceFittedModel_2A(fitted_model,
-                                      data,
-                                      self.hierarchical_levels,
-                                      self.model_label,
-                                      self.family,
-                                      self.n_parameters_individual,
-                                      self.n_parameters_trial,
-                                      print_diagnostics,
-                                      self.priors)
+                                          data,
+                                          self.hierarchical_levels,
+                                          self.model_label,
+                                          self.family,
+                                          self.n_parameters_individual,
+                                          self.n_parameters_trial,
+                                          print_diagnostics,
+                                          self.priors)
 
         res = fitted_model.extract_results(include_rhat,
                                            include_waic,
