@@ -1,9 +1,12 @@
-# Reinforcement learning data
-# NON HIER DATA, 2 alternatives
+import os
+import pandas as pd
+
 from rlssm.random.random_RL_RDM import simulate_rlrdm_2A
 from rlssm.random.random_common import generate_task_design_fontanesi
 
 
+# Reinforcement learning data
+# NON HIER DATA, 2 alternatives
 def test_RL_RDM_non_hier(print_results=True):
     print("Test - RL_2A + RDM_2A for non hier data; simulate_rlrdm_2A")
 
@@ -21,6 +24,11 @@ def test_RL_RDM_non_hier(print_results=True):
                              gen_ndt=.23,
                              initial_value_learning=0)
 
+    # Test data produced against reference data
+    reference_path = os.path.join(os.path.dirname(__file__), 'reference_data', 'RL_RDM_non_hier.csv')
+    # data.to_csv(reference_path)
+    reference_data = pd.read_csv(reference_path, index_col=0)
+    # assert data.equals(reference_data)
+
     if print_results:
         print(data)
-

@@ -21,22 +21,27 @@ def test_random_functions(print_results=True):
     testing_dir_path = os.path.dirname(os.path.realpath(__file__))
     success_tests_ran = total_tests = len([item for item in os.listdir(testing_dir_path) if '.py' in item]) - 1
 
-    try:
-        test_generate_dm_hier(print_results)
-        test_generate_dm_non_hier(print_results)
-        test_hier_DDM(print_results)
-        test_hier_RL_2A(print_results)
-        test_hier_RL_2alpha(print_results)
-        test_RL_DDM_2_alpha(print_results)
-        test_RL_DDM_2A(print_results)
-        test_RL_DDM_hier_2alpha(print_results)
-        test_RL_RDM_non_hier(print_results)
-        test_simple_DDM(print_results)
-        test_simple_RL(print_results)
-        test_simple_RL_2alpha(print_results)
-    except Exception as exc:
-        print(f"Random functions tests: Exception occurred: {exc}")
-        success_tests_ran -= 1
-    finally:
-        print(f"Random functions tests: Succesfully ran {success_tests_ran}/{total_tests} tests")
-        print("----------------------------------")
+    tests_to_run = [
+        test_generate_dm_hier,
+        test_generate_dm_non_hier,
+        test_hier_DDM,
+        test_hier_RL_2A,
+        test_hier_RL_2alpha,
+        test_RL_DDM_2_alpha,
+        test_RL_DDM_2A,
+        test_RL_DDM_hier_2alpha,
+        test_RL_RDM_non_hier,
+        test_simple_DDM,
+        test_simple_RL,
+        test_simple_RL_2alpha
+    ]
+
+    for t in tests_to_run:
+        try:
+            t(print_results)
+        except AssertionError as aerr:
+            print(f"{t.__name__}: AssertionError occurred!!! {aerr}")
+            success_tests_ran -= 1
+
+    print(f"Random functions tests: Succesfully ran {success_tests_ran}/{total_tests} tests")
+    print("----------------------------------")

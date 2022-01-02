@@ -4,7 +4,7 @@ from tests.random_functions.test_random_functions_runner import test_random_func
 
 
 def run_all_tests():
-    print_results = False
+    print_results = True
     test_fit_functions(print_results)
     test_model_creation(print_results)
     test_random_functions(print_results)

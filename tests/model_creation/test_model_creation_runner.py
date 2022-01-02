@@ -19,16 +19,21 @@ def test_model_creation(print_results=True):
     if not os.path.exists(pkl_path):
         os.makedirs(pkl_path)
 
-    try:
-        test_ALBA_model(print_results)
-        test_ARDM_model(print_results)
-        test_DDM_model(print_results)
-        test_LBA_model(print_results)
-        test_RDM_model(print_results)
-        test_RL_model(print_results)
-    except Exception as exc:
-        print(f"Model creation tests: Exception occurred: {exc}")
-        success_tests_ran -= 1
-    finally:
-        print(f"Model creation tests: Succesfully ran {success_tests_ran}/{total_tests} tests")
-        print("----------------------------------")
+    tests_to_run = [
+        test_ALBA_model,
+        test_ARDM_model,
+        test_DDM_model,
+        test_LBA_model,
+        test_RDM_model,
+        test_RL_model
+    ]
+
+    for t in tests_to_run:
+        try:
+            t(print_results)
+        except Exception as exc:
+            print(f"Model creation tests: Exception occurred: {exc}")
+            success_tests_ran -= 1
+
+    print(f"Model creation tests: Succesfully ran {success_tests_ran}/{total_tests} tests")
+    print("----------------------------------")
