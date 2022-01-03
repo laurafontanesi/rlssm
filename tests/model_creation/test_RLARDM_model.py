@@ -1,24 +1,10 @@
-import os
-import re
-
 from rlssm import RLARDModel_2A
+from tests.model_creation.common_methods import check_pkl_file_existence
 
 
-def test_RLARDM_model(print_results=True):
-    pkl_path = os.path.join(os.path.dirname(os.getcwd()), 'pkl_files')
+def test_RLARDM_model(hier_levels=1, print_results=True):
+    model_name = "RLARDM"
 
-    rlardm_model = RLARDModel_2A(hierarchical_levels=1)
-    if len([file for file in os.listdir(pkl_path) if re.search('-RLARDM', file)]):
-        print("Success - Test RLARDM pkl model existence")
-    else:
-        print("Failure - Test RLARDM pkl model existence")
+    rlardm_model = RLARDModel_2A(hierarchical_levels=hier_levels)
 
-
-def test_hierRLARDM_model(print_results=True):
-    pkl_path = os.path.join(os.path.dirname(os.getcwd()), 'pkl_files')
-
-    hier_rlardm_model = RLARDModel_2A(hierarchical_levels=2)
-    if len([file for file in os.listdir(pkl_path) if re.search('hierRLARDM', file)]):
-        print("Success - Test hierRLARDM pkl model existence")
-    else:
-        print("Failure - Test hierRLARDM pkl model existence")
+    check_pkl_file_existence(model_name=model_name, hier_levels=hier_levels)

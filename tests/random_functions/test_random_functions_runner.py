@@ -18,9 +18,6 @@ def test_random_functions(print_results=True):
     print("Running the random functions tests")
     print("----------------------------------")
 
-    testing_dir_path = os.path.dirname(os.path.realpath(__file__))
-    success_tests_ran = total_tests = len([item for item in os.listdir(testing_dir_path) if '.py' in item]) - 1
-
     tests_to_run = [
         test_generate_dm_hier,
         test_generate_dm_non_hier,
@@ -36,12 +33,15 @@ def test_random_functions(print_results=True):
         test_simple_RL_2alpha
     ]
 
+    total_tests = len(tests_to_run)
+    success_tests_ran = 0
+
     for t in tests_to_run:
         try:
             t(print_results)
+            success_tests_ran += 1
         except AssertionError as aerr:
             print(f"{t.__name__}: AssertionError occurred!!! {aerr}")
-            success_tests_ran -= 1
 
     print(f"Random functions tests: Succesfully ran {success_tests_ran}/{total_tests} tests")
     print("----------------------------------")

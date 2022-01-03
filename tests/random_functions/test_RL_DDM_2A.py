@@ -30,7 +30,7 @@ def test_RL_DDM_2A(print_results=True):
 
     # Test data produced against reference data
     reference_path = os.path.join(os.path.dirname(__file__), 'reference_data', 'RL_DDM_2A.csv')
-    data.to_csv(reference_path)
+    # data.to_csv(reference_path)
     reference_data = pd.read_csv(reference_path, index_col=0)
     # assert data.equals(reference_data)
 

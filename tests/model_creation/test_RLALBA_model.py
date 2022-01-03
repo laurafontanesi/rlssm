@@ -1,24 +1,10 @@
-import os
-import re
-
 from rlssm import RLALBAModel_2A
+from tests.model_creation.common_methods import check_pkl_file_existence
 
 
-def test_RLALBA_model(print_results=True):
-    pkl_path = os.path.join(os.path.dirname(os.getcwd()), 'pkl_files')
+def test_RLALBA_model(hier_levels=1, print_results=True):
+    model_name = "RLALBA"
 
-    rlalba_model = RLALBAModel_2A(hierarchical_levels=1)
-    if len([file for file in os.listdir(pkl_path) if re.search('-RLALBA', file)]):
-        print("Success - Test RLALBA pkl model existence")
-    else:
-        print("Failure - Test RLALBA pkl model existence")
+    rlalba_model = RLALBAModel_2A(hierarchical_levels=hier_levels)
 
-
-def test_hierRLALBA_model(print_results=True):
-    pkl_path = os.path.join(os.path.dirname(os.getcwd()), 'pkl_files')
-
-    hier_rlalba_model = RLALBAModel_2A(hierarchical_levels=2)
-    if len([file for file in os.listdir(pkl_path) if re.search('hierRLALBA', file)]):
-        print("Success - Test hierRLALBA pkl model existence")
-    else:
-        print("Failure - Test hierRLALBA pkl model existence")
+    check_pkl_file_existence(model_name=model_name, hier_levels=hier_levels)
