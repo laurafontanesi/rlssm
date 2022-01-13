@@ -64,14 +64,15 @@ def test_simple_DDM(print_results=True):
     assert all(i > 0 for i in data1['rel_sp']), f"rel_sp should be positive"
 
     # TEST: data4 response time for accurate decision is faster than for non accurate decision
-    assert np.min(data4.loc[data4['accuracy'] == 1.0]['rt']) <= np.min(data4.loc[data4['accuracy'] == 0]['rt']), \
+    assert np.mean(data4.loc[data4['accuracy'] == 1.0]['rt']) <= np.mean(data4.loc[data4['accuracy'] == 0]['rt']), \
         f"rt(accurate decision) should be faster than rt(non accurate decision)"
 
-    # TEST: min rt for data 5 > min rt for data 1
-    assert np.min(data5['rt']) > np.min(data1['rt']), f"min rt(data5) should be greater than min rt(data1)"
+    # TEST: rt for data 5 > rt for data 1
+    assert np.mean(data5['rt']) > np.mean(data1['rt']), f"min rt(data5) should be greater than min rt(data1)"
 
     # Test data produced against reference data
     reference_path = os.path.join(os.path.dirname(__file__), 'reference_data', 'simple_DDM.csv')
-    data1.to_csv(reference_path)
+    # data1.to_csv(reference_path)
     reference_data = pd.read_csv(reference_path, index_col=0)
     # assert data.equals(reference_data)
+    
