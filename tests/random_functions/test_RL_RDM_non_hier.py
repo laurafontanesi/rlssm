@@ -24,6 +24,9 @@ def test_RL_RDM_non_hier(print_results=True):
                              gen_ndt=.23,
                              initial_value_learning=0)
 
+    # TEST: assure there is only 1 participant
+    assert data.index[-1][0] == 1, f"Number of participants should be 1"
+
     # Test data produced against reference data
     reference_path = os.path.join(os.path.dirname(__file__), 'reference_data', 'RL_RDM_non_hier.csv')
     # data.to_csv(reference_path)

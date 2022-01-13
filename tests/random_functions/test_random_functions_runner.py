@@ -43,5 +43,5 @@ def test_random_functions(print_results=True):
         except AssertionError as aerr:
             print(f"{t.__name__}: AssertionError occurred!!! {aerr}")
 
-    print(f"Random functions tests: Succesfully ran {success_tests_ran}/{total_tests} tests")
+    print(f"Random functions tests: Successfully ran {success_tests_ran}/{total_tests} tests")
     print("----------------------------------")

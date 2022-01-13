@@ -20,7 +20,12 @@ def test_hier_DDM(print_results=True):
     # Test data produced against reference data
     reference_path = os.path.join(os.path.dirname(__file__), 'reference_data', 'hier_DDM.csv')
     # data.to_csv(reference_path)
+
+    # TEST: assure that there are 30 participants
+    assert data.index[-1][0] == 30, f"Number of participants should be 30"
+
     reference_data = pd.read_csv(reference_path, index_col=0)
+    # print(reference_data)
     # assert data.equals(reference_data)
 
     if print_results:

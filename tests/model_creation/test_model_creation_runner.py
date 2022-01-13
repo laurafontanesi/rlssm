@@ -53,5 +53,5 @@ def test_model_creation(print_results=True):
         except Exception as exc:
             print(f"Hier model creation failed: {exc}")
 
-    print(f"Model creation tests: Succesfully ran {success_tests_ran}/{total_tests} tests")
+    print(f"Model creation tests: Successfully ran {success_tests_ran}/{total_tests} tests")
     print("----------------------------------")

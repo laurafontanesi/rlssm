@@ -23,6 +23,9 @@ def test_hier_RL_2A(print_results=True):
                                gen_sd_sensitivity=.1,
                                initial_value_learning=20)
 
+    # TEST: assure that there are 30 participants
+    assert data.index[-1][0] == 30, f"Number of participants should be 30"
+
     # Test data produced against reference data
     reference_path = os.path.join(os.path.dirname(__file__), 'reference_data', 'hier_RL_2A.csv')
     # data.to_csv(reference_path)

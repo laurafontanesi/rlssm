@@ -22,6 +22,9 @@ def test_simple_RL(print_results=True):
                           gen_sensitivity=.5,
                           initial_value_learning=20)
 
+    # TEST: assure there is only 1 participant
+    assert data.index[-1][0] == 1, f"Number of participants should be 1"
+
     # Test data produced against reference data
     reference_path = os.path.join(os.path.dirname(__file__), 'reference_data', 'simple_RL.csv')
     # data.to_csv(reference_path)

@@ -27,6 +27,9 @@ def test_RL_DDM_hier_2alpha(print_results=True):
                                   gen_sd_ndt=.05,
                                   initial_value_learning=20)
 
+    # TEST: assure that there are 30 participants
+    assert data.index[-1][0] == 30, f"Number of participants should be 30"
+
     # Test data produced against reference data
     reference_path = os.path.join(os.path.dirname(__file__), 'reference_data', 'RL_DDM_hier_2alpha.csv')
     # data.to_csv(reference_path)

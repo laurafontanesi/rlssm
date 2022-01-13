@@ -1,13 +1,12 @@
-import os
-from tests.fit_functions.test_fit_experiment_data import test_fit_experiment_data
+from tests.plot_functions.test_plot_posterior import test_plot_posterior
 
 
-def test_fit_functions(print_results=True):
-    print("Running the fit functions tests")
+def test_plot_functions(print_results=True):
+    print("Running the plot functions tests")
     print("----------------------------------")
 
     tests_to_run = [
-        test_fit_experiment_data
+        test_plot_posterior
     ]
 
     total_tests = len(tests_to_run)
@@ -20,5 +19,5 @@ def test_fit_functions(print_results=True):
         except AssertionError as aerr:
             print(f"{t.__name__}: AssertionError occurred!!! {aerr}")
 
-    print(f"Fit functions tests: Successfully ran {success_tests_ran}/{total_tests} tests")
+    print(f"Plot functions tests: Successfully ran {success_tests_ran}/{total_tests} tests")
     print("----------------------------------")
