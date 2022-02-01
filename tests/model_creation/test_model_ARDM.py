@@ -2,7 +2,7 @@ from rlssm import ARDModel_2A
 from tests.model_creation.common_methods import check_pkl_file_existence
 
 
-def test_ARDM_model(hier_levels=1, print_results=True):
+def test_model_ARDM(hier_levels=1, print_results=True):
     model_name = "ARDM"
 
     ardm_model = ARDModel_2A(hierarchical_levels=hier_levels)

@@ -168,22 +168,30 @@ class RDModel_2A(Model):
             self.priors['threshold_priors'] = threshold_priors
         if ndt_priors is not None:
             self.priors['ndt_priors'] = ndt_priors
-
-        data_dict = {'N': N,
-                     'rt': data['rt'].values,
-                     'accuracy': data['accuracy_rescale'].values.astype(int),
-                     'threshold_priors': [threshold_priors['mu'], threshold_priors['sd']],
-                     'ndt_priors': [ndt_priors['mu'], ndt_priors['sd']],
-                     'drift_priors': [drift_priors['mu'], drift_priors['sd']]
-                     }
-
-        if self.hierarchical_levels == 2:
+        if self.hierarchical_levels == 1:
+            data_dict = {'N': N,
+                         'rt': data['rt'].values,
+                         'accuracy': data['accuracy_rescale'].values.astype(int),
+                         'threshold_priors': [threshold_priors['mu'], threshold_priors['sd']],
+                         'ndt_priors': [ndt_priors['mu'], ndt_priors['sd']],
+                         'drift_priors': [drift_priors['mu'], drift_priors['sd']]
+                         }
+            keys_priors = ["mu", "sd"]
+        else:
+            data_dict = {'N': N,
+                         'rt': data['rt'].values,
+                         'accuracy': data['accuracy_rescale'].values.astype(int),
+                         'threshold_priors': [threshold_priors['mu_mu'], threshold_priors['sd_mu'],
+                                              threshold_priors['mu_sd'], threshold_priors['sd_sd']],
+                         'ndt_priors': [ndt_priors['mu_mu'], ndt_priors['sd_mu'], ndt_priors['mu_sd'],
+                                        ndt_priors['sd_sd']],
+                         'drift_priors': [drift_priors['mu_mu'], drift_priors['sd_mu'], drift_priors['mu_sd'],
+                                          drift_priors['sd_sd']]
+                         }
             keys_priors = ["mu_mu", "sd_mu", "mu_sd", "sd_sd"]
             L = len(pd.unique(data.participant))  # n subjects (levels)
             data_dict.update({'L': L,
                               'participant': data['participant'].values.astype(int)})
-        else:
-            keys_priors = ["mu", "sd"]
 
         # Add data for mechanisms:
 

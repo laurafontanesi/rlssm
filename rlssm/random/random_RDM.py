@@ -1,70 +1,6 @@
 import numpy as np
 
 
-# PURE RDM_2A
-def rdm_trial(I, threshold, non_decision_time, noise_constant=1, dt=0.001, max_rt=10):
-    n_choice = len(I)
-    x = np.zeros(n_choice)
-    stop_race = False
-    rt = 0
-
-    while not stop_race:
-        for i in range(n_choice):
-            x[i] += np.random.normal(I[i] * dt, noise_constant * (dt ** (1 / 2)), 1)[0]
-        rt += dt
-        not_reached = np.sum(x < threshold)
-        if not_reached == n_choice:
-            stop_race = False
-            if rt > max_rt:
-                x = np.zeros(n_choice)
-                rt = 0
-        elif not_reached == n_choice - 1:
-            stop_race = True
-        else:
-            stop_race = False
-            x = np.zeros(n_choice)
-            rt = 0
-
-    return rt + non_decision_time, np.where(x >= threshold)[0][0] + 1
-
-
-def random_rdm_nA(drift, threshold, ndt, noise_constant=1, dt=0.001, max_rt=10):
-    shape = ndt.shape
-    n_options = drift.shape[1]
-    choice = np.empty(shape)
-    choice[:] = np.nan
-    rt = np.empty(shape)
-    rt[:] = np.nan
-
-    max_tsteps = max_rt / dt
-
-    x = np.zeros(drift.shape)
-    tstep = 0
-    ongoing = np.array(np.ones(drift.shape), dtype=bool)
-    ended = np.array(np.ones(drift.shape), dtype=bool)
-
-    stop_race = False
-
-    while np.sum(ongoing) > 0 and tstep < max_tsteps:
-        x[ongoing] += np.random.normal(drift[ongoing] * dt,
-                                       noise_constant * np.sqrt(dt),
-                                       np.sum(ongoing))
-        tstep += 1
-
-        for i in range(n_options):
-            ended[:, i, :] = (x[:, i, :] >= threshold)
-
-        # store results and filter out ended trials
-        for i in range(n_options):
-            if np.sum(ended[:, i, :]) > 0:
-                choice[np.logical_and(ended[:, i, :], ongoing[:, i, :])] = i + 1
-                rt[np.logical_and(ended[:, i, :], ongoing[:, i, :])] = dt * tstep + ndt[
-                    np.logical_and(ended[:, i, :], ongoing[:, i, :])]
-                ongoing[:, i, :][ended[:, i, :]] = False
-
-    return rt, choice
-
-
 def random_rdm_2A(cor_drift, inc_drift, threshold, ndt, noise_constant=1, dt=0.001, max_rt=10):
     shape = cor_drift.shape
     acc = np.empty(shape)
@@ -104,3 +40,25 @@ def random_rdm_2A(cor_drift, inc_drift, threshold, ndt, noise_constant=1, dt=0.0
             rt[np.logical_and(ended_incorrect, ongoing)] = dt * tstep + ndt[np.logical_and(ended_incorrect, ongoing)]
             ongoing[ended_incorrect] = False
     return rt, acc
+
+
+def simulate_rdm_2A(n_trials,
+                    gen_cor_drift,
+                    gen_inc_drift,
+                    gen_threshold,  # Threshold should be A in function random_lba_2A
+                    gen_ndt,
+                    gen_rel_sp=.5,
+                    participant_label=1,
+                    gen_drift_trialsd=None,
+                    gen_rel_sp_trialsd=None,
+                    **kwargs):
+    None
+
+
+def simulate_hier_rdm(n_trials, n_participants,
+                      gen_mu_drift, gen_sd_drift,
+                      gen_mu_threshold, gen_sd_threshold,
+                      gen_mu_ndt, gen_sd_ndt,
+                      gen_mu_rel_sp=.5, gen_sd_rel_sp=None,
+                      **kwargs):
+    None

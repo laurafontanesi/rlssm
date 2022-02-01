@@ -1,16 +1,11 @@
-import os
-
 import numpy as np
-import pandas as pd
 
-from rlssm.random.random_DDM import simulate_ddm
+from rlssm.random.random_DDM import simulate_ddm, simulate_hier_ddm
+from rlssm.random.random_common import generate_task_design_fontanesi
 
 
 # Sequential sampling models data
-# NON HIER DATA
-def test_simple_DDM(print_results=True):
-    print("Test - simple simulate_ddm")
-
+def test_random_DDM(print_results=True):
     data1 = simulate_ddm(
         n_trials=1000,
         gen_drift=.6,
@@ -51,11 +46,13 @@ def test_simple_DDM(print_results=True):
     assert data1.index[-1][0] == 1, f"Number of participants should be 1"
 
     # TEST: check that accuracy of data1 > accuracy of data2
-    assert np.mean(data1['accuracy']) > np.mean(data2['accuracy']), f"Accuracy(data1) is not better than accuracy(data2)"
+    assert np.mean(data1['accuracy']) > np.mean(
+        data2['accuracy']), f"Accuracy(data1) is not better than accuracy(data2)"
 
     # TEST: check if data3 has slower response time than data1 and data3 has higher accuracy than data1
     assert np.mean(data3['rt']) > np.mean(data1['rt']), f"RT data3 is not slower than RT data1"
-    assert np.mean(data3['accuracy']) > np.mean(data1['accuracy']), f"Accuracy(data3) is not better than accuracy(data1)"
+    assert np.mean(data3['accuracy']) > np.mean(
+        data1['accuracy']), f"Accuracy(data3) is not better than accuracy(data1)"
 
     # TEST: threshold should be positive
     assert all(i > 0 for i in data1['threshold']), f"Threshold should be positive"
@@ -70,9 +67,22 @@ def test_simple_DDM(print_results=True):
     # TEST: rt for data 5 > rt for data 1
     assert np.mean(data5['rt']) > np.mean(data1['rt']), f"min rt(data5) should be greater than min rt(data1)"
 
-    # Test data produced against reference data
-    reference_path = os.path.join(os.path.dirname(__file__), 'reference_data', 'simple_DDM.csv')
-    # data1.to_csv(reference_path)
-    reference_data = pd.read_csv(reference_path, index_col=0)
-    # assert data.equals(reference_data)
-    
+    # TEST hierarchical version
+    dm = generate_task_design_fontanesi(n_trials_block=80,
+                                        n_blocks=3,
+                                        n_participants=30,
+                                        trial_types=['1-2', '1-3', '2-4', '3-4'],
+                                        mean_options=[34, 38, 50, 54],
+                                        sd_options=[5, 5, 5, 5])
+
+    data_hier = simulate_hier_ddm(n_trials=100,
+                                  n_participants=30,
+                                  gen_mu_drift=1,
+                                  gen_sd_drift=.5,
+                                  gen_mu_threshold=1,
+                                  gen_sd_threshold=.1,
+                                  gen_mu_ndt=.23,
+                                  gen_sd_ndt=.1)
+
+    # TEST: assure that there are 30 participants
+    assert data_hier.index[-1][0] == 30, f"Number of participants should be 30"

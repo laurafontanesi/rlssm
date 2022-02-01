@@ -2,7 +2,7 @@ from rlssm import ALBAModel_2A
 from tests.model_creation.common_methods import check_pkl_file_existence
 
 
-def test_ALBA_model(hier_levels=1, print_results=True):
+def test_model_ALBA(hier_levels=1, print_results=True):
     model_name = "ALBA"
 
     alba_model = ALBAModel_2A(hierarchical_levels=hier_levels)

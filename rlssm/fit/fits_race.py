@@ -68,7 +68,8 @@ class raceFittedModel_2A(FittedModel):
 
         # trial parameters
         f_label = self.family.split('_')[0]
-        if f_label == 'LBA_2A' or f_label == 'ALBA_2A' or f_label == 'RLLBA' or f_label == 'RLALBA':
+        lba_labels = ['LBA_2A', 'ALBA_2A', 'RLLBA', 'RLALBA']
+        if f_label in lba_labels or self.family in lba_labels:
             trial_samples = self.stan_model.extract(['k_t',
                                                      'A_t',
                                                      'tau_t',

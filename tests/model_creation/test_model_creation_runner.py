@@ -1,16 +1,16 @@
 import os
 
-from tests.model_creation.test_ALBA_model import test_ALBA_model
-from tests.model_creation.test_ARDM_model import test_ARDM_model
-from tests.model_creation.test_DDM_model import test_DDM_model
-from tests.model_creation.test_LBA_model import test_LBA_model
-from tests.model_creation.test_RDM_model import test_RDM_model
-from tests.model_creation.test_RLALBA_model import test_RLALBA_model
-from tests.model_creation.test_RLARDM_model import test_RLARDM_model
-from tests.model_creation.test_RLDDM_model import test_RLDDM_model
-from tests.model_creation.test_RLLBA_model import test_RLLBA_model
-from tests.model_creation.test_RLRDM_model import test_RLRDM_model
-from tests.model_creation.test_RL_model import test_RL_model
+from tests.model_creation.test_model_ALBA import test_model_ALBA
+from tests.model_creation.test_model_ARDM import test_model_ARDM
+from tests.model_creation.test_model_DDM import test_model_DDM
+from tests.model_creation.test_model_LBA import test_model_LBA
+from tests.model_creation.test_model_RDM import test_model_RDM
+from tests.model_creation.test_model_RL import test_model_RL
+from tests.model_creation.test_model_RLALBA import test_model_RLALBA
+from tests.model_creation.test_model_RLARDM import test_model_RLARDM
+from tests.model_creation.test_model_RLDDM import test_model_RLDDM
+from tests.model_creation.test_model_RLLBA import test_model_RLLBA
+from tests.model_creation.test_model_RLRDM import test_model_RLRDM
 
 
 def test_model_creation(print_results=True):
@@ -22,21 +22,23 @@ def test_model_creation(print_results=True):
         os.makedirs(pkl_path)
 
     tests_to_run = [
-        test_ALBA_model,
-        test_ARDM_model,
-        test_DDM_model,
-        test_LBA_model,
-        test_RDM_model,
-        test_RL_model,
-        test_RLALBA_model,
-        test_RLARDM_model,
-        test_RLDDM_model,
-        test_RLLBA_model,
-        test_RLRDM_model
+        test_model_ALBA,
+        test_model_ARDM,
+        test_model_DDM,
+        test_model_LBA,
+        test_model_RDM,
+        test_model_RL,
+        test_model_RLALBA,
+        test_model_RLARDM,
+        test_model_RLDDM,
+        test_model_RLLBA,
+        test_model_RLRDM
     ]
 
     success_tests_ran = 0
     total_tests = 2 * len(tests_to_run)
+
+    failing_tests = []
 
     for t in tests_to_run:
         # Test creating the non-hier models
@@ -44,14 +46,18 @@ def test_model_creation(print_results=True):
             t(hier_levels=1, print_results=print_results)
             success_tests_ran += 1
         except Exception as exc:
-            print(f"Non hier model creation failed: {exc}")
+            failing_tests.append(t.__name__)
+            print(f"{t.__name__}: Non hier model creation failed: {exc}")
 
         # Test creating the hier models
         try:
             t(hier_levels=2, print_results=print_results)
             success_tests_ran += 1
         except Exception as exc:
-            print(f"Hier model creation failed: {exc}")
+            failing_tests.append(t.__name__)
+            print(f"{t.__name__}: Hier model creation failed: {exc}")
 
     print(f"Model creation tests: Successfully ran {success_tests_ran}/{total_tests} tests")
     print("----------------------------------")
+
+    return failing_tests
