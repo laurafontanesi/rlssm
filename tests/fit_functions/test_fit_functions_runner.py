@@ -11,7 +11,7 @@ def test_fit_functions(print_results=True, test_hier=True):
     tests_to_run = [
         test_fit_DDM,
         test_fit_LBA,
-        test_fit_RDM,.flatten()
+        test_fit_RDM,
         test_fit_RL
     ]
 
