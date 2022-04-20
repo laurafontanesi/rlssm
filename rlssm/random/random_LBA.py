@@ -106,19 +106,19 @@ def simulate_lba_2A(n_trials,
     n_trials : int
         Number of trials to simulate.
 
-    gen_cor_drift : float
+    gen_cor_drift : float, list, or numpy.ndarray
         Drift-rate of the Linear Ballistic Accumulator - correct trials.
 
-    gen_inc_drift : float
+    gen_inc_drift : float, list, or numpy.ndarray
         Drift-rate of the Linear Ballistic Accumulator - incorrect trials.
 
-    gen_threshold : float
+    gen_threshold : float, list, or numpy.ndarray
         Threshold of the Linear Ballistic Accumulator. Also called A.
 
-    gen_ndt : float
+    gen_ndt : float, list, or numpy.ndarray
         Non-decision time of the Linear Ballistic Accumulator. Also called tau.
 
-    gen_rel_sp : float
+    gen_rel_sp : float, list, or numpy.ndarray
         Relative starting point of the Linear Ballistic Accumulator. Also called k.
 
     Optional Parameters
@@ -156,13 +156,13 @@ def simulate_lba_2A(n_trials,
 
         >>> print(data1.head())
 
-                             k   tau    A  cor_drift  inc_drift        rt  accuracy
-        participant trial
-        1           1      0.8  0.23  1.5   0.453216   0.806479  1.534426       0.0
-                    2      0.8  0.23  1.5   0.725115  -0.061165  1.861768       1.0
-                    3      0.8  0.23  1.5   0.478014   0.412137  3.400750       1.0
-                    4      0.8  0.23  1.5   0.966026   1.184433  1.290519       1.0
-                    5      0.8  0.23  1.5   1.125275   0.268871  1.906879       1.0
+                           rel_sp   ndt  threshold  ...  inc_drift        rt  accuracy
+        participant trial                           ...
+        1           1         0.8  0.23        1.5  ...   0.202502  2.196517       1.0
+                    2         0.8  0.23        1.5  ...   0.878639  1.293609       0.0
+                    3         0.8  0.23        1.5  ...   0.275427  1.932238       1.0
+                    4         0.8  0.23        1.5  ...   1.536833  0.975452       1.0
+                    5         0.8  0.23        1.5  ...   0.768345  1.288486       1.0
     """
     # return a pandas dataframe with the following columns:
     # index: participant + trial, cor_drift, inc_drift, threshold, ndt, rt, accuracy

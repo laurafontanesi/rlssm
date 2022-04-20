@@ -641,7 +641,7 @@
     {
      "data": {
       "text/plain": [
-       "odict_keys(['k_t', 'A_t', 'tau_t', 'drift_cor_t', 'drift_inc_t'])"
+       "odict_keys(['k_t', 'A_t', 'ndt_t', 'drift_cor_t', 'drift_inc_t'])"
       ]
      },
      "execution_count": 8,

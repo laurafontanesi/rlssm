@@ -118,7 +118,7 @@ def simulate_hier_rl_2A(task_design,
 
     Note
     ----
-    The number of options can be actaully higher than 2,
+    The number of options can be actually higher than 2,
     but only 2 options (one correct, one incorrect) are presented
     in each trial.
     It is important that "trial_block" is set to 1 at the beginning

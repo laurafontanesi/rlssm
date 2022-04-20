@@ -1,4 +1,4 @@
-participant,trial,drift,drift_trialmu,drift_trialsd,rel_sp,threshold,ndt,rt,accuracy
+participant,trial,drift,drift_trial_mu,drift_trialsd,rel_sp,threshold,ndt,rt,accuracy
 1,1,0.536557758548863,0.6,0.1,0.5,1.4,0.23,0.474,1.0
 1,2,0.5906558890506458,0.6,0.1,0.5,1.4,0.23,0.751,1.0
 1,3,0.6661618782383085,0.6,0.1,0.5,1.4,0.23,0.528,1.0

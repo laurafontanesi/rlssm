@@ -50,23 +50,23 @@ class LBAModel_2A(Model):
         super().__init__(hierarchical_levels, "LBA_2A")
 
         # Define the model parameters
-        self.n_parameters_individual = 5  # k, A, tau, drift_cor, drift_inc
+        self.n_parameters_individual = 5  # rel_sp, threshold, ndt, drift_cor, drift_inc
         self.n_parameters_trial = 0
 
         # Define default priors
         if self.hierarchical_levels == 1:
             self.priors = dict(
                 drift_priors={'mu': 1, 'sd': 5},
-                k_priors={'mu': 1, 'sd': 1},
-                A_priors={'mu': 0.3, 'sd': 1},
-                tau_priors={'mu': 0, 'sd': 1},
+                rel_sp_priors={'mu': 1, 'sd': 1},
+                threshold_priors={'mu': 0.3, 'sd': 1},
+                ndt_priors={'mu': 0, 'sd': 1},
             )
         else:
             self.priors = dict(
                 drift_priors={'mu_mu': 2, 'sd_mu': 3, 'mu_sd': 1, 'sd_sd': 1},
-                k_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
-                A_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
-                tau_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                rel_sp_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                threshold_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                ndt_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
             )
 
         # Set up model label and priors for mechanisms
@@ -274,15 +274,15 @@ class RLLBAModel_2A(Model):
         self.separate_learning_rates = separate_learning_rates
         self.nonlinear_mapping = nonlinear_mapping
 
-        self.n_parameters_individual = 5  # k, A, tau, scaling, learning rate
+        self.n_parameters_individual = 5  # rel_sp, threshold, ndt, scaling, learning rate
         self.n_parameters_trial = 0
 
         # Define default priors
         if self.hierarchical_levels == 1:
             self.priors = dict(
-                k_priors={'mu': 1, 'sd': 1},
-                A_priors={'mu': 0.3, 'sd': 1},
-                tau_priors={'mu': 0, 'sd': 1},
+                rel_sp_priors={'mu': 1, 'sd': 1},
+                threshold_priors={'mu': 0.3, 'sd': 1},
+                ndt_priors={'mu': 0, 'sd': 1},
                 alpha_priors={'mu': 0, 'sd': 1},
                 alpha_pos_priors={'mu': 0, 'sd': 1},
                 alpha_neg_priors={'mu': 0, 'sd': 1},
@@ -291,9 +291,9 @@ class RLLBAModel_2A(Model):
             )
         else:
             self.priors = dict(
-                k_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
-                A_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
-                tau_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                rel_sp_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                threshold_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                ndt_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
                 alpha_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},
                 alpha_pos_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},
                 alpha_neg_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},

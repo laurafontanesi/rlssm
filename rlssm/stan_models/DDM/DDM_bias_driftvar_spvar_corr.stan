@@ -6,18 +6,18 @@ data {
 	int<lower=0,upper=1> accuracy_flipped[N];		// flipped accuracy (1, 0)
 	real<lower=0> rt[N];							// rt
 
-	vector[2] drift_trialmu_priors;					// mean and sd of the prior
+	vector[2] drift_trial_mu_priors;					// mean and sd of the prior
 	vector[2] threshold_priors;						// mean and sd of the prior
 	vector[2] ndt_priors;							// mean and sd of the prior
-	vector[2] rel_sp_trialmu_priors;				// mean and sd of the prior
-	vector[2] drift_trialsd_priors;					// mean and sd of the cauchy prior
-	vector[2] rel_sp_trialsd_priors;				// mean and sd of the cauchy prior
+	vector[2] rel_sp_trial_mu_priors;				// mean and sd of the prior
+	vector[2] drift_trial_sd_priors;					// mean and sd of the cauchy prior
+	vector[2] rel_sp_trial_sd_priors;				// mean and sd of the cauchy prior
 	real<lower=0> corr_matrix_prior;				// eta parameter of the LKJ prior
 }
 parameters {
 	corr_matrix[n_cor_par] omega;					// correlation matrix for trial-specific drift and rel_sp
 	vector[n_cor_par] par_mean_vector;				// drift and rel_sp means
-	vector<lower=0>[n_cor_par] tau;					// drift and rel_sp SD
+	vector<lower=0>[n_cor_par] ndt;					// drift and rel_sp SD
 	vector[n_cor_par] z_par_trial[N];				// trial-specific (deviations from the mean) drift-rate and rel_sp
 	real threshold;
 	real ndt;
@@ -30,28 +30,28 @@ transformed parameters {
 	real<lower=0, upper=1> rel_sp_ll[N];			// trial-by-trial relative starting point for likelihood (incorporates accuracy)
 	real<lower=0, upper=1> rel_sp_t[N];				// trial-by-trial relative starting point
 
-	real drift_trialmu;
-	real rel_sp_trialmu;
-	real drift_trialsd;
-	real rel_sp_trialsd;
+	real drift_trial_mu;
+	real rel_sp_trial_mu;
+	real drift_trial_sd;
+	real rel_sp_trial_sd;
 	real corr_drift_rel_sp;
-	real transf_drift_trialmu;
-	real transf_rel_sp_trialmu;
-	real<lower=0> transf_drift_trialsd;
-	real<lower=0> transf_rel_sp_trialsd;
+	real transf_drift_trial_mu;
+	real transf_rel_sp_trial_mu;
+	real<lower=0> transf_drift_trial_sd;
+	real<lower=0> transf_rel_sp_trial_sd;
 	real transf_corr_drift_rel_sp;
 	real transf_threshold;
 	real transf_ndt;
 
-	drift_trialmu = par_mean_vector[1];			// for the output
-	rel_sp_trialmu = Phi(par_mean_vector[2]);
-	drift_trialsd = tau[1];
-	rel_sp_trialsd = tau[2];
+	drift_trial_mu = par_mean_vector[1];			// for the output
+	rel_sp_trial_mu = Phi(par_mean_vector[2]);
+	drift_trial_sd = ndt[1];
+	rel_sp_trial_sd = ndt[2];
 	corr_drift_rel_sp = omega[2,1];
-	transf_drift_trialmu = drift_trialmu;
-	transf_rel_sp_trialmu = rel_sp_trialmu;
-	transf_drift_trialsd = drift_trialsd;
-	transf_rel_sp_trialsd = rel_sp_trialsd;
+	transf_drift_trial_mu = drift_trial_mu;
+	transf_rel_sp_trial_mu = rel_sp_trial_mu;
+	transf_drift_trial_sd = drift_trial_sd;
+	transf_rel_sp_trial_sd = rel_sp_trial_sd;
 	transf_corr_drift_rel_sp = corr_drift_rel_sp;
 	transf_threshold = log(1 + exp(threshold));
 	transf_ndt = log(1 + exp(ndt));
@@ -67,15 +67,15 @@ transformed parameters {
 }
 model {
 	omega ~ lkj_corr(corr_matrix_prior);
-	par_mean_vector[1] ~ normal(drift_trialmu_priors[1], drift_trialmu_priors[2]);
-	par_mean_vector[2] ~ normal(rel_sp_trialmu_priors[1], rel_sp_trialmu_priors[2]);
-	tau[1] ~ cauchy(drift_trialsd_priors[1], drift_trialsd_priors[2]);
-	tau[2] ~ cauchy(rel_sp_trialsd_priors[1], rel_sp_trialsd_priors[2]);
+	par_mean_vector[1] ~ normal(drift_trial_mu_priors[1], drift_trial_mu_priors[2]);
+	par_mean_vector[2] ~ normal(rel_sp_trial_mu_priors[1], rel_sp_trial_mu_priors[2]);
+	ndt[1] ~ cauchy(drift_trial_sd_priors[1], drift_trial_sd_priors[2]);
+	ndt[2] ~ cauchy(rel_sp_trial_sd_priors[1], rel_sp_trial_sd_priors[2]);
 	threshold ~ normal(threshold_priors[1], threshold_priors[2]);
 	ndt ~ normal(ndt_priors[1], ndt_priors[2]);
 	
 	for (n in 1:N)
-		z_par_trial[n] ~ multi_normal(par_mean_vector, quad_form_diag(omega, tau));
+		z_par_trial[n] ~ multi_normal(par_mean_vector, quad_form_diag(omega, ndt));
 
 	rt ~ wiener(threshold_t, ndt_t, rel_sp_ll, drift_ll);
 }

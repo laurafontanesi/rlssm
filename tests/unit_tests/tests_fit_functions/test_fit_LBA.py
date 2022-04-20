@@ -12,10 +12,9 @@ class TestFitLBA(unittest.TestCase):
 
         data = load_example_dataset(hierarchical_levels=hier_levels)
 
-        model_fit = model.fit(
-            data,
-            iter=1000,
-            chains=2)
+        model_fit = model.fit(data,
+                              iter=1000,
+                              chains=2)
 
     def test_fit_LBA_hier(self):
         hier_levels = 2

@@ -46,7 +46,7 @@ functions{
 
      }
 
-     real lba_lpdf(matrix RT, vector k, vector A, vector drift_cor, vector drift_inc, vector tau){
+     real lba_lpdf(matrix RT, vector rel_sp, vector threshold, vector drift_cor, vector drift_inc, vector ndt){
 
           real t;
           real b;
@@ -59,18 +59,18 @@ functions{
           s = 1;
 
           for (i in 1:rows(RT)){
-               b = A[i] + k[i];
-               t = RT[i,1] - tau[i];
+               b = threshold[i] + rel_sp[i];
+               t = RT[i,1] - ndt[i];
                if(t > 0){
                     cdf = 1;
 
                     if(RT[i,2] == 1){
-                      pdf = lba_pdf(t, b, A[i], drift_cor[i], s);
-                      cdf = 1-lba_cdf(t, b, A[i], drift_inc[i], s);
+                      pdf = lba_pdf(t, b, threshold[i], drift_cor[i], s);
+                      cdf = 1-lba_cdf(t, b, threshold[i], drift_inc[i], s);
                     }
                     else{
-                      pdf = lba_pdf(t, b, A[i], drift_inc[i], s);
-                      cdf = 1-lba_cdf(t, b, A[i], drift_cor[i], s);
+                      pdf = lba_pdf(t, b, threshold[i], drift_inc[i], s);
+                      cdf = 1-lba_cdf(t, b, threshold[i], drift_cor[i], s);
                     }
                     prob_neg = Phi(-drift_cor[i]/s) * Phi(-drift_inc[i]/s);
                     prob[i] = pdf*cdf;
@@ -105,9 +105,9 @@ data{
 
   real<lower=0> rt[N];							// reaction time
 
-  vector[2] k_priors;
-	vector[2] A_priors;
-  vector[2] tau_priors;
+  vector[2] rel_sp_priors;
+	vector[2] threshold_priors;
+  vector[2] ndt_priors;
   vector[2] v0_priors;
   vector[2] ws_priors;
   vector[2] wd_priors;
@@ -128,9 +128,9 @@ transformed data {
 }
 
 parameters {
-  real k;
-  real A;
-  real tau;
+  real rel_sp;
+  real threshold;
+  real ndt;
   real v0;
   real ws;
   real wd;
@@ -139,9 +139,9 @@ parameters {
 }
 
 transformed parameters {
-  vector<lower=0> [N] k_t;				    // trial-by-trial
-	vector<lower=0> [N] A_t;						// trial-by-trial
-  vector<lower=0> [N] tau_t;				 // trial-by-trial ndt
+  vector<lower=0> [N] rel_sp_t;				    // trial-by-trial
+	vector<lower=0> [N] threshold_t;						// trial-by-trial
+  vector<lower=0> [N] ndt_t;				 // trial-by-trial ndt
 	vector<lower=0> [N] drift_cor_t;				// trial-by-trial drift rate for predictions
 	vector<lower=0> [N] drift_inc_t;				// trial-by-trial drift rate for predictions
 
@@ -151,18 +151,18 @@ transformed parameters {
 
   real Q_mean;
 
-  real<lower=0> transf_k;
-  real<lower=0> transf_A;
-  real<lower=0> transf_tau;
+  real<lower=0> transf_rel_sp;
+  real<lower=0> transf_threshold;
+  real<lower=0> transf_ndt;
   real<lower=0> transf_v0;
   real<lower=0> transf_ws;
   real<lower=0> transf_wd;
   real<lower=0, upper=1> transf_alpha_pos;
 	real<lower=0, upper=1> transf_alpha_neg;
 
-  transf_k = log(1 + exp(k));
-	transf_A = log(1 + exp(A));
-	transf_tau = log(1 + exp(tau));
+  transf_rel_sp = log(1 + exp(rel_sp));
+	transf_threshold = log(1 + exp(threshold));
+	transf_ndt = log(1 + exp(ndt));
   transf_v0 = log(1 + exp(v0));
   transf_ws = log(1 + exp(ws));
   transf_wd = log(1 + exp(wd));
@@ -184,9 +184,9 @@ transformed parameters {
     PE_cor = f_cor[n] - Q[cor_option[n]];
 		PE_inc = f_inc[n] - Q[inc_option[n]];
 
-    k_t[n] = transf_k;
-		A_t[n] = transf_A;
-    tau_t[n] = transf_tau;
+    rel_sp_t[n] = transf_rel_sp;
+		threshold_t[n] = transf_threshold;
+    ndt_t[n] = transf_ndt;
     drift_cor_t[n] = transf_v0 + transf_wd * (Q[cor_option[n]] - Q[inc_option[n]]) + transf_ws * (Q[cor_option[n]] + Q[inc_option[n]]);
     drift_inc_t[n] = transf_v0 + transf_wd * (Q[inc_option[n]] - Q[cor_option[n]]) + transf_ws * (Q[cor_option[n]] + Q[inc_option[n]]);
 
@@ -207,23 +207,23 @@ transformed parameters {
 }
 
 model {
-     k ~ normal(k_priors[1], k_priors[2]);
-     A ~ normal(A_priors[1], A_priors[2]);
-     tau ~ normal(tau_priors[1], tau_priors[2]);
+     rel_sp ~ normal(rel_sp_priors[1], rel_sp_priors[2]);
+     threshold ~ normal(threshold_priors[1], threshold_priors[2]);
+     ndt ~ normal(ndt_priors[1], ndt_priors[2]);
      v0 ~ normal(v0_priors[1], v0_priors[2]);
      ws ~ normal(ws_priors[1], ws_priors[2]);
      wd ~ normal(wd_priors[1], wd_priors[2]);
      alpha_pos ~ normal(alpha_pos_priors[1], alpha_pos_priors[2]);
    	 alpha_neg ~ normal(alpha_neg_priors[1], alpha_neg_priors[2]);
 
-     RT ~ lba(k_t, A_t, drift_cor_t, drift_inc_t, tau_t);
+     RT ~ lba(rel_sp_t, threshold_t, drift_cor_t, drift_inc_t, ndt_t);
 }
 
 generated quantities {
     vector[N] log_lik;
   	{
     	for (n in 1:N){
-    		log_lik[n] = lba_lpdf(block(RT, n, 1, 1, 2)| segment(k_t, n, 1), segment(A_t, n, 1), segment(drift_cor_t, n, 1), segment(drift_inc_t, n, 1), segment(tau_t, n, 1));
+    		log_lik[n] = lba_lpdf(block(RT, n, 1, 1, 2)| segment(rel_sp_t, n, 1), segment(threshold_t, n, 1), segment(drift_cor_t, n, 1), segment(drift_inc_t, n, 1), segment(ndt_t, n, 1));
     	}
   	}
 }

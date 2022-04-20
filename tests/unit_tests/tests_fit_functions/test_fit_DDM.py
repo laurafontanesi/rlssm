@@ -18,6 +18,10 @@ class TestFitDDM(unittest.TestCase):
                               pointwise_waic=False,
                               verbose=False)
 
+        pred = model_fit.get_posterior_predictives_df(100)
+
+        print(pred)
+
     def test_fit_DDM_hier(self):
         hier_levels = 2
 

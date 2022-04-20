@@ -8,7 +8,7 @@ data {
 	vector[2] drift_priors;							// mean and sd of the prior
 	vector[2] threshold_priors;						// mean and sd of the prior
 	vector[2] ndt_priors;							// mean and sd of the prior
-	vector[2] rel_sp_trialsd_priors;				// mean and sd of the prior
+	vector[2] rel_sp_trial_sd_priors;				// mean and sd of the prior
 
 	real<lower=0, upper=1> starting_point;			// starting point diffusion model not to estimate
 }
@@ -16,7 +16,7 @@ parameters {
 	real drift;
 	real threshold;
 	real ndt;
-	real<lower=0> rel_sp_trialsd;
+	real<lower=0> rel_sp_trial_sd;
 	real z_rel_sp_trial[N];
 }
 transformed parameters {
@@ -30,19 +30,19 @@ transformed parameters {
 	real transf_drift;
 	real transf_threshold;
 	real transf_ndt;
-	real<lower=0> transf_rel_sp_trialsd;
+	real<lower=0> transf_rel_sp_trial_sd;
 
 	transf_drift = drift;							// for the output
 	transf_threshold = log(1 + exp(threshold));
 	transf_ndt = log(1 + exp(ndt));
-	transf_rel_sp_trialsd = rel_sp_trialsd;
+	transf_rel_sp_trial_sd = rel_sp_trial_sd;
 
 	for (n in 1:N) {
 		drift_t[n] = drift;
 		drift_ll[n] = drift_t[n]*accuracy[n];
 		threshold_t[n] = transf_threshold;
 		ndt_t[n] = transf_ndt;
-		rel_sp_t[n] = Phi(starting_point + z_rel_sp_trial[n]*rel_sp_trialsd);
+		rel_sp_t[n] = Phi(starting_point + z_rel_sp_trial[n]*rel_sp_trial_sd);
 		rel_sp_ll[n] = accuracy_flipped[n] + accuracy[n]*rel_sp_t[n];
 	}
 }
@@ -51,7 +51,7 @@ model {
 	threshold ~ normal(threshold_priors[1], threshold_priors[2]);
 	ndt ~ normal(ndt_priors[1], ndt_priors[2]);
 
-	rel_sp_trialsd ~ normal(rel_sp_trialsd_priors[1], rel_sp_trialsd_priors[2]);
+	rel_sp_trial_sd ~ normal(rel_sp_trial_sd_priors[1], rel_sp_trial_sd_priors[2]);
 	z_rel_sp_trial ~ normal(0, 1);
 
 	rt ~ wiener(threshold_t, ndt_t, rel_sp_ll, drift_ll);

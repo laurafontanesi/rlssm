@@ -50,24 +50,24 @@ class ALBAModel_2A(Model):
         super().__init__(hierarchical_levels, "ALBA_2A")
 
         # Define the model parameters
-        self.n_parameters_individual = 6  # k, A, tau, v0, ws, wd
+        self.n_parameters_individual = 6  # rel_sp, threshold, ndt, v0, ws, wd
         self.n_parameters_trial = 0
 
         # Define default priors
         if self.hierarchical_levels == 1:
             self.priors = dict(
-                k_priors={'mu': 1, 'sd': 1},
-                A_priors={'mu': 0.3, 'sd': 1},
-                tau_priors={'mu': 0, 'sd': 1},
+                rel_sp_priors={'mu': 1, 'sd': 1},
+                threshold_priors={'mu': 0.3, 'sd': 1},
+                ndt_priors={'mu': 0, 'sd': 1},
                 v0_priors={'mu': 9, 'sd': 2},
                 ws_priors={'mu': 0, 'sd': 2},
                 wd_priors={'mu': 3, 'sd': 3},
             )
         else:
             self.priors = dict(
-                k_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
-                A_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
-                tau_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                rel_sp_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                threshold_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                ndt_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
                 v0_priors={'mu_mu': 9, 'sd_mu': 3, 'mu_sd': 2, 'sd_sd': 1},
                 ws_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 2, 'sd_sd': 1},
                 wd_priors={'mu_mu': 3, 'sd_mu': 1, 'mu_sd': 3, 'sd_sd': 1},
@@ -77,15 +77,15 @@ class ALBAModel_2A(Model):
 
         # Set the stan model path
         self._set_model_path()
-        
+
         # Finally, compile the model
         self._compile_stan_model()
 
     def fit(self,
             data,
-            k_priors=None,
-            A_priors=None,
-            tau_priors=None,
+            rel_sp_priors=None,
+            threshold_priors=None,
+            ndt_priors=None,
             v0_priors=None,
             ws_priors=None,
             wd_priors=None,
@@ -187,12 +187,12 @@ class ALBAModel_2A(Model):
         data.loc[data.accuracy == 1, 'accuracy_rescale'] = 1
 
         # change default priors:
-        if k_priors is not None:
-            self.priors['rel_sp_priors'] = k_priors
-        if A_priors is not None:
-            self.priors['threshold_priors'] = A_priors
-        if tau_priors is not None:
-            self.priors['ndt_priors'] = tau_priors
+        if rel_sp_priors is not None:
+            self.priors['rel_sp_priors'] = rel_sp_priors
+        if threshold_priors is not None:
+            self.priors['threshold_priors'] = threshold_priors
+        if ndt_priors is not None:
+            self.priors['ndt_priors'] = ndt_priors
         if v0_priors is not None:
             self.priors['v0_priors'] = v0_priors
         if ws_priors is not None:
@@ -298,15 +298,15 @@ class RLALBAModel_2A(Model):
 
         self.separate_learning_rates = separate_learning_rates
 
-        self.n_parameters_individual = 7  # k, A, tau, v0, ws, wd, learning rate
+        self.n_parameters_individual = 7  # rel_sp, threshold, ndt, v0, ws, wd, learning rate
         self.n_parameters_trial = 0
 
         # Define default priors
         if self.hierarchical_levels == 1:
             self.priors = dict(
-                k_priors={'mu': 1, 'sd': 1},
-                A_priors={'mu': 0.3, 'sd': 1},
-                tau_priors={'mu': 0, 'sd': 1},
+                rel_sp_priors={'mu': 1, 'sd': 1},
+                threshold_priors={'mu': 0.3, 'sd': 1},
+                ndt_priors={'mu': 0, 'sd': 1},
                 alpha_priors={'mu': 0, 'sd': 1},
                 alpha_pos_priors={'mu': 0, 'sd': 1},
                 alpha_neg_priors={'mu': 0, 'sd': 1},
@@ -316,9 +316,9 @@ class RLALBAModel_2A(Model):
             )
         else:
             self.priors = dict(
-                k_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
-                A_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
-                tau_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                rel_sp_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                threshold_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                ndt_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
                 alpha_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},
                 alpha_pos_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},
                 alpha_neg_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},
@@ -346,9 +346,9 @@ class RLALBAModel_2A(Model):
             data,
             K,
             initial_value_learning,
-            k_priors=None,
-            A_priors=None,
-            tau_priors=None,
+            rel_sp_priors=None,
+            threshold_priors=None,
+            ndt_priors=None,
             v0_priors=None,
             ws_priors=None,
             wd_priors=None,
@@ -492,12 +492,12 @@ class RLALBAModel_2A(Model):
         data.loc[data.accuracy == 1, 'accuracy_rescale'] = 1
 
         # change default priors:
-        if k_priors is not None:
-            self.priors['rel_sp_priors'] = k_priors
-        if A_priors is not None:
-            self.priors['threshold_priors'] = A_priors
-        if tau_priors is not None:
-            self.priors['ndt_priors'] = tau_priors
+        if rel_sp_priors is not None:
+            self.priors['rel_sp_priors'] = rel_sp_priors
+        if threshold_priors is not None:
+            self.priors['threshold_priors'] = threshold_priors
+        if ndt_priors is not None:
+            self.priors['ndt_priors'] = ndt_priors
         if v0_priors is not None:
             self.priors['v0_priors'] = v0_priors
         if ws_priors is not None:

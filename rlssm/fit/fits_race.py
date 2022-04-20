@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 from rlssm.fit.fits import FittedModel, ModelResults
 from rlssm.plot import plotting
-from rlssm.random.random_LBA import random_lba_2A
+from rlssm.random.random_LBA import random_lba_2A, simulate_lba_2A
 from rlssm.random.random_RDM import random_rdm_2A
 from rlssm.utility.utils import list_individual_variables
 
@@ -70,9 +70,9 @@ class raceFittedModel_2A(FittedModel):
         f_label = self.family.split('_')[0]
         lba_labels = ['LBA_2A', 'ALBA_2A', 'RLLBA', 'RLALBA']
         if f_label in lba_labels or self.family in lba_labels:
-            trial_samples = self.stan_model.extract(['k_t',
-                                                     'A_t',
-                                                     'tau_t',
+            trial_samples = self.stan_model.extract(['rel_sp_t',
+                                                     'threshold_t',
+                                                     'ndt_t',
                                                      'drift_cor_t',
                                                      'drift_inc_t'])
         else:
@@ -156,18 +156,8 @@ class raceModelResults_2A(ModelResults):
         Other Parameters
         ----------------
 
-        noise_constant : float
-            Scaling factor of the diffusion decision model.
-            If changed, drift and threshold would be scaled accordingly.
-            Not to be changed in most applications.
-
-        rt_max : float
-            Controls the maximum rts that can be predicted.
-            Making this higher might make the function a bit slower.
-
-        dt : float
-            Controls the time resolution of the diffusion decision model. Default is 1 msec.
-            Lower values of dt make the function more precise but much slower.
+        **kwargs : dict
+            Keyword arguments to be passed to the posterior predictive function.
 
         Returns
         -------
