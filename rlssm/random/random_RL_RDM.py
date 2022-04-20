@@ -46,7 +46,7 @@ def simulate_rlrdm_2A(task_design,
 
     # simulate responses
     rt, acc = random_rdm_2A(data['cor_drift'],
-                            data['cor_drift'],
+                            data['inc_drift'],
                             data['threshold'],
                             data['ndt'], **kwargs)
     data['rt'] = rt

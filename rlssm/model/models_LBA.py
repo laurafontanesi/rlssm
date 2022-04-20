@@ -79,9 +79,9 @@ class LBAModel_2A(Model):
 
     def fit(self,
             data,
-            k_priors=None,
-            A_priors=None,
-            tau_priors=None,
+            rel_sp_priors=None,
+            threshold_priors=None,
+            ndt_priors=None,
             drift_priors=None,
             include_rhat=True,
             include_waic=True,
@@ -89,7 +89,7 @@ class LBAModel_2A(Model):
             include_last_values=True,
             print_diagnostics=True,
             **kwargs):
-        """Fits the specified diffusion decision model to data.
+        """Fits the specified Linear Ballistic Accumulator to data.
 
         Parameters
         ----------
@@ -111,27 +111,22 @@ class LBAModel_2A(Model):
 
         Returns
         -------
-        res : rlssm.fits.DDModelResults
+        res : rlssm.fits.raceModelResults_2A
 
         Other Parameters
         ----------------
 
-        starting_point : float, default .5
-            The relative starting point of the diffusion process.
-            By default there is no bias, so the starting point is .5.
-            Should be between 0 and 1.
-
-        k_priors : dict, optional
+        rel_sp_priors : dict, optional
             Priors for the k parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        A_priors : dict, optional
+        threshold_priors : dict, optional
             Priors for the A parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        tau_priors : dict, optional
+        ndt_priors : dict, optional
             Priors for the non decision time parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
@@ -171,12 +166,12 @@ class LBAModel_2A(Model):
         data.loc[data.accuracy == 1, 'accuracy_rescale'] = 1
 
         # change default priors:
-        if k_priors is not None:
-            self.priors['k_priors'] = k_priors
-        if A_priors is not None:
-            self.priors['A_priors'] = A_priors
-        if tau_priors is not None:
-            self.priors['tau_priors'] = tau_priors
+        if rel_sp_priors is not None:
+            self.priors['rel_sp_priors'] = rel_sp_priors
+        if threshold_priors is not None:
+            self.priors['threshold_priors'] = threshold_priors
+        if ndt_priors is not None:
+            self.priors['ndt_priors'] = ndt_priors
         if drift_priors is not None:
             self.priors['drift_priors'] = drift_priors
 
@@ -330,9 +325,9 @@ class RLLBAModel_2A(Model):
             data,
             K,
             initial_value_learning,
-            k_priors=None,
-            A_priors=None,
-            tau_priors=None,
+            rel_sp_priors=None,
+            threshold_priors=None,
+            ndt_priors=None,
             utility_priors=None,
             alpha_priors=None,
             drift_scaling_priors=None,
@@ -398,6 +393,26 @@ class RLLBAModel_2A(Model):
         Other Parameters
         ----------------
 
+        rel_sp_priors : dict, optional
+            Priors for the relative starting point (k parameter).
+            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
+
+        threshold_priors : dict, optional
+            Priors for the threshold (A parameter).
+            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
+
+        ndt_priors : dict, optional
+            Priors for the non-decision time (tau parameter).
+            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
+
+        utility_priors : dict, optional
+            Priors for the utility time parameter.
+            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
+
         alpha_priors : dict, optional
             Priors for the learning rate parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
@@ -405,26 +420,6 @@ class RLLBAModel_2A(Model):
 
         drift_scaling_priors : dict, optional
             Priors for the drift scaling parameter.
-            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
-            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
-
-        k_priors : dict, optional
-            Priors for the k parameter.
-            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
-            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
-
-        A_priors : dict, optional
-            Priors for the A parameter.
-            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
-            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
-
-        tau_priors : dict, optional
-            Priors for the tau parameter.
-            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
-            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
-
-        utility_priors : dict, optional
-            Priors for the utility time parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
@@ -470,12 +465,12 @@ class RLLBAModel_2A(Model):
         data.loc[data.accuracy == 1, 'accuracy_rescale'] = 1
 
         # change default priors:
-        if k_priors is not None:
-            self.priors['k_priors'] = k_priors
-        if A_priors is not None:
-            self.priors['A_priors'] = A_priors
-        if tau_priors is not None:
-            self.priors['tau_priors'] = tau_priors
+        if rel_sp_priors is not None:
+            self.priors['rel_sp_priors'] = rel_sp_priors
+        if threshold_priors is not None:
+            self.priors['threshold_priors'] = threshold_priors
+        if ndt_priors is not None:
+            self.priors['ndt_priors'] = ndt_priors
         if drift_scaling_priors is not None:
             self.priors['drift_scaling_priors'] = drift_scaling_priors
         if utility_priors is not None:

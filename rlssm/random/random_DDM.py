@@ -219,8 +219,8 @@ def simulate_ddm(n_trials,
                  gen_ndt,
                  gen_rel_sp=.5,
                  participant_label=1,
-                 gen_drift_trialsd=None,
-                 gen_rel_sp_trialsd=None,
+                 gen_drift_trial_sd=None,
+                 gen_rel_sp_trial_sd=None,
                  **kwargs):
     """Simulates behavior (rt and accuracy) according to the diffusion decision model.
 
@@ -233,21 +233,21 @@ def simulate_ddm(n_trials,
 
     Note
     ----
-    When `gen_drift_trialsd` is not specified, there is no across-trial variability
+    When `gen_drift_trial_sd` is not specified, there is no across-trial variability
     in the drift-rate.
 
-    Instead, when `gen_drift_trialsd` is specified, the trial-by-trial drift-rate
+    Instead, when `gen_drift_trial_sd` is specified, the trial-by-trial drift-rate
     has the following distribution:
 
-    - drift ~ normal(gen_drift, gen_drift_trialsd).
+    - drift ~ normal(gen_drift, gen_drift_trial_sd).
 
-    Similarly, when `gen_rel_sp_trialsd` is not specified, there is no across-trial
+    Similarly, when `gen_rel_sp_trial_sd` is not specified, there is no across-trial
     variability starting point.
 
-    Instead, when `gen_rel_sp_trialsd` is specified, the trial-by-trial relative
+    Instead, when `gen_rel_sp_trial_sd` is specified, the trial-by-trial relative
     starting point has the following distribution:
 
-    - rel_sp ~ Phi(normal(rel_sp, gen_rel_sp_trialsd)).
+    - rel_sp ~ Phi(normal(rel_sp, gen_rel_sp_trial_sd)).
 
     In this case, `gen_rel_sp` is first trasformed to the -Inf/+Inf scale,
     so the input value is the same (no bias still corresponds to .5).
@@ -277,16 +277,16 @@ def simulate_ddm(n_trials,
         Should be higher than 0 and smaller than 1.
         When is 0.5 (default), there is no bias.
 
-    gen_drift_trialsd : float, optional
+    participant_label : string or float, default 1
+        What will appear in the participant column of the output data.
+
+    gen_drift_trial_sd : float, default None
         Across trial variability in the drift-rate.
         Should be positive.
 
-    gen_rel_sp_trialsd : float, optional
+    gen_rel_sp_trial_sd : float, default None
         Across trial variability in the realtive starting point.
         Should be positive.
-
-    participant_label : string or float, default 1
-        What will appear in the participant column of the output data.
 
     **kwargs
         Additional arguments to rlssm.random.random_ddm().
@@ -308,57 +308,57 @@ def simulate_ddm(n_trials,
     so in this case there will be more accurate and fast decisions::
 
         from rlssm.random import simulate_ddm
-        >>> data = simulate_ddm(n_trials=1000,
+        >>> data1 = simulate_ddm(n_trials=1000,
                                 gen_drift=.8,
                                 gen_threshold=1.3,
                                 gen_ndt=.23,
                                 gen_rel_sp=.6)
 
-        >>> print(data.head())
-                participant  drift  rel_sp  threshold   ndt     rt  accuracy
-        trial
-        1                1    0.8     0.6        1.3  0.23  0.344       1.0
-        2                1    0.8     0.6        1.3  0.23  0.376       0.0
-        3                1    0.8     0.6        1.3  0.23  0.390       1.0
-        4                1    0.8     0.6        1.3  0.23  0.434       0.0
-        5                1    0.8     0.6        1.3  0.23  0.520       1.0
+        >>> print(data1.head())
+                           drift  rel_sp  threshold   ndt     rt  accuracy
+        participant trial
+        1           1        0.8     0.6        1.3  0.23  0.854       1.0
+                    2        0.8     0.6        1.3  0.23  0.276       1.0
+                    3        0.8     0.6        1.3  0.23  0.261       1.0
+                    4        0.8     0.6        1.3  0.23  0.286       1.0
+                    5        0.8     0.6        1.3  0.23  2.173       1.0
 
     To have trial number as a column::
 
-        >>> print(data.reset_index())
-            trial  participant  drift  rel_sp  threshold   ndt     rt  accuracy
-        0        1            1    0.8     0.6        1.3  0.23  0.344       1.0
-        1        2            1    0.8     0.6        1.3  0.23  0.376       0.0
-        2        3            1    0.8     0.6        1.3  0.23  0.390       1.0
-        3        4            1    0.8     0.6        1.3  0.23  0.434       0.0
-        4        5            1    0.8     0.6        1.3  0.23  0.520       1.0
-        ..     ...          ...    ...     ...        ...   ...    ...       ...
-        995    996            1    0.8     0.6        1.3  0.23  0.423       1.0
-        996    997            1    0.8     0.6        1.3  0.23  0.956       1.0
-        997    998            1    0.8     0.6        1.3  0.23  0.347       1.0
-        998    999            1    0.8     0.6        1.3  0.23  0.414       1.0
-        999   1000            1    0.8     0.6        1.3  0.23  0.401       1.0
+        >>> print(data1.reset_index())
+             participant  trial  drift  rel_sp  threshold   ndt     rt  accuracy
+        0              1      1    0.8     0.6        1.3  0.23  0.349       1.0
+        1              1      2    0.8     0.6        1.3  0.23  0.299       1.0
+        2              1      3    0.8     0.6        1.3  0.23  0.660       0.0
+        3              1      4    0.8     0.6        1.3  0.23  0.507       1.0
+        4              1      5    0.8     0.6        1.3  0.23  0.844       0.0
+        ..           ...    ...    ...     ...        ...   ...    ...       ...
+        995            1    996    0.8     0.6        1.3  0.23  0.451       1.0
+        996            1    997    0.8     0.6        1.3  0.23  1.054       1.0
+        997            1    998    0.8     0.6        1.3  0.23  0.324       1.0
+        998            1    999    0.8     0.6        1.3  0.23  0.292       1.0
+        999            1   1000    0.8     0.6        1.3  0.23  0.522       0.0
 
         [1000 rows x 8 columns]
 
     """
     data = pd.DataFrame({'participant': np.repeat(participant_label, n_trials)})
 
-    if gen_drift_trialsd is None:
+    if gen_drift_trial_sd is None:
         data['drift'] = gen_drift
     else:
-        data['drift'] = np.random.normal(gen_drift, gen_drift_trialsd, n_trials)
-        data['drift_trialmu'] = gen_drift
-        data['drift_trialsd'] = gen_drift_trialsd
+        data['drift'] = np.random.normal(gen_drift, gen_drift_trial_sd, n_trials)
+        data['drift_trial_mu'] = gen_drift
+        data['drift_trial_sd'] = gen_drift_trial_sd
 
-    if gen_rel_sp_trialsd is None:
+    if gen_rel_sp_trial_sd is None:
         data['rel_sp'] = gen_rel_sp
     else:
         gen_rel_sp = stats.norm.ppf(gen_rel_sp)
-        data['rel_sp'] = stats.norm.cdf(np.random.normal(gen_rel_sp, gen_rel_sp_trialsd, n_trials))
-        data['rel_sp_trialmu'] = gen_rel_sp
-        data['transf_rel_sp_trialmu'] = stats.norm.cdf(gen_rel_sp)
-        data['rel_sp_trialsd'] = gen_rel_sp_trialsd
+        data['rel_sp'] = stats.norm.cdf(np.random.normal(gen_rel_sp, gen_rel_sp_trial_sd, n_trials))
+        data['drift_trial_mu'] = gen_rel_sp
+        data['transf_rel_sp_trial_mu'] = stats.norm.cdf(gen_rel_sp)
+        data['rel_sp_trial_sd'] = gen_rel_sp_trial_sd
 
     data['threshold'] = gen_threshold
     data['ndt'] = gen_ndt
@@ -377,6 +377,7 @@ def simulate_hier_ddm(n_trials, n_participants,
                       gen_mu_threshold, gen_sd_threshold,
                       gen_mu_ndt, gen_sd_ndt,
                       gen_mu_rel_sp=.5, gen_sd_rel_sp=None,
+                      gen_drift_trial_sd=None,
                       **kwargs):
     """Simulates behavior (rt and accuracy) according to the diffusion decision model.
 
@@ -398,13 +399,21 @@ def simulate_hier_ddm(n_trials, n_participants,
     Note
     ----
 
-    When `gen_sd_rel_sp` is not specified, the relative starting point
-    is assumed to be fixed across participants at `gen_mu_rel_sp`.
+    When `gen_drift_trial_sd` is not specified, there is no across-trial variability
+    in the drift-rate.
 
-    Instead, when `gen_sd_rel_sp` is specified, the starting point
+    Instead, when `gen_drift_trial_sd` is specified, the trial-by-trial drift-rate
     has the following distribution:
 
-    - rel_sp ~ Phi(normal(gen_mu_rel_sp, gen_sd_rel_sp))
+    - drift ~ normal(gen_drift, gen_drift_trial_sd).
+
+    When `gen_rel_sp_trial_sd` is not specified, there is no across-trial
+    variability starting point.
+
+    Instead, when `gen_rel_sp_trial_sd` is specified, the trial-by-trial relative
+    starting point has the following distribution:
+
+    - rel_sp ~ Phi(normal(rel_sp, gen_rel_sp_trial_sd)).
 
     Parameters
     ----------
@@ -449,9 +458,15 @@ def simulate_hier_ddm(n_trials, n_participants,
         When `gen_sd_rel_sp` is specified, `gen_mu_rel_sp` is the
         group-mean of the starting point.
 
+
     gen_sd_rel_sp : float, optional
-        Group-standard deviation of the relative starting point
-        of the diffusion decision model.
+        Across trial variability in the drift-rate.
+        Should be positive.
+
+
+    gen_drift_trial_sd : float, optional
+        Across trial variability in the realtive starting point.
+        Should be positive.
 
     **kwargs
         Additional arguments to `rlssm.random.random_ddm()`.
@@ -538,9 +553,13 @@ def simulate_hier_ddm(n_trials, n_participants,
     ndt_sbj = np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants)))
 
     data['participant'] = np.repeat(np.arange(n_participants) + 1, n_trials)
-    data['drift'] = np.repeat(drift_sbj, n_trials)
     data['threshold'] = np.repeat(threshold_sbj, n_trials)
     data['ndt'] = np.repeat(ndt_sbj, n_trials)
+
+    if gen_drift_trial_sd is None:
+        data['drift'] = np.repeat(drift_sbj, n_trials)
+    else:
+        data['drift'] = np.random.normal(np.repeat(drift_sbj, n_trials), gen_drift_trial_sd)
 
     if gen_sd_rel_sp is None:
         rt, acc = random_ddm(data['drift'], data['threshold'], data['ndt'], rel_sp=.5, **kwargs)
@@ -556,6 +575,8 @@ def simulate_hier_ddm(n_trials, n_participants,
 
     data['rt'] = rt
     data['accuracy'] = acc
-    data['trial'] = np.repeat(np.arange(1, n_trials + 1), n_participants)
+    data['trial'] = np.tile(np.arange(1, n_trials + 1), n_participants)
 
-    return data.set_index(['participant', 'trial'])
+    data = data.set_index(['participant', 'trial'])
+
+    return data

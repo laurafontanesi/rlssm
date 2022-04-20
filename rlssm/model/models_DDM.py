@@ -141,8 +141,8 @@ class DDModel(Model):
             self.n_parameters_trial += 1
             del self.priors['drift_priors']
         else:
-            del self.priors['drift_trialmu_priors']
-            del self.priors['drift_trialsd_priors']
+            del self.priors['drift_trial_mu_priors']
+            del self.priors['drift_trial_sd_priors']
 
         if self.starting_point_variability:
             self.model_label += '_spvar'
@@ -152,16 +152,16 @@ class DDModel(Model):
             if self.starting_point_bias:
                 del self.priors['rel_sp_priors']
         else:
-            del self.priors['rel_sp_trialmu_priors']
-            del self.priors['rel_sp_trialsd_priors']
+            del self.priors['rel_sp_trial_mu_priors']
+            del self.priors['rel_sp_trial_sd_priors']
 
         # for nDDM or hDDM
         if self.drift_starting_point_correlation and not self.drift_starting_point_beta_correlation:
             self.model_label += '_corr'
             # add the corr coefficient
             self.n_parameters_individual += 1
-            del self.priors['beta_trialmu_priors']
-            del self.priors['beta_trialsd_priors']
+            del self.priors['beta_trial_mu_priors']
+            del self.priors['beta_trial_sd_priors']
             del self.priors['regression_coefficients_priors']
 
         elif self.drift_starting_point_beta_correlation:
@@ -174,12 +174,12 @@ class DDModel(Model):
             self.model_label += '_beta'
             # add 2 correlation coefficients
             self.n_parameters_individual += 2
-            del self.priors['beta_trialmu_priors']
-            del self.priors['beta_trialsd_priors']
+            del self.priors['beta_trial_mu_priors']
+            del self.priors['beta_trial_sd_priors']
             del self.priors['corr_matrix_prior']
         else:
-            del self.priors['beta_trialmu_priors']
-            del self.priors['beta_trialsd_priors']
+            del self.priors['beta_trial_mu_priors']
+            del self.priors['beta_trial_sd_priors']
             del self.priors['regression_coefficients_priors']
             del self.priors['corr_matrix_prior']
 
@@ -196,13 +196,13 @@ class DDModel(Model):
             ndt_priors=None,
             rel_sp_priors=None,
             starting_point=.5,
-            drift_trialmu_priors=None,
-            drift_trialsd_priors=None,
-            rel_sp_trialmu_priors=None,
-            rel_sp_trialsd_priors=None,
+            drift_trial_mu_priors=None,
+            drift_trial_sd_priors=None,
+            rel_sp_trial_mu_priors=None,
+            rel_sp_trial_sd_priors=None,
             corr_matrix_prior=None,
-            beta_trialmu_priors=None,
-            beta_trialsd_priors=None,
+            beta_trial_mu_priors=None,
+            beta_trial_sd_priors=None,
             regression_coefficients_priors=None,
             include_rhat=True,
             include_waic=True,
@@ -242,11 +242,6 @@ class DDModel(Model):
         Other Parameters
         ----------------
 
-        starting_point : float, default .5
-            The relative starting point of the diffusion process.
-            By default there is no bias, so the starting point is .5.
-            Should be between 0 and 1.
-
         drift_priors : dict, optional
             Priors for the drift-rate parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
@@ -268,25 +263,30 @@ class DDModel(Model):
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        drift_trialmu_priors : dict, optional
+        starting_point : float, default .5
+            The relative starting point of the diffusion process.
+            By default, there is no bias, so the starting point is .5.
+            Should be between 0 and 1.
+
+        drift_trial_mu_priors : dict, optional
             Priors for the mean drift-rate across trials
             (only meaningful if drift_variability is True).
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        drift_trialsd_priors : dict, optional
+        drift_trial_sd_priors : dict, optional
             Priors for the standard deviation of the drift-rate across trials
             (only meaningful if drift_variability is True).
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        rel_sp_trialmu_priors : dict, optional
-            Priors for the standard deviation of the relative starting point across trials
+        rel_sp_trial_mu_priors : dict, optional
+            Priors for the mean of the relative starting point across trials
             (only meaningful if starting_point_variability is True).
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        rel_sp_trialsd_priors : dict, optional
+        rel_sp_trial_sd_priors : dict, optional
             Priors for the standard deviation of the relative starting point across trials
             (only meaningful if starting_point_variability is True).
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
@@ -296,12 +296,12 @@ class DDModel(Model):
             Prior for the eta parameter of the LKJ prior of the correlation matrix
             (only meaningful if drift_starting_point_correlation is True).
 
-        beta_trialmu_priors : dict, optional
+        beta_trial_mu_priors : dict, optional
             Priors for the mean beta across trials
             (only meaningful if drift_starting_point_beta_correlation is True).
             Mean and standard deviation of the prior distr.
 
-        beta_trialsd_priors : dict, optional
+        beta_trial_sd_priors : dict, optional
             Priors for the standard deviation of the beta across trials
             (only meaningful if drift_starting_point_beta_correlation is True).
             Mean and standard deviation of the prior distr.
@@ -351,18 +351,18 @@ class DDModel(Model):
             self.priors['ndt_priors'] = ndt_priors
         if rel_sp_priors is not None:
             self.priors['rel_sp_priors'] = rel_sp_priors
-        if drift_trialmu_priors is not None:
-            self.priors['drift_trialmu_priors'] = drift_trialmu_priors
-        if drift_trialsd_priors is not None:
-            self.priors['drift_trialsd_priors'] = drift_trialsd_priors
-        if rel_sp_trialmu_priors is not None:
-            self.priors['rel_sp_trialmu_priors'] = rel_sp_trialmu_priors
-        if rel_sp_trialsd_priors is not None:
-            self.priors['rel_sp_trialsd_priors'] = rel_sp_trialsd_priors
-        if beta_trialmu_priors is not None:
-            self.priors['beta_trialmu_priors'] = beta_trialmu_priors
-        if beta_trialsd_priors is not None:
-            self.priors['beta_trialsd_priors'] = beta_trialsd_priors
+        if drift_trial_mu_priors is not None:
+            self.priors['drift_trial_mu_priors'] = drift_trial_mu_priors
+        if drift_trial_sd_priors is not None:
+            self.priors['drift_trial_sd_priors'] = drift_trial_sd_priors
+        if rel_sp_trial_mu_priors is not None:
+            self.priors['rel_sp_trial_mu_priors'] = rel_sp_trial_mu_priors
+        if rel_sp_trial_sd_priors is not None:
+            self.priors['rel_sp_trial_sd_priors'] = rel_sp_trial_sd_priors
+        if beta_trial_mu_priors is not None:
+            self.priors['beta_trial_mu_priors'] = beta_trial_mu_priors
+        if beta_trial_sd_priors is not None:
+            self.priors['beta_trial_sd_priors'] = beta_trial_sd_priors
         if regression_coefficients_priors is not None:
             self.priors['regression_coefficients_priors'] = regression_coefficients_priors
         if corr_matrix_prior is not None:

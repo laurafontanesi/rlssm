@@ -3,7 +3,6 @@ import unittest
 import numpy as np
 
 from rlssm.random.random_DDM import simulate_ddm, simulate_hier_ddm
-from rlssm.random.random_common import generate_task_design_fontanesi
 
 
 class TestRandomDDM(unittest.TestCase):
@@ -11,28 +10,28 @@ class TestRandomDDM(unittest.TestCase):
         self.data1 = simulate_ddm(
             n_trials=1000,
             gen_drift=.6,
-            gen_drift_trialsd=.1,
+            gen_drift_trial_sd=.1,
             gen_threshold=1.4,
             gen_ndt=.23)
 
         self.data2 = simulate_ddm(
             n_trials=1000,
             gen_drift=-.6,
-            gen_drift_trialsd=.1,
+            gen_drift_trial_sd=.1,
             gen_threshold=1.4,
             gen_ndt=.23)
 
         self.data3 = simulate_ddm(
             n_trials=1000,
             gen_drift=.6,
-            gen_drift_trialsd=.1,
+            gen_drift_trial_sd=.1,
             gen_threshold=2.4,
             gen_ndt=.23)
 
         self.data4 = simulate_ddm(
             n_trials=1000,
             gen_drift=.6,
-            gen_drift_trialsd=.1,
+            gen_drift_trial_sd=.1,
             gen_rel_sp=.8,
             gen_threshold=1.4,
             gen_ndt=.23)
@@ -40,7 +39,7 @@ class TestRandomDDM(unittest.TestCase):
         self.data5 = simulate_ddm(
             n_trials=1000,
             gen_drift=.6,
-            gen_drift_trialsd=.1,
+            gen_drift_trial_sd=.1,
             gen_threshold=1.4,
             gen_ndt=.5)
 
@@ -80,15 +79,8 @@ class TestRandomDDM(unittest.TestCase):
         assert np.mean(self.data5['rt']) > np.mean(
             self.data1['rt']), f"min rt(data5) should be greater than min rt(data1)"
 
-    def test_random_DDM_test9(self):
+    def test_random_DDM_hier(self):
         # TEST hierarchical version
-        dm = generate_task_design_fontanesi(n_trials_block=80,
-                                            n_blocks=3,
-                                            n_participants=30,
-                                            trial_types=['1-2', '1-3', '2-4', '3-4'],
-                                            mean_options=[34, 38, 50, 54],
-                                            sd_options=[5, 5, 5, 5])
-
         data_hier = simulate_hier_ddm(n_trials=100,
                                       n_participants=30,
                                       gen_mu_drift=1,
@@ -96,7 +88,10 @@ class TestRandomDDM(unittest.TestCase):
                                       gen_mu_threshold=1,
                                       gen_sd_threshold=.1,
                                       gen_mu_ndt=.23,
-                                      gen_sd_ndt=.1)
+                                      gen_sd_ndt=.1,
+                                      gen_drift_trial_sd=.01)
+
+        print(data_hier)
 
         # TEST: assure that there are 30 participants
         assert data_hier.index[-1][0] == 30, f"Number of participants should be 30"

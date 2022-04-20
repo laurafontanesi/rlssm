@@ -132,7 +132,7 @@ class raceModelResults_2A(ModelResults):
             tau_t = self.trial_samples['tau_t'][:n_posterior_predictives, :]
             drift_cor_t = self.trial_samples['drift_cor_t'][:n_posterior_predictives, :]
             drift_inc_t = self.trial_samples['drift_inc_t'][:n_posterior_predictives, :]
-            pp_rt, pp_acc = random_lba_2A(k_t, A_t, tau_t, drift_cor_t, drift_inc_t, **kwargs)
+            pp_rt, pp_acc = random_lba_2A(drift_cor_t, drift_inc_t, A_t, tau_t, k_t)
         else:
             drift_cor_t = self.trial_samples['drift_cor_t'][:n_posterior_predictives, :]
             drift_inc_t = self.trial_samples['drift_inc_t'][:n_posterior_predictives, :]
@@ -243,9 +243,7 @@ class raceModelResults_2A(ModelResults):
         if quantiles is None:
             quantiles = [.1, .3, .5, .7, .9]
 
-        pp = self.get_posterior_predictives_df(
-            n_posterior_predictives=n_posterior_predictives,
-            **kwargs)
+        pp = self.get_posterior_predictives_df(n_posterior_predictives=n_posterior_predictives, **kwargs)
 
         tmp = pd.DataFrame({'mean_accuracy': pp['accuracy'].mean(axis=1),
                             'mean_rt': pp['rt'].mean(axis=1),

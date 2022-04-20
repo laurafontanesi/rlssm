@@ -127,17 +127,17 @@ class ALBAModel_2A(Model):
             By default there is no bias, so the starting point is .5.
             Should be between 0 and 1.
 
-        k_priors : dict, optional
+        rel_sp_priors : dict, optional
             Priors for the k parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        A_priors : dict, optional
+        threshold_priors : dict, optional
             Priors for the A parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        tau_priors : dict, optional
+        ndt_priors : dict, optional
             Priors for the non decision time parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
@@ -188,11 +188,11 @@ class ALBAModel_2A(Model):
 
         # change default priors:
         if k_priors is not None:
-            self.priors['k_priors'] = k_priors
+            self.priors['rel_sp_priors'] = k_priors
         if A_priors is not None:
-            self.priors['A_priors'] = A_priors
+            self.priors['threshold_priors'] = A_priors
         if tau_priors is not None:
-            self.priors['tau_priors'] = tau_priors
+            self.priors['ndt_priors'] = tau_priors
         if v0_priors is not None:
             self.priors['v0_priors'] = v0_priors
         if ws_priors is not None:
@@ -415,17 +415,17 @@ class RLALBAModel_2A(Model):
         Other Parameters
         ----------------
 
-        k_priors : dict, optional
+        rel_sp_priors : dict, optional
             Priors for the k parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        A_priors : dict, optional
+        threshold_priors : dict, optional
             Priors for the A parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        tau_priors : dict, optional
+        ndt_priors : dict, optional
             Priors for the tau parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
@@ -493,11 +493,11 @@ class RLALBAModel_2A(Model):
 
         # change default priors:
         if k_priors is not None:
-            self.priors['k_priors'] = k_priors
+            self.priors['rel_sp_priors'] = k_priors
         if A_priors is not None:
-            self.priors['A_priors'] = A_priors
+            self.priors['threshold_priors'] = A_priors
         if tau_priors is not None:
-            self.priors['tau_priors'] = tau_priors
+            self.priors['ndt_priors'] = tau_priors
         if v0_priors is not None:
             self.priors['v0_priors'] = v0_priors
         if ws_priors is not None:
