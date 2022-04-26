@@ -1,8 +1,8 @@
 from __future__ import absolute_import, division, print_function
 import pandas as pd
 
+from rlssm.fit.fits_LBA import LBAFittedModel_2A
 from rlssm.model.models import Model
-from rlssm.fit.fits_race import raceFittedModel_2A
 
 
 class LBAModel_2A(Model):
@@ -111,7 +111,7 @@ class LBAModel_2A(Model):
 
         Returns
         -------
-        res : rlssm.fits.raceModelResults_2A
+        res : rlssm.fits.LBAFittedModel_2A
 
         Other Parameters
         ----------------
@@ -196,15 +196,15 @@ class LBAModel_2A(Model):
         # start sampling...
         fitted_model = self.compiled_model.sampling(data_dict, **kwargs)
 
-        fitted_model = raceFittedModel_2A(stan_model=fitted_model,
-                                          data=data,
-                                          hierarchical_levels=self.hierarchical_levels,
-                                          model_label=self.model_label,
-                                          family=self.family,
-                                          n_parameters_individual=self.n_parameters_individual,
-                                          n_parameters_trial=self.n_parameters_trial,
-                                          print_diagnostics=print_diagnostics,
-                                          priors=self.priors)
+        fitted_model = LBAFittedModel_2A(stan_model=fitted_model,
+                                         data=data,
+                                         hierarchical_levels=self.hierarchical_levels,
+                                         model_label=self.model_label,
+                                         family=self.family,
+                                         n_parameters_individual=self.n_parameters_individual,
+                                         n_parameters_trial=self.n_parameters_trial,
+                                         print_diagnostics=print_diagnostics,
+                                         priors=self.priors)
 
         res = fitted_model.extract_results(include_rhat,
                                            include_waic,
@@ -513,15 +513,15 @@ class RLLBAModel_2A(Model):
         # start sampling...
         fitted_model = self.compiled_model.sampling(data_dict, **kwargs)
 
-        fitted_model = raceFittedModel_2A(stan_model=fitted_model,
-                                          data=data,
-                                          hierarchical_levels=self.hierarchical_levels,
-                                          model_label=self.model_label,
-                                          family=self.family,
-                                          n_parameters_individual=self.n_parameters_individual,
-                                          n_parameters_trial=self.n_parameters_trial,
-                                          print_diagnostics=print_diagnostics,
-                                          priors=self.priors)
+        fitted_model = LBAFittedModel_2A(stan_model=fitted_model,
+                                         data=data,
+                                         hierarchical_levels=self.hierarchical_levels,
+                                         model_label=self.model_label,
+                                         family=self.family,
+                                         n_parameters_individual=self.n_parameters_individual,
+                                         n_parameters_trial=self.n_parameters_trial,
+                                         print_diagnostics=print_diagnostics,
+                                         priors=self.priors)
 
         res = fitted_model.extract_results(include_rhat,
                                            include_waic,

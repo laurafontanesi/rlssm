@@ -12,7 +12,7 @@ from rlssm.random.random_RDM import random_rdm_2A
 from rlssm.utility.utils import list_individual_variables
 
 
-class raceFittedModel_2A(FittedModel):
+class LBAFittedModel_2A(FittedModel):
     def __init__(self,
                  stan_model,
                  data,
@@ -81,7 +81,7 @@ class raceFittedModel_2A(FittedModel):
                                                      'threshold_t',
                                                      'ndt_t'])
 
-        res = raceModelResults_2A(self.model_label,
+        res = LBAModelResults_2A(self.model_label,
                                   self.data_info,
                                   self.parameters_info,
                                   self.priors,
@@ -94,7 +94,7 @@ class raceFittedModel_2A(FittedModel):
         return res
 
 
-class raceModelResults_2A(ModelResults):
+class LBAModelResults_2A(ModelResults):
     def __init__(self,
                  model_label,
                  data_info,
@@ -125,20 +125,14 @@ class raceModelResults_2A(ModelResults):
                           stacklevel=2)
             n_posterior_predictives = self.parameters_info['n_posterior_samples']
 
-        f_label = self.family.split('_')[0]
-        if f_label == 'LBA_2A' or f_label == 'ALBA_2A' or f_label == 'RLLBA' or f_label == 'RLALBA':
-            k_t = self.trial_samples['k_t'][:n_posterior_predictives, :]
-            A_t = self.trial_samples['A_t'][:n_posterior_predictives, :]
-            tau_t = self.trial_samples['tau_t'][:n_posterior_predictives, :]
-            drift_cor_t = self.trial_samples['drift_cor_t'][:n_posterior_predictives, :]
-            drift_inc_t = self.trial_samples['drift_inc_t'][:n_posterior_predictives, :]
-            pp_rt, pp_acc = random_lba_2A(drift_cor_t, drift_inc_t, A_t, tau_t, k_t)
-        else:
-            drift_cor_t = self.trial_samples['drift_cor_t'][:n_posterior_predictives, :]
-            drift_inc_t = self.trial_samples['drift_inc_t'][:n_posterior_predictives, :]
-            threshold_t = self.trial_samples['threshold_t'][:n_posterior_predictives, :]
-            ndt_t = self.trial_samples['ndt_t'][:n_posterior_predictives, :]
-            pp_rt, pp_acc = random_rdm_2A(drift_cor_t, drift_inc_t, threshold_t, ndt_t, **kwargs)
+        drift_cor_t = self.trial_samples['drift_cor_t'][:n_posterior_predictives, :]
+        drift_inc_t = self.trial_samples['drift_inc_t'][:n_posterior_predictives, :]
+
+        threshold_t = self.trial_samples['threshold_t'][:n_posterior_predictives, :]
+        ndt_t = self.trial_samples['ndt_t'][:n_posterior_predictives, :]
+        gen_rel_sp_t = self.trial_samples['gen_rel_sp_t'][:n_posterior_predictives, :]
+
+        pp_rt, pp_acc = random_lba_2A(drift_cor_t, drift_inc_t, threshold_t, ndt_t, gen_rel_sp_t)
 
         return pp_rt, pp_acc
 

@@ -1,8 +1,8 @@
 from __future__ import absolute_import, division, print_function
 import pandas as pd
 
+from rlssm.fit.fits_LBA import LBAFittedModel_2A
 from rlssm.model.models import Model
-from rlssm.fit.fits_race import raceFittedModel_2A
 
 
 class ALBAModel_2A(Model):
@@ -226,15 +226,15 @@ class ALBAModel_2A(Model):
         # start sampling...
         fitted_model = self.compiled_model.sampling(data_dict, **kwargs)
 
-        fitted_model = raceFittedModel_2A(fitted_model,
-                                          data,
-                                          self.hierarchical_levels,
-                                          self.model_label,
-                                          self.family,
-                                          self.n_parameters_individual,
-                                          self.n_parameters_trial,
-                                          print_diagnostics,
-                                          self.priors)
+        fitted_model = LBAFittedModel_2A(fitted_model,
+                                         data,
+                                         self.hierarchical_levels,
+                                         self.model_label,
+                                         self.family,
+                                         self.n_parameters_individual,
+                                         self.n_parameters_trial,
+                                         print_diagnostics,
+                                         self.priors)
 
         res = fitted_model.extract_results(include_rhat,
                                            include_waic,
@@ -542,15 +542,15 @@ class RLALBAModel_2A(Model):
         # start sampling...
         fitted_model = self.compiled_model.sampling(data_dict, **kwargs)
 
-        fitted_model = raceFittedModel_2A(fitted_model,
-                                          data,
-                                          self.hierarchical_levels,
-                                          self.model_label,
-                                          self.family,
-                                          self.n_parameters_individual,
-                                          self.n_parameters_trial,
-                                          print_diagnostics,
-                                          self.priors)
+        fitted_model = LBAFittedModel_2A(fitted_model,
+                                         data,
+                                         self.hierarchical_levels,
+                                         self.model_label,
+                                         self.family,
+                                         self.n_parameters_individual,
+                                         self.n_parameters_trial,
+                                         print_diagnostics,
+                                         self.priors)
 
         res = fitted_model.extract_results(include_rhat,
                                            include_waic,
