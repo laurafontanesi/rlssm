@@ -5,10 +5,10 @@ import pickle
 from math import isnan
 from math import isinf
 from hashlib import md5
-import pystan
+import cmdstanpy
 import numpy
 
-def check_div(fit):
+def check_div(fit): #TODO
     """Check transitions that ended with a divergence.
 
     Parameters
@@ -18,7 +18,7 @@ def check_div(fit):
         The fitted stan model.
 
     """
-    sampler_params = fit.get_sampler_params(inc_warmup=False)
+    sampler_params = fit.draws_pd(inc_warmup=False)
     divergent = [x for y in sampler_params for x in y['divergent__']]
     n = sum(divergent)
     N = len(divergent)
@@ -32,14 +32,14 @@ def check_treedepth(fit, max_depth=10):
     Parameters
     ----------
 
-    fit : pystan.StanFit4model
+    fit : cmdstanpy.CmdStanModel
         The fitted stan model.
 
     max_depth : int
         Maximum tree depth.
 
     """
-    sampler_params = fit.get_sampler_params(inc_warmup=False)
+    sampler_params = fit.draws_pd(inc_warmup=False)
     depths = [x for y in sampler_params for x in y['treedepth__']]
     n = sum(1 for x in depths if x == max_depth)
     N = len(depths)
@@ -54,11 +54,11 @@ def check_energy(fit):
     Parameters
     ----------
 
-    fit : pystan.StanFit4model
+    fit : cmdstanpy.CmdStanModel
         The fitted stan model.
 
     """
-    sampler_params = fit.get_sampler_params(inc_warmup=False)
+    sampler_params = fit.draws_pd(inc_warmup=False)
     no_warning = True
     for chain_num, s in enumerate(sampler_params):
         energies = s['energy__']
@@ -72,7 +72,7 @@ def check_energy(fit):
     else:
         print('  E-BFMI below 0.2 indicates you may need to reparameterize your model')
 
-def check_n_eff(fit):
+def check_n_eff(fit): # TODO
     """Checks the effective sample size per iteration.
 
     Parameters
@@ -99,7 +99,7 @@ def check_n_eff(fit):
     else:
         print('n_eff / iter below 0.001 indicates that the effective sample size has likely been overestimated')
 
-def check_rhat(fit):
+def check_rhat(fit): # TODO
     """Checks the potential scale reduction factors.
 
     Parameters
@@ -168,7 +168,7 @@ def partition_div(fit):
     Parameters
     ----------
 
-    fit : pystan.StanFit4model
+    fit : cmdstanpy.CmdStanModel
         The fitted stan model.
 
     Returns
@@ -181,7 +181,7 @@ def partition_div(fit):
         Dictionary containing the divergent transitions per parameter.
 
     """
-    sampler_params = fit.get_sampler_params(inc_warmup=False)
+    sampler_params = fit.draws_pd(inc_warmup=False)
     div = numpy.concatenate([x['divergent__'] for x in sampler_params]).astype('int')
     params = _shaped_ordered_params(fit)
     nondiv_params = dict((key, params[key][div == 0]) for key in params)
@@ -192,7 +192,7 @@ def compile_model(filename, model_name=None):
     """This will automatically cache models -
     great if you're just running a script on the command line.
 
-    See http://pystan.readthedocs.io/en/latest/avoiding_recompilation.html
+    See https://mc-stan.org/cmdstanpy/
 
     Parameters
     ----------
@@ -206,7 +206,7 @@ def compile_model(filename, model_name=None):
     Returns
     -------
 
-    sm : pystan.StanModel
+    sm : cmdstanpy.CmdStanModel
         The compiled stan model.
 
     """
@@ -221,7 +221,7 @@ def compile_model(filename, model_name=None):
         try:
             sm = pickle.load(open(cache_fn, 'rb'))
         except:
-            sm = pystan.StanModel(model_code=model_code)
+            sm = cmdstanpy.CmdStanModel(stan_file=filename)
             with open(cache_fn, 'wb') as f:
                 pickle.dump(sm, f)
         else:

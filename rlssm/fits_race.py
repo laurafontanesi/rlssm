@@ -62,35 +62,57 @@ class raceFittedModel_2A(FittedModel):
 
         par_to_display = list(np.append(['chain', 'draw'], main_parameters))
 
-        samples = self.stan_model.to_dataframe(pars=list(main_parameters),
-                                               permuted=True,
-                                               diagnostics=False,
-                                               inc_warmup=False)[par_to_display].reset_index(drop=True)
+        samples = self.stan_model.draws_pd()[main_parameters] #TODO
+
+        # samples = self.stan_model.to_dataframe(pars=list(main_parameters),
+        #                                        permuted=True,
+        #                                        diagnostics=False,
+        #                                        inc_warmup=False)[par_to_display].reset_index(drop=True)
 
         # trial parameters
         f_label = self.family.split('_')[0]
         if f_label == 'LBA' or f_label == 'ALBA' or f_label == 'RLLBA' or f_label == 'RLALBA':
-            trial_samples = self.stan_model.extract(['k_t',
-                                                                      'A_t',
-                                                                      'tau_t',
-                                                                      'drift_cor_t',
-                                                                      'drift_inc_t'])
+            trial_samples = {'k_t':None,
+                             'A_t':None,
+                             'tau_t':None,
+                             'drift_cor_t':None,
+                             'drift_inc_t':None}
+            trial_samples['k_t'] = np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'k_t' in i]])
+            trial_samples['A_t'] = np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'A_t' in i]])
+            trial_samples['tau_t'] = np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'tau_t' in i]])
+            trial_samples['drift_cor_t'] = np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'drift_cor_t' in i]])            
+            trial_samples['drift_inc_t'] = np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'drift_inc_t' in i]])
+            
+            # trial_samples = self.stan_model.extract(['k_t',
+            #                                                           'A_t',
+            #                                                           'tau_t',
+            #                                                           'drift_cor_t',
+            #                                                           'drift_inc_t'])
         else:
-            trial_samples = self.stan_model.extract(['drift_cor_t',
-                                                                     'drift_inc_t',
-                                                                     'threshold_t',
-                                                                     'ndt_t'])
+
+            trial_samples = {'drift_cor_t':None,
+                             'drift_inc_t':None,
+                             'threshold_t':None,
+                             'ndt_t':None}
+            trial_samples['drift_cor_t'] = np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'drift_cor_t' in i]])
+            trial_samples['drift_inc_t'] = np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'drift_inc_t' in i]])
+            trial_samples['threshold_t'] = np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'threshold_t' in i]])            
+            trial_samples['ndt_t'] = np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'ndt_t' in i]])
+
+            # trial_samples = self.stan_model.extract(['drift_cor_t',
+            #                                                          'drift_inc_t',
+            #                                                          'threshold_t',
+            #                                                          'ndt_t'])
 
         res = raceModelResults_2A(self.model_label,
-                                             self.data_info,
-                                             self.parameters_info,
-                                             self.priors,
-                                             rhat,
-                                             waic,
-                                             last_values,
-                                             samples,
-                                             trial_samples,
-                                             self.family)
+                                     self.data_info,
+                                     self.parameters_info,
+                                     rhat,
+                                     waic,
+                                     last_values,
+                                     samples,
+                                     trial_samples,
+                                     self.family)
         return res
 
 class raceModelResults_2A(ModelResults):
@@ -98,7 +120,6 @@ class raceModelResults_2A(ModelResults):
                  model_label,
                  data_info,
                  parameters_info,
-                 priors,
                  rhat,
                  waic,
                  last_values,
@@ -109,7 +130,6 @@ class raceModelResults_2A(ModelResults):
         super().__init__(model_label,
                          data_info,
                          parameters_info,
-                         priors,
                          rhat,
                          waic,
                          last_values,

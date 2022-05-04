@@ -26,7 +26,6 @@ class FittedModel(object):
         self.stan_model = stan_model
         self.model_label = model_label
         self.family = family
-        self.priors = priors
 
         # Print mcmc diagnostics...
         if print_diagnostics:
@@ -34,9 +33,11 @@ class FittedModel(object):
 
         self.data_info = {'N': data.shape[0], 'data':data}
 
-        n_samples_after_warmup = self.stan_model.stan_args[0]['iter'] - self.stan_model.stan_args[0]['warmup']
-        n_posterior_samples = n_samples_after_warmup / self.stan_model.stan_args[0]['thin']*len(self.stan_model.stan_args)
+        # n_samples_after_warmup = self.stan_model.stan_args[0]['iter'] - self.stan_model.stan_args[0]['warmup']
+        # n_posterior_samples = n_samples_after_warmup / self.stan_model.stan_args[0]['thin']*len(self.stan_model.stan_args)
 
+        n_posterior_samples = self.stan_model.num_draws_sampling
+        
         self.parameters_info = {'hierarchical_levels': hierarchical_levels,
                                 'n_parameters_individual':n_parameters_individual,
                                 'n_parameters_trial': n_parameters_trial,
@@ -48,22 +49,22 @@ class FittedModel(object):
                                          'n_parameters_hierarchical': n_parameters_individual*2 + n_parameters_individual*self.data_info['L']})
 
             r = re.compile("transf_.+")
-            parameters_names_transf = list(filter(r.match, self.stan_model.flatnames))
+            parameters_names_transf = list(filter(r.match, self.stan_model.column_names))
             individual_parameters_names = [name[10:] for name in parameters_names_transf]
 
             r = re.compile("mu_.+")
-            group_parameters_mu = list(filter(r.match, self.stan_model.flatnames))
+            group_parameters_mu = list(filter(r.match, self.stan_model.column_names))
             r = re.compile("sd_.+")
-            group_parameters_sd = list(filter(r.match, self.stan_model.flatnames))
+            group_parameters_sd = list(filter(r.match, self.stan_model.column_names))
 
             group_parameters_names_transf = parameters_names_transf + group_parameters_sd # add transformed par names for plotting
             group_parameters_names = group_parameters_mu + group_parameters_sd
 
             r = re.compile("z_.+_trial.+")
-            trials_deviations = list(filter(r.match, self.stan_model.flatnames))
+            trials_deviations = list(filter(r.match, self.stan_model.column_names))
 
             r = re.compile("z_.+")
-            individual_deviations = list(filter(r.match, self.stan_model.flatnames))
+            individual_deviations = list(filter(r.match, self.stan_model.column_names))
             if len(trials_deviations) > 0:
                 [individual_deviations.remove(el) for el in trials_deviations]
 
@@ -80,10 +81,10 @@ class FittedModel(object):
             self.data_info.update({'L': 1})
 
             r = re.compile("transf_.+")
-            parameters_names_transf = list(filter(r.match, self.stan_model.flatnames))
+            parameters_names_transf = list(filter(r.match, self.stan_model.column_names))
             parameters_names = [name[7:] for name in parameters_names_transf]
             r = re.compile("z_.+_trial.+")
-            parameters_names_all = parameters_names + list(filter(r.match, self.stan_model.flatnames))
+            parameters_names_all = parameters_names + list(filter(r.match, self.stan_model.column_names))
 
             self.parameters_info.update({'parameters_names': parameters_names})
             self.parameters_info.update({'parameters_names_transf': parameters_names_transf}) # add transformed par names for plotting
@@ -101,9 +102,9 @@ class FittedModel(object):
             Data frame with rows the parameters and columns the rhat and variable names.
 
         """
-        summary = self.stan_model.summary(pars=self.parameters_info['parameters_names_all'])
-        convergence = pd.DataFrame({'rhat': np.array(summary['summary'])[:, 9],
-                                    'variable': summary['summary_rownames']})
+        summary = self.stan_model.summary()
+        convergence = pd.DataFrame({'rhat': summary['R_hat'],
+                                    'variable': summary.index})
         return convergence
 
     def calculate_waic(self, pointwise=False):
@@ -128,7 +129,7 @@ class FittedModel(object):
             pointwise_waic (when `pointwise` is True).
 
         """
-        log_likelihood = self.stan_model['log_lik'] # n_samples X N observations
+        log_likelihood = self.stan_model.stan_variable('log_lik') # n_samples X N observations
         likelihood = np.exp(log_likelihood)
 
         mean_l = np.mean(likelihood, axis=0) # N observations
@@ -156,7 +157,7 @@ class FittedModel(object):
                    'waic_se':waic_se}
         return out
 
-    def get_last_values(self):
+    def get_last_values(self): #TODO: it should be more efficient
         """Extracts the last posterior estimates values in each chain.
 
         Returns
@@ -167,19 +168,28 @@ class FittedModel(object):
              Parameter values are in separate columns.
 
         """
-        samplesChains = self.stan_model.to_dataframe(pars=self.parameters_info['parameters_names_all'],
-                                                     permuted=False,
-                                                     diagnostics=False)
-        starting_points = samplesChains[samplesChains['draw'] == max(samplesChains['draw'])]
+        # samplesChains = self.stan_model.draws_as_dataframe(params=self.parameters_info['parameters_names_all'],
+        #                                                    inc_warmup=False)
 
-        return starting_points
+        samplesChains = self.stan_model.draws(inc_warmup=False)[-1, :, :]
+
+        starting_points = {'chain':self.stan_model.chain_ids}
+
+        
+        for i in range(len(self.stan_model.column_names)):
+            starting_points[self.stan_model.column_names[i]] = []
+            for j in range(len(self.stan_model.chain_ids)):
+                starting_points[self.stan_model.column_names[i]].append(samplesChains[j, i])
+        
+        # starting_points = samplesChains[samplesChains['draw'] == max(samplesChains['draw'])]
+
+        return pd.DataFrame(starting_points)
 
 class ModelResults(object):
     def __init__(self,
                  model_label,
                  data_info,
                  parameters_info,
-                 priors,
                  rhat,
                  waic,
                  last_values,
@@ -197,7 +207,7 @@ class ModelResults(object):
         self.model_label = model_label
         self.data_info = data_info
         self.parameters_info = parameters_info
-        self.priors = priors
+        # self.priors = priors
         self.rhat = rhat
         self.waic = waic
         self.last_values = last_values

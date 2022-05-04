@@ -197,7 +197,7 @@ class LBAModel_2A(Model):
             print(par, self.priors[par])
 
         # start sampling...
-        fitted_model = self.compiled_model.sampling(data_dict, **kwargs)
+        fitted_model = self.compiled_model.sample(data_dict, **kwargs)
 
         fitted_model = raceFittedModel_2A(stan_model=fitted_model,
                                           data=data,
@@ -512,7 +512,7 @@ class RLLBAModel_2A(Model):
             print(par, self.priors[par])
 
         # start sampling...
-        fitted_model = self.compiled_model.sampling(data_dict, **kwargs)
+        fitted_model = self.compiled_model.sample(data_dict, **kwargs)
 
         fitted_model = raceFittedModel_2A(stan_model=fitted_model,
                                           data=data,
