@@ -25,14 +25,14 @@ CLASSIFIERS = ["Development Status :: 1 - Planning",
                "Topic :: Scientific/Engineering"]
 
 # Description should be a one-liner:
-description = "rlssm: a package for fitting RL models, SSM, and combinations of the two"
+description = "rlssm: a package for fitting RL_2A models, SSM, and combinations of the two"
 # Long description will go up on the pypi page
 long_description = """
 
 rlssm
 ========
-``rlssm`` is a Python package for fitting reinforcement learning (RL) models,
-sequential sampling models (DDM, RDM, LBA, ALBA, and ARDM),
+``rlssm`` is a Python package for fitting reinforcement learning (RL_2A) models,
+sequential sampling models (DDM, RDM_2A, LBA_2A, ALBA_2A, and ARDM_2A),
 and combinations of the two, using Bayesian parameter estimation.
 
 Parameter estimation is done at an individual or hierarchical level

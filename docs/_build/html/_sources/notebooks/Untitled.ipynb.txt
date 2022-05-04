@@ -82,7 +82,7 @@
       "text/plain": [
        "{'k_priors': {'mu': 1, 'sd': 1},\n",
        " 'A_priors': {'mu': 0.3, 'sd': 1},\n",
-       " 'tau_priors': {'mu': 0, 'sd': 1},\n",
+       " 'ndt_priors': {'mu': 0, 'sd': 1},\n",
        " 'v0_priors': {'mu': 9, 'sd': 2},\n",
        " 'ws_priors': {'mu': 0, 'sd': 2},\n",
        " 'wd_priors': {'mu': 3, 'sd': 3}}"
@@ -126,7 +126,7 @@
       "text/plain": [
        "{'k_priors': {'mu': 1, 'sd': 1},\n",
        " 'A_priors': {'mu': 0.3, 'sd': 1},\n",
-       " 'tau_priors': {'mu': 0, 'sd': 1},\n",
+       " 'ndt_priors': {'mu': 0, 'sd': 1},\n",
        " 'alpha_priors': {'mu': 0, 'sd': 1},\n",
        " 'drift_scaling_priors': {'mu': 0, 'sd': 0.5}}"
       ]
