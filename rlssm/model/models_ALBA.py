@@ -200,6 +200,8 @@ class ALBAModel_2A(Model):
         if wd_priors is not None:
             self.priors['wd_priors'] = wd_priors
 
+        print(data.columns)
+        
         data_dict = {
             'N': N,
             'rt': data['rt'].values,
