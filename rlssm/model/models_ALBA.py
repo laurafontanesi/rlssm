@@ -117,7 +117,7 @@ class ALBAModel_2A(Model):
 
         Returns
         -------
-        res : rlssm.fits.DDModelResults
+        res : rlssm.fits.LBAFittedModel_2A
 
         Other Parameters
         ----------------

@@ -66,31 +66,22 @@ class LBAFittedModel_2A(FittedModel):
                                                diagnostics=False,
                                                inc_warmup=False)[par_to_display].reset_index(drop=True)
 
-        # trial parameters
-        f_label = self.family.split('_')[0]
-        lba_labels = ['LBA_2A', 'ALBA_2A', 'RLLBA', 'RLALBA']
-        if f_label in lba_labels or self.family in lba_labels:
-            trial_samples = self.stan_model.extract(['rel_sp_t',
-                                                     'threshold_t',
-                                                     'ndt_t',
-                                                     'drift_cor_t',
-                                                     'drift_inc_t'])
-        else:
-            trial_samples = self.stan_model.extract(['drift_cor_t',
-                                                     'drift_inc_t',
-                                                     'threshold_t',
-                                                     'ndt_t'])
+        trial_samples = self.stan_model.extract(['rel_sp_t',
+                                                 'threshold_t',
+                                                 'ndt_t',
+                                                 'drift_cor_t',
+                                                 'drift_inc_t'])
 
         res = LBAModelResults_2A(self.model_label,
-                                  self.data_info,
-                                  self.parameters_info,
-                                  self.priors,
-                                  rhat,
-                                  waic,
-                                  last_values,
-                                  samples,
-                                  trial_samples,
-                                  self.family)
+                                 self.data_info,
+                                 self.parameters_info,
+                                 self.priors,
+                                 rhat,
+                                 waic,
+                                 last_values,
+                                 samples,
+                                 trial_samples,
+                                 self.family)
         return res
 
 
