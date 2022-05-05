@@ -177,8 +177,6 @@ class ARDModel_2A(Model):
         data['accuracy_rescale'] = 2
         data.loc[data.accuracy == 1, 'accuracy_rescale'] = 1
 
-        print(data.columns)
-
         data_dict = {'N': N,
                      'rt': data['rt'].values,
                      'accuracy': data['accuracy_rescale'].values.astype(int),

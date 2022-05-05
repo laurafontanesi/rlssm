@@ -4,31 +4,29 @@ import unittest
 import numpy as np
 from matplotlib import pyplot as plt
 
-from rlssm.model.models_ALBA import ALBAModel_2A
+from rlssm.model.models_ARDM import ARDModel_2A
 from rlssm.utility.load_data import load_example_dataset
 from tests.unit_tests.tests_plot_functions.helper_methods import compute_MSE_error
 
 
-class TestPlotALBA(unittest.TestCase):
-    def test_plot_posterior_ALBA(self):
-        model = ALBAModel_2A(hierarchical_levels=1)
+class TestPlotARDM(unittest.TestCase):
+    def test_plot_posterior_ARDM(self):
+        model = ARDModel_2A(hierarchical_levels=1)
 
         data = load_example_dataset(hierarchical_levels=1)
 
         data['S_cor'] = np.random.normal(.4, 0.01, data.shape[0])
         data['S_inc'] = np.random.normal(.3, 0.01, data.shape[0])
 
-        model_fit = model.fit(
-            data,
-            thin=5,
-            iter=1000,
-            chains=2)
+        model_fit = model.fit(data,
+                              iter=1000,
+                              chains=2)
 
         model_fit.plot_posteriors(show_intervals="BCI")
 
         ref_fldr = os.path.join(os.path.dirname(__file__), 'reference_data')
         curr_image_path = os.path.join(ref_fldr, 'curr_img.png')
-        ref_image_path = os.path.join(ref_fldr, 'ref_plot_post_alba.png')
+        ref_image_path = os.path.join(ref_fldr, 'ref_plot_post_ardm.png')
 
         plt.savefig(curr_image_path)
 
