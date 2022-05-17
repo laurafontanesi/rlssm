@@ -3,17 +3,17 @@ import pandas as pd
 from scipy import stats
 
 
-def random_lba_2A(cor_drift, inc_drift, threshold, ndt, rel_sp):
+def random_lba_2A(cor_drift, inc_drift, sp_trial_var, ndt, k):
     """Simulates behavior (rt and accuracy) according to the Linear Ballistic Accumulator.
 
     Parameters
     ----------
 
-    rel_sp : float
-        Relative starting point of the Linear Ballistic Accumulator. Also called k.
+    k : float
+        Distance between starting point variability and threshold)
 
-    threshold : float
-        Threshold of the Linear Ballistic Accumulator. Also called A.
+    sp_trial_var : float
+        Starting point variability of the Linear Ballistic Accumulator. Also called A.
 
     ndt : float
         Non-decision time of the Linear Ballistic Accumulator. Also called tau.
@@ -43,7 +43,7 @@ def random_lba_2A(cor_drift, inc_drift, threshold, ndt, rel_sp):
     acc[:] = np.nan
     rt[:] = np.nan
 
-    b = rel_sp + threshold
+    b = k + sp_trial_var
     one_pose = True
     v_cor = np.array(cor_drift)
     v_inc = np.array(inc_drift)
@@ -55,8 +55,8 @@ def random_lba_2A(cor_drift, inc_drift, threshold, ndt, rel_sp):
         v_inc[ind] = np.random.normal(inc_drift[ind], np.ones(inc_drift[ind].shape))
         one_pose = np.sum(ind) > 0
 
-    start_cor = np.random.uniform(np.zeros(threshold.shape), threshold)
-    start_inc = np.random.uniform(np.zeros(threshold.shape), threshold)
+    start_cor = np.random.uniform(np.zeros(sp_trial_var.shape), sp_trial_var)
+    start_inc = np.random.uniform(np.zeros(sp_trial_var.shape), sp_trial_var)
 
     ttf_cor = (b - start_cor) / v_cor
     ttf_inc = (b - start_inc) / v_inc
@@ -83,9 +83,9 @@ def random_lba_2A(cor_drift, inc_drift, threshold, ndt, rel_sp):
 def simulate_lba_2A(n_trials,
                     gen_cor_drift,
                     gen_inc_drift,
-                    gen_threshold,  # A
+                    gen_sp_trial_var,  # A, wrongly called gen_threshold
                     gen_ndt,  # tau
-                    gen_rel_sp,  # k
+                    gen_k,  # wrongly called gen_rel_sp
                     gen_drift_trial_sd=None,
                     participant_label=1,
                     **kwargs):
@@ -112,14 +112,14 @@ def simulate_lba_2A(n_trials,
     gen_inc_drift : float, list, or numpy.ndarray
         Drift-rate of the Linear Ballistic Accumulator - incorrect trials.
 
-    gen_threshold : float, list, or numpy.ndarray
-        Threshold of the Linear Ballistic Accumulator. Also called A.
+    gen_sp_trial_var : float, list, or numpy.ndarray
+        Starting point variability of the Linear Ballistic Accumulator.
 
     gen_ndt : float, list, or numpy.ndarray
         Non-decision time of the Linear Ballistic Accumulator. Also called tau.
 
-    gen_rel_sp : float, list, or numpy.ndarray
-        Relative starting point of the Linear Ballistic Accumulator. Also called k.
+    gen_k : float, list, or numpy.ndarray
+        Distance between starting point variability and threshold.
 
     Optional Parameters
     -------------------
@@ -149,14 +149,14 @@ def simulate_lba_2A(n_trials,
         >>> data1 = simulate_lba_2A(n_trials=1000,
                                      gen_cor_drift=.6,
                                      gen_inc_drift=.4,
-                                     gen_threshold=1.5,
+                                     sp_trial_var=1.5,
                                      gen_ndt=.23,
-                                     gen_rel_sp=.8,
+                                     gen_k=.8,
                                      gen_drift_trial_sd=.5)
 
         >>> print(data1.head())
 
-                           rel_sp   ndt  threshold  ...  inc_drift        rt  accuracy
+                           k   ndt  sp_trial_var  ...  inc_drift        rt  accuracy
         participant trial                           ...
         1           1         0.8  0.23        1.5  ...   0.202502  2.196517       1.0
                     2         0.8  0.23        1.5  ...   0.878639  1.293609       0.0
@@ -165,12 +165,12 @@ def simulate_lba_2A(n_trials,
                     5         0.8  0.23        1.5  ...   0.768345  1.288486       1.0
     """
     # return a pandas dataframe with the following columns:
-    # index: participant + trial, cor_drift, inc_drift, threshold, ndt, rt, accuracy
+    # index: participant + trial, cor_drift, inc_drift, sp_trial_var, ndt, rt, accuracy
     data = pd.DataFrame({'participant': np.repeat(participant_label, n_trials)})
 
-    data['rel_sp'] = gen_rel_sp
+    data['k'] = gen_k
     data['ndt'] = gen_ndt
-    data['threshold'] = gen_threshold
+    data['sp_trial_var'] = gen_sp_trial_var
 
     if gen_drift_trial_sd is None:
         data['cor_drift'] = gen_cor_drift
@@ -180,7 +180,7 @@ def simulate_lba_2A(n_trials,
         data['inc_drift'] = np.random.normal(gen_inc_drift, gen_drift_trial_sd, n_trials)
 
     rt, acc = random_lba_2A(cor_drift=data['cor_drift'], inc_drift=data['inc_drift'],
-                            threshold=data['threshold'], ndt=data['ndt'], rel_sp=data['rel_sp'])
+                            sp_trial_var=data['sp_trial_var'], ndt=data['ndt'], k=data['k'])
 
     data['rt'] = rt
     data['accuracy'] = acc
@@ -194,9 +194,9 @@ def simulate_lba_2A(n_trials,
 def simulate_hier_lba(n_trials, n_participants,
                       gen_mu_drift_cor, gen_sd_drift_cor,
                       gen_mu_drift_inc, gen_sd_drift_inc,
-                      gen_mu_threshold, gen_sd_threshold,
+                      gen_mu_sp_trial_var, gen_sd_sp_trial_var,
                       gen_mu_ndt, gen_sd_ndt,
-                      gen_mu_rel_sp=.5, gen_sd_rel_sp=None,
+                      gen_mu_k=.5, gen_sd_k=None,
                       gen_drift_trial_sd=None,
                       **kwargs):
     """Simulate behavior (rt and accuracy) according to a hierarchical linear ballistic accumulator.
@@ -222,11 +222,11 @@ def simulate_hier_lba(n_trials, n_participants,
     gen_sd_drift_inc : float
         Standard deviation of the drift rate for incorrect trials.
 
-    gen_mu_threshold : float
-        Group-mean threshold of the linear ballistic accumulator.
+    gen_mu_sp_trial_var : float
+        Group-mean sp_trial_var of the linear ballistic accumulator.
 
-    gen_sd_threshold : float
-        Group-standard deviation of the threshold of the linear ballistic accumulator.
+    gen_sd_sp_trial_var : float
+        Group-standard deviation of the sp_trial_var of the linear ballistic accumulator.
 
     gen_mu_ndt : float
         Group-mean non-decision time of the linear ballistic accumulator.
@@ -237,14 +237,14 @@ def simulate_hier_lba(n_trials, n_participants,
     Optional parameters
     -------------------
 
-    gen_mu_rel_sp : float, default .5
+    gen_mu_k : float, default .5
         Relative starting point of the linear ballistic accumulator.
-        When `gen_sd_rel_sp` is not specified, `gen_mu_rel_sp` is
+        When `gen_sd_k` is not specified, `gen_mu_k` is
         fixed across participants to .5.
-        When `gen_sd_rel_sp` is specified, `gen_mu_rel_sp` is the
+        When `gen_sd_k` is specified, `gen_mu_k` is the
         group-mean of the starting point.
 
-    gen_sd_rel_sp : float, default None
+    gen_sd_k : float, default None
         Group-standard deviation of the relative starting point of the linear ballistic accumulator.
 
     gen_drift_trial_sd : float, optional
@@ -268,13 +268,13 @@ def simulate_hier_lba(n_trials, n_participants,
         >>> data_hier = simulate_hier_lba(n_trials=100, n_participants=30,
                                            gen_mu_drift_cor=1, gen_sd_drift_cor=.5,
                                            gen_mu_drift_inc=1, gen_sd_drift_inc=.5,
-                                           gen_mu_threshold=1, gen_sd_threshold=.1,
+                                           gen_mu_sp_trial_var=1, gen_sd_sp_trial_var=.1,
                                            gen_mu_ndt=.23, gen_sd_ndt=.1,
-                                           gen_mu_rel_sp=.1, gen_sd_rel_sp=.05)
+                                           gen_mu_k=.1, gen_sd_k=.05)
 
         >>> print(data_hier.head())
 
-                           threshold       ndt  cor_drift  ...    rel_sp        rt  accuracy
+                           sp_trial_var     ndt  cor_drift  ...    k        rt  accuracy
         participant trial                                  ...
         1           1       1.329862  0.825293   1.593415  ...  0.559247  1.867468       1.0
                     2       1.329862  0.825293   1.593415  ...  0.559247  1.633809       1.0
@@ -287,11 +287,11 @@ def simulate_hier_lba(n_trials, n_participants,
     cor_drift_sbj = np.random.normal(gen_mu_drift_cor, gen_sd_drift_cor, n_participants)
     inc_drift_sbj = np.random.normal(gen_mu_drift_inc, gen_sd_drift_inc, n_participants)
 
-    threshold_sbj = np.log(1 + np.exp(np.random.normal(gen_mu_threshold, gen_sd_threshold, n_participants)))
+    sp_trial_var_sbj = np.log(1 + np.exp(np.random.normal(gen_mu_sp_trial_var, gen_sd_sp_trial_var, n_participants)))
     ndt_sbj = np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants)))
 
     data['participant'] = np.repeat(np.arange(n_participants) + 1, n_trials)
-    data['threshold'] = np.repeat(threshold_sbj, n_trials)
+    data['sp_trial_var'] = np.repeat(sp_trial_var_sbj, n_trials)
     data['ndt'] = np.repeat(ndt_sbj, n_trials)
 
     if gen_drift_trial_sd is None:
@@ -301,14 +301,14 @@ def simulate_hier_lba(n_trials, n_participants,
         data['cor_drift'] = np.random.normal(np.repeat(cor_drift_sbj, n_trials), gen_drift_trial_sd)
         data['inc_drift'] = np.random.normal(np.repeat(inc_drift_sbj, n_trials), gen_drift_trial_sd)
 
-    if gen_sd_rel_sp is None:
-        data['rel_sp'] = np.repeat(.5, n_trials)
+    if gen_sd_k is None:
+        data['k'] = np.repeat(.5, n_trials)
     else:
-        rel_sp_sbj = stats.norm.cdf(np.random.normal(gen_mu_rel_sp, gen_sd_rel_sp, n_participants))
-        data['rel_sp'] = np.repeat(rel_sp_sbj, n_trials)
+        k_sbj = stats.norm.cdf(np.random.normal(gen_mu_k, gen_sd_k, n_participants))
+        data['k'] = np.repeat(k_sbj, n_trials)
 
-    rt, acc = random_lba_2A(cor_drift=data['cor_drift'], inc_drift=data['inc_drift'], threshold=data['threshold'],
-                            ndt=data['ndt'], rel_sp=data['rel_sp'])
+    rt, acc = random_lba_2A(cor_drift=data['cor_drift'], inc_drift=data['inc_drift'], sp_trial_var=data['sp_trial_var'],
+                            ndt=data['ndt'], k=data['k'])
 
     data['rt'] = rt
     data['accuracy'] = acc

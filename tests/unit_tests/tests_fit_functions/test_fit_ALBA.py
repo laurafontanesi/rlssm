@@ -34,10 +34,10 @@ class TestFitALBA(unittest.TestCase):
         data_hier['S_cor'] = np.random.normal(.4, 0.01, data_hier.shape[0])
         data_hier['S_inc'] = np.random.normal(.3, 0.01, data_hier.shape[0])
 
-        threshold_priors = {'mu_mu': -1, 'sd_mu': .5, 'mu_sd': 0, 'sd_sd': 1}
+        sp_trial_var_priors = {'mu_mu': -1, 'sd_mu': .5, 'mu_sd': 0, 'sd_sd': 1}
 
         model_fit = model.fit(data_hier,
-                              threshold_priors=threshold_priors,
+                              sp_trial_var_priors=sp_trial_var_priors,
                               warmup=50,
                               iter=100,
                               chains=2,

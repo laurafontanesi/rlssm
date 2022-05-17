@@ -50,22 +50,22 @@ class LBAModel_2A(Model):
         super().__init__(hierarchical_levels, "LBA_2A")
 
         # Define the model parameters
-        self.n_parameters_individual = 5  # rel_sp, threshold, ndt, drift_cor, drift_inc
+        self.n_parameters_individual = 5  # k, sp_trial_var, ndt, drift_cor, drift_inc
         self.n_parameters_trial = 0
 
         # Define default priors
         if self.hierarchical_levels == 1:
             self.priors = dict(
                 drift_priors={'mu': 1, 'sd': 5},
-                rel_sp_priors={'mu': 1, 'sd': 1},
-                threshold_priors={'mu': 0.3, 'sd': 1},
+                k_priors={'mu': 1, 'sd': 1},
+                sp_trial_var_priors={'mu': 0.3, 'sd': 1},
                 ndt_priors={'mu': 0, 'sd': 1},
             )
         else:
             self.priors = dict(
                 drift_priors={'mu_mu': 2, 'sd_mu': 3, 'mu_sd': 1, 'sd_sd': 1},
-                rel_sp_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
-                threshold_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                k_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                sp_trial_var_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
                 ndt_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
             )
 
@@ -79,8 +79,8 @@ class LBAModel_2A(Model):
 
     def fit(self,
             data,
-            rel_sp_priors=None,
-            threshold_priors=None,
+            k_priors=None,
+            sp_trial_var_priors=None,
             ndt_priors=None,
             drift_priors=None,
             include_rhat=True,
@@ -116,12 +116,12 @@ class LBAModel_2A(Model):
         Other Parameters
         ----------------
 
-        rel_sp_priors : dict, optional
+        k_priors : dict, optional
             Priors for the k parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        threshold_priors : dict, optional
+        sp_trial_var_priors : dict, optional
             Priors for the A parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
@@ -166,10 +166,10 @@ class LBAModel_2A(Model):
         data.loc[data.accuracy == 1, 'accuracy_rescale'] = 1
 
         # change default priors:
-        if rel_sp_priors is not None:
-            self.priors['rel_sp_priors'] = rel_sp_priors
-        if threshold_priors is not None:
-            self.priors['threshold_priors'] = threshold_priors
+        if k_priors is not None:
+            self.priors['k_priors'] = k_priors
+        if sp_trial_var_priors is not None:
+            self.priors['sp_trial_var_priors'] = sp_trial_var_priors
         if ndt_priors is not None:
             self.priors['ndt_priors'] = ndt_priors
         if drift_priors is not None:
@@ -274,14 +274,14 @@ class RLLBAModel_2A(Model):
         self.separate_learning_rates = separate_learning_rates
         self.nonlinear_mapping = nonlinear_mapping
 
-        self.n_parameters_individual = 5  # rel_sp, threshold, ndt, scaling, learning rate
+        self.n_parameters_individual = 5  # k, sp_trial_var, ndt, scaling, learning rate
         self.n_parameters_trial = 0
 
         # Define default priors
         if self.hierarchical_levels == 1:
             self.priors = dict(
-                rel_sp_priors={'mu': 1, 'sd': 1},
-                threshold_priors={'mu': 0.3, 'sd': 1},
+                k_priors={'mu': 1, 'sd': 1},
+                sp_trial_var_priors={'mu': 0.3, 'sd': 1},
                 ndt_priors={'mu': 0, 'sd': 1},
                 alpha_priors={'mu': 0, 'sd': 1},
                 alpha_pos_priors={'mu': 0, 'sd': 1},
@@ -291,8 +291,8 @@ class RLLBAModel_2A(Model):
             )
         else:
             self.priors = dict(
-                rel_sp_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
-                threshold_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                k_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                sp_trial_var_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
                 ndt_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
                 alpha_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},
                 alpha_pos_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},
@@ -325,8 +325,8 @@ class RLLBAModel_2A(Model):
             data,
             K,
             initial_value_learning,
-            rel_sp_priors=None,
-            threshold_priors=None,
+            k_priors=None,
+            sp_trial_var_priors=None,
             ndt_priors=None,
             utility_priors=None,
             alpha_priors=None,
@@ -393,13 +393,13 @@ class RLLBAModel_2A(Model):
         Other Parameters
         ----------------
 
-        rel_sp_priors : dict, optional
+        k_priors : dict, optional
             Priors for the relative starting point (k parameter).
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        threshold_priors : dict, optional
-            Priors for the threshold (A parameter).
+        sp_trial_var_priors : dict, optional
+            Priors for the sp_trial_var (A parameter).
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
@@ -465,10 +465,10 @@ class RLLBAModel_2A(Model):
         data.loc[data.accuracy == 1, 'accuracy_rescale'] = 1
 
         # change default priors:
-        if rel_sp_priors is not None:
-            self.priors['rel_sp_priors'] = rel_sp_priors
-        if threshold_priors is not None:
-            self.priors['threshold_priors'] = threshold_priors
+        if k_priors is not None:
+            self.priors['k_priors'] = k_priors
+        if sp_trial_var_priors is not None:
+            self.priors['sp_trial_var_priors'] = sp_trial_var_priors
         if ndt_priors is not None:
             self.priors['ndt_priors'] = ndt_priors
         if drift_scaling_priors is not None:

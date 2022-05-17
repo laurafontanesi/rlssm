@@ -9,9 +9,9 @@ class TestRandomALBA(unittest.TestCase):
     def setUp(self):
         self.data1 = simulate_alba_2A(gen_S_cor=np.random.normal(.4, 0.01, 100),
                                       gen_S_inc=np.random.normal(.3, 0.01, 100),
-                                      gen_threshold=2,
+                                      gen_sp_trial_var=2,
                                       gen_ndt=.2,
-                                      gen_rel_sp=.2,
+                                      gen_k=.2,
                                       gen_v0=1,
                                       gen_ws=.7,
                                       gen_wd=1,
@@ -27,9 +27,9 @@ class TestRandomALBA(unittest.TestCase):
                                             gen_ws=.7, gen_wd=1,
                                             gen_mu_drift_cor=.4, gen_sd_drift_cor=0.01,
                                             gen_mu_drift_inc=.3, gen_sd_drift_inc=0.01,
-                                            gen_mu_threshold=1, gen_sd_threshold=.1,
+                                            gen_mu_sp_trial_var=1, gen_sd_sp_trial_var=.1,
                                             gen_mu_ndt=.23, gen_sd_ndt=.1,
-                                            gen_mu_rel_sp=.5, gen_sd_rel_sp=None,
+                                            gen_mu_k=.5, gen_sd_k=None,
                                             gen_drift_trial_sd=None)
         # TEST: assure that there are 30 participants
         assert self.data_hier.index[-1][0] == 30, f"Number of participants should be 30"

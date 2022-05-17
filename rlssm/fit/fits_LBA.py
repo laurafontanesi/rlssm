@@ -66,8 +66,8 @@ class LBAFittedModel_2A(FittedModel):
                                                diagnostics=False,
                                                inc_warmup=False)[par_to_display].reset_index(drop=True)
 
-        trial_samples = self.stan_model.extract(['rel_sp_t',
-                                                 'threshold_t',
+        trial_samples = self.stan_model.extract(['k_t',
+                                                 'sp_trial_var_t',
                                                  'ndt_t',
                                                  'drift_cor_t',
                                                  'drift_inc_t'])
@@ -119,11 +119,11 @@ class LBAModelResults_2A(ModelResults):
         drift_cor_t = self.trial_samples['drift_cor_t'][:n_posterior_predictives, :]
         drift_inc_t = self.trial_samples['drift_inc_t'][:n_posterior_predictives, :]
 
-        threshold_t = self.trial_samples['threshold_t'][:n_posterior_predictives, :]
+        sp_trial_var_t = self.trial_samples['sp_trial_var_t'][:n_posterior_predictives, :]
         ndt_t = self.trial_samples['ndt_t'][:n_posterior_predictives, :]
-        gen_rel_sp_t = self.trial_samples['gen_rel_sp_t'][:n_posterior_predictives, :]
+        gen_k_t = self.trial_samples['gen_k_t'][:n_posterior_predictives, :]
 
-        pp_rt, pp_acc = random_lba_2A(drift_cor_t, drift_inc_t, threshold_t, ndt_t, gen_rel_sp_t)
+        pp_rt, pp_acc = random_lba_2A(drift_cor_t, drift_inc_t, sp_trial_var_t, ndt_t, gen_k_t)
 
         return pp_rt, pp_acc
 
@@ -195,7 +195,7 @@ class LBAModelResults_2A(ModelResults):
 
         noise_constant : float
             Scaling factor of the diffusion decision model.
-            If changed, drift and threshold would be scaled accordingly.
+            If changed, drift and sp_trial_var would be scaled accordingly.
             Not to be changed in most applications.
 
         rt_max : float
@@ -444,7 +444,7 @@ class LBAModelResults_2A(ModelResults):
 
         noise_constant : float
             Scaling factor of the diffusion decision model.
-            If changed, drift and threshold would be scaled accordingly.
+            If changed, drift and sp_trial_var would be scaled accordingly.
             Not to be changed in most applications.
 
         rt_max : float
