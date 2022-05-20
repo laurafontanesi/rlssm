@@ -6,28 +6,33 @@ from rlssm.random.random_RDM import random_rdm_2A
 from rlssm.random.random_common import _simulate_delta_rule_2A
 
 
-def simulate_ardm_2A(task_design,
-                     gen_alpha,
-                     gen_threshold,  # A
-                     gen_ndt,  # tau
-                     gen_v0,
-                     gen_ws,
-                     gen_wd,
-                     initial_value_learning=0,
-                     gen_drift_trial_sd=None,
-                     participant_label=1,
-                     **kwargs):
+def simulate_rlardm_2A(task_design,
+                       gen_alpha,
+                       gen_threshold,
+                       gen_ndt,
+                       gen_v0,
+                       gen_ws,
+                       gen_wd,
+                       initial_value_learning=0,
+                       gen_drift_trial_sd=None,
+                       **kwargs):
     """Simulates behavior (rt and accuracy) according to the Advantage Racing Diffusion Model.
 
     Note
     ----
     Parameters
     ----------
-    gen_S_cor : float
-        Brightness of correct trials.
+    task_design : DataFrame
+        `pandas.DataFrame`, with n_trials_block*n_blocks rows.
+        Columns contain:
+        "f_cor", "f_inc", "trial_type", "cor_option", "inc_option",
+        "trial_block", "block_label", "participant".
 
-    gen_S_inc : float
-        Brightness of incorrect trials.
+    gen_alpha : float or list of floats
+        The generating learning rate.
+        It should be a value between 0 (no updating) and 1 (full updating).
+        If a list of 2 values is provided then 2 separate learning rates
+        for positive and negative prediction error are used.
 
     gen_threshold : float
         Threshold of the ardm model. Should be positive.
@@ -47,12 +52,11 @@ def simulate_ardm_2A(task_design,
 
     Optional Parameters
     -------------------
+    initial_value_learning : float
+        The initial value for Q learning.
 
     gen_drift_trial_sd : float, default None
         Across trial variability in the drift-rate. Should be positive.
-
-    participant_label : string or float, default 1
-        What will appear in the participant column of the output data.
 
     kwargs : dict
         Additional parameters to be passed to `random_rdm_2A`.
@@ -67,21 +71,6 @@ def simulate_ardm_2A(task_design,
 
     Example
     -------
-
-        >>> data1 = simulate_ardm_2A(gen_S_cor=np.random.normal(.4, 0.01, 100),
-                                      gen_S_inc=np.random.normal(.3, 0.01, 100),
-                                      gen_threshold=2, gen_ndt=.2, gen_v0=1,
-                                      gen_ws=.7, gen_wd=1,
-                                      gen_drift_trial_sd=.1)
-
-        >>> print(data1.head())
-                                          S_cor     S_inc  threshold  ...  inc_drift     rt  accuracy
-            participant trial                                 ...
-            1           1      0.418064  0.315546          2  ...   1.474992  1.497       0.0
-                        2      0.402899  0.319556          2  ...   1.413985  0.940       0.0
-                        3      0.410951  0.302430          2  ...   1.420837  1.829       0.0
-                        4      0.407772  0.286868          2  ...   1.404168  1.289       0.0
-                        5      0.398231  0.308216          2  ...   1.362828  1.847       1.0
     """
     data = task_design.copy()
 
@@ -104,29 +93,22 @@ def simulate_ardm_2A(task_design,
                              axis=1)
 
         elif len(gen_alpha) == 3:
-            pass  # implement here Stefano's learning rule
+            raise ValueError("Not implemented yet.")  # implement here Stefano's learning rule
         else:
             raise ValueError("The gen_alpha list should be of either length 2 or 3.")
     else:
         raise TypeError("The gen_alpha should be either a list or a float/int.")
 
-    f_cor = data['f_cor']
-    f_inc = data['f_inc']
-
-    n_trials = np.shape(f_cor)[0]
+    n_trials = np.shape(data['f_cor'])[0]
 
     data['threshold'] = gen_threshold
     data['ndt'] = gen_ndt
 
-    gen_cor_drift = gen_v0 + gen_wd * (f_cor - f_inc) + gen_ws * (f_cor + f_inc)
-    gen_inc_drift = gen_v0 + gen_wd * (f_inc - f_cor) + gen_ws * (f_cor + f_inc)
-
     if gen_drift_trial_sd is None:
-        data['cor_drift'] = gen_cor_drift
-        data['inc_drift'] = gen_inc_drift
+        data['cor_drift'] = gen_v0 + gen_wd * (data['f_cor'] - data['f_inc']) + gen_ws * (data['f_cor'] + data['f_inc'])
+        data['inc_drift'] = gen_v0 + gen_wd * (data['f_inc'] - data['f_cor']) + gen_ws * (data['f_cor'] + data['f_inc'])
     else:
-        data['cor_drift'] = np.random.normal(gen_cor_drift, gen_drift_trial_sd)
-        data['inc_drift'] = np.random.normal(gen_inc_drift, gen_drift_trial_sd)
+        raise ValueError("Not implemented yet.")
 
     rt, acc = random_rdm_2A(cor_drift=data['cor_drift'], inc_drift=data['inc_drift'],
                             threshold=data['threshold'], ndt=data['ndt'])
@@ -140,12 +122,13 @@ def simulate_ardm_2A(task_design,
     return data
 
 
-def simulate_hier_rlardm(task_design, n_trials, gen_mu_alpha, gen_sd_alpha,
-                         gen_v0, gen_ws, gen_wd,
-                         gen_mu_drift_cor, gen_sd_drift_cor,
-                         gen_mu_drift_inc, gen_sd_drift_inc,
+def simulate_hier_rlardm(task_design,
+                         gen_mu_alpha, gen_sd_alpha,
                          gen_mu_threshold, gen_sd_threshold,
                          gen_mu_ndt, gen_sd_ndt,
+                         gen_mu_v0, gen_sd_v0,
+                         gen_mu_ws, gen_sd_ws,
+                         gen_mu_wd, gen_sd_wd,
                          initial_value_learning=0,
                          gen_drift_trial_sd=None,
                          **kwargs):
@@ -153,48 +136,56 @@ def simulate_hier_rlardm(task_design, n_trials, gen_mu_alpha, gen_sd_alpha,
 
     Parameters
     ---------
-    n_trials : int
-        Number of trials to simulate.
+    task_design : DataFrame
+        `pandas.DataFrame`, with n_trials_block*n_blocks rows.
+        Columns contain:
+        "f_cor", "f_inc", "trial_type", "cor_option", "inc_option",
+        "trial_block", "block_label", "participant".
 
-    n_participants : int
-        Number of participants to simulate.
+    gen_mu_alpha : float or list of floats
+        The generating group mean of the learning rate.
+        If a list of 2 values is provided then 2 separate learning rates
+        for positive and negative prediction error are used.
 
-    gen_v0 : float
-        The Bias parameter; ensures each accumulator has a positive drift rate, and eventually reaches threshold.
-        Must be positive.
-
-    gen_ws : float
-        Sum weight: must be positive.
-
-    gen_wd : float
-        Difference weight: must be positive.
-
-    gen_mu_drift_cor : float
-        Mean of the drift rate for correct trials.
-
-    gen_sd_drift_cor : float
-        Standard deviation of the drift rate for correct trials.
-
-    gen_mu_drift_inc : float
-        Mean of the drift rate for incorrect trials.
-
-    gen_sd_drift_inc : float
-        Standard deviation of the drift rate for incorrect trials.
+    gen_sd_alpha : float or list of floats
+        The generating group SD of the learning rate.
+        If a list of 2 values is provided then 2 separate learning rates
+        for positive and negative prediction error are used.
 
     gen_mu_threshold : float
-        Group-mean threshold of the advantage Racing Diffusion Model.
+        Group-mean threshold of the Advantage Racing Diffusion Model.
 
     gen_sd_threshold : float
-        Group-standard deviation of the threshold of the advantage Racing Diffusion Model.
+        Group-standard deviation of the threshold of the Advantage Racing Diffusion Model.
 
     gen_mu_ndt : float
-        Group-mean non-decision time of the advantage Racing Diffusion Model.
+        Group-mean non-decision time of the Advantage Racing Diffusion Model.
 
     gen_sd_ndt : float
-        Group-standard deviation of the non-decision time of the advantage Racing Diffusion Model.
+        Group-standard deviation of the non-decision time of the Advantage Racing Diffusion Model.
+
+    gen_mu_v0 : float or list of floats
+        The mean of the Bias parameter; ensures each accumulator has a positive drift rate, and eventually reaches sp_trial_var.
+
+    gen_sd_v0 : float or list of floats
+        The SD of the Bias parameter; ensures each accumulator has a positive drift rate, and eventually reaches sp_trial_var.
+
+    gen_mu_ws : float or list of floats
+        The mean of the Sum Weight parameter.
+
+    gen_sd_ws : float or list of floats
+        The SD of the Sum Weight parameter.
+
+    gen_mu_wd : float or list of floats
+        The mean of the Difference Weight parameter.
+
+    gen_sd_wd : float or list of floats
+        The SD of the Difference Weight parameter.
 
     Optional parameters
     -------------------
+    initial_value_learning : float
+        The initial value for Q learning.
 
     gen_drift_trial_sd : float, optional
         Across trial variability in the drift-rate.
@@ -212,30 +203,10 @@ def simulate_hier_rlardm(task_design, n_trials, gen_mu_alpha, gen_sd_alpha,
 
     Example
     -------
-
-        >>> data_hier = simulate_hier_ardm(n_trials=100, n_participants=30, gen_v0=1,
-                                            gen_ws=.7, gen_wd=1,
-                                            gen_mu_drift_cor=.4, gen_sd_drift_cor=0.01,
-                                            gen_mu_drift_inc=.3, gen_sd_drift_inc=0.01,
-                                            gen_mu_threshold=1, gen_sd_threshold=.1,
-                                            gen_mu_ndt=.23, gen_sd_ndt=.1,
-                                            gen_drift_trial_sd=None)
-
-        >>> print(data_hier.head())
-
-                                   threshold    ndt  cor_drift  inc_drift     rt  accuracy
-        participant trial
-        1           1       1.256843  0.749   1.583609   1.367835  1.342       1.0
-                    2       1.256843  0.749   1.583609   1.367835  1.008       0.0
-                    3       1.256843  0.749   1.583609   1.367835  1.672       0.0
-                    4       1.256843  0.749   1.583609   1.367835  1.201       0.0
-                    5       1.256843  0.749   1.583609   1.367835  0.961       0.0
     """
     data = task_design.copy()
     participants = pd.unique(data["participant"])
     n_participants = len(participants)
-    n_block_labels = len(pd.unique(data["block_label"]))
-    n_blocks = len(pd.unique(data["trial_block"]))
 
     if n_participants < 2:
         raise ValueError("You only have one participant. Use simulate_rl_2A instead.")
@@ -247,7 +218,10 @@ def simulate_hier_rlardm(task_design, n_trials, gen_mu_alpha, gen_sd_alpha,
         parameters = pd.DataFrame(
             {'alpha': stats.norm.cdf(np.random.normal(gen_mu_alpha, gen_sd_alpha, n_participants)),
              'threshold': np.log(1 + np.exp(np.random.normal(gen_mu_threshold, gen_sd_threshold, n_participants))),
-             'ndt': np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants)))},
+             'ndt': np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants))),
+             'v0': np.log(1 + np.exp(np.random.normal(gen_mu_v0, gen_sd_v0, n_participants))),
+             'wd': np.log(1 + np.exp(np.random.normal(gen_mu_wd, gen_sd_wd, n_participants))),
+             'ws': np.log(1 + np.exp(np.random.normal(gen_mu_ws, gen_sd_ws, n_participants)))},
             index=participants)
         data = pd.concat([data.set_index('participant'), parameters], axis=1, ignore_index=False).reset_index().rename(
             columns={'index': 'participant'})
@@ -258,13 +232,16 @@ def simulate_hier_rlardm(task_design, n_trials, gen_mu_alpha, gen_sd_alpha,
 
     elif type(gen_mu_alpha) is list:
         if len(gen_mu_alpha) != len(gen_sd_alpha):
-            raise ValueError("gen_mu_alpha and gen_sd_alpha should be of the same lenght.")
+            raise ValueError("gen_mu_alpha and gen_sd_alpha should be of the same length.")
         if len(gen_mu_alpha) == 2:
             parameters = pd.DataFrame(
                 {'alpha_pos': stats.norm.cdf(np.random.normal(gen_mu_alpha[0], gen_sd_alpha[0], n_participants)),
                  'alpha_neg': stats.norm.cdf(np.random.normal(gen_mu_alpha[1], gen_sd_alpha[1], n_participants)),
                  'threshold': np.log(1 + np.exp(np.random.normal(gen_mu_threshold, gen_sd_threshold, n_participants))),
-                 'ndt': np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants)))},
+                 'ndt': np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants))),
+                 'v0': np.log(1 + np.exp(np.random.normal(gen_mu_v0, gen_sd_v0, n_participants))),
+                 'wd': np.log(1 + np.exp(np.random.normal(gen_mu_wd, gen_sd_wd, n_participants))),
+                 'ws': np.log(1 + np.exp(np.random.normal(gen_mu_ws, gen_sd_ws, n_participants)))},
                 index=participants)
             data = pd.concat([data.set_index('participant'), parameters], axis=1,
                              ignore_index=False).reset_index().rename(columns={'index': 'participant'})
@@ -282,25 +259,13 @@ def simulate_hier_rlardm(task_design, n_trials, gen_mu_alpha, gen_sd_alpha,
     else:
         raise TypeError("The gen_alpha should be either a list or a float/int.")
 
-    gen_S_cor = np.random.normal(gen_mu_drift_cor, gen_sd_drift_cor, n_participants)
-    gen_S_inc = np.random.normal(gen_mu_drift_inc, gen_sd_drift_inc, n_participants)
-
-    threshold_sbj = np.log(1 + np.exp(np.random.normal(gen_mu_threshold, gen_sd_threshold, n_participants)))
-    ndt_sbj = np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants)))
-
-    cor_drift_sbj = gen_v0 + gen_wd * (gen_S_cor - gen_S_inc) + gen_ws * (gen_S_cor + gen_S_inc)
-    inc_drift_sbj = gen_v0 + gen_wd * (gen_S_inc - gen_S_cor) + gen_ws * (gen_S_cor + gen_S_inc)
-
-    # data['participant'] = np.repeat(np.arange(n_participants) + 1, n_trials)
-    data['threshold'] = np.repeat(threshold_sbj, n_blocks * n_block_labels)
-    data['ndt'] = np.repeat(ndt_sbj, n_blocks * n_block_labels)
-
     if gen_drift_trial_sd is None:
-        data['cor_drift'] = np.repeat(cor_drift_sbj, n_blocks * n_block_labels)
-        data['inc_drift'] = np.repeat(inc_drift_sbj, n_blocks * n_block_labels)
+        data['cor_drift'] = data['v0'] + data['wd'] * (data['Q_cor'] - data['Q_inc']) + data['ws'] * (
+                data['Q_cor'] + data['Q_inc'])
+        data['inc_drift'] = data['v0'] + data['wd'] * (data['Q_inc'] - data['Q_cor']) + data['ws'] * (
+                data['Q_cor'] + data['Q_inc'])
     else:
-        data['cor_drift'] = np.random.normal(np.repeat(cor_drift_sbj, n_trials), gen_drift_trial_sd)
-        data['inc_drift'] = np.random.normal(np.repeat(inc_drift_sbj, n_trials), gen_drift_trial_sd)
+        raise ValueError("Not implemented yet.")
 
     rt, acc = random_rdm_2A(cor_drift=data['cor_drift'], inc_drift=data['inc_drift'], threshold=data['threshold'],
                             ndt=data['ndt'])

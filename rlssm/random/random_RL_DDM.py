@@ -249,7 +249,7 @@ def simulate_hier_rlddm_2A(task_design,
 
     elif type(gen_mu_alpha) is list:
         if len(gen_mu_alpha) != len(gen_sd_alpha):
-            raise ValueError("gen_mu_alpha and gen_sd_alpha should be of the same lenght.")
+            raise ValueError("gen_mu_alpha and gen_sd_alpha should be of the same length.")
         if len(gen_mu_alpha) == 2:
             parameters = pd.DataFrame(
                 {'alpha_pos': stats.norm.cdf(np.random.normal(gen_mu_alpha[0], gen_sd_alpha[0], n_participants)),

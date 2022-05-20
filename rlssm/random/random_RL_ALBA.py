@@ -8,15 +8,14 @@ from rlssm.random.random_common import _simulate_delta_rule_2A
 
 def simulate_rlalba_2A(task_design,
                        gen_alpha,
-                       gen_sp_trial_var,  # A
-                       gen_ndt,  # tau
-                       gen_k,  # k
+                       gen_sp_trial_var,
+                       gen_ndt,
+                       gen_k,
                        gen_v0,
                        gen_ws,
                        gen_wd,
                        initial_value_learning=0,
                        gen_drift_trial_sd=None,
-                       participant_label=1,
                        **kwargs):
     """Simulates behavior (rt and accuracy) according to the RL-ALBA model.
 
@@ -63,9 +62,6 @@ def simulate_rlalba_2A(task_design,
     gen_drift_trial_sd : float, default None
         Across trial variability in the drift-rate. Should be positive.
 
-    participant_label : string or float, default 1
-        What will appear in the participant column of the output data.
-
     kwargs : dict
         Additional parameters to be passed to `random_lba_2A`.
     Returns
@@ -79,15 +75,6 @@ def simulate_rlalba_2A(task_design,
 
     Example
     -------
-        >>> self.dm_non_hier = generate_task_design_fontanesi(n_trials_block=80, n_blocks=3,
-                                                              n_participants=1, trial_types=['1-2', '1-3', '2-4', '3-4'],
-                                                              mean_options=[34, 38, 50, 54], sd_options=[5, 5, 5, 5])
-
-        >>> self.data1 = simulate_rlalba_2A(task_design=self.dm_non_hier,
-                                        gen_alpha=0.1, gen_sp_trial_var=2,
-                                        gen_ndt=.2, gen_k=.2,
-                                        gen_v0=1, gen_ws=7, gen_wd=1,
-                                        gen_drift_trial_sd=None, participant_label=1)
     """
 
     data = task_design.copy()
@@ -117,24 +104,17 @@ def simulate_rlalba_2A(task_design,
     else:
         raise TypeError("The gen_alpha should be either a list or a float/int.")
 
-    f_cor = data['f_cor']
-    f_inc = data['f_inc']
-
-    n_trials = np.shape(f_cor)[0]
+    n_trials = np.shape(data['f_cor'])[0]
 
     data['sp_trial_var'] = gen_sp_trial_var
     data['ndt'] = gen_ndt
     data['k'] = gen_k
 
-    gen_cor_drift = gen_v0 + gen_wd * (f_cor - f_inc) + gen_ws * (f_cor + f_inc)
-    gen_inc_drift = gen_v0 + gen_wd * (f_inc - f_cor) + gen_ws * (f_cor + f_inc)
-
     if gen_drift_trial_sd is None:
-        data['cor_drift'] = gen_cor_drift
-        data['inc_drift'] = gen_inc_drift
+        data['cor_drift'] = gen_v0 + gen_wd * (data['f_cor'] - data['f_inc']) + gen_ws * (data['f_cor'] + data['f_inc'])
+        data['inc_drift'] = gen_v0 + gen_wd * (data['f_inc'] - data['f_cor']) + gen_ws * (data['f_cor'] + data['f_inc'])
     else:
-        data['cor_drift'] = np.random.normal(gen_cor_drift, gen_drift_trial_sd)
-        data['inc_drift'] = np.random.normal(gen_inc_drift, gen_drift_trial_sd)
+        raise ValueError("Not implemented yet.")
 
     rt, acc = random_lba_2A(cor_drift=data['cor_drift'], inc_drift=data['inc_drift'],
                             sp_trial_var=data['sp_trial_var'], ndt=data['ndt'], k=data['k'])
@@ -148,13 +128,14 @@ def simulate_rlalba_2A(task_design,
     return data
 
 
-def simulate_hier_rlalba(task_design, n_trials, gen_mu_alpha, gen_sd_alpha,
-                         gen_v0, gen_ws, gen_wd,
-                         gen_mu_drift_cor, gen_sd_drift_cor,
-                         gen_mu_drift_inc, gen_sd_drift_inc,
+def simulate_hier_rlalba(task_design,
+                         gen_mu_alpha, gen_sd_alpha,
                          gen_mu_sp_trial_var, gen_sd_sp_trial_var,
                          gen_mu_ndt, gen_sd_ndt,
-                         gen_mu_k=.5, gen_sd_k=None,
+                         gen_mu_k, gen_sd_k,
+                         gen_mu_v0, gen_sd_v0,
+                         gen_mu_ws, gen_sd_ws,
+                         gen_mu_wd, gen_sd_wd,
                          initial_value_learning=0,
                          gen_drift_trial_sd=None,
                          **kwargs):
@@ -168,9 +149,6 @@ def simulate_hier_rlalba(task_design, n_trials, gen_mu_alpha, gen_sd_alpha,
         "f_cor", "f_inc", "trial_type", "cor_option", "inc_option",
         "trial_block", "block_label", "participant".
 
-    n_trials : int
-        Number of trials to simulate.
-
     gen_mu_alpha : float or list of floats
         The generating group mean of the learning rate.
         If a list of 2 values is provided then 2 separate learning rates
@@ -180,28 +158,6 @@ def simulate_hier_rlalba(task_design, n_trials, gen_mu_alpha, gen_sd_alpha,
         The generating group SD of the learning rate.
         If a list of 2 values is provided then 2 separate learning rates
         for positive and negative prediction error are used.
-
-    gen_v0 : float
-        The Bias parameter; ensures each accumulator has a positive drift rate, and eventually reaches sp_trial_var.
-        Must be positive.
-
-    gen_ws : float
-        Sum weight: must be positive.
-
-    gen_wd : float
-        Difference weight: must be positive.
-
-    gen_mu_drift_cor : float
-        Mean of the drift rate for correct trials.
-
-    gen_sd_drift_cor : float
-        Standard deviation of the drift rate for correct trials.
-
-    gen_mu_drift_inc : float
-        Mean of the drift rate for incorrect trials.
-
-    gen_sd_drift_inc : float
-        Standard deviation of the drift rate for incorrect trials.
 
     gen_mu_sp_trial_var : float
         Group-mean sp_trial_var of the advantage linear ballistic accumulator.
@@ -215,18 +171,32 @@ def simulate_hier_rlalba(task_design, n_trials, gen_mu_alpha, gen_sd_alpha,
     gen_sd_ndt : float
         Group-standard deviation of the non-decision time of the advantage linear ballistic accumulator.
 
+    gen_mu_k : float
+        Mean of the distance between starting point variability and threshold.
+
+    gen_sd_k : float
+        Standard deviation of the distance between starting point variability and threshold.
+
+    gen_mu_v0 : float or list of floats
+        The mean of the Bias parameter; ensures each accumulator has a positive drift rate, and eventually reaches sp_trial_var.
+
+    gen_sd_v0 : float or list of floats
+        The SD of the Bias parameter; ensures each accumulator has a positive drift rate, and eventually reaches sp_trial_var.
+
+    gen_mu_ws : float or list of floats
+        The mean of the Sum Weight parameter.
+
+    gen_sd_ws : float or list of floats
+        The SD of the Sum Weight parameter.
+
+    gen_mu_wd : float or list of floats
+        The mean of the Difference Weight parameter.
+
+    gen_sd_wd : float or list of floats
+        The SD of the Difference Weight parameter.
+
     Optional parameters
     -------------------
-    gen_mu_k : float, default .5
-        Relative starting point of the linear ballistic accumulator.
-        When `gen_sd_k` is not specified, `gen_mu_k` is
-        fixed across participants to .5.
-        When `gen_sd_k` is specified, `gen_mu_k` is the
-        group-mean of the starting point.
-
-    gen_sd_k : float, default None
-        Group-standard deviation of the relative starting point of the linear ballistic accumulator.
-
     initial_value_learning : float
         The initial value for Q learning.
 
@@ -246,31 +216,10 @@ def simulate_hier_rlalba(task_design, n_trials, gen_mu_alpha, gen_sd_alpha,
 
     Example
     -------
-    >>>         self.dm_hier = generate_task_design_fontanesi(n_trials_block=80,
-                                                              n_blocks=3,
-                                                              n_participants=30,
-                                                              trial_types=['1-2', '1-3', '2-4', '3-4'],
-                                                              mean_options=[34, 38, 50, 54],
-                                                              sd_options=[5, 5, 5, 5])
-
-    >>>         self.data_hier = simulate_hier_rlalba(task_design=self.dm_hier,
-                                              n_trials=100,
-                                              gen_mu_alpha=[-.5, -1],
-                                              gen_sd_alpha=[.1, .1],
-                                              gen_v0=1, gen_ws=.7, gen_wd=1,
-                                              gen_mu_drift_cor=.4, gen_sd_drift_cor=0.01,
-                                              gen_mu_drift_inc=.3, gen_sd_drift_inc=0.01,
-                                              gen_mu_sp_trial_var=1, gen_sd_sp_trial_var=.1,
-                                              gen_mu_ndt=.23, gen_sd_ndt=.1,
-                                              gen_mu_k=.5, gen_sd_k=None,
-                                              initial_value_learning=0,
-                                              gen_drift_trial_sd=None)
     """
     data = task_design.copy()
     participants = pd.unique(data["participant"])
     n_participants = len(participants)
-    n_block_labels = len(pd.unique(data["block_label"]))
-    n_blocks = len(pd.unique(data["trial_block"]))
 
     if n_participants < 2:
         raise ValueError("You only have one participant. Use simulate_rl_2A instead.")
@@ -283,7 +232,11 @@ def simulate_hier_rlalba(task_design, n_trials, gen_mu_alpha, gen_sd_alpha,
             {'alpha': stats.norm.cdf(np.random.normal(gen_mu_alpha, gen_sd_alpha, n_participants)),
              'sp_trial_var': np.log(
                  1 + np.exp(np.random.normal(gen_mu_sp_trial_var, gen_sd_sp_trial_var, n_participants))),
-             'ndt': np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants)))},
+             'ndt': np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants))),
+             'k': np.log(1 + np.exp(np.random.normal(gen_mu_k, gen_sd_k, n_participants))),
+             'v0': np.log(1 + np.exp(np.random.normal(gen_mu_v0, gen_sd_v0, n_participants))),
+             'wd': np.log(1 + np.exp(np.random.normal(gen_mu_wd, gen_sd_wd, n_participants))),
+             'ws': np.log(1 + np.exp(np.random.normal(gen_mu_ws, gen_sd_ws, n_participants)))},
             index=participants)
         data = pd.concat([data.set_index('participant'), parameters], axis=1, ignore_index=False).reset_index().rename(
             columns={'index': 'participant'})
@@ -301,7 +254,11 @@ def simulate_hier_rlalba(task_design, n_trials, gen_mu_alpha, gen_sd_alpha,
                  'alpha_neg': stats.norm.cdf(np.random.normal(gen_mu_alpha[1], gen_sd_alpha[1], n_participants)),
                  'sp_trial_var': np.log(
                      1 + np.exp(np.random.normal(gen_mu_sp_trial_var, gen_sd_sp_trial_var, n_participants))),
-                 'ndt': np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants)))},
+                 'ndt': np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants))),
+                 'k': np.log(1 + np.exp(np.random.normal(gen_mu_k, gen_sd_k, n_participants))),
+                 'v0': np.log(1 + np.exp(np.random.normal(gen_mu_v0, gen_sd_v0, n_participants))),
+                 'wd': np.log(1 + np.exp(np.random.normal(gen_mu_wd, gen_sd_wd, n_participants))),
+                 'ws': np.log(1 + np.exp(np.random.normal(gen_mu_ws, gen_sd_ws, n_participants)))},
                 index=participants)
             data = pd.concat([data.set_index('participant'), parameters], axis=1,
                              ignore_index=False).reset_index().rename(columns={'index': 'participant'})
@@ -319,31 +276,13 @@ def simulate_hier_rlalba(task_design, n_trials, gen_mu_alpha, gen_sd_alpha,
     else:
         raise TypeError("The gen_alpha should be either a list or a float/int.")
 
-    gen_S_cor = np.random.normal(gen_mu_drift_cor, gen_sd_drift_cor, n_participants)
-    gen_S_inc = np.random.normal(gen_mu_drift_inc, gen_sd_drift_inc, n_participants)
-
-    cor_drift_sbj = gen_v0 + gen_wd * (gen_S_cor - gen_S_inc) + gen_ws * (gen_S_cor + gen_S_inc)
-    inc_drift_sbj = gen_v0 + gen_wd * (gen_S_inc - gen_S_cor) + gen_ws * (gen_S_cor + gen_S_inc)
-
-    sp_trial_var_sbj = np.log(1 + np.exp(np.random.normal(gen_mu_sp_trial_var, gen_sd_sp_trial_var, n_participants)))
-    ndt_sbj = np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants)))
-
-    # data['participant'] = np.repeat(np.arange(n_participants) + 1, n_trials)
-    data['sp_trial_var'] = np.repeat(sp_trial_var_sbj, n_blocks * n_block_labels)
-    data['ndt'] = np.repeat(ndt_sbj, n_blocks * n_block_labels)
-
     if gen_drift_trial_sd is None:
-        data['cor_drift'] = np.repeat(cor_drift_sbj, n_blocks * n_block_labels)
-        data['inc_drift'] = np.repeat(inc_drift_sbj, n_blocks * n_block_labels)
+        data['cor_drift'] = data['v0'] + data['wd'] * (data['Q_cor'] - data['Q_inc']) + data['ws'] * (
+                data['Q_cor'] + data['Q_inc'])
+        data['inc_drift'] = data['v0'] + data['wd'] * (data['Q_inc'] - data['Q_cor']) + data['ws'] * (
+                data['Q_cor'] + data['Q_inc'])
     else:
-        data['cor_drift'] = np.random.normal(np.repeat(cor_drift_sbj, n_trials), gen_drift_trial_sd)
-        data['inc_drift'] = np.random.normal(np.repeat(inc_drift_sbj, n_trials), gen_drift_trial_sd)
-
-    if gen_sd_k is None:
-        data['k'] = np.repeat(.5, n_participants * n_blocks * n_block_labels)
-    else:
-        k_sbj = stats.norm.cdf(np.random.normal(gen_mu_k, gen_sd_k, n_participants))
-        data['k'] = np.repeat(k_sbj, n_trials)
+        raise ValueError("Not implemented yet.")
 
     rt, acc = random_lba_2A(cor_drift=data['cor_drift'], inc_drift=data['inc_drift'], sp_trial_var=data['sp_trial_var'],
                             ndt=data['ndt'], k=data['k'])

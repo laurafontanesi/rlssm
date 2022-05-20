@@ -116,7 +116,7 @@ def simulate_lba_2A(n_trials,
         Starting point variability of the Linear Ballistic Accumulator.
 
     gen_ndt : float, list, or numpy.ndarray
-        Non-decision time of the Linear Ballistic Accumulator. Also called tau.
+        Non-decision time of the Linear Ballistic Accumulator.
 
     gen_k : float, list, or numpy.ndarray
         Distance between starting point variability and threshold.

@@ -21,26 +21,23 @@ class TestRandomRLALBA(unittest.TestCase):
                                                       sd_options=[5, 5, 5, 5])
 
         self.data_non_hier = simulate_rlalba_2A(task_design=self.dm_non_hier,
-                                                gen_alpha=0.1,
-                                                gen_sp_trial_var=2,
+                                                gen_alpha=.1,
+                                                gen_sp_trial_var=.2,
                                                 gen_ndt=.2,
-                                                gen_k=.2,
-                                                gen_v0=1,
-                                                gen_ws=7,
-                                                gen_wd=1,
-                                                gen_drift_trial_sd=None,
-                                                participant_label=1)
+                                                gen_k=3,
+                                                gen_v0=2,
+                                                gen_ws=.01,
+                                                gen_wd=.05,
+                                                gen_drift_trial_sd=None)
 
         self.data_hier = simulate_hier_rlalba(task_design=self.dm_hier,
-                                              n_trials=100,
-                                              gen_mu_alpha=[-.5, -1],
-                                              gen_sd_alpha=[.1, .1],
-                                              gen_v0=1, gen_ws=.7, gen_wd=1,
-                                              gen_mu_drift_cor=.4, gen_sd_drift_cor=0.01,
-                                              gen_mu_drift_inc=.3, gen_sd_drift_inc=0.01,
-                                              gen_mu_sp_trial_var=1, gen_sd_sp_trial_var=.1,
+                                              gen_mu_alpha=[-.5, -1], gen_sd_alpha=[.1, .1],
+                                              gen_mu_sp_trial_var=2, gen_sd_sp_trial_var=.1,
                                               gen_mu_ndt=.23, gen_sd_ndt=.1,
-                                              gen_mu_k=.5, gen_sd_k=None,
+                                              gen_mu_k=2, gen_sd_k=.1,
+                                              gen_mu_v0=3, gen_sd_v0=.1,
+                                              gen_mu_ws=-4, gen_sd_ws=.01,
+                                              gen_mu_wd=-2, gen_sd_wd=.01,
                                               initial_value_learning=0,
                                               gen_drift_trial_sd=None)
 
