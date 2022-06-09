@@ -54,10 +54,6 @@ class TestRandomRLDDM(unittest.TestCase):
         # TEST: assure that there are 30 participants
         assert self.data_non_hier.index[-1][0] == 30, f"Number of participants should be 30"
         assert self.data_non_hier_2alpha.index[-1][0] == 1, f"Number of participants should be 1"
-        assert self.data_hier_2alpha.index[-1][0] == 30, f"Number of participants should be 30"
 
-    def test_random_RLDDM_test2(self):
-        # TODO: Test data produced against reference data; test to be created
-        reference_path = os.path.join(os.path.dirname(__file__), 'reference_data', 'RL_DDM_2A.csv')
-        reference_path = os.path.join(os.path.dirname(__file__), 'reference_data', 'RL_DDM_2_alpha.csv')
-        reference_path = os.path.join(os.path.dirname(__file__), 'reference_data', 'RL_DDM_hier_2alpha.csv')
+    def test_random_RLDDM_hier(self):
+        assert self.data_hier_2alpha.index[-1][0] == 30, f"Number of participants should be 30"

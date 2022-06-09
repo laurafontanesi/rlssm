@@ -61,11 +61,11 @@ def simulate_rlddm_2A(task_design,
         Non decision time of the diffusion decision model, in seconds.
         Should be positive.
 
-    initial_value_learning : float
-        The initial value for Q learning.
-
     Other Parameters
     ----------------
+
+    initial_value_learning : float
+        The initial value for Q learning.
 
     **kwargs
         Additional arguments to rlssm.random.random_ddm().
@@ -78,6 +78,24 @@ def simulate_rlddm_2A(task_design,
         'Q_cor', 'Q_inc', 'drift', 'alpha', 'drift_scaling',
         'threshold', 'ndt', 'rt', and 'accuracy'.
 
+    Examples
+    --------
+
+        >>> data_non_hier = simulate_hier_rlddm_2A(task_design=dm_non_hier,
+                                                    gen_mu_alpha=-.5, gen_sd_alpha=.1,
+                                                    gen_mu_drift_scaling=.1, gen_sd_drift_scaling=.5,
+                                                    gen_mu_threshold=1, gen_sd_threshold=.1,
+                                                    gen_mu_ndt=.23, gen_sd_ndt=.05,
+                                                    initial_value_learning=20)
+        >>> print(data_non_hier.head())
+
+                                             trial trial_type  ...        rt  accuracy
+        participant block_label trial_block                    ...
+        1           1           1                1        2-4  ...  1.489023       1.0
+                                2                2        1-3  ...  0.990023       1.0
+                                3                3        1-2  ...  1.771023       0.0
+                                4                4        2-4  ...  1.366023       1.0
+                                5                5        3-4  ...  0.865023       1.0
     """
     data = task_design.copy()
 
@@ -222,6 +240,24 @@ def simulate_hier_rlddm_2A(task_design,
         'Q_cor', 'Q_inc', 'drift', 'alpha', 'drift_scaling',
         'threshold', 'ndt', 'rt', and 'accuracy'.
 
+    Examples
+    --------
+
+        >>> data_hier_2alpha = simulate_hier_rlddm_2A(task_design=dm_hier,
+                                                       gen_mu_alpha=[-.5, -1], gen_sd_alpha=[.1, .1],
+                                                       gen_mu_drift_scaling=.1, gen_sd_drift_scaling=.5,
+                                                       gen_mu_threshold=1, gen_sd_threshold=.1,
+                                                       gen_mu_ndt=.23, gen_sd_ndt=.05,
+                                                       initial_value_learning=20)
+        >>> print(data_hier_2alpha.head())
+
+                                             trial trial_type  ...        rt  accuracy
+        participant block_label trial_block                    ...
+        1           1           1                1        2-4  ...  1.081138       0.0
+                                2                2        1-3  ...  1.150138       1.0
+                                3                3        1-2  ...  0.979138       0.0
+                                4                4        3-4  ...  0.996138       0.0
+                                5                5        3-4  ...  1.117138       1.0
     """
     data = task_design.copy()
     participants = pd.unique(data["participant"])

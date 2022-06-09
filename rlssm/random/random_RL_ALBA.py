@@ -19,8 +19,6 @@ def simulate_rlalba_2A(task_design,
                        **kwargs):
     """Simulates behavior (rt and accuracy) according to the RL-ALBA model.
 
-    Note
-    ----
     Parameters
     ----------
     task_design : DataFrame
@@ -73,8 +71,22 @@ def simulate_rlalba_2A(task_design,
         as well as the generating parameters
         (both for each trial and across-trials when there is across-trial variability).
 
-    Example
-    -------
+    Examples
+    --------
+
+        >>> data_non_hier = simulate_rlalba_2A(task_design=dm_non_hier, gen_alpha=.1, gen_sp_trial_var=.2,
+                                                gen_ndt=.2, gen_k=3, gen_v0=2, gen_ws=.01, gen_wd=.05,
+                                                gen_drift_trial_sd=None)
+        >>> print(data_non_hier.head())
+
+                                       block_label trial_type  ...        rt  accuracy
+        participant trial trial_block                          ...
+        1           1     1                      1        3-4  ...  1.048977       1.0
+                    2     2                      1        1-3  ...  1.018408       1.0
+                    3     3                      1        1-3  ...  1.095582       1.0
+                    4     4                      1        3-4  ...  1.070185       1.0
+                    5     5                      1        3-4  ...  1.079644       1.0
+
     """
 
     data = task_design.copy()
@@ -214,8 +226,27 @@ def simulate_hier_rlalba(task_design,
         Columns contain simulated response times and accuracy ["rt", "accuracy"],
         as well as the generating parameters (at the participant level).
 
-    Example
-    -------
+    Examples
+    --------
+
+        >>> data_hier = simulate_hier_rlalba(task_design=dm_hier,
+                                              gen_mu_alpha=[-.5, -1], gen_sd_alpha=[.1, .1],
+                                              gen_mu_sp_trial_var=2, gen_sd_sp_trial_var=.1,
+                                              gen_mu_ndt=.23, gen_sd_ndt=.1,
+                                              gen_mu_k=2, gen_sd_k=.1,
+                                              gen_mu_v0=3, gen_sd_v0=.1,
+                                              gen_mu_ws=-4, gen_sd_ws=.01,
+                                              gen_mu_wd=-2, gen_sd_wd=.01,
+                                              initial_value_learning=0, gen_drift_trial_sd=None)
+        >>> print(data_hier.head())
+
+                                       block_label trial_type  ...        rt  accuracy
+        participant trial trial_block                          ...
+        1           1     1                      1        1-2  ...  1.719207       0.0
+                    2     2                      1        1-3  ...  1.767478       0.0
+                    3     3                      1        2-4  ...  1.431838       1.0
+                    4     4                      1        3-4  ...  1.683734       0.0
+                    5     5                      1        1-2  ...  1.607148       0.0
     """
     data = task_design.copy()
     participants = pd.unique(data["participant"])

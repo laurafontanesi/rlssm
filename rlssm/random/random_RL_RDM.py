@@ -11,6 +11,66 @@ def simulate_rlrdm_2A(task_design,
                       gen_ndt,
                       initial_value_learning=0,
                       **kwargs):
+    """Simulates behavior (rt and accuracy) according to the RL-RDM model.
+
+    Parameters
+    ----------
+    task_design : DataFrame
+        `pandas.DataFrame`, with n_trials_block*n_blocks rows.
+        Columns contain:
+        "f_cor", "f_inc", "trial_type", "cor_option", "inc_option",
+        "trial_block", "block_label", "participant".
+
+    gen_alpha : float or list of floats
+        The generating learning rate.
+        It should be a value between 0 (no updating) and 1 (full updating).
+        If a list of 2 values is provided then 2 separate learning rates
+        for positive and negative prediction error are used.
+
+    gen_drift_scaling:
+        Drift-rate scaling of the RL-RDM model.
+
+    gen_threshold : float
+        Threshold of the diffusion decision model.
+        Should be positive.
+
+    gen_ndt : float
+        Non decision time of the diffusion decision model, in seconds.
+        Should be positive.
+
+    Optional Parameters
+    -------------------
+    initial_value_learning : float
+        The initial value for Q learning.
+
+    kwargs : dict
+        Additional parameters to be passed to `random_lba_2A`.
+
+    Returns
+    -------
+
+    data : DataFrame
+        `pandas.DataFrame`, with n_trials rows.
+        Columns contain simulated response times and accuracy ["rt", "accuracy"],
+        as well as the generating parameters
+        (both for each trial and across-trials when there is across-trial variability).
+
+    Examples
+    --------
+
+        >>> data = simulate_rlrdm_2A(task_design=dm, gen_drift_scaling=.1,
+                                      gen_threshold=1, gen_ndt=.23, initial_value_learning=0)
+        >>> print(data.head())
+
+                                             trial trial_type  ...     rt  accuracy
+        participant block_label trial_block                    ...
+        1           1           1                1        3-4  ...  0.886       1.0
+                                2                2        1-3  ...  2.376       1.0
+                                3                3        1-3  ...  0.473       0.0
+                                4                4        1-2  ...  0.630       0.0
+                                5                5        3-4  ...  0.420       1.0
+
+    """
     data = task_design.copy()
 
     if (type(gen_alpha) == float) | (type(gen_alpha) == int):

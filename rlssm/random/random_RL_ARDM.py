@@ -69,8 +69,27 @@ def simulate_rlardm_2A(task_design,
         as well as the generating parameters
         (both for each trial and across-trials when there is across-trial variability).
 
-    Example
-    -------
+    Examples
+    --------
+
+        >>> data_hier = simulate_hier_rlardm(task_design=dm_hier,
+                                              gen_mu_alpha=[-.5, -1], gen_sd_alpha=[.1, .1],
+                                              gen_mu_threshold=2, gen_sd_threshold=.1,
+                                              gen_mu_ndt=.23, gen_sd_ndt=.1,
+                                              gen_mu_v0=3, gen_sd_v0=.1,
+                                              gen_mu_ws=-4, gen_sd_ws=.01,
+                                              gen_mu_wd=-2, gen_sd_wd=.01,
+                                              initial_value_learning=0,
+                                              gen_drift_trial_sd=None)
+        >>> print(data_hier.head())
+
+                                       block_label trial_type  ...        rt  accuracy
+        participant trial trial_block                          ...
+        1           1     1                      1        1-3  ...  1.183774       1.0
+                    2     2                      1        1-3  ...  1.236774       1.0
+                    3     3                      1        1-3  ...  1.104774       0.0
+                    4     4                      1        1-2  ...  1.089774       0.0
+                    5     5                      1        1-3  ...  1.262774       1.0
     """
     data = task_design.copy()
 
@@ -201,8 +220,19 @@ def simulate_hier_rlardm(task_design,
         Columns contain simulated response times and accuracy ["rt", "accuracy"],
         as well as the generating parameters (at the participant level).
 
-    Example
-    -------
+        >>> data1 = simulate_ardm_2A(gen_S_cor=np.random.normal(.4, 0.01, 100),
+                                      gen_S_inc=np.random.normal(.3, 0.01, 100),
+                                      gen_threshold=2, gen_ndt=.2, gen_v0=1,
+                                      gen_ws=.7, gen_wd=1, gen_drift_trial_sd=.1)
+        >>> print(data1.head())
+
+                           threshold       ndt  ...        rt  accuracy
+        participant trial                       ...
+        1           1       1.304838  0.778967  ...  1.166967       0.0
+                    2       1.304838  0.778967  ...  1.398967       1.0
+                    3       1.304838  0.778967  ...  0.934967       1.0
+                    4       1.304838  0.778967  ...  1.801967       0.0
+                    5       1.304838  0.778967  ...  1.167967       0.0
     """
     data = task_design.copy()
     participants = pd.unique(data["participant"])
