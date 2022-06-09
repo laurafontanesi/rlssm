@@ -59,6 +59,19 @@ def simulate_rl_2A(task_design,
         'Q_cor', 'Q_inc', 'alpha', 'sensitivity',
         'p_cor', and 'accuracy'.
 
+    Examples
+    --------
+        >>> data = simulate_rl_2A(task_design=dm_non_hier, gen_alpha=.1, gen_sensitivity=.5,
+                                    initial_value_learning=20)
+
+        >>> print(data)
+                                             trial trial_type  ...     p_cor  accuracy
+        participant block_label trial_block                    ...
+        1           1           1                1        1-2  ...  0.500000         1
+                                2                2        3-4  ...  0.610639         1
+                                3                3        1-3  ...  0.821274         1
+                                4                4        1-3  ...  0.943880         1
+                                5                5        1-2  ...  0.196945         0
     """
     data = task_design.copy()
 
@@ -164,6 +177,21 @@ def simulate_hier_rl_2A(task_design,
         `pandas.DataFrame`, that is the task_design, plus:
         'Q_cor', 'Q_inc', 'alpha', 'sensitivity',
         'p_cor', and 'accuracy'.
+
+        Examples
+    --------
+        >>> data_hier = simulate_hier_rl_2A(task_design=dm_hier, gen_mu_alpha=-.5, gen_sd_alpha=.1,
+                                             gen_mu_sensitivity=.5, gen_sd_sensitivity=.1,
+                                             initial_value_learning=20)
+
+        >>> print(data_hier)
+                                             trial trial_type  ...     p_cor  accuracy
+        participant block_label trial_block                    ...
+        1           1           1                1        1-2  ...  0.500000         0
+                                2                2        3-4  ...  0.965112         1
+                                3                3        1-2  ...  0.660162         0
+                                4                4        2-4  ...  0.999997         1
+                                5                5        1-2  ...  0.999863         1
 
     """
     data = task_design.copy()
