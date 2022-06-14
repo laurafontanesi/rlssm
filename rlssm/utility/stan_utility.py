@@ -1,11 +1,11 @@
 # Code mostly taken from M. Betancourt and can be retrieved at
 # https://github.com/betanalpha/jupyter_case_studies/blob/master/principled_bayesian_workflow/stan_utility.py
-import os.path
+import os
 import pickle
 from math import isnan
 from math import isinf
 from hashlib import md5
-import pystan
+import cmdstanpy
 import numpy
 
 __dir__ = os.path.abspath(os.path.dirname(__file__))
@@ -17,12 +17,13 @@ def check_div(fit):
     Parameters
     ----------
 
-    fit : pystan.StanFit4model
+    fit : cmdstanpy.CmdStanModel
         The fitted stan model.
 
     """
-    sampler_params = fit.get_sampler_params(inc_warmup=False)
-    divergent = [x for y in sampler_params for x in y['divergent__']]
+
+    sampler_params = fit.draws_pd(inc_warmup=False)
+    divergent = sampler_params['divergent__']
     n = sum(divergent)
     N = len(divergent)
     print('{} of {} iterations ended with a divergence ({}%)'.format(n, N, 100 * n / N))
@@ -36,15 +37,15 @@ def check_treedepth(fit, max_depth=10):
     Parameters
     ----------
 
-    fit : pystan.StanFit4model
+    fit : cmdstanpy.CmdStanModel
         The fitted stan model.
 
     max_depth : int
         Maximum tree depth.
 
     """
-    sampler_params = fit.get_sampler_params(inc_warmup=False)
-    depths = [x for y in sampler_params for x in y['treedepth__']]
+    sampler_params = fit.draws_pd(inc_warmup=False)
+    depths = sampler_params['treedepth__']
     n = sum(1 for x in depths if x == max_depth)
     N = len(depths)
     print(('{} of {} iterations saturated the maximum tree depth of {}' +
@@ -59,19 +60,34 @@ def check_energy(fit):
     Parameters
     ----------
 
-    fit : pystan.StanFit4model
+    fit : cmdstanpy.CmdStanModel
         The fitted stan model.
 
     """
-    sampler_params = fit.get_sampler_params(inc_warmup=False)
+    # sampler_params = fit.draws_pd(inc_warmup=False)
+    # no_warning = True
+    # for chain_num, s in enumerate(sampler_params):
+    #     energies = s['energy__']
+    #     numer = sum((energies[i] - energies[i - 1])**2 for i in range(1, len(energies))) / len(energies)
+    #     denom = numpy.var(energies)
+    #     if numer / denom < 0.2:
+    #         print('Chain {}: E-BFMI = {}'.format(chain_num, numer / denom))
+    #         no_warning = False
+    # if no_warning:
+    #     print('E-BFMI indicated no pathological behavior')
+    # else:
+    #     print('  E-BFMI below 0.2 indicates you may need to reparameterize your model')
+
+    sampler_params = fit.draws_pd(inc_warmup=False)
     no_warning = True
-    for chain_num, s in enumerate(sampler_params):
-        energies = s['energy__']
-        numer = sum((energies[i] - energies[i - 1]) ** 2 for i in range(1, len(energies))) / len(energies)
-        denom = numpy.var(energies)
-        if numer / denom < 0.2:
-            print('Chain {}: E-BFMI = {}'.format(chain_num, numer / denom))
-            no_warning = False
+
+    energies = sampler_params['energy__']
+
+    numer = sum((energies[i] - energies[i - 1]) ** 2 for i in range(1, len(energies))) / len(energies)
+    denom = numpy.var(energies)
+    if numer / denom < 0.2:
+        print('Chain {}: E-BFMI = {}'.format(-1, numer / denom))  # TODO -1 should be chain number
+        no_warning = False
     if no_warning:
         print('E-BFMI indicated no pathological behavior')
     else:
@@ -84,14 +100,15 @@ def check_n_eff(fit):
     Parameters
     ----------
 
-    fit : pystan.StanFit4model
+    fit : cmdstanpy.CmdStanModel
         The fitted stan model.
 
     """
-    fit_summary = fit.summary(probs=[0.5])
-    n_effs = [x[4] for x in fit_summary['summary']]
-    names = fit_summary['summary_rownames']
-    n_iter = len(fit.extract()['lp__'])
+
+    fit_summary = fit.summary(percentiles=[50])
+    n_effs = fit_summary['N_Eff']
+    names = list(fit_summary.index)
+    n_iter = fit.draws().shape[0]
 
     no_warning = True
     for n_eff, name in zip(n_effs, names):
@@ -112,13 +129,14 @@ def check_rhat(fit):
     Parameters
     ----------
 
-    fit : pystan.StanFit4model
+    fit : cmdstanpy.CmdStanModel
         The fitted stan model.
 
     """
-    fit_summary = fit.summary(probs=[0.5])
-    rhats = [x[5] for x in fit_summary['summary']]
-    names = fit_summary['summary_rownames']
+
+    fit_summary = fit.summary(percentiles=[50])
+    rhats = fit_summary['R_hat']
+    names = list(fit_summary.index)
 
     no_warning = True
     for rhat, name in zip(rhats, names):
@@ -137,15 +155,15 @@ def check_all_diagnostics(fit):
     Parameters
     ----------
 
-    fit : pystan.StanFit4model
+    fit : cmdstanpy.CmdStanModel
         The fitted stan model.
 
     """
     print("Checks MCMC diagnostics:")
     check_n_eff(fit)
-    check_div(fit)
     check_treedepth(fit)
     check_energy(fit)
+    check_div(fit)
 
 
 def _by_chain(unpermuted_extraction):
@@ -179,7 +197,7 @@ def partition_div(fit):
     Parameters
     ----------
 
-    fit : pystan.StanFit4model
+    fit : cmdstanpy.CmdStanModel
         The fitted stan model.
 
     Returns
@@ -192,7 +210,7 @@ def partition_div(fit):
         Dictionary containing the divergent transitions per parameter.
 
     """
-    sampler_params = fit.get_sampler_params(inc_warmup=False)
+    sampler_params = fit.draws_pd(inc_warmup=False)
     div = numpy.concatenate([x['divergent__'] for x in sampler_params]).astype('int')
     params = _shaped_ordered_params(fit)
     nondiv_params = dict((key, params[key][div == 0]) for key in params)
@@ -204,7 +222,7 @@ def compile_model(filename, model_name=None):
     """This will automatically cache models -
     great if you're just running a script on the command line.
 
-    See http://pystan.readthedocs.io/en/latest/avoiding_recompilation.html
+    See https://mc-stan.org/cmdstanpy/
 
     Parameters
     ----------
@@ -218,7 +236,7 @@ def compile_model(filename, model_name=None):
     Returns
     -------
 
-    sm : pystan.StanModel
+    sm : cmdstanpy.CmdStanModel
         The compiled stan model.
 
     """
@@ -236,9 +254,9 @@ def compile_model(filename, model_name=None):
         try:
             sm = pickle.load(open(cache_fn, 'rb'))
         except:
-            sm = pystan.StanModel(model_code=model_code)
-            with open(cache_fn, 'wb') as f1:
-                pickle.dump(sm, f1)
+            sm = cmdstanpy.CmdStanModel(stan_file=filename)
+            with open(cache_fn, 'wb') as f:
+                pickle.dump(sm, f)
         else:
             print("Using cached StanModel")
         return sm

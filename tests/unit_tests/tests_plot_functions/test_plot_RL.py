@@ -19,9 +19,9 @@ class TestPlotRL(unittest.TestCase):
             K=4,
             initial_value_learning=27.5,
             sensitivity_priors={'mu': 0, 'sd': 5},
-            iter=2000,
-            chains=2,
-            verbose=False)
+            # iter=2000,
+            # verbose=False,
+            chains=2)
 
         model_fit.plot_posteriors(show_intervals="BCI")
 

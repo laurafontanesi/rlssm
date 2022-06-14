@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 
 from rlssm.fit.fits import FittedModel, ModelResults
 from rlssm.plot import plotting
-from rlssm.random.random_LBA import random_lba_2A, simulate_lba_2A
 from rlssm.random.random_RDM import random_rdm_2A
 from rlssm.utility.utils import list_individual_variables
 
@@ -59,32 +58,43 @@ class RDMFittedModel_2A(FittedModel):
         else:
             main_parameters = self.parameters_info['parameters_names_transf']
 
-        par_to_display = list(np.append(['chain', 'draw'], main_parameters))
+        # par_to_display = list(np.append(['chain', 'draw'], main_parameters))
+        #
+        # samples = self.stan_model.to_dataframe(pars=list(main_parameters),
+        #                                        permuted=True,
+        #                                        diagnostics=False,
+        #                                        inc_warmup=False)[par_to_display].reset_index(drop=True)
+        #
+        # # trial parameters
+        # f_label = self.family.split('_')[0]
+        # lba_labels = ['LBA_2A', 'ALBA_2A', 'RLLBA', 'RLALBA']
+        # if f_label in lba_labels or self.family in lba_labels:
+        #     trial_samples = self.stan_model.extract(['rel_sp_t',
+        #                                              'threshold_t',
+        #                                              'ndt_t',
+        #                                              'drift_cor_t',
+        #                                              'drift_inc_t'])
+        # else:
+        #     trial_samples = self.stan_model.extract(['drift_cor_t',
+        #                                              'drift_inc_t',
+        #                                              'threshold_t',
+        #                                              'ndt_t'])
 
-        samples = self.stan_model.to_dataframe(pars=list(main_parameters),
-                                               permuted=True,
-                                               diagnostics=False,
-                                               inc_warmup=False)[par_to_display].reset_index(drop=True)
+        samples = self.stan_model.draws_pd()[main_parameters]  # TODO
 
-        # trial parameters
-        f_label = self.family.split('_')[0]
-        lba_labels = ['LBA_2A', 'ALBA_2A', 'RLLBA', 'RLALBA']
-        if f_label in lba_labels or self.family in lba_labels:
-            trial_samples = self.stan_model.extract(['rel_sp_t',
-                                                     'threshold_t',
-                                                     'ndt_t',
-                                                     'drift_cor_t',
-                                                     'drift_inc_t'])
-        else:
-            trial_samples = self.stan_model.extract(['drift_cor_t',
-                                                     'drift_inc_t',
-                                                     'threshold_t',
-                                                     'ndt_t'])
+        trial_samples = {'drift_cor_t': None, 'drift_inc_t': None, 'threshold_t': None, 'ndt_t': None}
+        trial_samples['drift_cor_t'] = np.asarray(
+            self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'drift_cor_t' in i]])
+        trial_samples['drift_inc_t'] = np.asarray(
+            self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'drift_inc_t' in i]])
+        trial_samples['threshold_t'] = np.asarray(
+            self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'threshold_t' in i]])
+        trial_samples['ndt_t'] = np.asarray(
+            self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'ndt_t' in i]])
 
         res = RDMModelResults_2A(self.model_label,
                                  self.data_info,
                                  self.parameters_info,
-                                 self.priors,
                                  rhat,
                                  waic,
                                  last_values,
@@ -99,7 +109,6 @@ class RDMModelResults_2A(ModelResults):
                  model_label,
                  data_info,
                  parameters_info,
-                 priors,
                  rhat,
                  waic,
                  last_values,
@@ -110,7 +119,6 @@ class RDMModelResults_2A(ModelResults):
         super().__init__(model_label,
                          data_info,
                          parameters_info,
-                         priors,
                          rhat,
                          waic,
                          last_values,

@@ -16,11 +16,11 @@ class TestPlotRLDDM(unittest.TestCase):
         model_fit = model.fit(data,
                               K=4,
                               initial_value_learning=27.5,
-                              iter=1000,
+                              # iter=1000,
+                              # verbose=False,
                               chains=2,
-                              pointwise_waic=False,
-                              verbose=False)
-
+                              pointwise_waic=False)
+        
         model_fit.plot_posteriors(show_intervals="BCI")
 
         ref_fldr = os.path.join(os.path.dirname(__file__), 'reference_data')

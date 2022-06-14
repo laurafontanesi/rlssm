@@ -224,17 +224,18 @@ class ALBAModel_2A(Model):
             print(par, self.priors[par])
 
         # start sampling...
-        fitted_model = self.compiled_model.sampling(data_dict, **kwargs)
+        self.compiled_model.sample()
+        fitted_model = self.compiled_model.sample(data_dict, **kwargs)
 
-        fitted_model = LBAFittedModel_2A(fitted_model,
-                                         data,
-                                         self.hierarchical_levels,
-                                         self.model_label,
-                                         self.family,
-                                         self.n_parameters_individual,
-                                         self.n_parameters_trial,
-                                         print_diagnostics,
-                                         self.priors)
+        fitted_model = LBAFittedModel_2A(stan_model=fitted_model,
+                                         data=data,
+                                         hierarchical_levels=self.hierarchical_levels,
+                                         model_label=self.model_label,
+                                         family=self.family,
+                                         n_parameters_individual=self.n_parameters_individual,
+                                         n_parameters_trial=self.n_parameters_trial,
+                                         print_diagnostics=print_diagnostics,
+                                         priors=self.priors)
 
         res = fitted_model.extract_results(include_rhat,
                                            include_waic,
@@ -540,7 +541,7 @@ class RLALBAModel_2A(Model):
             print(par, self.priors[par])
 
         # start sampling...
-        fitted_model = self.compiled_model.sampling(data_dict, **kwargs)
+        fitted_model = self.compiled_model.sample(data_dict, **kwargs)
 
         fitted_model = LBAFittedModel_2A(fitted_model,
                                          data,

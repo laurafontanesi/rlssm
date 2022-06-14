@@ -71,26 +71,52 @@ class DDMFittedModel(FittedModel):
 
         par_to_display = list(np.append(['chain', 'draw'], main_parameters))
 
-        samples = self.stan_model.to_dataframe(pars=list(main_parameters),
-                                               permuted=True,
-                                               diagnostics=False,
-                                               inc_warmup=False)[par_to_display].reset_index(drop=True)
+        samples = self.stan_model.draws_pd()[main_parameters] #TODO
+
+        # samples = self.stan_model.to_dataframe(pars=list(main_parameters),
+        #                                        permuted=True,
+        #                                        diagnostics=False,
+        #                                        inc_warmup=False)[par_to_display].reset_index(drop=True)
 
         # trial parameters
         if self.starting_point_bias | self.starting_point_variability:
             if self.drift_starting_point_beta_correlation or self.drift_starting_point_regression:
-                trial_samples = self.stan_model.extract(['drift_t', 'threshold_t', 'ndt_t', 'rel_sp_t', 'beta_t'])
+                trial_samples = {'drift_t': None, 'threshold_t': None, 'ndt_t': None, 'beta_t': None, 'rel_sp_t': None}
+                trial_samples['drift_t'] = np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'drift_t' in i]])
+                trial_samples['threshold_t'] = np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'threshold_t' in i]])
+                trial_samples['ndt_t'] = np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'ndt_t' in i]])
+                trial_samples['beta_t'] = np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'beta_t' in i]])
+                trial_samples['rel_sp_t'] = np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'rel_sp_t' in i]])
+                
+                # trial_samples = self.stan_model.extract(['drift_t', 'threshold_t', 'ndt_t', 'rel_sp_t', 'beta_t'])
             else:
-                trial_samples = self.stan_model.extract(['drift_t', 'threshold_t', 'ndt_t', 'rel_sp_t'])
+                trial_samples = {'drift_t': None, 'threshold_t': None, 'ndt_t': None, 'rel_sp_t': None}
+                trial_samples['drift_t'] = np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'drift_t' in i]])
+                trial_samples['threshold_t'] = np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'threshold_t' in i]])
+                trial_samples['ndt_t'] = np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'ndt_t' in i]])
+                trial_samples['rel_sp_t'] = np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'rel_sp_t' in i]])
+                
+                # trial_samples = self.stan_model.extract(['drift_t', 'threshold_t', 'ndt_t', 'rel_sp_t'])
         else:
             if self.drift_starting_point_beta_correlation or self.drift_starting_point_regression:
-                trial_samples = self.stan_model.extract(['drift_t', 'threshold_t', 'ndt_t', 'beta_t'])
+                trial_samples = {'drift_t': None, 'threshold_t': None, 'ndt_t': None, 'beta_t': None}
+                trial_samples['drift_t'] = np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'drift_t' in i]])
+                trial_samples['threshold_t'] = np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'threshold_t' in i]])
+                trial_samples['ndt_t'] = np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'ndt_t' in i]])
+                trial_samples['beta_t'] = np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'beta_t' in i]])
+                
+                # trial_samples = self.stan_model.extract(['drift_t', 'threshold_t', 'ndt_t', 'beta_t'])
+            
             else:
-                trial_samples = self.stan_model.extract(['drift_t', 'threshold_t', 'ndt_t'])
+                trial_samples = {'drift_t': None, 'threshold_t': None, 'ndt_t': None}
+                trial_samples['drift_t'] = np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'drift_t' in i]])
+                trial_samples['threshold_t'] = np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'threshold_t' in i]])
+                trial_samples['ndt_t'] = np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'ndt_t' in i]])
+                
+                # trial_samples = self.stan_model.extract(['drift_t', 'threshold_t', 'ndt_t'])
         res = DDModelResults(self.model_label,
                              self.data_info,
                              self.parameters_info,
-                             self.priors,
                              rhat,
                              waic,
                              last_values,
@@ -116,7 +142,6 @@ class DDModelResults(ModelResults):
                  model_label,
                  data_info,
                  parameters_info,
-                 priors,
                  rhat,
                  waic,
                  last_values,
@@ -128,7 +153,6 @@ class DDModelResults(ModelResults):
         super().__init__(model_label,
                          data_info,
                          parameters_info,
-                         priors,
                          rhat,
                          waic,
                          last_values,

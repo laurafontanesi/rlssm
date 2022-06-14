@@ -405,7 +405,7 @@ class DDModel(Model):
             print(par, self.priors[par])
 
         # start sampling...
-        fitted_model = self.compiled_model.sampling(data_dict, **kwargs)
+        fitted_model = self.compiled_model.sample(data_dict, **kwargs)
 
         fitted_model = DDMFittedModel(fitted_model,
                                       data,
@@ -743,7 +743,7 @@ class RLDDModel(Model):
             print(par, self.priors[par])
 
         # start sampling...
-        fitted_model = self.compiled_model.sampling(data_dict, **kwargs)
+        fitted_model = self.compiled_model.sample(data_dict, **kwargs)
 
         fitted_model = DDMFittedModel(fitted_model,
                                       data,

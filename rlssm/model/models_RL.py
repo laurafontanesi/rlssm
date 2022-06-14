@@ -287,7 +287,7 @@ class RLModel_2A(Model):
             print(par, self.priors[par])
 
         # start sampling...
-        fitted_model = self.compiled_model.sampling(data_dict, **kwargs)
+        fitted_model = self.compiled_model.sample(data_dict, **kwargs)
 
         fitted_model = RLFittedModel_2A(stan_model=fitted_model,
                                         data=data,
@@ -298,6 +298,7 @@ class RLModel_2A(Model):
                                         n_parameters_trial=self.n_parameters_trial,
                                         print_diagnostics=print_diagnostics,
                                         priors=self.priors)
+        
         res = fitted_model.extract_results(include_rhat,
                                            include_waic,
                                            pointwise_waic,

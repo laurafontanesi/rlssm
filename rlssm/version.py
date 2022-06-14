@@ -25,18 +25,18 @@ CLASSIFIERS = ["Development Status :: 1 - Planning",
                "Topic :: Scientific/Engineering"]
 
 # Description should be a one-liner:
-description = "rlssm: a package for fitting RL_2A models, SSM, and combinations of the two"
+description = "rlssm: a package for fitting RL models, SSM, and combinations of the two"
 # Long description will go up on the pypi page
 long_description = """
 
 rlssm
 ========
-``rlssm`` is a Python package for fitting reinforcement learning (RL_2A) models,
-sequential sampling models (DDM, RDM_2A, LBA_2A, ALBA_2A, and ARDM_2A),
+``rlssm`` is a Python package for fitting reinforcement learning (RL) models,
+sequential sampling models (DDM, RDM, LBA, ALBA, and ARDM),
 and combinations of the two, using Bayesian parameter estimation.
 
 Parameter estimation is done at an individual or hierarchical level
-using ``PyStan``, the Python Interface to Stan.
+using ``CmdStanPy``, the Python Interface to Stan.
 Stan performs Bayesian inference using the No-U-Turn sampler,
 a variant of Hamiltonian Monte Carlo.
 
@@ -72,4 +72,4 @@ MINOR = _version_minor
 MICRO = _version_micro
 VERSION = __version__
 PACKAGE_DATA = {'rlssm': [pjoin('data', '*')]}
-REQUIRES = ["numpy", "pandas", "pystan"]
+REQUIRES = ["numpy", "pandas", "cmdstanpy"]

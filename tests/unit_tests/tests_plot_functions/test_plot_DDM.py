@@ -16,10 +16,10 @@ class TestPlotDDM(unittest.TestCase):
         model_fit = model.fit(
             data,
             thin=1,
-            iter=1000,
+            # iter=1000,
+            # verbose=False,
             chains=2,
-            pointwise_waic=False,
-            verbose=False)
+            pointwise_waic=False)
 
         model_fit.plot_posteriors(show_intervals="BCI")
 

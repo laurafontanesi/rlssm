@@ -37,17 +37,20 @@ class RLFittedModel_2A(FittedModel):
 
         par_to_display = list(np.append(['chain', 'draw'], main_parameters))
 
-        samples = self.stan_model.to_dataframe(pars=list(main_parameters),
-                                               permuted=True,
-                                               diagnostics=False,
-                                               inc_warmup=False)[par_to_display].reset_index(drop=True)
+        samples = self.stan_model.draws_pd()[main_parameters] #TODO
+
+        # samples = self.stan_model.to_dataframe(pars=list(main_parameters),
+        #                                        permuted=True,
+        #                                        diagnostics=False,
+        #                                        inc_warmup=False)[par_to_display].reset_index(drop=True)
 
         # trial parameters
-        trial_samples = self.stan_model.extract(['log_p_t'])
+        trial_samples = {'log_p_t': np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'log_p_t' in i]])}
+        # trial_samples = self.stan_model.extract(['log_p_t'])
+
         res = RLModelResults_2A(self.model_label,
                                 self.data_info,
                                 self.parameters_info,
-                                self.priors,
                                 rhat,
                                 waic,
                                 last_values,

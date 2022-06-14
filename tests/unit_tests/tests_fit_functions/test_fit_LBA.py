@@ -13,7 +13,7 @@ class TestFitLBA(unittest.TestCase):
         data = load_example_dataset(hierarchical_levels=hier_levels)
 
         model_fit = model.fit(data,
-                              iter=1000,
+                              # iter=1000,
                               chains=2)
 
     def test_fit_LBA_hier(self):
@@ -31,7 +31,7 @@ class TestFitLBA(unittest.TestCase):
 
         model_fit = model.fit(data_hier,
                               drift_priors=drift_priors,
-                              warmup=50,
-                              iter=200,
-                              chains=2,
-                              verbose=False)
+                              # warmup=50,
+                              # iter=200,
+                              # verbose=False,
+                              chains=2)

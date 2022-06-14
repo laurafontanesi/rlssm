@@ -15,7 +15,7 @@ class TestFitRLALBA(unittest.TestCase):
         model_fit = model.fit(data,
                               K=4,
                               initial_value_learning=27.5,
-                              iter=1000,
+                              # iter=1000,
                               chains=2)
 
     def test_fit_RLALBA_hier(self):
@@ -31,7 +31,7 @@ class TestFitRLALBA(unittest.TestCase):
         model_fit = model.fit(data_hier,
                               K=4,
                               initial_value_learning=27.5,
-                              warmup=50,
-                              iter=200,
-                              chains=2,
-                              verbose=False)
+                              # warmup=50,
+                              # iter=200,
+                              # verbose=False,
+                              chains=2)

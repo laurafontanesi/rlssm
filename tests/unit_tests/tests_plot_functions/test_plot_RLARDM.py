@@ -17,7 +17,7 @@ class TestPlotRLARDM(unittest.TestCase):
         model_fit = model.fit(data,
                               K=4,
                               initial_value_learning=27.5,
-                              iter=1000,
+                              # iter=1000,
                               chains=2)
 
         model_fit.plot_posteriors(show_intervals="BCI")

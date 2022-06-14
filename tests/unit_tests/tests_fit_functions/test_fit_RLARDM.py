@@ -15,7 +15,7 @@ class TestFitRLARDM(unittest.TestCase):
         model_fit = model.fit(data,
                               K=4,
                               initial_value_learning=27.5,
-                              iter=1000,
+                              # iter=1000,
                               chains=2)
 
     def test_fit_RLARDM_hier(self):
@@ -31,6 +31,6 @@ class TestFitRLARDM(unittest.TestCase):
         model_fit = model.fit(data_hier,
                               K=4,
                               initial_value_learning=27.5,
-                              warmup=50,
-                              iter=200,
+                              # warmup=50,
+                              # iter=200,
                               chains=2)

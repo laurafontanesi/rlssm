@@ -19,7 +19,7 @@ class TestPlotARDM(unittest.TestCase):
         data['S_inc'] = np.random.normal(.3, 0.01, data.shape[0])
 
         model_fit = model.fit(data,
-                              iter=1000,
+                              # iter=1000,
                               chains=2)
 
         model_fit.plot_posteriors(show_intervals="BCI")

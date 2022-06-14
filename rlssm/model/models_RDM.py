@@ -1,8 +1,8 @@
 from __future__ import absolute_import, division, print_function
 import pandas as pd
 
-from rlssm.fit.fits_RDM import RDMFittedModel_2A
 from rlssm.model.models import Model
+from rlssm.fit.fits_RDM import RDMFittedModel_2A
 
 
 class RDModel_2A(Model):
@@ -202,7 +202,7 @@ class RDModel_2A(Model):
             print(par, self.priors[par])
 
         # start sampling...
-        fitted_model = self.compiled_model.sampling(data_dict, **kwargs)
+        fitted_model = self.compiled_model.sample(data_dict, **kwargs)
 
         fitted_model = RDMFittedModel_2A(fitted_model,
                                          data,
@@ -509,7 +509,7 @@ class RLRDModel_2A(Model):
             print(par, self.priors[par])
 
         # start sampling...
-        fitted_model = self.compiled_model.sampling(data_dict, **kwargs)
+        fitted_model = self.compiled_model.sample(data_dict, **kwargs)
 
         fitted_model = RDMFittedModel_2A(fitted_model,
                                          data,

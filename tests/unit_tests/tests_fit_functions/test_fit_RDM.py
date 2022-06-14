@@ -20,10 +20,10 @@ class TestFitRDM(unittest.TestCase):
                               threshold_priors=threshold_priors,
                               ndt_priors=drift_priors,
                               drift_priors=ndt_priors,
-                              iter=1000,
+                              # iter=1000,
                               chains=2,
-                              pointwise_waic=False,
-                              verbose=False)
+                              # verbose=False)
+                              pointwise_waic=False)
 
     def test_fit_RDM_hier(self):
         hier_levels = 2
@@ -43,7 +43,7 @@ class TestFitRDM(unittest.TestCase):
                               drift_priors=drift_priors,
                               threshold_priors=threshold_priors,
                               ndt_priors=ndt_priors,
-                              warmup=50,
-                              iter=200,
-                              chains=2,
-                              verbose=False)
+                              # warmup=50,
+                              # iter=200,
+                              # verbose=False,
+                              chains=2)

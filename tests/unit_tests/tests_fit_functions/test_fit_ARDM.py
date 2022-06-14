@@ -18,7 +18,7 @@ class TestFitARDM(unittest.TestCase):
         data['S_inc'] = np.random.normal(.3, 0.01, data.shape[0])
 
         model_fit = model.fit(data,
-                              iter=1000,
+                              # iter=1000,
                               chains=2)
 
     def test_fit_ARDM_hier(self):
@@ -40,7 +40,7 @@ class TestFitARDM(unittest.TestCase):
         model_fit = model.fit(data_hier,
                               threshold_priors=threshold_priors,
                               ndt_priors=ndt_priors,
-                              warmup=50,
-                              iter=100,
-                              chains=2,
-                              verbose=False)
+                              # warmup=50,
+                              # iter=100,
+                              # verbose=False,
+                              chains=2)
