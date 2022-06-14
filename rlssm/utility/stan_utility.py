@@ -252,11 +252,12 @@ def compile_model(filename, model_name=None):
         else:
             cache_fn = os.path.join(path_pkl_fldr, f"cached-{model_name}-{code_hash}.pkl")
         try:
-            sm = pickle.load(open(cache_fn, 'rb'))
+            with open(cache_fn, 'rb') as f1:
+                sm = pickle.load(f1)
         except:
             sm = cmdstanpy.CmdStanModel(stan_file=filename)
-            with open(cache_fn, 'wb') as f:
-                pickle.dump(sm, f)
+            with open(cache_fn, 'wb') as f1:
+                pickle.dump(sm, f1)
         else:
             print("Using cached StanModel")
         return sm

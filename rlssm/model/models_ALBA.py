@@ -224,7 +224,6 @@ class ALBAModel_2A(Model):
             print(par, self.priors[par])
 
         # start sampling...
-        self.compiled_model.sample()
         fitted_model = self.compiled_model.sample(data_dict, **kwargs)
 
         fitted_model = LBAFittedModel_2A(stan_model=fitted_model,
