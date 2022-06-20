@@ -18,8 +18,10 @@ class TestFitALBA(unittest.TestCase):
         data['S_inc'] = np.random.normal(.3, 0.01, data.shape[0])
 
         model_fit = model.fit(data,
-                              # iter=1000,
-                              chains=2)
+                              iter_sampling=500,
+                              iter_warmup=500,
+                              chains=2,
+                              parallel_chains=2)
 
     def test_fit_ALBA_hier(self):
         hier_levels = 2
@@ -38,8 +40,7 @@ class TestFitALBA(unittest.TestCase):
 
         model_fit = model.fit(data_hier,
                               sp_trial_var_priors=sp_trial_var_priors,
-                              # warmup=50,
-                              # iter=100,
-                              # verbose=False,
-                              chains=2)
-
+                              iter_sampling=500,
+                              iter_warmup=500,
+                              chains=2,
+                              parallel_chains=2)

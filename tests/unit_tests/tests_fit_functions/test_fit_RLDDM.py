@@ -15,10 +15,10 @@ class TestFitRLDDM(unittest.TestCase):
         model_fit = model.fit(data,
                               K=4,
                               initial_value_learning=27.5,
-                              # iter=1000,
-                              # verbose=False,
+                              iter_sampling=500,
+                              iter_warmup=500,
                               chains=2,
-                              pointwise_waic=False)
+                              parallel_chains=2)
 
         pred = model_fit.get_posterior_predictives_df(100)
 
@@ -35,7 +35,7 @@ class TestFitRLDDM(unittest.TestCase):
         model_fit = model.fit(data_hier,
                               K=4,
                               initial_value_learning=27.5,
-                              # warmup=50,
-                              # iter=200,
-                              # verbose=False,
-                              chains=2)
+                              iter_sampling=500,
+                              iter_warmup=500,
+                              chains=2,
+                              parallel_chains=2)

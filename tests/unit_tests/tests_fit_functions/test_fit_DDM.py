@@ -13,14 +13,12 @@ class TestFitDDM(unittest.TestCase):
         data = load_example_dataset(hierarchical_levels=hier_levels)
 
         model_fit = model.fit(data,
-                              # iter=1000,
+                              iter_sampling=500,
+                              iter_warmup=500,
                               chains=2,
-                              # verbose=False,
-                              pointwise_waic=False)
+                              parallel_chains=2)
 
-        pred = model_fit.get_posterior_predictives_df(100)
-
-        print(pred)
+        # pred = model_fit.get_posterior_predictives_df(100)
 
     def test_fit_DDM_hier(self):
         hier_levels = 2
@@ -38,7 +36,7 @@ class TestFitDDM(unittest.TestCase):
         model_fit = model.fit(data_hier,
                               drift_priors=drift_priors,
                               threshold_priors=threshold_priors,
-                              # warmup=50,
-                              # iter=200,
-                              # verbose=False,
-                              chains=2)
+                              iter_sampling=500,
+                              iter_warmup=500,
+                              chains=2,
+                              parallel_chains=2)

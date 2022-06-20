@@ -14,14 +14,14 @@ class TestPlotRL(unittest.TestCase):
 
         data = load_example_dataset(hierarchical_levels=1)
 
-        model_fit = model.fit(
-            data,
-            K=4,
-            initial_value_learning=27.5,
-            sensitivity_priors={'mu': 0, 'sd': 5},
-            # iter=2000,
-            # verbose=False,
-            chains=2)
+        model_fit = model.fit(data,
+                              K=4,
+                              initial_value_learning=27.5,
+                              sensitivity_priors={'mu': 0, 'sd': 5},
+                              iter_sampling=500,
+                              iter_warmup=500,
+                              chains=2,
+                              parallel_chains=2)
 
         model_fit.plot_posteriors(show_intervals="BCI")
 

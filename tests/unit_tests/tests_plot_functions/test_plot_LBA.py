@@ -13,11 +13,12 @@ class TestPlotLBA(unittest.TestCase):
         model = LBAModel_2A(hierarchical_levels=1)
 
         data = load_example_dataset(hierarchical_levels=1)
-        model_fit = model.fit(
-            data,
-            thin=5,
-            # iter=1000,
-            chains=2)
+        model_fit = model.fit(data,
+                              thin=5,
+                              iter_sampling=500,
+                              iter_warmup=500,
+                              chains=2,
+                              parallel_chains=2)
 
         model_fit.plot_posteriors(show_intervals="BCI")
 

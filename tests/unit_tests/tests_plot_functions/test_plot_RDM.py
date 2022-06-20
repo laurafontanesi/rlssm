@@ -22,10 +22,10 @@ class TestPlotRDM(unittest.TestCase):
                               threshold_priors=threshold_priors,
                               ndt_priors=drift_priors,
                               drift_priors=ndt_priors,
-                              # iter=1000,
-                              # verbose=False,
+                              iter_sampling=500,
+                              iter_warmup=500,
                               chains=2,
-                              pointwise_waic=False)
+                              parallel_chains=2)
 
         model_fit.plot_posteriors(show_intervals="BCI")
 

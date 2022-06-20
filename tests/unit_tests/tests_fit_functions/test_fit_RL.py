@@ -16,9 +16,10 @@ class TestFitRL(unittest.TestCase):
                               K=4,
                               initial_value_learning=27.5,
                               sensitivity_priors={'mu': 0, 'sd': 5},
-                              # iter=1000,
-                              # verbose=False,
-                              chains=2)
+                              iter_sampling=500,
+                              iter_warmup=500,
+                              chains=2,
+                              parallel_chains=2)
 
     def test_fit_RL_hier(self):
         hier_levels = 2
@@ -33,6 +34,7 @@ class TestFitRL(unittest.TestCase):
         model_fit = model.fit(data_hier,
                               K=4,
                               initial_value_learning=27.5,
-                              # warmup=50,
-                              # iter=200,
-                              chains=2)
+                              iter_sampling=500,
+                              iter_warmup=500,
+                              chains=2,
+                              parallel_chains=2)
