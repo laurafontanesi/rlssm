@@ -3,7 +3,7 @@ import pandas as pd
 from scipy import stats
 
 
-def random_lba_2A(cor_drift, inc_drift, sp_trial_var, ndt, k):
+def random_lba_2A(cor_drift, inc_drift, sp_trial_var, ndt, k, drift_trial_var):
     """Simulates behavior (rt and accuracy) according to the Linear Ballistic Accumulator.
 
     Parameters
@@ -51,8 +51,12 @@ def random_lba_2A(cor_drift, inc_drift, sp_trial_var, ndt, k):
     # this while loop might be wrong
     while one_pose:
         ind = np.logical_and(v_cor < 0, v_inc < 0)
-        v_cor[ind] = np.random.normal(cor_drift[ind], np.ones(cor_drift[ind].shape))
-        v_inc[ind] = np.random.normal(inc_drift[ind], np.ones(inc_drift[ind].shape))
+        # v_cor[ind] = np.random.normal(cor_drift[ind], np.ones(cor_drift[ind].shape))
+        # v_inc[ind] = np.random.normal(inc_drift[ind], np.ones(inc_drift[ind].shape))
+        
+        v_cor[ind] = np.random.normal(cor_drift[ind], drift_trial_var[ind])
+        v_inc[ind] = np.random.normal(inc_drift[ind], drift_trial_var[ind])
+        
         one_pose = np.sum(ind) > 0
 
     start_cor = np.random.uniform(np.zeros(sp_trial_var.shape), sp_trial_var)

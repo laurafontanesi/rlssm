@@ -113,29 +113,30 @@ transformed data {
 }
 
 parameters {
-  real mu_k;
-  real mu_sp_trial_var;
-  real mu_ndt;
-  real mu_drift_cor;
-  real mu_drift_inc;
+     real mu_k;
+     real mu_sp_trial_var;
+     real mu_ndt;
+     real mu_drift_cor;
+     real mu_drift_inc;
 
-  real<lower=0> sd_k;
-	real<lower=0> sd_sp_trial_var;
-  real<lower=0> sd_ndt;
-	real<lower=0> sd_drift_cor;
-	real<lower=0> sd_drift_inc;
+     real<lower=0> sd_k;
+     real<lower=0> sd_sp_trial_var;
+     real<lower=0> sd_ndt;
+     real<lower=0> sd_drift_cor;
+     real<lower=0> sd_drift_inc;
 
-  real z_k[L];
-  real z_sp_trial_var[L];
-  real z_ndt[L];
-  real z_drift_cor[L];
-  real z_drift_inc[L];
+     real z_k[L];
+     real z_sp_trial_var[L];
+     real z_ndt[L];
+     real z_drift_cor[L];
+     real z_drift_inc[L];
 }
 
 transformed parameters {
+     vector<lower=0> [N] ndt_t;                    // trial-by-trial ndt
   vector<lower=0> [N] k_t;				// trial-by-trial
 	vector<lower=0> [N] sp_trial_var_t;						// trial-by-trial
-  vector<lower=0> [N] ndt_t;				 // trial-by-trial ndt
+  
 	vector<lower=0> [N] drift_cor_t;				// trial-by-trial drift rate for predictions
 	vector<lower=0> [N] drift_inc_t;				// trial-by-trial drift rate for predictions
 

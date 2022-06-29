@@ -288,23 +288,25 @@ class RLRDModel_2A(Model):
         # Define default priors
         if self.hierarchical_levels == 1:
             self.priors = dict(
-                threshold_priors={'mu': 0, 'sd': 5},
-                ndt_priors={'mu': 0, 'sd': 5},
                 alpha_priors={'mu': 0, 'sd': 1},
                 alpha_pos_priors={'mu': 0, 'sd': 1},
                 alpha_neg_priors={'mu': 0, 'sd': 1},
-                drift_scaling_priors={'mu': 0, 'sd': 0.5},
-                utility_priors={'mu': 0, 'sd': 2}
+                ndt_priors={'mu': 0, 'sd': 5},
+                threshold_priors={'mu': 0, 'sd': 5},
+                slop_priors = {'mu': -1.5, 'sd':1},
+                drift_asym_priors={'mu':0, 'sd':1},
+                drift_scaling_priors={'mu':2, 'sd':1}
             )
         else:
             self.priors = dict(
-                threshold_priors={'mu_mu': 1, 'sd_mu': 3, 'mu_sd': 0, 'sd_sd': 3},
-                ndt_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
                 alpha_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},
                 alpha_pos_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},
                 alpha_neg_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},
-                drift_scaling_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
-                utility_priors={'mu_mu': 0, 'sd_mu': 0.1, 'mu_sd': 0, 'sd_sd': 2}
+                ndt_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                threshold_priors={'mu_mu': 1, 'sd_mu': 3, 'mu_sd': 0, 'sd_sd': 3},
+                slop_priors={'mu_mu':-1, 'sd_mu':0.5, 'mu_sd':0, 'sd_sd':1},
+                drift_asym_priors={'mu_mu': -1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                drift_scaling_priors={'mu_mu': 2, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1}
             )
 
         # Set up model label and priors for mechanisms
@@ -318,8 +320,10 @@ class RLRDModel_2A(Model):
 
         if self.nonlinear_mapping:
             self.model_label += '_nonlin'
+            self.n_parameters_individual += 2
         else:
-            del self.priors['utility_priors']
+            del self.priors['slop_priors']
+            del self.priors['drift_asymtot_priors']
 
         # Set the stan model path
         self._set_model_path()
@@ -332,12 +336,13 @@ class RLRDModel_2A(Model):
             K,
             initial_value_learning,
             alpha_priors=None,
-            drift_scaling_priors=None,
-            threshold_priors=None,
-            ndt_priors=None,
-            utility_priors=None,
             alpha_pos_priors=None,
             alpha_neg_priors=None,
+            ndt_priors=None,
+            threshold_priors=None,
+            slop_priors=None,
+            drift_asymtot_priors=None,
+            drift_scaling_priors=None,
             include_rhat=True,
             include_waic=True,
             pointwise_waic=False,
@@ -402,27 +407,7 @@ class RLRDModel_2A(Model):
             Priors for the learning rate parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
-
-        drift_scaling_priors : dict, optional
-            Priors for the drift scaling parameter.
-            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
-            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
-
-        threshold_priors : dict, optional
-            Priors for the threshold parameter.
-            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
-            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
-
-        ndt_priors : dict, optional
-            Priors for the non decision time parameter.
-            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
-            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
-
-        utility_priors : dict, optional
-            Priors for the utility time parameter.
-            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
-            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
-
+        
         alpha_pos_priors : dict, optional
             Priors for the learning rate for the positive PE
             (only meaningful if separate_learning_rates is True).
@@ -432,6 +417,31 @@ class RLRDModel_2A(Model):
         alpha_neg_priors : dict, optional
             Priors for the learning rate for the negative PE
             (only meaningful if separate_learning_rates is True).
+            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
+        
+        ndt_priors : dict, optional
+            Priors for the non decision time parameter.
+            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
+
+        threshold_priors : dict, optional
+            Priors for the threshold parameter.
+            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
+        
+        slop_priors : dict, optional
+            Priors for the utility time parameter.
+            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
+        
+        drift_asymtot_priors : dict, optional
+            Priors for the utility time parameter.
+            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
+
+        drift_scaling_priors : dict, optional
+            Priors for the drift scaling parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
@@ -465,20 +475,24 @@ class RLRDModel_2A(Model):
         data.loc[data.accuracy == 1, 'accuracy_rescale'] = 1
 
         # change default priors:
-        if threshold_priors is not None:
-            self.priors['threshold_priors'] = threshold_priors
-        if ndt_priors is not None:
-            self.priors['ndt_priors'] = ndt_priors
-        if drift_scaling_priors is not None:
-            self.priors['drift_scaling_priors'] = drift_scaling_priors
-        if utility_priors is not None:
-            self.priors['utility_priors'] = utility_priors
         if alpha_priors is not None:
             self.priors['alpha_priors'] = alpha_priors
         if alpha_pos_priors is not None:
             self.priors['alpha_pos_priors'] = alpha_pos_priors
         if alpha_neg_priors is not None:
             self.priors['alpha_neg_priors'] = alpha_neg_priors
+        if ndt_priors is not None:
+            self.priors['ndt_priors'] = ndt_priors
+        if threshold_priors is not None:
+            self.priors['threshold_priors'] = threshold_priors
+        if slop_priors is not None:
+            self.priors['slop_priors'] = slop_priors
+        if drift_asymtot_priors is not None:
+            self.priors['drift_asym_priors'] = drift_asymtot_priors
+        if drift_scaling_priors is not None:
+            self.priors['drift_scaling_priors'] = drift_scaling_priors
+        
+        
 
         data_dict = {'N': N,
                      'K': K,
@@ -490,6 +504,7 @@ class RLRDModel_2A(Model):
                      'block_label': data['block_label'].values.astype(int),
                      'rt': data['rt'].values,
                      'accuracy': data['accuracy_rescale'].values.astype(int),
+                     'feedback_type': data['feedback_type'].values.astype(int),
                      'initial_value': initial_value_learning}
 
         if self.hierarchical_levels == 2:

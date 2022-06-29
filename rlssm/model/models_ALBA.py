@@ -62,6 +62,7 @@ class ALBAModel_2A(Model):
                 v0_priors={'mu': 9, 'sd': 2},
                 ws_priors={'mu': 0, 'sd': 2},
                 wd_priors={'mu': 3, 'sd': 3},
+                drift_variability_priors={'mu': 1, 'sd': 1}
             )
         else:
             self.priors = dict(
@@ -71,6 +72,7 @@ class ALBAModel_2A(Model):
                 v0_priors={'mu_mu': 9, 'sd_mu': 3, 'mu_sd': 2, 'sd_sd': 1},
                 ws_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 2, 'sd_sd': 1},
                 wd_priors={'mu_mu': 3, 'sd_mu': 1, 'mu_sd': 3, 'sd_sd': 1},
+                drift_variability_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 1, 'sd_sd': 1}
             )
 
         # Set up model label and priors for mechanisms
@@ -89,6 +91,7 @@ class ALBAModel_2A(Model):
             v0_priors=None,
             ws_priors=None,
             wd_priors=None,
+            drift_variability_priors=None,
             include_rhat=True,
             include_waic=True,
             pointwise_waic=False,
@@ -156,6 +159,11 @@ class ALBAModel_2A(Model):
             Priors for the wd parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
+        
+        drift_variability_priors : dict, optional
+            Priors for the drift-variability parameter.
+            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
         include_rhat : bool, default True
             Whether to calculate the Gelman-Rubin convergence diagnostic r hat
@@ -199,6 +207,8 @@ class ALBAModel_2A(Model):
             self.priors['ws_priors'] = ws_priors
         if wd_priors is not None:
             self.priors['wd_priors'] = wd_priors
+        if drift_variability_priors is not None:
+            self.priors['drift_variability_priors'] = drift_variability_priors
 
         data_dict = {
             'N': N,

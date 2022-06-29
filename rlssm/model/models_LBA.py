@@ -50,7 +50,7 @@ class LBAModel_2A(Model):
         super().__init__(hierarchical_levels, "LBA_2A")
 
         # Define the model parameters
-        self.n_parameters_individual = 5  # k, sp_trial_var, ndt, drift_cor, drift_inc
+        self.n_parameters_individual = 6  # k, sp_trial_var, ndt, drift_cor, drift_inc, drift_variability
         self.n_parameters_trial = 0
 
         # Define default priors
@@ -60,13 +60,14 @@ class LBAModel_2A(Model):
                 k_priors={'mu': 1, 'sd': 1},
                 sp_trial_var_priors={'mu': 0.3, 'sd': 1},
                 ndt_priors={'mu': 0, 'sd': 1},
-            )
+                drift_variability_priors={'mu': 1, 'sd': 1})
         else:
             self.priors = dict(
                 drift_priors={'mu_mu': 2, 'sd_mu': 3, 'mu_sd': 1, 'sd_sd': 1},
                 k_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
                 sp_trial_var_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
                 ndt_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                drift_variability_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 1, 'sd_sd': 1}
             )
 
         # Set up model label and priors for mechanisms
@@ -83,6 +84,7 @@ class LBAModel_2A(Model):
             sp_trial_var_priors=None,
             ndt_priors=None,
             drift_priors=None,
+            drift_variability_priors=None,
             include_rhat=True,
             include_waic=True,
             pointwise_waic=False,
@@ -135,6 +137,11 @@ class LBAModel_2A(Model):
             Priors for the drift-rate parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
+        
+        drift_variability_priors : dict, optional
+            Priors for the drift-variability parameter.
+            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
         include_rhat : bool, default True
             Whether to calculate the Gelman-Rubin convergence diagnostic r hat
@@ -174,6 +181,8 @@ class LBAModel_2A(Model):
             self.priors['ndt_priors'] = ndt_priors
         if drift_priors is not None:
             self.priors['drift_priors'] = drift_priors
+        if drift_variability_priors is not None:
+            self.priors['drift_variability_priors'] = drift_variability_priors
 
         data_dict = {'N': N,
                      'rt': data['rt'].values,
@@ -274,31 +283,35 @@ class RLLBAModel_2A(Model):
         self.separate_learning_rates = separate_learning_rates
         self.nonlinear_mapping = nonlinear_mapping
 
-        self.n_parameters_individual = 5  # k, sp_trial_var, ndt, scaling, learning rate
+        self.n_parameters_individual = 6  # learning rate, k, sp_trial_var, ndt, scaling, drift variability
         self.n_parameters_trial = 0
 
         # Define default priors
         if self.hierarchical_levels == 1:
             self.priors = dict(
-                k_priors={'mu': 1, 'sd': 1},
-                sp_trial_var_priors={'mu': 0.3, 'sd': 1},
-                ndt_priors={'mu': 0, 'sd': 1},
                 alpha_priors={'mu': 0, 'sd': 1},
                 alpha_pos_priors={'mu': 0, 'sd': 1},
                 alpha_neg_priors={'mu': 0, 'sd': 1},
-                drift_scaling_priors={'mu': 0, 'sd': 0.5},
-                utility_priors={'mu': 0, 'sd': 2}
+                k_priors={'mu': 1, 'sd': 1},
+                ndt_priors={'mu': 0, 'sd': 1},
+                sp_trial_var_priors={'mu': 0.3, 'sd': 1},
+                slop_priors = {'mu': -1.5, 'sd':1},
+                drift_asym_priors={'mu':0, 'sd':1},
+                drift_scaling_priors={'mu':2, 'sd':1},
+                drift_variability_priors={'mu': 1, 'sd': 1}
             )
         else:
             self.priors = dict(
-                k_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
-                sp_trial_var_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
-                ndt_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
                 alpha_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},
                 alpha_pos_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},
                 alpha_neg_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},
-                drift_scaling_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
-                utility_priors={'mu_mu': 0, 'sd_mu': 0.1, 'mu_sd': 0, 'sd_sd': 2}
+                ndt_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                k_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                sp_trial_var_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                slop_priors={'mu_mu':-1, 'sd_mu':0.5, 'mu_sd':0, 'sd_sd':1},
+                drift_asym_priors={'mu_mu': -1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                drift_scaling_priors={'mu_mu': 2, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                drift_variability_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 1, 'sd_sd': 1}
             )
 
         # Set up model label and priors for mechanisms
@@ -312,8 +325,10 @@ class RLLBAModel_2A(Model):
 
         if self.nonlinear_mapping:
             self.model_label += '_nonlin'
-            self.n_parameters_individual += 1  # utility
-        del self.priors['utility_priors']
+            self.n_parameters_individual += 2 
+        else:
+            del self.priors['slop_priors']
+            del self.priors['drift_asymtot_priors']
 
         # Set the stan model path
         self._set_model_path()
@@ -325,14 +340,16 @@ class RLLBAModel_2A(Model):
             data,
             K,
             initial_value_learning,
-            k_priors=None,
-            sp_trial_var_priors=None,
-            ndt_priors=None,
-            utility_priors=None,
             alpha_priors=None,
-            drift_scaling_priors=None,
             alpha_pos_priors=None,
             alpha_neg_priors=None,
+            ndt_priors=None,
+            k_priors=None,
+            sp_trial_var_priors=None,
+            slop_priors=None,
+            drift_asymtot_priors=None,
+            drift_scaling_priors=None,
+            drift_variability_priors=None,
             include_rhat=True,
             include_waic=True,
             pointwise_waic=False,
@@ -392,6 +409,27 @@ class RLLBAModel_2A(Model):
 
         Other Parameters
         ----------------
+        alpha_priors : dict, optional
+            Priors for the learning rate parameter.
+            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
+        
+        alpha_pos_priors : dict, optional
+            Priors for the learning rate for the positive PE
+            (only meaningful if separate_learning_rates is True).
+            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
+        
+        alpha_neg_priors : dict, optional
+            Priors for the learning rate for the negative PE
+            (only meaningful if separate_learning_rates is True).
+            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
+        
+        ndt_priors : dict, optional
+            Priors for the non-decision time (tau parameter).
+            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
         k_priors : dict, optional
             Priors for the relative starting point (k parameter).
@@ -403,35 +441,23 @@ class RLLBAModel_2A(Model):
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        ndt_priors : dict, optional
-            Priors for the non-decision time (tau parameter).
+        slop_priors : dict, optional
+            Priors for the slop parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
-
-        utility_priors : dict, optional
-            Priors for the utility time parameter.
+        
+        drift_asymtot_priors : dict, optional
+            Priors for the asymtotic drift rate parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
-
-        alpha_priors : dict, optional
-            Priors for the learning rate parameter.
-            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
-            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
-
+        
         drift_scaling_priors : dict, optional
             Priors for the drift scaling parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
-
-        alpha_pos_priors : dict, optional
-            Priors for the learning rate for the positive PE
-            (only meaningful if separate_learning_rates is True).
-            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
-            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
-
-        alpha_neg_priors : dict, optional
-            Priors for the learning rate for the negative PE
-            (only meaningful if separate_learning_rates is True).
+        
+        drift_variability_priors : dict, optional
+            Priors for the drift-variability parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
@@ -465,22 +491,27 @@ class RLLBAModel_2A(Model):
         data.loc[data.accuracy == 1, 'accuracy_rescale'] = 1
 
         # change default priors:
-        if k_priors is not None:
-            self.priors['k_priors'] = k_priors
-        if sp_trial_var_priors is not None:
-            self.priors['sp_trial_var_priors'] = sp_trial_var_priors
-        if ndt_priors is not None:
-            self.priors['ndt_priors'] = ndt_priors
-        if drift_scaling_priors is not None:
-            self.priors['drift_scaling_priors'] = drift_scaling_priors
-        if utility_priors is not None:
-            self.priors['utility_priors'] = utility_priors
         if alpha_priors is not None:
             self.priors['alpha_priors'] = alpha_priors
         if alpha_pos_priors is not None:
             self.priors['alpha_pos_priors'] = alpha_pos_priors
         if alpha_neg_priors is not None:
             self.priors['alpha_neg_priors'] = alpha_neg_priors
+        if ndt_priors is not None:
+            self.priors['ndt_priors'] = ndt_priors
+        if k_priors is not None:
+            self.priors['k_priors'] = k_priors
+        if sp_trial_var_priors is not None:
+            self.priors['sp_trial_var_priors'] = sp_trial_var_priors
+        if slop_priors is not None:
+            self.priors['slop_priors'] = slop_priors
+        if drift_asymtot_priors is not None:
+            self.priors['drift_asym_priors'] = drift_asymtot_priors
+        if drift_scaling_priors is not None:
+            self.priors['drift_scaling_priors'] = drift_scaling_priors
+        if drift_variability_priors is not None:
+            self.priors['drift_variability_priors'] = drift_variability_priors
+        
 
         data_dict = {'N': N,
                      'K': K,
@@ -492,6 +523,7 @@ class RLLBAModel_2A(Model):
                      'block_label': data['block_label'].values.astype(int),
                      'rt': data['rt'].values,
                      'accuracy': data['accuracy_rescale'].values.astype(int),
+                     'feedback_type': data['feedback_type'].values.astype(int),
                      'initial_value': initial_value_learning}
 
         if self.hierarchical_levels == 2:
