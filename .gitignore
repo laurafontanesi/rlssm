@@ -9,4 +9,6 @@ build/
 /pkl_files
 cached*.pkl
 *.pkl
-/tests/andrei_test.py
+
+# stan cached files
+*.hpp
