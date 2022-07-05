@@ -50,13 +50,13 @@ static constexpr std::array<const char*, 243> locations_array__ =
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 138, column 2 to column 28)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 139, column 2 to column 34)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 140, column 2 to column 37)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 142, column 2 to column 27)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 143, column 2 to column 27)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 144, column 2 to column 31)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 145, column 2 to column 27)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 146, column 2 to column 21)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 147, column 2 to column 22)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 148, column 2 to column 28)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 142, column 2 to column 45)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 143, column 2 to column 45)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 144, column 2 to column 40)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 145, column 2 to column 36)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 146, column 2 to column 30)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 147, column 2 to column 31)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 148, column 2 to column 37)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 150, column 2 to column 42)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 151, column 2 to column 42)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 152, column 2 to column 59)",
@@ -182,11 +182,11 @@ static constexpr std::array<const char*, 243> locations_array__ =
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 68, column 2 to column 22)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 70, column 2 to column 29)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 71, column 2 to column 29)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 72, column 2 to column 24)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 73, column 2 to column 33)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 74, column 2 to column 29)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 75, column 2 to column 23)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 76, column 2 to column 30)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 72, column 2 to column 23)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 73, column 2 to column 29)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 74, column 2 to column 24)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 75, column 2 to column 30)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 76, column 2 to column 33)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 80, column 9 to column 10)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 80, column 2 to column 15)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_2lr_nonlin.stan', line 81, column 10 to column 11)",
@@ -497,22 +497,22 @@ class hierRLRDM_2A_2lr_nonlin_model final : public model_base_crtp<hierRLRDM_2A_
   std::vector<double> rt;
   Eigen::Matrix<double, -1, 1> alpha_pos_priors__;
   Eigen::Matrix<double, -1, 1> alpha_neg_priors__;
-  Eigen::Matrix<double, -1, 1> slop_priors__;
-  Eigen::Matrix<double, -1, 1> drift_scaling_priors__;
-  Eigen::Matrix<double, -1, 1> threshold_priors__;
   Eigen::Matrix<double, -1, 1> ndt_priors__;
+  Eigen::Matrix<double, -1, 1> threshold_priors__;
+  Eigen::Matrix<double, -1, 1> slop_priors__;
   Eigen::Matrix<double, -1, 1> drift_asym_priors__;
+  Eigen::Matrix<double, -1, 1> drift_scaling_priors__;
   Eigen::Matrix<double, -1, 1> Q0__;
   Eigen::Matrix<double, -1, -1> RT__; 
   Eigen::Map<Eigen::Matrix<double, -1, 1>> f_cor{nullptr, 0};
   Eigen::Map<Eigen::Matrix<double, -1, 1>> f_inc{nullptr, 0};
   Eigen::Map<Eigen::Matrix<double, -1, 1>> alpha_pos_priors{nullptr, 0};
   Eigen::Map<Eigen::Matrix<double, -1, 1>> alpha_neg_priors{nullptr, 0};
-  Eigen::Map<Eigen::Matrix<double, -1, 1>> slop_priors{nullptr, 0};
-  Eigen::Map<Eigen::Matrix<double, -1, 1>> drift_scaling_priors{nullptr, 0};
-  Eigen::Map<Eigen::Matrix<double, -1, 1>> threshold_priors{nullptr, 0};
   Eigen::Map<Eigen::Matrix<double, -1, 1>> ndt_priors{nullptr, 0};
+  Eigen::Map<Eigen::Matrix<double, -1, 1>> threshold_priors{nullptr, 0};
+  Eigen::Map<Eigen::Matrix<double, -1, 1>> slop_priors{nullptr, 0};
   Eigen::Map<Eigen::Matrix<double, -1, 1>> drift_asym_priors{nullptr, 0};
+  Eigen::Map<Eigen::Matrix<double, -1, 1>> drift_scaling_priors{nullptr, 0};
   Eigen::Map<Eigen::Matrix<double, -1, 1>> Q0{nullptr, 0};
   Eigen::Map<Eigen::Matrix<double, -1, -1>> RT{nullptr, 0, 0};
  
@@ -796,80 +796,6 @@ class hierRLRDM_2A_2lr_nonlin_model final : public model_base_crtp<hierRLRDM_2A_
         }
       }
       current_statement__ = 173;
-      context__.validate_dims("data initialization","slop_priors","double",
-           std::vector<size_t>{static_cast<size_t>(4)});
-      slop_priors__ = 
-        Eigen::Matrix<double, -1, 1>::Constant(4,
-          std::numeric_limits<double>::quiet_NaN());
-      new (&slop_priors) Eigen::Map<Eigen::Matrix<double, -1, 1>>(slop_priors__.data(), 4);
-        
-      
-      {
-        std::vector<local_scalar_t__> slop_priors_flat__;
-        current_statement__ = 173;
-        slop_priors_flat__ = context__.vals_r("slop_priors");
-        current_statement__ = 173;
-        pos__ = 1;
-        current_statement__ = 173;
-        for (int sym1__ = 1; sym1__ <= 4; ++sym1__) {
-          current_statement__ = 173;
-          stan::model::assign(slop_priors, slop_priors_flat__[(pos__ - 1)],
-            "assigning variable slop_priors", stan::model::index_uni(sym1__));
-          current_statement__ = 173;
-          pos__ = (pos__ + 1);
-        }
-      }
-      current_statement__ = 174;
-      context__.validate_dims("data initialization","drift_scaling_priors",
-          "double", std::vector<size_t>{static_cast<size_t>(4)});
-      drift_scaling_priors__ = 
-        Eigen::Matrix<double, -1, 1>::Constant(4,
-          std::numeric_limits<double>::quiet_NaN());
-      new (&drift_scaling_priors) Eigen::Map<Eigen::Matrix<double, -1, 1>>(drift_scaling_priors__.data(), 4);
-        
-      
-      {
-        std::vector<local_scalar_t__> drift_scaling_priors_flat__;
-        current_statement__ = 174;
-        drift_scaling_priors_flat__ = context__.vals_r("drift_scaling_priors");
-        current_statement__ = 174;
-        pos__ = 1;
-        current_statement__ = 174;
-        for (int sym1__ = 1; sym1__ <= 4; ++sym1__) {
-          current_statement__ = 174;
-          stan::model::assign(drift_scaling_priors,
-            drift_scaling_priors_flat__[(pos__ - 1)],
-            "assigning variable drift_scaling_priors", stan::model::index_uni(sym1__));
-          current_statement__ = 174;
-          pos__ = (pos__ + 1);
-        }
-      }
-      current_statement__ = 175;
-      context__.validate_dims("data initialization","threshold_priors",
-          "double", std::vector<size_t>{static_cast<size_t>(4)});
-      threshold_priors__ = 
-        Eigen::Matrix<double, -1, 1>::Constant(4,
-          std::numeric_limits<double>::quiet_NaN());
-      new (&threshold_priors) Eigen::Map<Eigen::Matrix<double, -1, 1>>(threshold_priors__.data(), 4);
-        
-      
-      {
-        std::vector<local_scalar_t__> threshold_priors_flat__;
-        current_statement__ = 175;
-        threshold_priors_flat__ = context__.vals_r("threshold_priors");
-        current_statement__ = 175;
-        pos__ = 1;
-        current_statement__ = 175;
-        for (int sym1__ = 1; sym1__ <= 4; ++sym1__) {
-          current_statement__ = 175;
-          stan::model::assign(threshold_priors,
-            threshold_priors_flat__[(pos__ - 1)],
-            "assigning variable threshold_priors", stan::model::index_uni(sym1__));
-          current_statement__ = 175;
-          pos__ = (pos__ + 1);
-        }
-      }
-      current_statement__ = 176;
       context__.validate_dims("data initialization","ndt_priors","double",
            std::vector<size_t>{static_cast<size_t>(4)});
       ndt_priors__ = 
@@ -880,20 +806,69 @@ class hierRLRDM_2A_2lr_nonlin_model final : public model_base_crtp<hierRLRDM_2A_
       
       {
         std::vector<local_scalar_t__> ndt_priors_flat__;
-        current_statement__ = 176;
+        current_statement__ = 173;
         ndt_priors_flat__ = context__.vals_r("ndt_priors");
-        current_statement__ = 176;
+        current_statement__ = 173;
         pos__ = 1;
-        current_statement__ = 176;
+        current_statement__ = 173;
         for (int sym1__ = 1; sym1__ <= 4; ++sym1__) {
-          current_statement__ = 176;
+          current_statement__ = 173;
           stan::model::assign(ndt_priors, ndt_priors_flat__[(pos__ - 1)],
             "assigning variable ndt_priors", stan::model::index_uni(sym1__));
-          current_statement__ = 176;
+          current_statement__ = 173;
           pos__ = (pos__ + 1);
         }
       }
-      current_statement__ = 177;
+      current_statement__ = 174;
+      context__.validate_dims("data initialization","threshold_priors",
+          "double", std::vector<size_t>{static_cast<size_t>(4)});
+      threshold_priors__ = 
+        Eigen::Matrix<double, -1, 1>::Constant(4,
+          std::numeric_limits<double>::quiet_NaN());
+      new (&threshold_priors) Eigen::Map<Eigen::Matrix<double, -1, 1>>(threshold_priors__.data(), 4);
+        
+      
+      {
+        std::vector<local_scalar_t__> threshold_priors_flat__;
+        current_statement__ = 174;
+        threshold_priors_flat__ = context__.vals_r("threshold_priors");
+        current_statement__ = 174;
+        pos__ = 1;
+        current_statement__ = 174;
+        for (int sym1__ = 1; sym1__ <= 4; ++sym1__) {
+          current_statement__ = 174;
+          stan::model::assign(threshold_priors,
+            threshold_priors_flat__[(pos__ - 1)],
+            "assigning variable threshold_priors", stan::model::index_uni(sym1__));
+          current_statement__ = 174;
+          pos__ = (pos__ + 1);
+        }
+      }
+      current_statement__ = 175;
+      context__.validate_dims("data initialization","slop_priors","double",
+           std::vector<size_t>{static_cast<size_t>(4)});
+      slop_priors__ = 
+        Eigen::Matrix<double, -1, 1>::Constant(4,
+          std::numeric_limits<double>::quiet_NaN());
+      new (&slop_priors) Eigen::Map<Eigen::Matrix<double, -1, 1>>(slop_priors__.data(), 4);
+        
+      
+      {
+        std::vector<local_scalar_t__> slop_priors_flat__;
+        current_statement__ = 175;
+        slop_priors_flat__ = context__.vals_r("slop_priors");
+        current_statement__ = 175;
+        pos__ = 1;
+        current_statement__ = 175;
+        for (int sym1__ = 1; sym1__ <= 4; ++sym1__) {
+          current_statement__ = 175;
+          stan::model::assign(slop_priors, slop_priors_flat__[(pos__ - 1)],
+            "assigning variable slop_priors", stan::model::index_uni(sym1__));
+          current_statement__ = 175;
+          pos__ = (pos__ + 1);
+        }
+      }
+      current_statement__ = 176;
       context__.validate_dims("data initialization","drift_asym_priors",
           "double", std::vector<size_t>{static_cast<size_t>(4)});
       drift_asym_priors__ = 
@@ -904,16 +879,41 @@ class hierRLRDM_2A_2lr_nonlin_model final : public model_base_crtp<hierRLRDM_2A_
       
       {
         std::vector<local_scalar_t__> drift_asym_priors_flat__;
-        current_statement__ = 177;
+        current_statement__ = 176;
         drift_asym_priors_flat__ = context__.vals_r("drift_asym_priors");
+        current_statement__ = 176;
+        pos__ = 1;
+        current_statement__ = 176;
+        for (int sym1__ = 1; sym1__ <= 4; ++sym1__) {
+          current_statement__ = 176;
+          stan::model::assign(drift_asym_priors,
+            drift_asym_priors_flat__[(pos__ - 1)],
+            "assigning variable drift_asym_priors", stan::model::index_uni(sym1__));
+          current_statement__ = 176;
+          pos__ = (pos__ + 1);
+        }
+      }
+      current_statement__ = 177;
+      context__.validate_dims("data initialization","drift_scaling_priors",
+          "double", std::vector<size_t>{static_cast<size_t>(4)});
+      drift_scaling_priors__ = 
+        Eigen::Matrix<double, -1, 1>::Constant(4,
+          std::numeric_limits<double>::quiet_NaN());
+      new (&drift_scaling_priors) Eigen::Map<Eigen::Matrix<double, -1, 1>>(drift_scaling_priors__.data(), 4);
+        
+      
+      {
+        std::vector<local_scalar_t__> drift_scaling_priors_flat__;
+        current_statement__ = 177;
+        drift_scaling_priors_flat__ = context__.vals_r("drift_scaling_priors");
         current_statement__ = 177;
         pos__ = 1;
         current_statement__ = 177;
         for (int sym1__ = 1; sym1__ <= 4; ++sym1__) {
           current_statement__ = 177;
-          stan::model::assign(drift_asym_priors,
-            drift_asym_priors_flat__[(pos__ - 1)],
-            "assigning variable drift_asym_priors", stan::model::index_uni(sym1__));
+          stan::model::assign(drift_scaling_priors,
+            drift_scaling_priors_flat__[(pos__ - 1)],
+            "assigning variable drift_scaling_priors", stan::model::index_uni(sym1__));
           current_statement__ = 177;
           pos__ = (pos__ + 1);
         }
@@ -1578,6 +1578,33 @@ class hierRLRDM_2A_2lr_nonlin_model final : public model_base_crtp<hierRLRDM_2A_
       current_statement__ = 40;
       stan::math::check_greater_or_equal(function__, "drift_scaling_sbj",
                                             drift_scaling_sbj, 0);
+      current_statement__ = 41;
+      stan::math::check_greater_or_equal(function__, "transf_mu_alpha_pos",
+                                            transf_mu_alpha_pos, 0);
+      current_statement__ = 41;
+      stan::math::check_less_or_equal(function__, "transf_mu_alpha_pos",
+                                         transf_mu_alpha_pos, 1);
+      current_statement__ = 42;
+      stan::math::check_greater_or_equal(function__, "transf_mu_alpha_neg",
+                                            transf_mu_alpha_neg, 0);
+      current_statement__ = 42;
+      stan::math::check_less_or_equal(function__, "transf_mu_alpha_neg",
+                                         transf_mu_alpha_neg, 1);
+      current_statement__ = 43;
+      stan::math::check_greater_or_equal(function__, "transf_mu_drift_scaling",
+                                            transf_mu_drift_scaling, 0);
+      current_statement__ = 44;
+      stan::math::check_greater_or_equal(function__, "transf_mu_threshold",
+                                            transf_mu_threshold, 0);
+      current_statement__ = 45;
+      stan::math::check_greater_or_equal(function__, "transf_mu_ndt",
+                                            transf_mu_ndt, 0);
+      current_statement__ = 46;
+      stan::math::check_greater_or_equal(function__, "transf_mu_slop",
+                                            transf_mu_slop, 0);
+      current_statement__ = 47;
+      stan::math::check_greater_or_equal(function__, "transf_mu_drift_asym",
+                                            transf_mu_drift_asym, 0);
       {
         current_statement__ = 125;
         lp_accum__.add(
@@ -2320,6 +2347,33 @@ class hierRLRDM_2A_2lr_nonlin_model final : public model_base_crtp<hierRLRDM_2A_
       current_statement__ = 40;
       stan::math::check_greater_or_equal(function__, "drift_scaling_sbj",
                                             drift_scaling_sbj, 0);
+      current_statement__ = 41;
+      stan::math::check_greater_or_equal(function__, "transf_mu_alpha_pos",
+                                            transf_mu_alpha_pos, 0);
+      current_statement__ = 41;
+      stan::math::check_less_or_equal(function__, "transf_mu_alpha_pos",
+                                         transf_mu_alpha_pos, 1);
+      current_statement__ = 42;
+      stan::math::check_greater_or_equal(function__, "transf_mu_alpha_neg",
+                                            transf_mu_alpha_neg, 0);
+      current_statement__ = 42;
+      stan::math::check_less_or_equal(function__, "transf_mu_alpha_neg",
+                                         transf_mu_alpha_neg, 1);
+      current_statement__ = 43;
+      stan::math::check_greater_or_equal(function__, "transf_mu_drift_scaling",
+                                            transf_mu_drift_scaling, 0);
+      current_statement__ = 44;
+      stan::math::check_greater_or_equal(function__, "transf_mu_threshold",
+                                            transf_mu_threshold, 0);
+      current_statement__ = 45;
+      stan::math::check_greater_or_equal(function__, "transf_mu_ndt",
+                                            transf_mu_ndt, 0);
+      current_statement__ = 46;
+      stan::math::check_greater_or_equal(function__, "transf_mu_slop",
+                                            transf_mu_slop, 0);
+      current_statement__ = 47;
+      stan::math::check_greater_or_equal(function__, "transf_mu_drift_asym",
+                                            transf_mu_drift_asym, 0);
       if (emit_transformed_parameters__) {
         out__.write(ndt_t);
         out__.write(threshold_t);

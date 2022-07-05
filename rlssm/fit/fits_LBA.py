@@ -54,25 +54,14 @@ class LBAFittedModel_2A(FittedModel):
         if self.parameters_info['hierarchical_levels'] == 2:
             main_parameters = self.parameters_info['group_parameters_names_transf']
 
-            for p in self.parameters_info['individual_parameters_names']:
-                main_parameters = np.append(main_parameters, list_individual_variables(p, self.data_info['L']))
+            main_parameters = np.append(main_parameters, [p + '_sbj' for p in self.parameters_info['individual_parameters_names']])
+
+            # for p in self.parameters_info['individual_parameters_names']:
+            #     main_parameters = np.append(main_parameters, list_individual_variables(p, self.data_info['L']))
         else:
             main_parameters = self.parameters_info['parameters_names_transf']
 
-        # par_to_display = list(np.append(['chain', 'draw'], main_parameters))
-        # samples = self.stan_model.to_dataframe(pars=list(main_parameters),
-        #                                        permuted=True,
-        #                                        diagnostics=False,
-        #                                        inc_warmup=False)[par_to_display].reset_index(drop=True)
-        # trial_samples = self.stan_model.extract(['k_t',
-        #                                          'sp_trial_var_t',
-        #                                          'ndt_t',
-        #                                          'drift_cor_t',
-        #                                          'drift_inc_t'])
-        stan_samples_df = self.stan_model.draws_pd()
-
-
-        samples = stan_samples_df[main_parameters]  # TODO
+        samples = self.stan_model.draws_pd(vars=main_parameters) 
 
         trial_samples = {'k_t': None,
                          'sp_trial_var_t': None,
@@ -80,18 +69,12 @@ class LBAFittedModel_2A(FittedModel):
                          'drift_inc_t': None, 
                          'drift_trial_var': None}
 
-        trial_samples['k_t'] = np.asarray(
-            stan_samples_df[[i for i in self.stan_model.column_names if 'k_t' in i]])
-        trial_samples['sp_trial_var_t'] = np.asarray(
-            stan_samples_df[[i for i in self.stan_model.column_names if 'sp_trial_var_t' in i]])
-        trial_samples['ndt_t'] = np.asarray(
-            stan_samples_df[[i for i in self.stan_model.column_names if 'ndt_t' in i]])
-        trial_samples['drift_cor_t'] = np.asarray(
-            stan_samples_df[[i for i in self.stan_model.column_names if 'drift_cor_t' in i]])
-        trial_samples['drift_inc_t'] = np.asarray(
-            stan_samples_df[[i for i in self.stan_model.column_names if 'drift_inc_t' in i]])
-        trial_samples['drift_variability_t'] = np.asarray(
-            stan_samples_df[[i for i in self.stan_model.column_names if 'drift_variability_t' in i]])
+        trial_samples['k_t'] = np.asarray(self.stan_model.draws_pd(vars=['k_t']))
+        trial_samples['sp_trial_var_t'] = np.asarray(self.stan_model.draws_pd(vars=['sp_trial_var_t']))
+        trial_samples['ndt_t'] = np.asarray(self.stan_model.draws_pd(vars=['ndt_t']))
+        trial_samples['drift_cor_t'] = np.asarray(self.stan_model.draws_pd(vars=['drift_cor_t']))
+        trial_samples['drift_inc_t'] = np.asarray(self.stan_model.draws_pd(vars=['drift_inc_t']))
+        trial_samples['drift_variability_t'] = np.asarray(self.stan_model.draws_pd(vars=['drift_variability_t']))
 
         res = LBAModelResults_2A(self.model_label,
                                  self.data_info,

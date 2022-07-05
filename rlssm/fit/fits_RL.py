@@ -29,24 +29,18 @@ class RLFittedModel_2A(FittedModel):
         if self.parameters_info['hierarchical_levels'] == 2:
             main_parameters = self.parameters_info['group_parameters_names_transf']
 
-            for p in self.parameters_info['individual_parameters_names']:
-                main_parameters = np.append(main_parameters, list_individual_variables(p, self.data_info['L']))
+            main_parameters = np.append(main_parameters, [p + '_sbj' for p in self.parameters_info['individual_parameters_names']])
+
+            # for p in self.parameters_info['individual_parameters_names']:
+            #     main_parameters = np.append(main_parameters, list_individual_variables(p, self.data_info['L']))
 
         else:
             main_parameters = self.parameters_info['parameters_names_transf']
 
-        par_to_display = list(np.append(['chain', 'draw'], main_parameters))
-
-        samples = self.stan_model.draws_pd()[main_parameters] #TODO
-
-        # samples = self.stan_model.to_dataframe(pars=list(main_parameters),
-        #                                        permuted=True,
-        #                                        diagnostics=False,
-        #                                        inc_warmup=False)[par_to_display].reset_index(drop=True)
+        samples = self.stan_model.draws_pd(vars=main_parameters)
 
         # trial parameters
-        trial_samples = {'log_p_t': np.asarray(self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'log_p_t' in i]])}
-        # trial_samples = self.stan_model.extract(['log_p_t'])
+        trial_samples['log_p_t'] = np.asarray(self.stan_model.draws_pd(vars=['log_p_t']))
 
         res = RLModelResults_2A(self.model_label,
                                 self.data_info,
