@@ -49,29 +49,32 @@ data{
   int<lower=1> N;               // number of data items
   int<lower=1> K;               // number of options
   real initial_value;
-  int<lower=1> block_label[N];					// block label
-  int<lower=1> trial_block[N];					// trial within block
+  int<lower=1> block_label[N];          // block label
+  int<lower=1> trial_block[N];          // trial within block
 
-  vector[N] f_cor;								// feedback correct option
-	vector[N] f_inc;								// feedback incorrect option
+  vector[N] f_cor;                // feedback correct option
+  vector[N] f_inc;                // feedback incorrect option
 
 
-  int<lower=1, upper=K> cor_option[N];			// correct option
-	int<lower=1, upper=K> inc_option[N];			// incorrect option
-  int<lower=1, upper=2> accuracy[N];				// accuracy (1->cor, 2->inc)
+  int<lower=1, upper=K> cor_option[N];      // correct option
+  int<lower=1, upper=K> inc_option[N];      // incorrect option
+  int<lower=1, upper=2> accuracy[N];        // accuracy (1->cor, 2->inc)
+  int<lower=0, upper=1> feedback_type[N]; // feedback_type = 0 -> full feedback, feedback_type = 1 -> partial feedback
 
-  real<lower=0> rt[N];							// reaction time
+  real<lower=0> rt[N];              // reaction time
 
-  vector[2] alpha_pos_priors;						// mean and sd of the alpha_pos prior
-	vector[2] alpha_neg_priors;						// mean and sd of the alpha_neg prior
-  vector[2] utility_priors;
-	vector[2] drift_scaling_priors;			// mean and sd of the prior for scaling
-	vector[2] threshold_priors;					// mean and sd of the prior for threshold
-	vector[2] ndt_priors;							  // mean and sd of the prior for non-decision time
+  vector[2] alpha_pos_priors;           // mean and sd of the alpha_pos prior
+  vector[2] alpha_neg_priors;           // mean and sd of the alpha_neg prior
+  vector[2] ndt_priors;               // mean and sd of the prior for non-decision time
+  vector[2] threshold_priors;         // mean and sd of the prior for threshold
+  vector[2] slop_priors;
+  vector[2] drift_asym_priors;      // mean and sd of the prior for asymtot modulation
+  vector[2] drift_scaling_priors;     // mean and sd of the prior for scaling
+  
 }
 
 transformed data {
-	vector[K] Q0;
+  vector[K] Q0;
   matrix [N, 2] RT;
 
   Q0 = rep_vector(initial_value, K);
@@ -83,121 +86,118 @@ transformed data {
 }
 
 parameters {
-	real ndt;     // non-decision time
-  real threshold;       // threshold
-  real drift_scaling;    // scaling
   real alpha_pos;
-	real alpha_neg;
-  real utility;
-  real theta;
+  real alpha_neg;
+  real ndt;       // non-decision time
+  real threshold;       // threshold
+  real slop;
+  real drift_asym;
+  real drift_scaling;    // scaling
 }
 
 transformed parameters {
-  vector<lower=0> [N] drift_cor_t;				// trial-by-trial drift rate for predictions
-	vector<lower=0> [N] drift_inc_t;				// trial-by-trial drift rate for predictions
-	vector<lower=0> [N] threshold_t;				// trial-by-trial threshold
-	vector<lower=0> [N] ndt_t;						// trial-by-trial ndt
+  vector<lower=0> [N] ndt_t;            // trial-by-trial ndt
+  vector<lower=0> [N] threshold_t;        // trial-by-trial threshold
+  vector<lower=0> [N] drift_cor_t;        // trial-by-trial drift rate for predictions
+  vector<lower=0> [N] drift_inc_t;        // trial-by-trial drift rate for predictions
 
-  real PE_cor;			// prediction error correct option
-	real PE_inc;			// prediction error incorrect option
-	vector[K] Q;
+  real PE_cor;      // prediction error correct option
+  real PE_inc;      // prediction error incorrect option
+  vector[K] Q;
 
   real Q_mean;
-  // real delta_Q_cor[N];
-  // real delta_Q_inc[N];
-  // real Q_mean_pres[N];							// mean Q presented options
-
+  real Q_min;
+  real Q_mean_pres[N];              // mean Q presented options
 
   real transf_alpha_pos;
-	real transf_alpha_neg;
+  real transf_alpha_neg;
   real transf_ndt;
-	real transf_drift_scaling;
   real transf_threshold;
-  real transf_utility;
-  real transf_theta;
+  real transf_slop;
+  real transf_drift_asym;
+  real transf_drift_scaling;
 
-	transf_drift_scaling = log(1 + exp(drift_scaling)); // for the output
-  transf_threshold = log(1 + exp(threshold));
-  transf_ndt = log(1 + exp(ndt));
   transf_alpha_pos = Phi(alpha_pos);
-	transf_alpha_neg = Phi(alpha_neg);
-  transf_utility = log(1 + exp(utility));
-  transf_theta = log(1 + exp(theta));
+  transf_alpha_neg = Phi(alpha_neg);
+  transf_ndt = log(1 + exp(ndt));
+  transf_threshold = log(1 + exp(threshold));
+  transf_slop = log(1 + exp(slop));
+  transf_drift_asym = log(1 + exp(drift_asym));
+  transf_drift_scaling = log(1 + exp(drift_scaling));
 
 
 
   for (n in 1:N){
     if (trial_block[n] == 1){
-			if (block_label[n] == 1){
-				Q = Q0;
-			} else{
-				Q_mean = mean(Q);
-				Q = rep_vector(Q_mean, K);
-			}
-		}
-
-    // Q_mean_pres[n] = (Q[cor_option[n]] + Q[inc_option[n]])/2;
-    // delta_Q_cor[n] = Q[cor_option[n]] - Q[inc_option[n]];
-    // delta_Q_inc[n] = Q[inc_option[n]] - Q[cor_option[n]];
-
+      if (block_label[n] == 1){
+        Q = Q0;
+      } else{
+        Q_mean = mean(Q);
+        Q = rep_vector(Q_mean, K);
+      }
+    }
+    Q_min = min(Q);
+    Q_mean_pres[n] = (Q[cor_option[n]] + Q[inc_option[n]])/2;
     PE_cor = f_cor[n] - Q[cor_option[n]];
-		PE_inc = f_inc[n] - Q[inc_option[n]];
+    PE_inc = f_inc[n] - Q[inc_option[n]];
 
-    // drift_cor_t[n] = transf_drift_scaling * pow(Q[cor_option[n]], transf_utility);
-    // drift_inc_t[n] = transf_drift_scaling * pow(Q[inc_option[n]], transf_utility);
+    drift_cor_t[n] = (transf_drift_scaling + 0.1*transf_drift_asym*(Q_mean_pres[n] - Q_min)) / (1+exp(transf_slop*(Q_mean_pres[n] - Q[cor_option[n]])));
+    drift_inc_t[n] = (transf_drift_scaling + 0.1*transf_drift_asym*(Q_mean_pres[n] - Q_min)) / (1+exp(transf_slop*(Q_mean_pres[n] - Q[inc_option[n]])));
 
-    // drift_cor_t[n] = transf_drift_scaling * pow((2*Q[cor_option[n]] - Q[inc_option[n]])/2, transf_utility);
-    // drift_inc_t[n] = transf_drift_scaling * pow((2*Q[inc_option[n]] - Q[cor_option[n]])/2, transf_utility);
-
-    // drift_cor_t[n] = transf_drift_scaling * pow(Q_mean_pres[n] + delta_Q_cor[n], transf_utility);
-    // drift_inc_t[n] = transf_drift_scaling * pow(Q_mean_pres[n] + delta_Q_inc[n], transf_utility);
-
-    if (2*Q[cor_option[n]] - Q[inc_option[n]] > 0){
-      drift_cor_t[n] = transf_drift_scaling * pow(2*Q[cor_option[n]] - Q[inc_option[n]] + transf_theta, transf_utility);
-    }else{
-      drift_cor_t[n] = transf_drift_scaling * pow(transf_theta * exp((2*Q[cor_option[n]] - Q[inc_option[n]])/transf_theta), transf_utility);
-    }
-    if (2*Q[inc_option[n]] - Q[cor_option[n]]>0){
-      drift_inc_t[n] = transf_drift_scaling * pow(2*Q[inc_option[n]] - Q[cor_option[n]] + transf_theta, transf_utility);
-    }else{
-      drift_inc_t[n] = transf_drift_scaling * pow(transf_theta * exp((2*Q[inc_option[n]] - Q[cor_option[n]])/transf_theta), transf_utility);
-    }
-
+    ndt_t[n] = transf_ndt;
     threshold_t[n] = transf_threshold;
-		ndt_t[n] = transf_ndt;
+    
 
-    if (PE_cor >= 0) {
-			Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha_pos*PE_cor;
-		} else {
-			Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha_neg*PE_cor;
-		}
-		if (PE_inc >= 0) {
-			Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha_pos*PE_inc;
-		} else {
-			Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha_neg*PE_inc;
-		}
+    if (feedback_type[n] == 1){
+      if(accuracy[n] == 1){
+        if (PE_cor >= 0) {
+          Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha_pos*PE_cor;
+        } else {
+          Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha_neg*PE_cor;
+        }
+      }
+      else{
+        if (PE_inc >= 0) {
+          Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha_pos*PE_inc;
+        } else {
+          Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha_neg*PE_inc;
+        }
+      }
+    }
+    else{
+      if (PE_cor >= 0) {
+        Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha_pos*PE_cor;
+      } else {
+        Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha_neg*PE_cor;
+      }
+      if (PE_inc >= 0) {
+        Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha_pos*PE_inc;
+      } else {
+        Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha_neg*PE_inc;
+      }
+    }
 
   }
 
 }
 
 model {
-	ndt ~  normal(ndt_priors[1], ndt_priors[2]);
-	threshold ~ normal(threshold_priors[1], threshold_priors[2]);
   alpha_pos ~ normal(alpha_pos_priors[1], alpha_pos_priors[2]);
-	alpha_neg ~ normal(alpha_neg_priors[1], alpha_neg_priors[2]);
-	drift_scaling ~ normal(drift_scaling_priors[1], drift_scaling_priors[2]);
-  utility ~ normal(utility_priors[1], utility_priors[2]);
-  theta ~ normal(1, 1);
+  alpha_neg ~ normal(alpha_neg_priors[1], alpha_neg_priors[2]);
+  ndt ~  normal(ndt_priors[1], ndt_priors[2]);
+  threshold ~ normal(threshold_priors[1], threshold_priors[2]);
+  slop ~ normal(slop_priors[1], slop_priors[2]);
+  drift_asym ~ normal(drift_asym_priors[1], drift_asym_priors[2]);
+  drift_scaling ~ normal(drift_scaling_priors[1], drift_scaling_priors[2]);
 
-	RT ~ race(ndt_t, threshold_t, drift_cor_t, drift_inc_t);
+  RT ~ race(ndt_t, threshold_t, drift_cor_t, drift_inc_t);
 }
 
 generated quantities {
-	vector[N] log_lik;
-	{
-	for (n in 1:N){
-		log_lik[n] = race_lpdf(block(RT, n, 1, 1, 2)| segment(ndt_t, n, 1), segment(threshold_t, n, 1), segment(drift_cor_t, n, 1), segment(drift_inc_t, n, 1));
-	}
-	}
+  vector[N] log_lik;
+  {
+  for (n in 1:N){
+    log_lik[n] = race_lpdf(block(RT, n, 1, 1, 2)| segment(ndt_t, n, 1), segment(threshold_t, n, 1), segment(drift_cor_t, n, 1), segment(drift_inc_t, n, 1));
+  }
+  }
 }
