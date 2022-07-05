@@ -40,7 +40,7 @@ class RLFittedModel_2A(FittedModel):
         samples = self.stan_model.draws_pd(vars=main_parameters)
 
         # trial parameters
-        trial_samples['log_p_t'] = np.asarray(self.stan_model.draws_pd(vars=['log_p_t']))
+        trial_samples = {'log_p_t': np.asarray(self.stan_model.draws_pd(vars=['log_p_t']))}
 
         res = RLModelResults_2A(self.model_label,
                                 self.data_info,
