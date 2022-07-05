@@ -4,6 +4,7 @@
 __pycache__/
 dist/
 build/
+.idea
 
 # pystan cashed models
 /pkl_files
