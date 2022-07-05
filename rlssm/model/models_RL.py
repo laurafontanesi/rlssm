@@ -94,18 +94,18 @@ class RLModel_2A(Model):
         if increasing_sensitivity:
             self.model_label += '_pow'
             self.n_parameters_individual += 1
-            del self.priors['sensitivity_priors']
+            self.priors.pop('sensitivity_priors', None)
         else:
-            del self.priors['consistency_priors']
-            del self.priors['scaling_priors']
+            self.priors.pop('consistency_priors', None)
+            self.priors.pop('scaling_priors', None)
 
         if separate_learning_rates:
             self.model_label += '_2lr'
             self.n_parameters_individual += 1
-            del self.priors['alpha_priors']
+            self.priors.pop('alpha_priors', None)
         else:
-            del self.priors['alpha_pos_priors']
-            del self.priors['alpha_neg_priors']
+            self.priors.pop('alpha_pos_priors', None)
+            self.priors.pop('alpha_neg_priors', None)
 
         # Set the stan model path
         self._set_model_path()
@@ -298,7 +298,7 @@ class RLModel_2A(Model):
                                         n_parameters_trial=self.n_parameters_trial,
                                         print_diagnostics=print_diagnostics,
                                         priors=self.priors)
-        
+
         res = fitted_model.extract_results(include_rhat,
                                            include_waic,
                                            pointwise_waic,

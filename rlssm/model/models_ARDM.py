@@ -316,10 +316,10 @@ class RLARDModel_2A(Model):
         if separate_learning_rates:
             self.model_label += '_2lr'
             self.n_parameters_individual += 1
-            del self.priors['alpha_priors']
+            self.priors.pop('alpha_priors', None)
         else:
-            del self.priors['alpha_pos_priors']
-            del self.priors['alpha_neg_priors']
+            self.priors.pop('alpha_pos_priors', None)
+            self.priors.pop('alpha_neg_priors', None)
 
         # Set the stan model path
         self._set_model_path()

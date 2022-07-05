@@ -133,16 +133,16 @@ class DDModel(Model):
             self.model_label += '_bias'
             self.n_parameters_individual += 1
         else:
-            del self.priors['rel_sp_priors']
+            self.priors.pop('rel_sp_priors', None)
 
         if self.drift_variability:
             self.model_label += '_driftvar'
             self.n_parameters_individual += 1
             self.n_parameters_trial += 1
-            del self.priors['drift_priors']
+            self.priors.pop('drift_priors', None)
         else:
-            del self.priors['drift_trial_mu_priors']
-            del self.priors['drift_trial_sd_priors']
+            self.priors.pop('drift_trial_mu_priors', None)
+            self.priors.pop('drift_trial_sd_priors', None)
 
         if self.starting_point_variability:
             self.model_label += '_spvar'
@@ -150,38 +150,36 @@ class DDModel(Model):
             self.n_parameters_trial += 1
             # when you are estimating both mean and sd
             if self.starting_point_bias:
-                del self.priors['rel_sp_priors']
+                self.priors.pop('rel_sp_priors', None)
         else:
-            del self.priors['rel_sp_trial_mu_priors']
-            del self.priors['rel_sp_trial_sd_priors']
+            self.priors.pop('rel_sp_trial_mu_priors', None)
+            self.priors.pop('rel_sp_trial_sd_priors', None)
 
         # for nDDM or hDDM
         if self.drift_starting_point_correlation and not self.drift_starting_point_beta_correlation:
             self.model_label += '_corr'
             # add the corr coefficient
             self.n_parameters_individual += 1
-            del self.priors['beta_trial_mu_priors']
-            del self.priors['beta_trial_sd_priors']
-            del self.priors['regression_coefficients_priors']
-
+            self.priors.pop('beta_trial_mu_priors', None)
+            self.priors.pop('beta_trial_sd_priors', None)
+            self.priors.pop('regression_coefficients_priors', None)
         elif self.drift_starting_point_beta_correlation:
             self.model_label += '_corr_beta'
             # add 3 correlation coefficients, plus mean and sd of the beta variable
             self.n_parameters_individual += 5
-            del self.priors['regression_coefficients_priors']
-
+            self.priors.pop('regression_coefficients_priors', None)
         elif self.drift_starting_point_regression:
             self.model_label += '_beta'
             # add 2 correlation coefficients
             self.n_parameters_individual += 2
-            del self.priors['beta_trial_mu_priors']
-            del self.priors['beta_trial_sd_priors']
-            del self.priors['corr_matrix_prior']
+            self.priors.pop('beta_trial_mu_priors', None)
+            self.priors.pop('beta_trial_sd_priors', None)
+            self.priors.pop('corr_matrix_prior', None)
         else:
-            del self.priors['beta_trial_mu_priors']
-            del self.priors['beta_trial_sd_priors']
-            del self.priors['regression_coefficients_priors']
-            del self.priors['corr_matrix_prior']
+            self.priors.pop('beta_trial_mu_priors', None)
+            self.priors.pop('beta_trial_sd_priors', None)
+            self.priors.pop('regression_coefficients_priors', None)
+            self.priors.pop('corr_matrix_prior', None)
 
         # Set the stan model path
         self._set_model_path()
@@ -385,7 +383,7 @@ class DDModel(Model):
         # starting point bias priors
         if self.starting_point_bias:
             data_dict.update({'accuracy_flipped': data['accuracy_flipped'].values.astype(int)})
-            del data_dict['starting_point']
+            self.priors.pop('starting_point', None)
         elif self.starting_point_variability:
             data_dict.update({'accuracy_flipped': data['accuracy_flipped'].values.astype(int)})
 
@@ -531,21 +529,21 @@ class RLDDModel(Model):
             self.model_label += '_nonlin'
             self.n_parameters_individual += 1
         else:
-            del self.priors['drift_asymptote_priors']
+            self.priors.pop('drift_asymptote_priors', None)
 
         if self.separate_learning_rates:
             self.model_label += '_2lr'
             self.n_parameters_individual += 1
-            del self.priors['alpha_priors']
+            self.priors.pop('alpha_priors', None)
         else:
-            del self.priors['alpha_pos_priors']
-            del self.priors['alpha_neg_priors']
+            self.priors.pop('alpha_pos_priors', None)
+            self.priors.pop('alpha_neg_priors', None)
 
         if self.threshold_modulation:
             self.model_label += '_thrmod'
             self.n_parameters_individual += 1
         else:
-            del self.priors['threshold_modulation_priors']
+            self.priors.pop('threshold_modulation_priors', None)
 
         # Set the stan model path
         self._set_model_path()
