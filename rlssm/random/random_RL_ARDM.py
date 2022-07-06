@@ -18,10 +18,9 @@ def simulate_rlardm_2A(task_design,
                        **kwargs):
     """Simulates behavior (rt and accuracy) according to the Advantage Racing Diffusion Model.
 
-    Note
-    ----
     Parameters
     ----------
+
     task_design : DataFrame
         `pandas.DataFrame`, with n_trials_block*n_blocks rows.
         Columns contain:
@@ -52,14 +51,19 @@ def simulate_rlardm_2A(task_design,
 
     Optional Parameters
     -------------------
-    initial_value_learning : float
+
+    initial_value_learning : float, default 0
         The initial value for Q learning.
 
     gen_drift_trial_sd : float, default None
         Across trial variability in the drift-rate. Should be positive.
 
-    kwargs : dict
+    Other Parameters
+    ----------------
+
+    **kwargs : dict
         Additional parameters to be passed to `random_rdm_2A`.
+
     Returns
     -------
 
@@ -184,10 +188,12 @@ def simulate_hier_rlardm(task_design,
         Group-standard deviation of the non-decision time of the Advantage Racing Diffusion Model.
 
     gen_mu_v0 : float or list of floats
-        The mean of the Bias parameter; ensures each accumulator has a positive drift rate, and eventually reaches sp_trial_var.
+        The mean of the Bias parameter; ensures each accumulator has a positive drift rate.
+        It eventually reaches sp_trial_var.
 
     gen_sd_v0 : float or list of floats
-        The SD of the Bias parameter; ensures each accumulator has a positive drift rate, and eventually reaches sp_trial_var.
+        The SD of the Bias parameter; ensures each accumulator has a positive drift rate.
+        It eventually reaches sp_trial_var.
 
     gen_mu_ws : float or list of floats
         The mean of the Sum Weight parameter.
@@ -203,18 +209,23 @@ def simulate_hier_rlardm(task_design,
 
     Optional parameters
     -------------------
-    initial_value_learning : float
+
+    initial_value_learning : float, default 0
         The initial value for Q learning.
 
-    gen_drift_trial_sd : float, optional
+    gen_drift_trial_sd : float, default None
         Across trial variability in the drift-rate.
         Should be positive.
 
-    kwargs : dict
+    Other parameters
+    ----------------
+
+    **kwargs : dict
         Additional parameters to be passed to `random_rdm_2A`.
 
     Returns
     -------
+
     data : DataFrame
         `pandas.DataFrame`, with n_trials*n_participants rows.
         Columns contain simulated response times and accuracy ["rt", "accuracy"],

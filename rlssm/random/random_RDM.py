@@ -22,7 +22,7 @@ def random_rdm_2A(cor_drift, inc_drift, threshold, ndt, noise_constant=1, dt=0.0
         Shape is usually (n_samples, n_trials).
         Non decision time of the diffusion decision model, in seconds.
 
-    Other Parameters
+    Optional Parameters
     ----------------
 
     noise_constant : float, default 1
@@ -126,11 +126,14 @@ def simulate_rdm_2A(n_trials,
         Non decision time of the Racing Diffusion Model, in seconds.
         Should be positive.
 
-    Other Parameters
-    ----------------
+    Optional Parameters
+    -------------------
 
     participant_label : string or float, default 1
         What will appear in the participant column of the output data.
+
+    Other Parameters
+    ----------------
 
     **kwargs
         Additional arguments to rlssm.random.random_rdm_2A().
@@ -231,11 +234,13 @@ def simulate_hier_rdm(n_trials, n_participants,
 
     Other Parameters
     ----------------
+
     **kwargs : dict
-        Keyword arguments to be passed to the random_rdm_2A function.
+        Keyword arguments to be passed to `random_rdm_2A`.
 
     Returns
     -------
+
     data : pandas.DataFrame
         `pandas.DataFrame`, with n_trials*n_participants rows.
         Columns contain simulated response times and accuracy ["rt", "accuracy"],

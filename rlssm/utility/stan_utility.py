@@ -40,7 +40,10 @@ def check_treedepth(fit, max_depth=10):
     fit : cmdstanpy.CmdStanModel
         The fitted stan model.
 
-    max_depth : int
+    Optional Parameters
+    -------------------
+
+    max_depth : int, default 10
         Maximum tree depth.
 
     """
@@ -230,7 +233,10 @@ def compile_model(filename, model_name=None):
     filename : str
         Location of the stan model.
 
-    model_name : str
+    Optional Parameters
+    -------------------
+
+    model_name : str, default None
         Optional model name to add to cashed model file.
 
     Returns

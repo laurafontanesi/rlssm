@@ -91,7 +91,5 @@ class TestRandomDDM(unittest.TestCase):
                                       gen_sd_ndt=.1,
                                       gen_drift_trial_sd=.01)
 
-        print(data_hier)
-
         # TEST: assure that there are 30 participants
         assert data_hier.index[-1][0] == 30, f"Number of participants should be 30"

@@ -48,7 +48,10 @@ def simulate_rl_2A(task_design,
         It should be a value higher than 0
         (the higher, the more sensitivity to value differences).
 
-    initial_value_learning : float
+    Optional Parameters
+    -------------------
+
+    initial_value_learning : float, default 0
         The initial value for Q learning.
 
     Returns
@@ -167,7 +170,10 @@ def simulate_hier_rl_2A(task_design,
         The generating group SD of the sensitivity parameter
         for the soft_max choice rule.
 
-    initial_value_learning : float
+    Optional Parameters
+    -------------------
+
+    initial_value_learning : float, default 0
         The initial value for Q learning.
 
     Returns

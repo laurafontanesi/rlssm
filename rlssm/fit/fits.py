@@ -116,10 +116,10 @@ class FittedModel(object):
         Calculates pWAIC1 and pWAIC2
         according to http://www.stat.columbia.edu/~gelman/research/published/waic_understand3.pdf
 
-        Parameters
-        ----------
+        Optional Parameters
+        -------------------
 
-        pointwise : bool, default to False
+        pointwise : bool, default False
             By default, gives the averaged waic.
             Set to True is you want additional waic per observation.
 
@@ -198,15 +198,6 @@ class ModelResults(object):
                  last_values,
                  samples,
                  trial_samples):
-        """Initiates a ModelResults object.
-
-        Parameters
-        ----------
-
-        Attributes
-        ----------
-
-        """
         self.model_label = model_label
         self.data_info = data_info
         self.parameters_info = parameters_info
@@ -224,13 +215,11 @@ class ModelResults(object):
         and read them and inspect them at a later stage,
         without having to refit the model.
 
-        Parameters
-        ----------
+        Optional Parameters
+        -------------------
 
-        filename : str, optional
-            File path where the pickled object will be stored.
-            If not specified, is set to
-
+        filename : str, default None
+            File path where the pickled object will be stored. If not specified, name determined by pickle package.
         """
 
         dir_path = os.getcwd()  # os.path.dirname(os.path.realpath(__file__))
@@ -258,26 +247,26 @@ class ModelResults(object):
         By default, 95 percent HDI are shown.
         The kernel density estimation is calculated using scipy.stats.gaussian_kde.
 
-        Parameters
+        Optional Parameters
         ----------
 
-        gridsize : int, default to 100
-            Resolution of the kernel density estimation function, default to 100.
+        gridsize : int, default 100
+            Resolution of the kernel density estimation function, default 100.
 
-        clip : tuple of (float, float), optional
+        clip : tuple of (float, float), default None
             Range for the kernel density estimation function.
             Default is min and max values of the distribution.
 
-        show_intervals : str, default to "HDI"
+        show_intervals : str, default "HDI"
             Either "HDI", "BCI", or None.
-            HDI is better when the distribution is not simmetrical.
+            HDI is better when the distribution is not symmetrical.
             If None, then no intervals are shown.
 
-        alpha_intervals : float, default to .05
+        alpha_intervals : float, default .05
             Alpha level for the intervals.
             Default is 5 percent which gives 95 percent BCIs and HDIs.
 
-        intervals_kws : dict
+        intervals_kws : dict, default None
             Additional arguments for `matplotlib.axes.Axes.fill_between`
             that shows shaded intervals.
             By default, they are 50 percent transparent.
@@ -286,7 +275,7 @@ class ModelResults(object):
         ----------------
 
         **kwargs
-            Additional parameters for seaborn.FacetGrid.
+            Additional parameters for `seaborn.FacetGrid`.
 
         Returns
         -------

@@ -22,11 +22,6 @@ class Model(object):
         family : str
             Model family. At the moment either "RL_2A", "DDM", "RDM_2A", or "RLDDM" "RLRDM".
 
-        Attributes
-        ----------
-        model_label : str
-            The label of the fully specified model.
-
         """
         if not isinstance(hierarchical_levels, int):
             raise TypeError("hierarchical_levels must be integer")

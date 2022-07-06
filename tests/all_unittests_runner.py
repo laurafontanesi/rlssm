@@ -7,7 +7,7 @@ failedFiles = set()
 
 
 def run_tests(ignore_hier_tests=False):
-    test_dir = 'unit_tests/tests_plot_functions'
+    test_dir = 'unit_tests/'
     discovered_tests = unittest.defaultTestLoader.discover(test_dir)
     print(f"Running tests in {test_dir}; : Number of test discovered: {discovered_tests.countTestCases()}")
     print(f"Ignoring hierarchical version of all tests: {ignore_hier_tests}")

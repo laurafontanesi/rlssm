@@ -16,10 +16,9 @@ def simulate_ardm_2A(gen_S_cor,
                      **kwargs):
     """Simulates behavior (rt and accuracy) according to the Advantage Racing Diffusion Model.
 
-    Note
-    ----
     Parameters
     ----------
+
     gen_S_cor : float
         Brightness of correct trials.
 
@@ -51,8 +50,12 @@ def simulate_ardm_2A(gen_S_cor,
     participant_label : string or float, default 1
         What will appear in the participant column of the output data.
 
-    kwargs : dict
+    Other Parameters
+    ----------------
+
+    **kwargs : dict
         Additional parameters to be passed to `random_rdm_2A`.
+
     Returns
     -------
 
@@ -166,11 +169,14 @@ def simulate_hier_ardm(n_trials, n_participants,
     Optional parameters
     -------------------
 
-    gen_drift_trial_sd : float, optional
+    gen_drift_trial_sd : float, default None
         Across trial variability in the drift-rate.
         Should be positive.
 
-    kwargs : dict
+    Other Parameters
+    ----------------
+
+    **kwargs : dict
         Additional parameters to be passed to `random_rdm_2A`.
 
     Returns

@@ -4,6 +4,12 @@ import numpy as np
 
 def load_model_results(filename):
     """Load model results from pickle.
+
+    Parameters
+    ----------
+
+    filename : str
+        Name of pickle file.
     """
     return pickle.load(open(filename, "rb"))
 
@@ -36,8 +42,11 @@ def bci(x, alpha=0.05):
     x : array-like
         An array containing MCMC samples.
 
-    alpha : float
-        Desired probability of type I error (defaults to 0.05).
+    Optional Parameters
+    -------------------
+
+    alpha : float, default 0.05
+        Desired probability of type I error.
 
     Returns
     -------
@@ -96,14 +105,17 @@ def calc_min_interval(x, alpha):
 def hdi(x, alpha=0.05):
     """Calculate highest posterior density (HPD).
 
-        Parameters
-        ----------
+    Parameters
+    ----------
 
-        x : array-like
-            An array containing MCMC samples.
+    x : array-like
+        An array containing MCMC samples.
 
-        alpha : float
-            Desired probability of type I error (defaults to 0.05).
+    Optional Parameters
+    -------------------
+
+    alpha : float, default 0.05
+        Desired probability of type I error.
 
     Returns
     -------

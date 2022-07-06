@@ -27,40 +27,47 @@ def plot_posterior(x,
     x : array-like
         Usually samples from a posterior distribution.
 
-    ax : matplotlib.axes.Axes, optional
+    Optional Parameters
+    -------------------
+
+    ax : matplotlib.axes.Axes, default None
         If provided, plot on this Axes.
         Default is set to current Axes.
 
-    gridsize : int, default to 100
+    gridsize : int, default 100
         Resolution of the kernel density estimation function.
 
-    clip : tuple of (float, float), optional
+    clip : tuple of (float, float), default None
         Range for the kernel density estimation function.
         Default is min and max values of `x`.
 
-    show_intervals : str, default to "HDI"
+    show_intervals : str, default "HDI"
         Either "HDI", "BCI", or None.
-        HDI is better when the distribution is not simmetrical.
+        HDI is better when the distribution is not symmetrical.
         If None, then no intervals are shown.
 
-    alpha_intervals : float, default to .05
+    alpha_intervals : float, default .05
         Alpha level for the intervals calculation.
         Default is 5 percent which gives 95 percent BCIs and HDIs.
 
-    intervals_kws : dict, optional
-        Additional arguments for `matplotlib.axes.Axes.fill_between`
-        that shows shaded intervals.
-        By default, they are 50 percent transparent.
-
     color : matplotlib.colors
         Color for both the density curve and the intervals.
+
+    intervals_kws : dict, default None
+        Additional arguments for `matplotlib.axes.Axes.fill_between` that shows shaded intervals.
+        By default, they are 50 percent transparent.
+
+    Other Parameters
+    ----------------
+
+    **kwargs : dict
+        Additional arguments for `matplotlib.axes.Axes.plot`.
 
     Returns
     -------
 
     ax : matplotlib.axes.Axes
-        Returns the `matplotlib.axes.Axes` object with the plot
-        for further tweaking.
+        Returns the `matplotlib.axes.Axes` object with the plot for further tweaking.
 
     """
     if clip is None:

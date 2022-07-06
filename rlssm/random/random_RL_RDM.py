@@ -15,6 +15,7 @@ def simulate_rlrdm_2A(task_design,
 
     Parameters
     ----------
+
     task_design : DataFrame
         `pandas.DataFrame`, with n_trials_block*n_blocks rows.
         Columns contain:
@@ -40,10 +41,14 @@ def simulate_rlrdm_2A(task_design,
 
     Optional Parameters
     -------------------
-    initial_value_learning : float
+
+    initial_value_learning : float, default 0
         The initial value for Q learning.
 
-    kwargs : dict
+    Other Parameters
+    ----------------
+
+    **kwargs : dict
         Additional parameters to be passed to `random_lba_2A`.
 
     Returns
