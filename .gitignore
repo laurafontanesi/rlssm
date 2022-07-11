@@ -11,6 +11,6 @@ build/
 cached*.pkl
 *.pkl
 
-# stan cached files (hpp and with no extension)
-/rlssm/stan_models/*/^[^.]*$
-*.hpp
+# ignore the stan cached files (hpp and with no extension); only allow .stan files
+rlssm/stan_models/**/*
+!rlssm/stan_models/**/*.stan
