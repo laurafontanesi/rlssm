@@ -1,68 +1,38 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Parameter recovery of the hierarchical DDM with starting point bias &mdash; rlssm 0.1.dev documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Fit a RL model on individual data" href="RL_2A_fitting.html" />
     <link rel="prev" title="Parameter recovery of the DDM with starting point bias" href="DDM_starting-point-bias_fitting.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> rlssm
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -70,30 +40,20 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">Getting started:</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
 </ul>
-<p class="caption"><span class="caption-text">How to:</span></p>
+<p class="caption" role="heading"><span class="caption-text">How to:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="initialize_model.html">How to initialize a model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fit_model.html">How to fit a model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="inspect_model.html">How to inspect model fit results</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Examples:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="DDM_fitting.html">Fit the DDM on individual data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DDM_hierarchical_fitting.html">Fit the DDM on hierarchical data</a></li>
@@ -114,7 +74,7 @@
 <li class="toctree-l1"><a class="reference internal" href="RLDDM_fitting.html">Fit the RLDDM on individual data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="LBA_2A_fitting.html">Fit the LBA on individual data</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API Reference:</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../models/model_classes.html">Model classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../models/modelresult_RL.html">ModelResults class for RL models</a></li>
@@ -125,68 +85,30 @@
 <li class="toctree-l1"><a class="reference internal" href="../simulations/simulateRL.html">Simulate data with RL models, RLDDMs, and RL+race models</a></li>
 </ul>
 
-            
-          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">rlssm</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../index.html">Docs</a> &raquo;</li>
-        
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
       <li>Parameter recovery of the hierarchical DDM with starting point bias</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="../_sources/notebooks/DDM_starting-point-bias_hierarchical_fitting.ipynb.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   
 <style>
 /* CSS for nbsphinx extension */
@@ -397,11 +319,12 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
+.prompt .copybtn {
     display: none;
 }
 
 /* Some additional styling taken form the Jupyter notebook CSS */
+.jp-RenderedHTMLCommon table,
 div.rendered_html table {
   border: none;
   border-collapse: collapse;
@@ -410,10 +333,14 @@ div.rendered_html table {
   font-size: 12px;
   table-layout: fixed;
 }
+.jp-RenderedHTMLCommon thead,
 div.rendered_html thead {
   border-bottom: 1px solid black;
   vertical-align: bottom;
 }
+.jp-RenderedHTMLCommon tr,
+.jp-RenderedHTMLCommon th,
+.jp-RenderedHTMLCommon td,
 div.rendered_html tr,
 div.rendered_html th,
 div.rendered_html td {
@@ -425,12 +352,15 @@ div.rendered_html td {
   max-width: none;
   border: none;
 }
+.jp-RenderedHTMLCommon th,
 div.rendered_html th {
   font-weight: bold;
 }
+.jp-RenderedHTMLCommon tbody tr:nth-child(odd),
 div.rendered_html tbody tr:nth-child(odd) {
   background: #f5f5f5;
 }
+.jp-RenderedHTMLCommon tbody tr:hover,
 div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
@@ -457,26 +387,23 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<div class="section" id="Parameter-recovery-of-the-hierarchical-DDM-with-starting-point-bias">
-<h1>Parameter recovery of the hierarchical DDM with starting point bias<a class="headerlink" href="#Parameter-recovery-of-the-hierarchical-DDM-with-starting-point-bias" title="Permalink to this headline">¶</a></h1>
+<section id="Parameter-recovery-of-the-hierarchical-DDM-with-starting-point-bias">
+<h1>Parameter recovery of the hierarchical DDM with starting point bias<a class="headerlink" href="#Parameter-recovery-of-the-hierarchical-DDM-with-starting-point-bias" title="Permalink to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">rlssm</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">rlssm</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="Simulate-group-data">
-<h2>Simulate group data<a class="headerlink" href="#Simulate-group-data" title="Permalink to this headline">¶</a></h2>
+<section id="Simulate-group-data">
+<h2>Simulate group data<a class="headerlink" href="#Simulate-group-data" title="Permalink to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">rlssm.random</span> <span class="kn">import</span> <span class="n">simulate_hier_ddm</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rlssm.random.random_DDM</span> <span class="kn">import</span> <span class="n">simulate_hier_ddm</span>
 </pre></div>
 </div>
 </div>
@@ -484,13 +411,12 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">simulate_hier_ddm</span><span class="p">(</span><span class="n">n_trials</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">simulate_hier_ddm</span><span class="p">(</span><span class="n">n_trials</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
                          <span class="n">n_participants</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-                         <span class="n">gen_mu_drift</span><span class="o">=.</span><span class="mi">6</span><span class="p">,</span> <span class="n">gen_sd_drift</span><span class="o">=.</span><span class="mi">1</span><span class="p">,</span>
-                         <span class="n">gen_mu_threshold</span><span class="o">=.</span><span class="mi">5</span><span class="p">,</span> <span class="n">gen_sd_threshold</span><span class="o">=.</span><span class="mi">1</span><span class="p">,</span>
-                         <span class="n">gen_mu_ndt</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">gen_sd_ndt</span><span class="o">=.</span><span class="mi">01</span><span class="p">,</span>
-                         <span class="n">gen_mu_rel_sp</span><span class="o">=.</span><span class="mi">1</span><span class="p">,</span> <span class="n">gen_sd_rel_sp</span><span class="o">=.</span><span class="mi">01</span><span class="p">)</span>
+                         <span class="n">gen_mu_drift</span><span class="o">=</span><span class="mf">.6</span><span class="p">,</span> <span class="n">gen_sd_drift</span><span class="o">=</span><span class="mf">.1</span><span class="p">,</span>
+                         <span class="n">gen_mu_threshold</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">gen_sd_threshold</span><span class="o">=</span><span class="mf">.1</span><span class="p">,</span>
+                         <span class="n">gen_mu_ndt</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">gen_sd_ndt</span><span class="o">=</span><span class="mf">.01</span><span class="p">,</span>
+                         <span class="n">gen_mu_rel_sp</span><span class="o">=</span><span class="mf">.1</span><span class="p">,</span> <span class="n">gen_sd_rel_sp</span><span class="o">=</span><span class="mf">.01</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -498,8 +424,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -600,8 +525,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;participant&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">()[[</span><span class="s1">&#39;rt&#39;</span><span class="p">,</span> <span class="s1">&#39;accuracy&#39;</span><span class="p">]]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;participant&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">()[[</span><span class="s1">&#39;rt&#39;</span><span class="p">,</span> <span class="s1">&#39;accuracy&#39;</span><span class="p">]]</span>
 </pre></div>
 </div>
 </div>
@@ -869,15 +793,14 @@ div.rendered_html tbody tr:hover {
 </table>
 </div></div>
 </div>
-</div>
-<div class="section" id="Initialize-the-model">
-<h2>Initialize the model<a class="headerlink" href="#Initialize-the-model" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="Initialize-the-model">
+<h2>Initialize the model<a class="headerlink" href="#Initialize-the-model" title="Permalink to this heading"></a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">DDModel</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">starting_point_bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">DDModel</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">starting_point_bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -889,16 +812,16 @@ div.rendered_html tbody tr:hover {
 Using cached StanModel
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Fit">
-<h2>Fit<a class="headerlink" href="#Fit" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="Fit">
+<h2>Fit<a class="headerlink" href="#Fit" title="Permalink to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># sampling parameters</span>
-<span class="n">n_iter</span> <span class="o">=</span> <span class="mi">5000</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># sampling parameters</span>
+<span class="n">n_warmup</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">n_sampling</span> <span class="o">=</span> <span class="mi">3000</span>
 <span class="n">n_chains</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="n">n_thin</span> <span class="o">=</span> <span class="mi">1</span>
 </pre></div>
@@ -908,13 +831,12 @@ Using cached StanModel
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model_fit</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
     <span class="n">data</span><span class="p">,</span>
     <span class="n">thin</span> <span class="o">=</span> <span class="n">n_thin</span><span class="p">,</span>
-    <span class="nb">iter</span> <span class="o">=</span> <span class="n">n_iter</span><span class="p">,</span>
-    <span class="n">chains</span> <span class="o">=</span> <span class="n">n_chains</span><span class="p">,</span>
-    <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">iter_warmup</span><span class="o">=</span><span class="n">n_warmup</span><span class="p">,</span>
+    <span class="n">iter_sampling</span><span class="o">=</span><span class="n">n_sampling</span><span class="p">,</span>
+    <span class="n">chains</span> <span class="o">=</span> <span class="n">n_chains</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -954,14 +876,13 @@ n_eff / iter looks reasonable for all parameters
 E-BFMI indicated no pathological behavior
 </pre></div></div>
 </div>
-<div class="section" id="get-Rhat">
-<h3>get Rhat<a class="headerlink" href="#get-Rhat" title="Permalink to this headline">¶</a></h3>
+<section id="get-Rhat">
+<h3>get Rhat<a class="headerlink" href="#get-Rhat" title="Permalink to this heading"></a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">rhat</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">rhat</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1028,15 +949,14 @@ E-BFMI indicated no pathological behavior
 </table>
 </div></div>
 </div>
-</div>
-<div class="section" id="calculate-wAIC">
-<h3>calculate wAIC<a class="headerlink" href="#calculate-wAIC" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="calculate-wAIC">
+<h3>calculate wAIC<a class="headerlink" href="#calculate-wAIC" title="Permalink to this heading"></a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">waic</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">waic</span>
 </pre></div>
 </div>
 </div>
@@ -1052,16 +972,15 @@ E-BFMI indicated no pathological behavior
  &#39;waic_se&#39;: 92.20297977041197}
 </pre></div></div>
 </div>
-</div>
-</div>
-<div class="section" id="Posteriors">
-<h2>Posteriors<a class="headerlink" href="#Posteriors" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="Posteriors">
+<h2>Posteriors<a class="headerlink" href="#Posteriors" title="Permalink to this heading"></a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1313,8 +1232,7 @@ E-BFMI indicated no pathological behavior
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">context</span> <span class="o">=</span> <span class="s2">&quot;talk&quot;</span><span class="p">,</span>
         <span class="n">style</span> <span class="o">=</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span>
         <span class="n">palette</span> <span class="o">=</span> <span class="s2">&quot;husl&quot;</span><span class="p">,</span>
@@ -1327,8 +1245,7 @@ E-BFMI indicated no pathological behavior
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">g</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">plot_posteriors</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">show_intervals</span><span class="o">=</span><span class="s1">&#39;HDI&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">plot_posteriors</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">show_intervals</span><span class="o">=</span><span class="s1">&#39;HDI&#39;</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()):</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;drift&#39;</span><span class="p">,</span> <span class="s1">&#39;threshold&#39;</span><span class="p">,</span> <span class="s1">&#39;ndt&#39;</span><span class="p">,</span> <span class="s1">&#39;rel_sp&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
@@ -1342,56 +1259,38 @@ E-BFMI indicated no pathological behavior
 <img alt="../_images/notebooks_DDM_starting-point-bias_hierarchical_fitting_20_0.png" src="../_images/notebooks_DDM_starting-point-bias_hierarchical_fitting_20_0.png" />
 </div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="RL_2A_fitting.html" class="btn btn-neutral float-right" title="Fit a RL model on individual data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="DDM_starting-point-bias_fitting.html" class="btn btn-neutral float-left" title="Parameter recovery of the DDM with starting point bias" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="DDM_starting-point-bias_fitting.html" class="btn btn-neutral float-left" title="Parameter recovery of the DDM with starting point bias" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="RL_2A_fitting.html" class="btn btn-neutral float-right" title="Fit a RL model on individual data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &copy; Copyright 2021, Laura Fontanesi
-
-    </p>
+    <p>&#169; Copyright 2021, Laura Fontanesi.</p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

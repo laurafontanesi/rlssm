@@ -3,7 +3,11 @@
   {
    "cell_type": "markdown",
    "id": "surgical-kruger",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%% md\n"
+    }
+   },
    "source": [
     "# How to inspect model fit results"
    ]
@@ -12,7 +16,11 @@
    "cell_type": "code",
    "execution_count": 1,
    "id": "rotary-houston",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [],
    "source": [
     "import rlssm\n",
@@ -30,7 +38,11 @@
   {
    "cell_type": "markdown",
    "id": "random-reviewer",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%% md\n"
+    }
+   },
    "source": [
     "## Posteriors"
    ]
@@ -38,7 +50,11 @@
   {
    "cell_type": "markdown",
    "id": "german-transformation",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%% md\n"
+    }
+   },
    "source": [
     "The posterior samples are stored in `samples`:"
    ]
@@ -47,7 +63,11 @@
    "cell_type": "code",
    "execution_count": 2,
    "id": "intellectual-bargain",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -201,7 +221,11 @@
    "cell_type": "code",
    "execution_count": 3,
    "id": "bound-bulletin",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -521,7 +545,11 @@
   {
    "cell_type": "markdown",
    "id": "enabling-persian",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%% md\n"
+    }
+   },
    "source": [
     "You can simply plot the model's posteriors using `plot_posteriors`: "
    ]
@@ -530,7 +558,11 @@
    "cell_type": "code",
    "execution_count": 4,
    "id": "regulation-hungarian",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -552,7 +584,11 @@
   {
    "cell_type": "markdown",
    "id": "sophisticated-ferry",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%% md\n"
+    }
+   },
    "source": [
     "By default, 95% HDIs are shown, but you can also choose to have the posteriors without intervals or BCIs, and change the alpha level:"
    ]
@@ -561,7 +597,11 @@
    "cell_type": "code",
    "execution_count": 5,
    "id": "coated-musical",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -583,7 +623,11 @@
   {
    "cell_type": "markdown",
    "id": "talented-automation",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%% md\n"
+    }
+   },
    "source": [
     "### Trial-level\n",
     "\n",
@@ -594,7 +638,11 @@
    "cell_type": "code",
    "execution_count": 6,
    "id": "encouraging-studio",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -615,7 +663,11 @@
    "cell_type": "code",
    "execution_count": 7,
    "id": "established-tribune",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -636,7 +688,11 @@
    "cell_type": "code",
    "execution_count": 8,
    "id": "turned-korea",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -656,7 +712,11 @@
   {
    "cell_type": "markdown",
    "id": "verified-shore",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%% md\n"
+    }
+   },
    "source": [
     "In the case of a RL model fit on choices alone, you can extract the log probability of accuracy=1 for each trial:"
    ]
@@ -665,7 +725,11 @@
    "cell_type": "code",
    "execution_count": 9,
    "id": "round-address",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -686,7 +750,11 @@
    "cell_type": "code",
    "execution_count": 10,
    "id": "casual-accountability",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -706,7 +774,11 @@
   {
    "cell_type": "markdown",
    "id": "dress-victor",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%% md\n"
+    }
+   },
    "source": [
     "## Posterior predictives"
    ]
@@ -714,7 +786,11 @@
   {
    "cell_type": "markdown",
    "id": "numerous-better",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%% md\n"
+    }
+   },
    "source": [
     "With `get_posterior_predictives_df` you get posterior predictives as pandas DataFrames of `n_posterior_predictives` X `n_trials` shape:"
    ]
@@ -723,7 +799,11 @@
    "cell_type": "code",
    "execution_count": 11,
    "id": "professional-positive",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -1118,7 +1198,11 @@
   {
    "cell_type": "markdown",
    "id": "opposed-sentence",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%% md\n"
+    }
+   },
    "source": [
     "For the DDM, you have additional parameters to tweak the DDM simulations, and you get a DataFrame with a hierarchical column index,  for RTs and for accuracy:"
    ]
@@ -1127,7 +1211,11 @@
    "cell_type": "code",
    "execution_count": 12,
    "id": "precious-transsexual",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -1539,7 +1627,11 @@
   {
    "cell_type": "markdown",
    "id": "environmental-island",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%% md\n"
+    }
+   },
    "source": [
     "You can also have posterior predictive summaries with `get_posterior_predictives_summary`.\n",
     "\n",
@@ -1550,7 +1642,11 @@
    "cell_type": "code",
    "execution_count": 13,
    "id": "neural-silicon",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -1661,7 +1757,11 @@
    "cell_type": "code",
    "execution_count": 14,
    "id": "opened-saint",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -1955,7 +2055,11 @@
   {
    "cell_type": "markdown",
    "id": "rubber-lithuania",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%% md\n"
+    }
+   },
    "source": [
     "You can also specify which quantiles you are interested in:"
    ]
@@ -1964,7 +2068,11 @@
    "cell_type": "code",
    "execution_count": 15,
    "id": "moved-project",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -2206,7 +2314,11 @@
   {
    "cell_type": "markdown",
    "id": "canadian-anger",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%% md\n"
+    }
+   },
    "source": [
     "Finally, you can get summary for grouping variables (e.g., experimental conditions, trial blocks, etc.) in your data:"
    ]
@@ -2215,7 +2327,11 @@
    "cell_type": "code",
    "execution_count": 16,
    "id": "defensive-stage",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -2478,7 +2594,11 @@
   {
    "cell_type": "markdown",
    "id": "alternate-jewel",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%% md\n"
+    }
+   },
    "source": [
     "## Plot posterior predictives"
    ]
@@ -2486,7 +2606,11 @@
   {
    "cell_type": "markdown",
    "id": "processed-plumbing",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%% md\n"
+    }
+   },
    "source": [
     "You can plot posterior predictives similarly, both **ungrouped** (across all trials) or **grouped** (across conditions, trial blocks, etc.plot_mean_posterior_predictives).\n",
     "\n",
@@ -2497,7 +2621,11 @@
    "cell_type": "code",
    "execution_count": 17,
    "id": "spoken-appraisal",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -2519,7 +2647,11 @@
   {
    "cell_type": "markdown",
    "id": "caroline-rainbow",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%% md\n"
+    }
+   },
    "source": [
     "Quantile plots have 2 main visualization options, \"shades\" and \"lines\", and you can specify again which quantiles you want, which in tervals and alpha levels: "
    ]
@@ -2528,7 +2660,11 @@
    "cell_type": "code",
    "execution_count": 18,
    "id": "focal-missouri",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -2551,7 +2687,11 @@
    "cell_type": "code",
    "execution_count": 19,
    "id": "radical-belief",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -2576,7 +2716,11 @@
    "cell_type": "code",
    "execution_count": 20,
    "id": "precious-collapse",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -2603,7 +2747,11 @@
    "cell_type": "code",
    "execution_count": 21,
    "id": "answering-tobacco",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [],
    "source": [
     "# Define new grouping variables:\n",
@@ -2627,7 +2775,11 @@
    "cell_type": "code",
    "execution_count": 22,
    "id": "amazing-migration",
-   "metadata": {},
+   "metadata": {
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   },
    "outputs": [
     {
      "data": {
