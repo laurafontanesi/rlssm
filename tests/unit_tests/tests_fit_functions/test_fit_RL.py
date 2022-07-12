@@ -1,5 +1,7 @@
 import unittest
 
+import numpy as np
+
 from rlssm.utility.load_data import load_example_dataset
 from rlssm.model.models_RL import RLModel_2A
 
@@ -11,6 +13,7 @@ class TestFitRL(unittest.TestCase):
         model = RLModel_2A(hierarchical_levels=hier_levels)
 
         data = load_example_dataset(hierarchical_levels=hier_levels)
+        data['feedback_type'] = np.array(1)
 
         model_fit = model.fit(data,
                               K=4,
@@ -27,6 +30,7 @@ class TestFitRL(unittest.TestCase):
         model = RLModel_2A(hierarchical_levels=hier_levels)
 
         data = load_example_dataset(hierarchical_levels=hier_levels)
+        data['feedback_type'] = np.array(1)
 
         # to make the hier test work faster, only take the first 10 participants into consideration
         data_hier = data[data['participant'] <= 10]

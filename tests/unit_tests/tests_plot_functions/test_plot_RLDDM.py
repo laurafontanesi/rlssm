@@ -1,6 +1,7 @@
 import os
 import unittest
 
+import numpy as np
 from matplotlib import pyplot as plt
 
 from rlssm.model.models_DDM import RLDDModel
@@ -13,6 +14,8 @@ class TestPlotRLDDM(unittest.TestCase):
         model = RLDDModel(hierarchical_levels=1)
 
         data = load_example_dataset(hierarchical_levels=1)
+        data['feedback_type'] = np.array(1)
+
         model_fit = model.fit(data,
                               K=4,
                               initial_value_learning=27.5,

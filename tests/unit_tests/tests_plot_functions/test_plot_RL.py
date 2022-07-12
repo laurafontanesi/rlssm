@@ -2,6 +2,7 @@ import os
 import unittest
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 from rlssm.utility.load_data import load_example_dataset
 from rlssm.model.models_RL import RLModel_2A
@@ -13,6 +14,7 @@ class TestPlotRL(unittest.TestCase):
         model = RLModel_2A(hierarchical_levels=1)
 
         data = load_example_dataset(hierarchical_levels=1)
+        data['feedback_type'] = np.array(1)
 
         model_fit = model.fit(data,
                               K=4,
