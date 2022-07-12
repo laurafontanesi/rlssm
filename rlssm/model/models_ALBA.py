@@ -11,7 +11,7 @@ class ALBAModel_2A(Model):
     When initializing the model, you should specify whether the model is hierarchical or not.
 
     The underlying stan model will be compiled if no previously compiled model is found.
-    After initializing the model, it can be fitted to a particular dataset using pystan.
+    After initializing the model, it can be fitted to a particular dataset using cmdstanpy.
 
     """
 
@@ -42,7 +42,7 @@ class ALBAModel_2A(Model):
         stan_model_path : str
             The location of the stan model code.
 
-        compiled_model : pystan.StanModel
+        compiled_model : StanModel
             The compiled stan model.
 
         """
@@ -185,7 +185,7 @@ class ALBAModel_2A(Model):
             It is advised to leave it to True and always check, on top of the r hat.
 
         **kwargs
-            Additional arguments to pystan.StanModel.sampling().
+            Additional arguments to StanModel.sampling().
 
         """
         data.reset_index(inplace=True)
@@ -262,7 +262,7 @@ class RLALBAModel_2A(Model):
     Additionally, you can specify the mechanisms that you wish to include or exclude.
 
     The underlying stan model will be compiled if no previously compiled model is found.
-    After initializing the model, it can be fitted to a particular dataset using pystan.
+    After initializing the model, it can be fitted to a particular dataset using cmdstanpy.
 
     """
 
@@ -300,7 +300,7 @@ class RLALBAModel_2A(Model):
         stan_model_path : str
             The location of the stan model code.
 
-        compiled_model : pystan.StanModel
+        compiled_model : StanModel
             The compiled stan model.
 
         """
@@ -341,10 +341,10 @@ class RLALBAModel_2A(Model):
         if separate_learning_rates:
             self.model_label += '_2lr'
             self.n_parameters_individual += 1
-            del self.priors['alpha_priors']
+            self.priors.pop('alpha_priors', None)
         else:
-            del self.priors['alpha_pos_priors']
-            del self.priors['alpha_neg_priors']
+            self.priors.pop('alpha_pos_priors', None)
+            self.priors.pop('alpha_neg_priors', None)
 
         # Set the stan model path
         self._set_model_path()
@@ -492,7 +492,7 @@ class RLALBAModel_2A(Model):
             It is advised to leave it to True and always check, on top of the r hat.
 
         **kwargs
-            Additional arguments to pystan.StanModel.sampling().
+            Additional arguments to StanModel.sampling().
 
         """
         data.reset_index(inplace=True)
