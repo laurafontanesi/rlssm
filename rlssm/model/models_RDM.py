@@ -105,29 +105,20 @@ class RDModel_2A(Model):
             - *participant*, the participant number.
               Should be integers starting from 1.
 
-        Returns
-        -------
-        res : rlssm.fits.DDModelResults
+        Optional Parameters
+        -------------------
 
-        Other Parameters
-        ----------------
-
-        starting_point : float, default .5
-            The relative starting point of the diffusion process.
-            By default there is no bias, so the starting point is .5.
-            Should be between 0 and 1.
-
-        threshold_priors : dict, optional
+        threshold_priors : dict, default None
             Priors for the threshold parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        ndt_priors : dict, optional
+        ndt_priors : dict, default None
             Priors for the non decision time parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        drift_priors : dict, optional
+        drift_priors : dict, default None
             Priors for the drift-rate parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
@@ -141,7 +132,7 @@ class RDModel_2A(Model):
             (WAIC; Watanabe, 2013).
 
         pointwise_waic : bool, default False
-            Whether to also inclue the pointwise WAIC.
+            Whether to also include the pointwise WAIC.
             Only relevant if include_waic is True.
 
         include_last_values : bool, default True
@@ -151,8 +142,16 @@ class RDModel_2A(Model):
             Whether to print mcmc diagnostics after fitting.
             It is advised to leave it to True and always check, on top of the r hat.
 
+        Other Parameters
+        ----------------
+
         **kwargs
-            Additional arguments to StanModel.sampling().
+            Additional arguments to `StanModel.sampling`.
+
+        Returns
+        -------
+
+        res : rlssm.fits.RDMModelResults
 
         """
         data.reset_index(inplace=True)
@@ -397,51 +396,47 @@ class RLRDModel_2A(Model):
             The learning value in the following learning sessions is set to
             the average learned value in the previous learning session.
 
-        Returns
-        -------
-        res : rlssm.fits.DDModelResults
-
-        Other Parameters
+        Optional Parameters
         ----------------
 
-        alpha_priors : dict, optional
+        alpha_priors : dict, default None
             Priors for the learning rate parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
         
-        alpha_pos_priors : dict, optional
+        alpha_pos_priors : dict, default None
             Priors for the learning rate for the positive PE
             (only meaningful if separate_learning_rates is True).
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        alpha_neg_priors : dict, optional
+        alpha_neg_priors : dict, default None
             Priors for the learning rate for the negative PE
             (only meaningful if separate_learning_rates is True).
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
         
-        ndt_priors : dict, optional
+        ndt_priors : dict, default None
             Priors for the non decision time parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        threshold_priors : dict, optional
+        threshold_priors : dict, default None
             Priors for the threshold parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
         
-        slop_priors : dict, optional
+        slop_priors : dict, default None
             Priors for the utility time parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
         
-        drift_asymtot_priors : dict, optional
+        drift_asymtot_priors : dict, default None
             Priors for the utility time parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        drift_scaling_priors : dict, optional
+        drift_scaling_priors : dict, default None
             Priors for the drift scaling parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
@@ -455,7 +450,7 @@ class RLRDModel_2A(Model):
             (WAIC; Watanabe, 2013).
 
         pointwise_waic : bool, default False
-            Whether to also inclue the pointwise WAIC.
+            Whether to also include the pointwise WAIC.
             Only relevant if include_waic is True.
 
         include_last_values : bool, default True
@@ -465,8 +460,16 @@ class RLRDModel_2A(Model):
             Whether to print mcmc diagnostics after fitting.
             It is advised to leave it to True and always check, on top of the r hat.
 
+        Other Parameters
+        ----------------
+
         **kwargs
-            Additional arguments to StanModel.sampling().
+            Additional arguments to `StanModel.sampling`.
+
+        Returns
+        -------
+
+        res : rlssm.fits.RDMModelResults
 
         """
         data.reset_index(inplace=True)

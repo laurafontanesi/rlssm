@@ -233,29 +233,25 @@ class DDModel(Model):
 
             - *beta*, the external variable to correlate/regress to drift and rel_sp.
 
-        Returns
-        -------
-        res : rlssm.fits.DDModelResults
+        Optional Parameters
+        -------------------
 
-        Other Parameters
-        ----------------
-
-        drift_priors : dict, optional
+        drift_priors : dict, default None
             Priors for the drift-rate parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        threshold_priors : dict, optional
+        threshold_priors : dict, default None
             Priors for the threshold parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        ndt_priors : dict, optional
+        ndt_priors : dict, default None
             Priors for the non decision time parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        rel_sp_priors : dict, optional
+        rel_sp_priors : dict, default None
             Priors for the relative starting point parameter
             (only meaningful if starting_point_bias is True).
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
@@ -266,45 +262,45 @@ class DDModel(Model):
             By default, there is no bias, so the starting point is .5.
             Should be between 0 and 1.
 
-        drift_trial_mu_priors : dict, optional
+        drift_trial_mu_priors : dict, default None
             Priors for the mean drift-rate across trials
             (only meaningful if drift_variability is True).
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        drift_trial_sd_priors : dict, optional
+        drift_trial_sd_priors : dict, default None
             Priors for the standard deviation of the drift-rate across trials
             (only meaningful if drift_variability is True).
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        rel_sp_trial_mu_priors : dict, optional
+        rel_sp_trial_mu_priors : dict, default None
             Priors for the mean of the relative starting point across trials
             (only meaningful if starting_point_variability is True).
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        rel_sp_trial_sd_priors : dict, optional
+        rel_sp_trial_sd_priors : dict, default None
             Priors for the standard deviation of the relative starting point across trials
             (only meaningful if starting_point_variability is True).
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        corr_matrix_prior : float, default to 1
+        corr_matrix_prior : float, default 1
             Prior for the eta parameter of the LKJ prior of the correlation matrix
             (only meaningful if drift_starting_point_correlation is True).
 
-        beta_trial_mu_priors : dict, optional
+        beta_trial_mu_priors : dict, default None
             Priors for the mean beta across trials
             (only meaningful if drift_starting_point_beta_correlation is True).
             Mean and standard deviation of the prior distr.
 
-        beta_trial_sd_priors : dict, optional
+        beta_trial_sd_priors : dict, default None
             Priors for the standard deviation of the beta across trials
             (only meaningful if drift_starting_point_beta_correlation is True).
             Mean and standard deviation of the prior distr.
 
-        regression_coefficients_priors : dict, optional
+        regression_coefficients_priors : dict, default None
             Priors for the regression coefficients
             (only relevant if drift_starting_point_regression is True).
             Mean and standard deviation of the prior distr.
@@ -318,7 +314,7 @@ class DDModel(Model):
             (WAIC; Watanabe, 2013).
 
         pointwise_waic : bool, default False
-            Whether to also inclue the pointwise WAIC.
+            Whether to also include the pointwise WAIC.
             Only relevant if include_waic is True.
 
         include_last_values : bool, default True
@@ -328,8 +324,15 @@ class DDModel(Model):
             Whether to print mcmc diagnostics after fitting.
             It is advised to leave it to True and always check, on top of the r hat.
 
+        Other Parameters
+        ----------------
+
         **kwargs
             Additional arguments to StanModel.sampling().
+
+        Returns
+        -------
+        res : rlssm.fits.DDModelResults
 
         """
         data.reset_index(inplace=True)
@@ -616,50 +619,46 @@ class RLDDModel(Model):
             The learning value in the following learning sessions is set to
             the average learned value in the previous learning session.
 
-        Returns
-        -------
-        res : rlssm.fits.DDModelResults
-
-        Other Parameters
+        Optional Parameters
         ----------------
 
-        alpha_priors : dict, optional
+        alpha_priors : dict, default None
             Priors for the learning rate parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        drift_scaling_priors : dict, optional
+        drift_scaling_priors : dict, default None
             Priors for the drift scaling parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        threshold_priors : dict, optional
+        threshold_priors : dict, default None
             Priors for the threshold parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        ndt_priors : dict, optional
+        ndt_priors : dict, default None
             Priors for the non decision time parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        drift_asymptote_priors: dict, optional
+        drift_asymptote_priors: dict, default None
             Priors for the drift-rate asymptote (only meaningful if nonlinear_mapping is True).
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        threshold_modulation_priors : dict, optional
+        threshold_modulation_priors : dict, default None
             Priors for the threshold coefficient (only meaningful if threshold_modulation is True).
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        alpha_pos_priors : dict, optional
+        alpha_pos_priors : dict, default None
             Priors for the learning rate for the positive PE
             (only meaningful if separate_learning_rates is True).
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        alpha_neg_priors : dict, optional
+        alpha_neg_priors : dict, default None
             Priors for the learning rate for the negative PE
             (only meaningful if separate_learning_rates is True).
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
@@ -674,7 +673,7 @@ class RLDDModel(Model):
             (WAIC; Watanabe, 2013).
 
         pointwise_waic : bool, default False
-            Whether to also inclue the pointwise WAIC.
+            Whether to also include the pointwise WAIC.
             Only relevant if include_waic is True.
 
         include_last_values : bool, default True
@@ -684,8 +683,16 @@ class RLDDModel(Model):
             Whether to print mcmc diagnostics after fitting.
             It is advised to leave it to True and always check, on top of the r hat.
 
+        Other Parameters
+        ----------------
+
         **kwargs
             Additional arguments to StanModel.sampling().
+
+        Returns
+        -------
+
+        res : rlssm.fits.DDModelResults
 
         """
         data.reset_index(inplace=True)

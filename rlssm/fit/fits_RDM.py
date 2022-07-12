@@ -125,10 +125,10 @@ class RDMModelResults_2A(ModelResults):
     def get_posterior_predictives_df(self, n_posterior_predictives=500, **kwargs):
         """Calculates posterior predictives of choices and response times.
 
-        Parameters
-        ----------
+        Optional Parameters
+        -------------------
 
-        n_posterior_predictives : int
+        n_posterior_predictives : int, default 500
              Number of posterior samples to use for posterior predictives calculation.
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
@@ -172,10 +172,10 @@ class RDMModelResults_2A(ModelResults):
         for each posterior sample across all trials.
         Response times are summarized using mean, skewness, and quantiles.
 
-        Parameters
-        ----------
+        Optional Parameters
+        -------------------
 
-        n_posterior_predictives : int
+        n_posterior_predictives : int, default 500
              Number of posterior samples to use for posterior predictives calculation.
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
@@ -187,6 +187,9 @@ class RDMModelResults_2A(ModelResults):
 
         Other Parameters
         ----------------
+
+        **kwargs : dict
+            Keyword arguments to be passed to the `self.get_posterior_predictives_df`.
 
         noise_constant : float
             Scaling factor of the diffusion decision model.
@@ -254,11 +257,20 @@ class RDMModelResults_2A(ModelResults):
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
 
-        figsize : tuple
+        Optional Parameters
+        -------------------
+
+        figsize : tuple, default (20, 8)
             figure size of the matplotlib figure
+
+        post_pred_kws : dict, default None
+            Additional parameters to get_posterior_predictives_summary.
 
         Other Parameters
         ----------------
+
+        **kwargs : dict
+            Keyword arguments to be passed to the `plotting.plot_mean_prediction`.
 
         show_data : bool
             Whether to show a vertical line for the mean data. Set to False to not show it.
@@ -271,14 +283,14 @@ class RDMModelResults_2A(ModelResults):
             Default is set to current Axes.
 
         gridsize : int
-            Resolution of the kernel density estimation function, default to 100.
+            Resolution of the kernel density estimation function, default 100.
 
         clip : tuple
             Range for the kernel density estimation function.
             Default is min and max values of the distribution.
 
         show_intervals : either "HDI", "BCI", or None
-            HDI is better when the distribution is not simmetrical.
+            HDI is better when the distribution is not symmetrical.
             If None, then no intervals are shown.
 
         alpha_intervals : float
@@ -343,21 +355,29 @@ class RDMModelResults_2A(ModelResults):
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
 
-        quantiles : list of floats
-             Quantiles to summarize response times distributions
-             (separately for correct/incorrect) with.
+        Optional Parameters
+        -------------------
 
-        figsize : tuple
+        quantiles : list of floats, default None
+             Quantiles to summarize response times distributions (separately for correct/incorrect) with.
+
+        figsize : tuple, default (20, 8)
             figure size of the matplotlib figure
+
+        post_pred_kws : dict, default None
+            Additional parameters to `get_posterior_predictives_summary`.
 
         Other Parameters
         ----------------
+
+        **kwargs : dict
+            Keyword arguments to be passed to the `plotting.plot_quantiles_prediction`.
 
         show_data : bool
             Whether to show the quantiles of the data. Set to False to not show it.
 
         show_intervals : either "HDI", "BCI", or None
-            HDI is better when the distribution is not simmetrical.
+            HDI is better when the distribution is not symmetrical.
             If None, then no intervals are shown.
 
         alpha_intervals : float
@@ -425,17 +445,23 @@ class RDMModelResults_2A(ModelResults):
         grouping_vars :  list of strings
              They should be existing grouping variables in the data.
 
-        n_posterior_predictives : int
+        Optional Parameters
+        -------------------
+
+        n_posterior_predictives : int, default 500
              Number of posterior samples to use for posterior predictives calculation.
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
 
-        quantiles : list of floats
+        quantiles : list of floats, default None
              Quantiles to summarize response times distributions
              (separately for correct/incorrect) with.
 
         Other Parameters
         ----------------
+
+        **kwargs : dict
+            Keyword arguments to be passed to the `self.get_posterior_predictives_df`.
 
         noise_constant : float
             Scaling factor of the diffusion decision model.
@@ -536,8 +562,20 @@ class RDMModelResults_2A(ModelResults):
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
 
+        Optional Parameters
+        -------------------
+
+        figsize : tuple, default (20, 8)
+            figure size of the matplotlib figure
+
+        post_pred_kws : dict, default None
+            Additional parameters to get_posterior_predictives_summary.
+
         Other Parameters
         ----------------
+
+        **kwargs : dict
+            Keyword arguments to be passed to the `plotting.plot_grouped_mean_prediction`.
 
         x_order : list of strings
             Order to plot the levels of the first grouping variable in,
@@ -556,7 +594,7 @@ class RDMModelResults_2A(ModelResults):
             Whether to show a vertical line for the mean data. Set to False to not show it.
 
         show_intervals : either "HDI", "BCI", or None
-            HDI is better when the distribution is not simmetrical.
+            HDI is better when the distribution is not symmetrical.
             If None, then no intervals are shown.
 
         alpha_intervals : float
@@ -666,24 +704,33 @@ class RDMModelResults_2A(ModelResults):
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
 
-        grouping_vars :  string
+        grouping_var :  string
              Should be an existing grouping variable in the data.
 
-        quantiles : list of floats
+        Optional Parameters
+        -------------------
+
+        quantiles : list of floats, default None
              Quantiles to summarize response times distributions
              (separately for correct/incorrect) with.
 
-        figsize : tuple
+        figsize : tuple, default (20, 8)
             figure size of the matplotlib figure
+
+        post_pred_kws : dict, default None
+            Additional parameters to get_posterior_predictives_summary.
 
         Other Parameters
         ----------------
+
+        **kwargs : dict
+            Keyword arguments to be passed to the `plotting.plot_grouped_quantiles_prediction`.
 
         show_data : bool
             Whether to show the quantiles of the data. Set to False to not show it.
 
         show_intervals : either "HDI", "BCI", or None
-            HDI is better when the distribution is not simmetrical.
+            HDI is better when the distribution is not symmetrical.
             If None, then no intervals are shown.
 
         alpha_intervals : float

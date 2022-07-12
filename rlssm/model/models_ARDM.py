@@ -111,39 +111,30 @@ class ARDModel_2A(Model):
             - *participant*, the participant number.
               Should be integers starting from 1.
 
-        Returns
-        -------
-        res : rlssm.fits.DDModelResults
+        Optional Parameters
+        -------------------
 
-        Other Parameters
-        ----------------
-
-        starting_point : float, default .5
-            The relative starting point of the diffusion process.
-            By default there is no bias, so the starting point is .5.
-            Should be between 0 and 1.
-
-        threshold_priors : dict, optional
+        threshold_priors : dict, default None
             Priors for the threshold parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        ndt_priors : dict, optional
+        ndt_priors : dict, default None
             Priors for the non decision time parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        v0_priors : dict, optional
+        v0_priors : dict, default None
             Priors for the v0 parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        ws_priors : dict, optional
+        ws_priors : dict, default None
             Priors for the ws parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
 
-        wd_priors : dict, optional
+        wd_priors : dict, default None
             Priors for the wd parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
@@ -157,7 +148,7 @@ class ARDModel_2A(Model):
             (WAIC; Watanabe, 2013).
 
         pointwise_waic : bool, default False
-            Whether to also inclue the pointwise WAIC.
+            Whether to also include the pointwise WAIC.
             Only relevant if include_waic is True.
 
         include_last_values : bool, default True
@@ -167,8 +158,16 @@ class ARDModel_2A(Model):
             Whether to print mcmc diagnostics after fitting.
             It is advised to leave it to True and always check, on top of the r hat.
 
+        Other Parameters
+        ----------------
+
         **kwargs
             Additional arguments to StanModel.sampling().
+
+        Returns
+        -------
+
+        res : rlssm.fits.DDModelResults
 
         """
         data.reset_index(inplace=True)
@@ -392,12 +391,9 @@ class RLARDModel_2A(Model):
             The learning value in the following learning sessions is set to
             the average learned value in the previous learning session.
 
-        Returns
-        -------
-        res : rlssm.fits.DDModelResults
+        Optional Parameters
+        -------------------
 
-        Other Parameters
-        ----------------
         threshold_priors : dict, optional
             Priors for the threshold parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
@@ -449,7 +445,7 @@ class RLARDModel_2A(Model):
             (WAIC; Watanabe, 2013).
 
         pointwise_waic : bool, default False
-            Whether to also inclue the pointwise WAIC.
+            Whether to also include the pointwise WAIC.
             Only relevant if include_waic is True.
 
         include_last_values : bool, default True
@@ -459,8 +455,16 @@ class RLARDModel_2A(Model):
             Whether to print mcmc diagnostics after fitting.
             It is advised to leave it to True and always check, on top of the r hat.
 
+        Other Parameters
+        ----------------
+
         **kwargs
             Additional arguments to StanModel.sampling().
+
+        Returns
+        -------
+
+        res : rlssm.fits.DDModelResults
 
         """
         data.reset_index(inplace=True)

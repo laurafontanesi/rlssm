@@ -128,6 +128,12 @@ def _simulate_delta_rule_2A(task_design,
         The generating learning rate.
         It should be a value between 0 (no updating) and 1 (full updating).
 
+    initial_value_learning : float
+        The initial value for Q learning.
+
+    Optional parameters
+    -------------------
+
     alpha_pos : float, default None
         If a value for both alpha_pos and alpha_neg is provided,
         separate learning rates are estimated
@@ -137,9 +143,6 @@ def _simulate_delta_rule_2A(task_design,
         If a value for both alpha_pos and alpha_neg is provided,
         separate learning rates are estimated
         for positive and negative prediction errors.
-
-    initial_value_learning : float
-        The initial value for Q learning.
 
     Returns
     -------

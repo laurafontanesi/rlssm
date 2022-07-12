@@ -65,8 +65,8 @@ class LBAFittedModel_2A(FittedModel):
 
         trial_samples = {'k_t': None,
                          'sp_trial_var_t': None,
-                         'ndt_t': None, 'drift_cor_t': None, 
-                         'drift_inc_t': None, 
+                         'ndt_t': None, 'drift_cor_t': None,
+                         'drift_inc_t': None,
                          'drift_trial_var': None}
 
         trial_samples['k_t'] = np.asarray(self.stan_model.draws_pd(vars=['k_t']))
@@ -124,7 +124,7 @@ class LBAModelResults_2A(ModelResults):
         ndt_t = self.trial_samples['ndt_t'][:n_posterior_predictives, :]
         k_t = self.trial_samples['k_t'][:n_posterior_predictives, :]
         drift_variability_t = self.trial_samples['drift_variability_t'][:n_posterior_predictives, :]
-        
+
         pp_rt, pp_acc = random_lba_2A(drift_cor_t, drift_inc_t, sp_trial_var_t, ndt_t, k_t, drift_variability_t)
 
         return pp_rt, pp_acc
@@ -132,10 +132,10 @@ class LBAModelResults_2A(ModelResults):
     def get_posterior_predictives_df(self, n_posterior_predictives=500, **kwargs):
         """Calculates posterior predictives of choices and response times.
 
-        Parameters
-        ----------
+        Optional Parameters
+        -------------------
 
-        n_posterior_predictives : int
+        n_posterior_predictives : int, default 500
              Number of posterior samples to use for posterior predictives calculation.
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
@@ -144,14 +144,14 @@ class LBAModelResults_2A(ModelResults):
         ----------------
 
         **kwargs : dict
-            Keyword arguments to be passed to the posterior predictive function.
+            Keyword arguments to be passed to the `self.get_posterior_predictives`.
 
         Returns
         -------
 
         out : DataFrame
             Data frame of shape (n_samples, n_trials*2).
-            Response times and accuracy are provided as hierarchical column indeces.
+            Response times and accuracy are provided as hierarchical column indexes.
 
         """
         pp_rt, pp_acc = self.get_posterior_predictives(n_posterior_predictives, **kwargs)
@@ -179,21 +179,24 @@ class LBAModelResults_2A(ModelResults):
         for each posterior sample across all trials.
         Response times are summarized using mean, skewness, and quantiles.
 
-        Parameters
-        ----------
+        Optional Parameters
+        -------------------
 
-        n_posterior_predictives : int
+        n_posterior_predictives : int, default 500
              Number of posterior samples to use for posterior predictives calculation.
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
 
-        quantiles : list of floats
+        quantiles : list of floats, default None
              Quantiles to summarize response times distributions
              (separately for correct/incorrect) with.
              Default to [.1, .3, .5, .7, .9].
 
         Other Parameters
         ----------------
+
+        **kwargs : dict
+            Keyword arguments to be passed to the `self.get_posterior_predictives_df`.
 
         noise_constant : float
             Scaling factor of the diffusion decision model.
@@ -213,7 +216,7 @@ class LBAModelResults_2A(ModelResults):
 
         out : DataFrame
             Pandas DataFrame, where every row corresponds to a posterior sample.
-            The columns contains the mean accuracy for each posterior sample,
+            The columns contain the mean accuracy for each posterior sample,
             as well as mean response times, response times skewness and response times quantiles.
 
         """
@@ -261,11 +264,20 @@ class LBAModelResults_2A(ModelResults):
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
 
-        figsize : tuple
+        Optional Parameters
+        -------------------
+
+        figsize : tuple, default (20, 8)
             figure size of the matplotlib figure
+
+        post_pred_kws : dict, default None
+            Additional parameters to get_posterior_predictives_summary.
 
         Other Parameters
         ----------------
+
+        **kwargs : dict
+            Keyword arguments to be passed to the `plotting.plot_mean_prediction`.
 
         show_data : bool
             Whether to show a vertical line for the mean data. Set to False to not show it.
@@ -278,14 +290,14 @@ class LBAModelResults_2A(ModelResults):
             Default is set to current Axes.
 
         gridsize : int
-            Resolution of the kernel density estimation function, default to 100.
+            Resolution of the kernel density estimation function, default 100.
 
         clip : tuple
             Range for the kernel density estimation function.
             Default is min and max values of the distribution.
 
         show_intervals : either "HDI", "BCI", or None
-            HDI is better when the distribution is not simmetrical.
+            HDI is better when the distribution is not symmetrical.
             If None, then no intervals are shown.
 
         alpha_intervals : float
@@ -350,21 +362,30 @@ class LBAModelResults_2A(ModelResults):
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
 
-        quantiles : list of floats
+        Optional Parameters
+        -------------------
+
+        quantiles : list of floats, default None
              Quantiles to summarize response times distributions
              (separately for correct/incorrect) with.
 
-        figsize : tuple
+        figsize : tuple, default (20, 8)
             figure size of the matplotlib figure
+
+        post_pred_kws : dict, default None
+            Additional parameters to get_posterior_predictives_summary.
 
         Other Parameters
         ----------------
+
+        **kwargs : dict
+            Keyword arguments to be passed to the `plotting.plot_quantiles_prediction`.
 
         show_data : bool
             Whether to show the quantiles of the data. Set to False to not show it.
 
         show_intervals : either "HDI", "BCI", or None
-            HDI is better when the distribution is not simmetrical.
+            HDI is better when the distribution is not symmetrical.
             If None, then no intervals are shown.
 
         alpha_intervals : float
@@ -432,17 +453,23 @@ class LBAModelResults_2A(ModelResults):
         grouping_vars :  list of strings
              They should be existing grouping variables in the data.
 
-        n_posterior_predictives : int
+        Optional Parameters
+        -------------------
+
+        n_posterior_predictives : int, default 500
              Number of posterior samples to use for posterior predictives calculation.
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
 
-        quantiles : list of floats
+        quantiles : list of floats, default None
              Quantiles to summarize response times distributions
              (separately for correct/incorrect) with.
 
         Other Parameters
         ----------------
+
+        **kwargs : dict
+            Keyword arguments to be passed to the `self.get_posterior_predictives_df`.
 
         noise_constant : float
             Scaling factor of the diffusion decision model.
@@ -462,7 +489,7 @@ class LBAModelResults_2A(ModelResults):
 
         out : DataFrame
              Pandas DataFrame.
-             The columns contains the mean accuracy for each posterior sample,
+             The columns contain the mean accuracy for each posterior sample,
              as well as mean response times, response times skewness and response times quantiles.
              The row index is a pandas.MultIndex, with the grouping variables as higher level
              and number of samples as lower level.
@@ -543,8 +570,20 @@ class LBAModelResults_2A(ModelResults):
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
 
+        Optional Parameters
+        -------------------
+
+        figsize : tuple, default (20, 8)
+            figure size of the matplotlib figure
+
+        post_pred_kws : dict, default None
+            Additional parameters to get_posterior_predictives_summary.
+
         Other Parameters
         ----------------
+
+        **kwargs : dict
+            Keyword arguments to be passed to the `plotting.plot_grouped_mean_prediction`.
 
         x_order : list of strings
             Order to plot the levels of the first grouping variable in,
@@ -563,7 +602,7 @@ class LBAModelResults_2A(ModelResults):
             Whether to show a vertical line for the mean data. Set to False to not show it.
 
         show_intervals : either "HDI", "BCI", or None
-            HDI is better when the distribution is not simmetrical.
+            HDI is better when the distribution is not symmetrical.
             If None, then no intervals are shown.
 
         alpha_intervals : float
@@ -673,24 +712,33 @@ class LBAModelResults_2A(ModelResults):
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
 
-        grouping_vars :  string
+        grouping_var :  string
              Should be an existing grouping variable in the data.
 
-        quantiles : list of floats
+        Optional Parameters
+        -------------------
+
+        quantiles : list of floats, default None
              Quantiles to summarize response times distributions
              (separately for correct/incorrect) with.
 
-        figsize : tuple
+        figsize : tuple, default (20, 8)
             figure size of the matplotlib figure
+
+        post_pred_kws : dict, default None
+            Additional parameters to get_posterior_predictives_summary.
 
         Other Parameters
         ----------------
+
+        **kwargs : dict
+            Keyword arguments to be passed to the `plotting.plot_grouped_quantiles_prediction`.
 
         show_data : bool
             Whether to show the quantiles of the data. Set to False to not show it.
 
         show_intervals : either "HDI", "BCI", or None
-            HDI is better when the distribution is not simmetrical.
+            HDI is better when the distribution is not symmetrical.
             If None, then no intervals are shown.
 
         alpha_intervals : float

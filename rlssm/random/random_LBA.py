@@ -3,14 +3,17 @@ import pandas as pd
 from scipy import stats
 
 
-def random_lba_2A(cor_drift, inc_drift, sp_trial_var, ndt, k, drift_trial_var):
+def random_lba_2A(cor_drift, inc_drift, sp_trial_var, ndt, k, drift_trial_var=None):
     """Simulates behavior (rt and accuracy) according to the Linear Ballistic Accumulator.
 
     Parameters
     ----------
 
-    k : float
-        Distance between starting point variability and threshold)
+    cor_drift : numpy.ndarray
+        Drift-rate of the Linear Ballistic Accumulator - correct responses. 1D array of floats.
+
+    inc_drift : numpy.ndarray
+        Drift-rate of the Linear Ballistic Accumulator - incorrect responses. 1D array of floats.
 
     sp_trial_var : float
         Starting point variability of the Linear Ballistic Accumulator. Also called A.
@@ -18,15 +21,16 @@ def random_lba_2A(cor_drift, inc_drift, sp_trial_var, ndt, k, drift_trial_var):
     ndt : float
         Non-decision time of the Linear Ballistic Accumulator. Also called tau.
 
-    cor_drift : float
-        Drift-rate of the Linear Ballistic Accumulator - correct responses.
+    k : float
+        Distance between starting point variability and threshold.
 
-    inc_drift : float
-        Drift-rate of the Linear Ballistic Accumulator - incorrect responses.
+    Optional parameters
+    -------------------
+    drift_trial_var : numpy.ndarray, default None
+        The drift rate trial variability. 1D array of 0s and 1s.
 
     Returns
     -------
-
     rt : numpy.ndarray
         Shape is the same as the input parameters.
         Contains simulated response times according to the Linear Ballistic Accumulator.
@@ -51,12 +55,13 @@ def random_lba_2A(cor_drift, inc_drift, sp_trial_var, ndt, k, drift_trial_var):
     # this while loop might be wrong
     while one_pose:
         ind = np.logical_and(v_cor < 0, v_inc < 0)
-        # v_cor[ind] = np.random.normal(cor_drift[ind], np.ones(cor_drift[ind].shape))
-        # v_inc[ind] = np.random.normal(inc_drift[ind], np.ones(inc_drift[ind].shape))
-        
-        v_cor[ind] = np.random.normal(cor_drift[ind], drift_trial_var[ind])
-        v_inc[ind] = np.random.normal(inc_drift[ind], drift_trial_var[ind])
-        
+        if drift_trial_var is None:
+            v_cor[ind] = np.random.normal(cor_drift[ind], np.ones(cor_drift[ind].shape))
+            v_inc[ind] = np.random.normal(inc_drift[ind], np.ones(inc_drift[ind].shape))
+        else:
+            v_cor[ind] = np.random.normal(cor_drift[ind], drift_trial_var[ind])
+            v_inc[ind] = np.random.normal(inc_drift[ind], drift_trial_var[ind])
+
         one_pose = np.sum(ind) > 0
 
     start_cor = np.random.uniform(np.zeros(sp_trial_var.shape), sp_trial_var)
@@ -135,8 +140,11 @@ def simulate_lba_2A(n_trials,
     participant_label : string or float, default 1
         What will appear in the participant column of the output data.
 
-    **kwargs
-        Additional arguments to rlssm.random.random_lba_2A().
+    Other Parameters
+    ----------------
+
+    **kwargs : dict
+        Additional arguments to `rlssm.random.random_lba_2A`.
 
     Returns
     -------
@@ -255,8 +263,11 @@ def simulate_hier_lba(n_trials, n_participants,
         Across trial variability in the drift-rate.
         Should be positive.
 
+    Other Parameters
+    ----------------
+
     **kwargs : dict
-        Additional arguments to `rlssm.random.random_lba_2A()`.
+        Additional arguments to `rlssm.random.random_lba_2A`.
 
     Returns
     -------

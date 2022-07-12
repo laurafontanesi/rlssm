@@ -34,8 +34,8 @@ def random_ddm(drift, threshold, ndt, rel_sp=.5, noise_constant=1, dt=0.001, max
         Shape is usually (n_samples, n_trials).
         Non decision time of the diffusion decision model, in seconds.
 
-    Other Parameters
-    ----------------
+    Optional Parameters
+    -------------------
 
     rel_sp : numpy.ndarray or float, default .5
         When is an array , shape is usually (n_samples, n_trials).
@@ -46,13 +46,13 @@ def random_ddm(drift, threshold, ndt, rel_sp=.5, noise_constant=1, dt=0.001, max
         If changed, drift and threshold would be scaled accordingly.
         Not to be changed in most applications.
 
-    max_rt : float, default 10
-        Controls the maximum rts that can be predicted.
-        Making this higher might make the function a bit slower.
-
     dt : float, default 0.001
         Controls the time resolution of the diffusion decision model. Default is 1 msec.
         Lower values of dt make the function more precise but much slower.
+
+    max_rt : float, default 10
+        Controls the maximum rts that can be predicted.
+        Making this higher might make the function a bit slower.
 
     Returns
     -------
@@ -147,8 +147,8 @@ def random_ddm_vector(drift, threshold, ndt, rel_sp=.5, noise_constant=1, dt=0.0
         Shape is usually (n_samples, n_trials).
         Non decision time of the diffusion decision model, in seconds.
 
-    Other Parameters
-    ----------------
+    Optional Parameters
+    -------------------
 
     rel_sp : numpy.ndarray or float, default .5
         When is an array , shape is usually (n_samples, n_trials).
@@ -159,13 +159,13 @@ def random_ddm_vector(drift, threshold, ndt, rel_sp=.5, noise_constant=1, dt=0.0
         If changed, drift and threshold would be scaled accordingly.
         Not to be changed in most applications.
 
-    max_rt : float, default 10
-        Controls the maximum rts that can be predicted.
-        Making this higher might make the function a bit slower.
-
     dt : float, default 0.001
         Controls the time resolution of the diffusion decision model. Default is 1 msec.
         Lower values of dt make the function more precise but much slower.
+
+    rt_max : float, default 10
+        Controls the maximum rts that can be predicted.
+        Making this higher might make the function a bit slower.
 
     Returns
     -------
@@ -269,8 +269,8 @@ def simulate_ddm(n_trials,
         Non decision time of the diffusion decision model, in seconds.
         Should be positive.
 
-    Other Parameters
-    ----------------
+    Optional Parameters
+    -------------------
 
     gen_rel_sp : float, default .5
         Relative starting point of the diffusion decision model.
@@ -288,8 +288,11 @@ def simulate_ddm(n_trials,
         Across trial variability in the realtive starting point.
         Should be positive.
 
+    Other Parameters
+    ----------------
+
     **kwargs
-        Additional arguments to rlssm.random.random_ddm().
+        Additional arguments to `rlssm.random.random_ddm`.
 
     Returns
     -------
@@ -448,8 +451,8 @@ def simulate_hier_ddm(n_trials, n_participants,
         Group-standard deviation of the non decision time
         of the diffusion decision model.
 
-    Other Parameters
-    ----------------
+    Optional Parameters
+    -------------------
 
     gen_mu_rel_sp : float, default .5
         Relative starting point of the diffusion decision model.
@@ -459,17 +462,20 @@ def simulate_hier_ddm(n_trials, n_participants,
         group-mean of the starting point.
 
 
-    gen_sd_rel_sp : float, optional
+    gen_sd_rel_sp : float, default None
         Across trial variability in the drift-rate.
         Should be positive.
 
 
-    gen_drift_trial_sd : float, optional
+    gen_drift_trial_sd : float, default None
         Across trial variability in the realtive starting point.
         Should be positive.
 
+    Other Parameters
+    ----------------
+
     **kwargs
-        Additional arguments to `rlssm.random.random_ddm()`.
+        Additional arguments to `rlssm.random.random_ddm`.
 
     Returns
     -------

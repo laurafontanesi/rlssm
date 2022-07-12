@@ -172,6 +172,9 @@ class RLModelResults_2A(ModelResults):
         Other Parameters
         ----------------
 
+        **kwargs : dict
+            Keyword arguments to be passed to the `plotting.plot_mean_prediction`.
+
         show_data : bool
             Whether to show a vertical line for the mean data. Set to False to not show it.
 
@@ -183,14 +186,14 @@ class RLModelResults_2A(ModelResults):
             Default is set to current Axes.
 
         gridsize : int
-            Resolution of the kernel density estimation function, default to 100.
+            Resolution of the kernel density estimation function, default 100.
 
         clip : tuple
             Range for the kernel density estimation function.
             Default is min and max values of the distribution.
 
         show_intervals : either "HDI", "BCI", or None
-            HDI is better when the distribution is not simmetrical.
+            HDI is better when the distribution is not symmetrical.
             If None, then no intervals are shown.
 
         alpha_intervals : float
@@ -301,6 +304,9 @@ class RLModelResults_2A(ModelResults):
         Other Parameters
         ----------------
 
+        **kwargs : dict
+            Keyword arguments to be passed to the `plotting.plot_grouped_mean_prediction`.
+
         x_order : list of strings
              Order to plot the levels of the first grouping variable in,
              otherwise the levels are inferred from the data objects.
@@ -318,7 +324,7 @@ class RLModelResults_2A(ModelResults):
             Whether to show a vertical line for the mean data. Set to False to not show it.
 
         show_intervals : either "HDI", "BCI", or None
-            HDI is better when the distribution is not simmetrical.
+            HDI is better when the distribution is not symmetrical.
             If None, then no intervals are shown.
 
         alpha_intervals : float

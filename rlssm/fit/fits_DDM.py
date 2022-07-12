@@ -71,6 +71,7 @@ class DDMFittedModel(FittedModel):
         else:
             main_parameters = self.parameters_info['parameters_names_transf']
 
+
         samples = self.stan_model.draws_pd(vars=main_parameters)
 
         # trial parameters
@@ -110,7 +111,7 @@ class DDModelResults(ModelResults):
     """DDModelResults allows to perform various model checks
     on fitted DDM and RLDDM models.
 
-    In particular, this can be used to to visualize the estimated
+    In particular, this can be used to visualize the estimated
     posterior distributions and to calculate and visualize the
     estimated posterior predictives distributions.
 
@@ -143,16 +144,19 @@ class DDModelResults(ModelResults):
     def get_posterior_predictives(self, n_posterior_predictives=500, **kwargs):
         """Calculates posterior predictives of choices and response times.
 
-        Parameters
-        ----------
+        Optional Parameters
+        -------------------
 
-        n_posterior_predictives : int
+        n_posterior_predictives : int, default 500
              Number of posterior samples to use for posterior predictives calculation.
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
 
         Other Parameters
         ----------------
+
+        **kwargs : dict
+            Keyword arguments to be passed to the `random_ddm`.
 
         noise_constant : float
             Scaling factor of the diffusion decision model.
@@ -199,16 +203,19 @@ class DDModelResults(ModelResults):
     def get_posterior_predictives_df(self, n_posterior_predictives=500, **kwargs):
         """Calculates posterior predictives of choices and response times.
 
-        Parameters
-        ----------
+        Optional Parameters
+        -------------------
 
-        n_posterior_predictives : int
+        n_posterior_predictives : int, default 500
              Number of posterior samples to use for posterior predictives calculation.
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
 
         Other Parameters
         ----------------
+
+        **kwargs : dict
+            Keyword arguments to be passed to the `self.get_posterior_predictives`.
 
         noise_constant : float
             Scaling factor of the diffusion decision model.
@@ -256,10 +263,10 @@ class DDModelResults(ModelResults):
         for each posterior sample across all trials.
         Response times are summarized using mean, skewness, and quantiles.
 
-        Parameters
+        Optional Parameters
         ----------
 
-        n_posterior_predictives : int
+        n_posterior_predictives : int, default 500
              Number of posterior samples to use for posterior predictives calculation.
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
@@ -271,6 +278,9 @@ class DDModelResults(ModelResults):
 
         Other Parameters
         ----------------
+
+        **kwargs : dict
+            Keyword arguments to be passed to the `self.get_posterior_predictives_df`.
 
         noise_constant : float
             Scaling factor of the diffusion decision model.
@@ -290,7 +300,7 @@ class DDModelResults(ModelResults):
 
         out : DataFrame
             Pandas DataFrame, where every row corresponds to a posterior sample.
-            The columns contains the mean accuracy for each posterior sample,
+            The columns contain the mean accuracy for each posterior sample,
             as well as mean response times, response times skewness and response times quantiles.
 
         """
@@ -340,11 +350,20 @@ class DDModelResults(ModelResults):
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
 
+        Optional Parameters
+        -------------------
+
         figsize : tuple
             figure size of the matplotlib figure
 
+        post_pred_kws : dict
+            Additional parameters to get_posterior_predictives_summary.
+
         Other Parameters
         ----------------
+
+        **kwargs : dict
+            Keyword arguments to be passed to the `plotting.plot_mean_prediction`.
 
         show_data : bool
             Whether to show a vertical line for the mean data. Set to False to not show it.
@@ -357,14 +376,14 @@ class DDModelResults(ModelResults):
             Default is set to current Axes.
 
         gridsize : int
-            Resolution of the kernel density estimation function, default to 100.
+            Resolution of the kernel density estimation function, default 100.
 
         clip : tuple
             Range for the kernel density estimation function.
             Default is min and max values of the distribution.
 
         show_intervals : either "HDI", "BCI", or None
-            HDI is better when the distribution is not simmetrical.
+            HDI is better when the distribution is not symmetrical.
             If None, then no intervals are shown.
 
         alpha_intervals : float
@@ -429,6 +448,10 @@ class DDModelResults(ModelResults):
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
 
+
+        Optional Parameters
+        -------------------
+
         quantiles : list of floats
              Quantiles to summarize response times distributions
              (separately for correct/incorrect) with.
@@ -436,14 +459,20 @@ class DDModelResults(ModelResults):
         figsize : tuple
             figure size of the matplotlib figure
 
+        post_pred_kws : dict
+            Additional parameters to get_posterior_predictives_summary.
+
         Other Parameters
         ----------------
+
+        **kwargs : dict
+            Keyword arguments to be passed to the `plotting.plot_quantiles_prediction`.
 
         show_data : bool
             Whether to show the quantiles of the data. Set to False to not show it.
 
         show_intervals : either "HDI", "BCI", or None
-            HDI is better when the distribution is not simmetrical.
+            HDI is better when the distribution is not symmetrical.
             If None, then no intervals are shown.
 
         alpha_intervals : float
@@ -511,6 +540,9 @@ class DDModelResults(ModelResults):
         grouping_vars :  list of strings
              They should be existing grouping variables in the data.
 
+        Optional Parameters
+        -------------------
+
         n_posterior_predictives : int
              Number of posterior samples to use for posterior predictives calculation.
              If n_posterior_predictives is bigger than the posterior samples,
@@ -522,6 +554,9 @@ class DDModelResults(ModelResults):
 
         Other Parameters
         ----------------
+
+        **kwargs : dict
+            Keyword arguments to be passed to the `self.get_posterior_predictives_df`.
 
         noise_constant : float
             Scaling factor of the diffusion decision model.
@@ -617,13 +652,25 @@ class DDModelResults(ModelResults):
              They should be existing grouping variables in the data.
              The list should be of lenght 1 or 2.
 
+        Optional Parameters
+        -------------------
+
         n_posterior_predictives : int
              Number of posterior samples to use for posterior predictives calculation.
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
 
+        figsize : tuple
+            figure size of the matplotlib figure
+
+        post_pred_kws : dict
+            Additional parameters to 'get_posterior_predictives_summary'.
+
         Other Parameters
         ----------------
+
+        **kwargs : dict
+            Keyword arguments to be passed to the `plotting.plot_grouped_mean_prediction`.
 
         x_order : list of strings
             Order to plot the levels of the first grouping variable in,
@@ -642,7 +689,7 @@ class DDModelResults(ModelResults):
             Whether to show a vertical line for the mean data. Set to False to not show it.
 
         show_intervals : either "HDI", "BCI", or None
-            HDI is better when the distribution is not simmetrical.
+            HDI is better when the distribution is not symmetrical.
             If None, then no intervals are shown.
 
         alpha_intervals : float
@@ -752,7 +799,10 @@ class DDModelResults(ModelResults):
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
 
-        grouping_vars :  string
+        Optional Parameters
+        -------------------
+
+        grouping_var:  string
              Should be an existing grouping variable in the data.
 
         quantiles : list of floats
@@ -762,14 +812,20 @@ class DDModelResults(ModelResults):
         figsize : tuple
             figure size of the matplotlib figure
 
+        post_pred_kws : dict
+            Additional parameters to get_posterior_predictives_summary.
+
         Other Parameters
         ----------------
+
+        **kwargs : dict
+            Keyword arguments to be passed to the `plotting.plot_grouped_quantiles_prediction`.
 
         show_data : bool
             Whether to show the quantiles of the data. Set to False to not show it.
 
         show_intervals : either "HDI", "BCI", or None
-            HDI is better when the distribution is not simmetrical.
+            HDI is better when the distribution is not symmetrical.
             If None, then no intervals are shown.
 
         alpha_intervals : float

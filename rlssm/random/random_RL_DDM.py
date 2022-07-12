@@ -61,14 +61,17 @@ def simulate_rlddm_2A(task_design,
         Non decision time of the diffusion decision model, in seconds.
         Should be positive.
 
+    Optional Parameters
+    -------------------
+
+    initial_value_learning : float, default 0
+        The initial value for Q learning.
+
     Other Parameters
     ----------------
 
-    initial_value_learning : float
-        The initial value for Q learning.
-
-    **kwargs
-        Additional arguments to rlssm.random.random_ddm().
+    **kwargs : dict
+        Additional arguments to `rlssm.random.random_ddm`.
 
     Returns
     -------
@@ -223,14 +226,17 @@ def simulate_hier_rlddm_2A(task_design,
         Group-standard deviation of the non decision time
         of the RLDDM.
 
-    initial_value_learning : float
+    Optional Parameters
+    -------------------
+
+    initial_value_learning : float, default 0
         The initial value for Q learning.
 
     Other Parameters
     ----------------
 
-    **kwargs
-        Additional arguments to rlssm.random.random_ddm().
+    **kwargs : dict
+        Additional arguments to `rlssm.random.random_ddm`.
 
     Returns
     -------

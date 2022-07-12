@@ -22,6 +22,7 @@ def simulate_alba_2A(gen_S_cor,
     ----
     Parameters
     ----------
+
     gen_S_cor : float
         Brightness of correct trials.
 
@@ -56,8 +57,12 @@ def simulate_alba_2A(gen_S_cor,
     participant_label : string or float, default 1
         What will appear in the participant column of the output data.
 
-    kwargs : dict
+    Other Parameters
+    ----------------
+
+    **kwargs : dict
         Additional parameters to be passed to `random_lba_2A`.
+
     Returns
     -------
 
@@ -132,6 +137,7 @@ def simulate_hier_alba(n_trials, n_participants,
 
     Parameters
     ---------
+
     n_trials : int
         Number of trials to simulate.
 
@@ -174,6 +180,7 @@ def simulate_hier_alba(n_trials, n_participants,
 
     Optional parameters
     -------------------
+
     gen_mu_k : float, default .5
         Relative starting point of the linear ballistic accumulator.
         When `gen_sd_k` is not specified, `gen_mu_k` is
@@ -188,7 +195,10 @@ def simulate_hier_alba(n_trials, n_participants,
         Across trial variability in the drift-rate.
         Should be positive.
 
-    kwargs : dict
+    Other parameters
+    ----------------
+
+    **kwargs : dict
         Additional parameters to be passed to `random_lba_2A`.
 
     Returns

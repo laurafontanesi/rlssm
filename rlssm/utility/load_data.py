@@ -10,6 +10,10 @@ def load_example_dataset(hierarchical_levels, n_alternatives=2):
 
     Parameters
     ----------
+
+    hierarchical_levels : int
+         Set to 1 for individual data and to 2 for grouped data.
+
     n_alternatives : int
         When 2, the dataset of https://doi.org/10.3758/s13423-018-1554-2
         is loaded.
