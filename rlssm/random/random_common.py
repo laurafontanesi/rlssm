@@ -181,6 +181,9 @@ def _simulate_delta_rule_2A(task_design,
 
     Q_cor = np.array([])
     Q_inc = np.array([])
+    Q_min = np.array([])
+    Q_max_t = np.array([])
+    Q_mean_t = np.array([])
     for n in range(n_trials):
         index_cor = int(task_design.cor_option.values[n] - 1)
         index_inc = int(task_design.inc_option.values[n] - 1)
@@ -206,8 +209,15 @@ def _simulate_delta_rule_2A(task_design,
 
         Q_cor = np.append(Q_cor, Q[index_cor])
         Q_inc = np.append(Q_inc, Q[index_inc])
+        Q_min = np.append(Q_min, np.min(Q))
+        Q_max_t = np.append(Q_max_t, np.max([Q[index_cor], Q[index_inc]]))
+        Q_mean_t = np.append(Q_mean_t, (Q[index_cor] + Q[index_inc])/2)
 
-    return pd.DataFrame({'Q_cor': Q_cor, 'Q_inc': Q_inc})
+    return pd.DataFrame({'Q_cor': Q_cor,
+                         'Q_inc': Q_inc, 
+                         'Q_min': Q_min,
+                         'Q_max_t': Q_max_t,
+                         'Q_mean_t': Q_mean_t})
 
 
 def _soft_max_2A(row):

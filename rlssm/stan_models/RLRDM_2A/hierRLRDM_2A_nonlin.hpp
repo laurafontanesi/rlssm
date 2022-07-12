@@ -41,29 +41,29 @@ static constexpr std::array<const char*, 214> locations_array__ =
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 127, column 2 to column 14)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 128, column 2 to column 22)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 130, column 2 to column 38)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 131, column 2 to column 37)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 132, column 2 to column 33)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 133, column 2 to column 27)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 134, column 2 to column 28)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 135, column 2 to column 34)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 131, column 2 to column 33)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 132, column 2 to column 27)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 133, column 2 to column 28)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 134, column 2 to column 34)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 135, column 2 to column 37)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 137, column 2 to column 23)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 138, column 2 to column 31)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 139, column 2 to column 27)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 140, column 2 to column 21)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 141, column 2 to column 22)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 142, column 2 to column 28)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 138, column 2 to column 27)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 139, column 2 to column 21)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 140, column 2 to column 22)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 141, column 2 to column 28)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 142, column 2 to column 31)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 144, column 2 to column 34)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 145, column 2 to column 59)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 146, column 2 to column 51)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 147, column 2 to column 39)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 148, column 2 to column 41)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 149, column 2 to column 53)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 145, column 2 to column 51)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 146, column 2 to column 39)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 147, column 2 to column 41)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 148, column 2 to column 53)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 149, column 2 to column 59)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 152, column 4 to column 55)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 153, column 4 to column 96)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 154, column 4 to column 80)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 155, column 4 to column 56)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 156, column 4 to column 62)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 157, column 4 to column 84)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 153, column 4 to column 80)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 154, column 4 to column 56)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 155, column 4 to column 62)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 156, column 4 to column 84)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 157, column 4 to column 96)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 151, column 17 to line 158, column 3)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 151, column 2 to line 158, column 3)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 165, column 8 to column 25)",
@@ -155,11 +155,11 @@ static constexpr std::array<const char*, 214> locations_array__ =
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 68, column 19 to column 20)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 68, column 2 to column 22)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 70, column 2 to column 25)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 71, column 2 to column 24)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 72, column 2 to column 33)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 73, column 2 to column 29)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 74, column 2 to column 23)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 75, column 2 to column 30)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 71, column 2 to column 23)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 72, column 2 to column 29)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 73, column 2 to column 24)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 74, column 2 to column 30)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 75, column 2 to column 33)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 79, column 9 to column 10)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 79, column 2 to column 15)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 80, column 10 to column 11)",
@@ -182,11 +182,11 @@ static constexpr std::array<const char*, 214> locations_array__ =
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 120, column 9 to column 10)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 128, column 19 to column 20)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 130, column 35 to column 36)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 131, column 34 to column 35)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 132, column 30 to column 31)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 133, column 24 to column 25)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 134, column 25 to column 26)",
- " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 135, column 31 to column 32)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 131, column 30 to column 31)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 132, column 24 to column 25)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 133, column 25 to column 26)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 134, column 31 to column 32)",
+ " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 135, column 34 to column 35)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 237, column 9 to column 10)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 3, column 10 to column 19)",
  " (in '/Users/khamir/_DecisionMaking/_rlssm/rlssm/rlssm/stan_models/RLRDM_2A/hierRLRDM_2A_nonlin.stan', line 4, column 10 to column 75)",
@@ -467,21 +467,21 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
   std::vector<int> feedback_type;
   std::vector<double> rt;
   Eigen::Matrix<double, -1, 1> alpha_priors__;
-  Eigen::Matrix<double, -1, 1> slop_priors__;
-  Eigen::Matrix<double, -1, 1> drift_scaling_priors__;
-  Eigen::Matrix<double, -1, 1> threshold_priors__;
   Eigen::Matrix<double, -1, 1> ndt_priors__;
+  Eigen::Matrix<double, -1, 1> threshold_priors__;
+  Eigen::Matrix<double, -1, 1> slop_priors__;
   Eigen::Matrix<double, -1, 1> drift_asym_priors__;
+  Eigen::Matrix<double, -1, 1> drift_scaling_priors__;
   Eigen::Matrix<double, -1, 1> Q0__;
   Eigen::Matrix<double, -1, -1> RT__; 
   Eigen::Map<Eigen::Matrix<double, -1, 1>> f_cor{nullptr, 0};
   Eigen::Map<Eigen::Matrix<double, -1, 1>> f_inc{nullptr, 0};
   Eigen::Map<Eigen::Matrix<double, -1, 1>> alpha_priors{nullptr, 0};
-  Eigen::Map<Eigen::Matrix<double, -1, 1>> slop_priors{nullptr, 0};
-  Eigen::Map<Eigen::Matrix<double, -1, 1>> drift_scaling_priors{nullptr, 0};
-  Eigen::Map<Eigen::Matrix<double, -1, 1>> threshold_priors{nullptr, 0};
   Eigen::Map<Eigen::Matrix<double, -1, 1>> ndt_priors{nullptr, 0};
+  Eigen::Map<Eigen::Matrix<double, -1, 1>> threshold_priors{nullptr, 0};
+  Eigen::Map<Eigen::Matrix<double, -1, 1>> slop_priors{nullptr, 0};
   Eigen::Map<Eigen::Matrix<double, -1, 1>> drift_asym_priors{nullptr, 0};
+  Eigen::Map<Eigen::Matrix<double, -1, 1>> drift_scaling_priors{nullptr, 0};
   Eigen::Map<Eigen::Matrix<double, -1, 1>> Q0{nullptr, 0};
   Eigen::Map<Eigen::Matrix<double, -1, -1>> RT{nullptr, 0, 0};
  
@@ -739,80 +739,6 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
         }
       }
       current_statement__ = 146;
-      context__.validate_dims("data initialization","slop_priors","double",
-           std::vector<size_t>{static_cast<size_t>(4)});
-      slop_priors__ = 
-        Eigen::Matrix<double, -1, 1>::Constant(4,
-          std::numeric_limits<double>::quiet_NaN());
-      new (&slop_priors) Eigen::Map<Eigen::Matrix<double, -1, 1>>(slop_priors__.data(), 4);
-        
-      
-      {
-        std::vector<local_scalar_t__> slop_priors_flat__;
-        current_statement__ = 146;
-        slop_priors_flat__ = context__.vals_r("slop_priors");
-        current_statement__ = 146;
-        pos__ = 1;
-        current_statement__ = 146;
-        for (int sym1__ = 1; sym1__ <= 4; ++sym1__) {
-          current_statement__ = 146;
-          stan::model::assign(slop_priors, slop_priors_flat__[(pos__ - 1)],
-            "assigning variable slop_priors", stan::model::index_uni(sym1__));
-          current_statement__ = 146;
-          pos__ = (pos__ + 1);
-        }
-      }
-      current_statement__ = 147;
-      context__.validate_dims("data initialization","drift_scaling_priors",
-          "double", std::vector<size_t>{static_cast<size_t>(4)});
-      drift_scaling_priors__ = 
-        Eigen::Matrix<double, -1, 1>::Constant(4,
-          std::numeric_limits<double>::quiet_NaN());
-      new (&drift_scaling_priors) Eigen::Map<Eigen::Matrix<double, -1, 1>>(drift_scaling_priors__.data(), 4);
-        
-      
-      {
-        std::vector<local_scalar_t__> drift_scaling_priors_flat__;
-        current_statement__ = 147;
-        drift_scaling_priors_flat__ = context__.vals_r("drift_scaling_priors");
-        current_statement__ = 147;
-        pos__ = 1;
-        current_statement__ = 147;
-        for (int sym1__ = 1; sym1__ <= 4; ++sym1__) {
-          current_statement__ = 147;
-          stan::model::assign(drift_scaling_priors,
-            drift_scaling_priors_flat__[(pos__ - 1)],
-            "assigning variable drift_scaling_priors", stan::model::index_uni(sym1__));
-          current_statement__ = 147;
-          pos__ = (pos__ + 1);
-        }
-      }
-      current_statement__ = 148;
-      context__.validate_dims("data initialization","threshold_priors",
-          "double", std::vector<size_t>{static_cast<size_t>(4)});
-      threshold_priors__ = 
-        Eigen::Matrix<double, -1, 1>::Constant(4,
-          std::numeric_limits<double>::quiet_NaN());
-      new (&threshold_priors) Eigen::Map<Eigen::Matrix<double, -1, 1>>(threshold_priors__.data(), 4);
-        
-      
-      {
-        std::vector<local_scalar_t__> threshold_priors_flat__;
-        current_statement__ = 148;
-        threshold_priors_flat__ = context__.vals_r("threshold_priors");
-        current_statement__ = 148;
-        pos__ = 1;
-        current_statement__ = 148;
-        for (int sym1__ = 1; sym1__ <= 4; ++sym1__) {
-          current_statement__ = 148;
-          stan::model::assign(threshold_priors,
-            threshold_priors_flat__[(pos__ - 1)],
-            "assigning variable threshold_priors", stan::model::index_uni(sym1__));
-          current_statement__ = 148;
-          pos__ = (pos__ + 1);
-        }
-      }
-      current_statement__ = 149;
       context__.validate_dims("data initialization","ndt_priors","double",
            std::vector<size_t>{static_cast<size_t>(4)});
       ndt_priors__ = 
@@ -823,20 +749,69 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
       
       {
         std::vector<local_scalar_t__> ndt_priors_flat__;
-        current_statement__ = 149;
+        current_statement__ = 146;
         ndt_priors_flat__ = context__.vals_r("ndt_priors");
-        current_statement__ = 149;
+        current_statement__ = 146;
         pos__ = 1;
-        current_statement__ = 149;
+        current_statement__ = 146;
         for (int sym1__ = 1; sym1__ <= 4; ++sym1__) {
-          current_statement__ = 149;
+          current_statement__ = 146;
           stan::model::assign(ndt_priors, ndt_priors_flat__[(pos__ - 1)],
             "assigning variable ndt_priors", stan::model::index_uni(sym1__));
-          current_statement__ = 149;
+          current_statement__ = 146;
           pos__ = (pos__ + 1);
         }
       }
-      current_statement__ = 150;
+      current_statement__ = 147;
+      context__.validate_dims("data initialization","threshold_priors",
+          "double", std::vector<size_t>{static_cast<size_t>(4)});
+      threshold_priors__ = 
+        Eigen::Matrix<double, -1, 1>::Constant(4,
+          std::numeric_limits<double>::quiet_NaN());
+      new (&threshold_priors) Eigen::Map<Eigen::Matrix<double, -1, 1>>(threshold_priors__.data(), 4);
+        
+      
+      {
+        std::vector<local_scalar_t__> threshold_priors_flat__;
+        current_statement__ = 147;
+        threshold_priors_flat__ = context__.vals_r("threshold_priors");
+        current_statement__ = 147;
+        pos__ = 1;
+        current_statement__ = 147;
+        for (int sym1__ = 1; sym1__ <= 4; ++sym1__) {
+          current_statement__ = 147;
+          stan::model::assign(threshold_priors,
+            threshold_priors_flat__[(pos__ - 1)],
+            "assigning variable threshold_priors", stan::model::index_uni(sym1__));
+          current_statement__ = 147;
+          pos__ = (pos__ + 1);
+        }
+      }
+      current_statement__ = 148;
+      context__.validate_dims("data initialization","slop_priors","double",
+           std::vector<size_t>{static_cast<size_t>(4)});
+      slop_priors__ = 
+        Eigen::Matrix<double, -1, 1>::Constant(4,
+          std::numeric_limits<double>::quiet_NaN());
+      new (&slop_priors) Eigen::Map<Eigen::Matrix<double, -1, 1>>(slop_priors__.data(), 4);
+        
+      
+      {
+        std::vector<local_scalar_t__> slop_priors_flat__;
+        current_statement__ = 148;
+        slop_priors_flat__ = context__.vals_r("slop_priors");
+        current_statement__ = 148;
+        pos__ = 1;
+        current_statement__ = 148;
+        for (int sym1__ = 1; sym1__ <= 4; ++sym1__) {
+          current_statement__ = 148;
+          stan::model::assign(slop_priors, slop_priors_flat__[(pos__ - 1)],
+            "assigning variable slop_priors", stan::model::index_uni(sym1__));
+          current_statement__ = 148;
+          pos__ = (pos__ + 1);
+        }
+      }
+      current_statement__ = 149;
       context__.validate_dims("data initialization","drift_asym_priors",
           "double", std::vector<size_t>{static_cast<size_t>(4)});
       drift_asym_priors__ = 
@@ -847,16 +822,41 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
       
       {
         std::vector<local_scalar_t__> drift_asym_priors_flat__;
-        current_statement__ = 150;
+        current_statement__ = 149;
         drift_asym_priors_flat__ = context__.vals_r("drift_asym_priors");
+        current_statement__ = 149;
+        pos__ = 1;
+        current_statement__ = 149;
+        for (int sym1__ = 1; sym1__ <= 4; ++sym1__) {
+          current_statement__ = 149;
+          stan::model::assign(drift_asym_priors,
+            drift_asym_priors_flat__[(pos__ - 1)],
+            "assigning variable drift_asym_priors", stan::model::index_uni(sym1__));
+          current_statement__ = 149;
+          pos__ = (pos__ + 1);
+        }
+      }
+      current_statement__ = 150;
+      context__.validate_dims("data initialization","drift_scaling_priors",
+          "double", std::vector<size_t>{static_cast<size_t>(4)});
+      drift_scaling_priors__ = 
+        Eigen::Matrix<double, -1, 1>::Constant(4,
+          std::numeric_limits<double>::quiet_NaN());
+      new (&drift_scaling_priors) Eigen::Map<Eigen::Matrix<double, -1, 1>>(drift_scaling_priors__.data(), 4);
+        
+      
+      {
+        std::vector<local_scalar_t__> drift_scaling_priors_flat__;
+        current_statement__ = 150;
+        drift_scaling_priors_flat__ = context__.vals_r("drift_scaling_priors");
         current_statement__ = 150;
         pos__ = 1;
         current_statement__ = 150;
         for (int sym1__ = 1; sym1__ <= 4; ++sym1__) {
           current_statement__ = 150;
-          stan::model::assign(drift_asym_priors,
-            drift_asym_priors_flat__[(pos__ - 1)],
-            "assigning variable drift_asym_priors", stan::model::index_uni(sym1__));
+          stan::model::assign(drift_scaling_priors,
+            drift_scaling_priors_flat__[(pos__ - 1)],
+            "assigning variable drift_scaling_priors", stan::model::index_uni(sym1__));
           current_statement__ = 150;
           pos__ = (pos__ + 1);
         }
@@ -921,15 +921,15 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
       current_statement__ = 172;
       stan::math::validate_non_negative_index("alpha_sbj", "L", L);
       current_statement__ = 173;
-      stan::math::validate_non_negative_index("drift_scaling_sbj", "L", L);
-      current_statement__ = 174;
       stan::math::validate_non_negative_index("threshold_sbj", "L", L);
-      current_statement__ = 175;
+      current_statement__ = 174;
       stan::math::validate_non_negative_index("ndt_sbj", "L", L);
-      current_statement__ = 176;
+      current_statement__ = 175;
       stan::math::validate_non_negative_index("slop_sbj", "L", L);
-      current_statement__ = 177;
+      current_statement__ = 176;
       stan::math::validate_non_negative_index("drift_asym_sbj", "L", L);
+      current_statement__ = 177;
+      stan::math::validate_non_negative_index("drift_scaling_sbj", "L", L);
       current_statement__ = 178;
       stan::math::validate_non_negative_index("log_lik", "N", N);
     } catch (const std::exception& e) {
@@ -1044,8 +1044,6 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
          std::vector<local_scalar_t__>(N, DUMMY_VAR__);
       std::vector<local_scalar_t__> alpha_sbj =
          std::vector<local_scalar_t__>(L, DUMMY_VAR__);
-      std::vector<local_scalar_t__> drift_scaling_sbj =
-         std::vector<local_scalar_t__>(L, DUMMY_VAR__);
       std::vector<local_scalar_t__> threshold_sbj =
          std::vector<local_scalar_t__>(L, DUMMY_VAR__);
       std::vector<local_scalar_t__> ndt_sbj =
@@ -1054,27 +1052,29 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
          std::vector<local_scalar_t__>(L, DUMMY_VAR__);
       std::vector<local_scalar_t__> drift_asym_sbj =
          std::vector<local_scalar_t__>(L, DUMMY_VAR__);
+      std::vector<local_scalar_t__> drift_scaling_sbj =
+         std::vector<local_scalar_t__>(L, DUMMY_VAR__);
       local_scalar_t__ transf_mu_alpha = DUMMY_VAR__;
-      local_scalar_t__ transf_mu_drift_scaling = DUMMY_VAR__;
       local_scalar_t__ transf_mu_threshold = DUMMY_VAR__;
       local_scalar_t__ transf_mu_ndt = DUMMY_VAR__;
       local_scalar_t__ transf_mu_slop = DUMMY_VAR__;
       local_scalar_t__ transf_mu_drift_asym = DUMMY_VAR__;
+      local_scalar_t__ transf_mu_drift_scaling = DUMMY_VAR__;
       current_statement__ = 43;
       transf_mu_alpha = stan::math::Phi(mu_alpha);
       current_statement__ = 44;
-      transf_mu_drift_scaling = stan::math::log(
-                                  (1 + stan::math::exp(mu_drift_scaling)));
-      current_statement__ = 45;
       transf_mu_threshold = stan::math::log(
                               (1 + stan::math::exp(mu_threshold)));
-      current_statement__ = 46;
+      current_statement__ = 45;
       transf_mu_ndt = stan::math::log((1 + stan::math::exp(mu_ndt)));
-      current_statement__ = 47;
+      current_statement__ = 46;
       transf_mu_slop = stan::math::log((1 + stan::math::exp(mu_slop)));
-      current_statement__ = 48;
+      current_statement__ = 47;
       transf_mu_drift_asym = stan::math::log(
                                (1 + stan::math::exp(mu_drift_asym)));
+      current_statement__ = 48;
+      transf_mu_drift_scaling = stan::math::log(
+                                  (1 + stan::math::exp(mu_drift_scaling)));
       current_statement__ = 56;
       for (int l = 1; l <= L; ++l) {
         current_statement__ = 49;
@@ -1085,15 +1085,6 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
                  stan::model::index_uni(l)) * sd_alpha))),
           "assigning variable alpha_sbj", stan::model::index_uni(l));
         current_statement__ = 50;
-        stan::model::assign(drift_scaling_sbj,
-          stan::math::log(
-            (1 +
-              stan::math::exp(
-                (mu_drift_scaling +
-                  (stan::model::rvalue(z_drift_scaling, "z_drift_scaling",
-                     stan::model::index_uni(l)) * sd_drift_scaling))))),
-          "assigning variable drift_scaling_sbj", stan::model::index_uni(l));
-        current_statement__ = 51;
         stan::model::assign(threshold_sbj,
           stan::math::log(
             (1 +
@@ -1102,7 +1093,7 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
                   (stan::model::rvalue(z_threshold, "z_threshold",
                      stan::model::index_uni(l)) * sd_threshold))))),
           "assigning variable threshold_sbj", stan::model::index_uni(l));
-        current_statement__ = 52;
+        current_statement__ = 51;
         stan::model::assign(ndt_sbj,
           stan::math::log(
             (1 +
@@ -1111,7 +1102,7 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
                   (stan::model::rvalue(z_ndt, "z_ndt",
                      stan::model::index_uni(l)) * sd_ndt))))),
           "assigning variable ndt_sbj", stan::model::index_uni(l));
-        current_statement__ = 53;
+        current_statement__ = 52;
         stan::model::assign(slop_sbj,
           stan::math::log(
             (1 +
@@ -1120,7 +1111,7 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
                   (stan::model::rvalue(z_slop, "z_slop",
                      stan::model::index_uni(l)) * sd_slop))))),
           "assigning variable slop_sbj", stan::model::index_uni(l));
-        current_statement__ = 54;
+        current_statement__ = 53;
         stan::model::assign(drift_asym_sbj,
           stan::math::log(
             (1 +
@@ -1129,6 +1120,15 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
                   (stan::model::rvalue(z_drift_asym, "z_drift_asym",
                      stan::model::index_uni(l)) * sd_drift_asym))))),
           "assigning variable drift_asym_sbj", stan::model::index_uni(l));
+        current_statement__ = 54;
+        stan::model::assign(drift_scaling_sbj,
+          stan::math::log(
+            (1 +
+              stan::math::exp(
+                (mu_drift_scaling +
+                  (stan::model::rvalue(z_drift_scaling, "z_drift_scaling",
+                     stan::model::index_uni(l)) * sd_drift_scaling))))),
+          "assigning variable drift_scaling_sbj", stan::model::index_uni(l));
       }
       current_statement__ = 96;
       for (int n = 1; n <= N; ++n) {
@@ -1399,18 +1399,18 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
       current_statement__ = 31;
       stan::math::check_less_or_equal(function__, "alpha_sbj", alpha_sbj, 1);
       current_statement__ = 32;
-      stan::math::check_greater_or_equal(function__, "drift_scaling_sbj",
-                                            drift_scaling_sbj, 0);
-      current_statement__ = 33;
       stan::math::check_greater_or_equal(function__, "threshold_sbj",
                                             threshold_sbj, 0);
-      current_statement__ = 34;
+      current_statement__ = 33;
       stan::math::check_greater_or_equal(function__, "ndt_sbj", ndt_sbj, 0);
-      current_statement__ = 35;
+      current_statement__ = 34;
       stan::math::check_greater_or_equal(function__, "slop_sbj", slop_sbj, 0);
-      current_statement__ = 36;
+      current_statement__ = 35;
       stan::math::check_greater_or_equal(function__, "drift_asym_sbj",
                                             drift_asym_sbj, 0);
+      current_statement__ = 36;
+      stan::math::check_greater_or_equal(function__, "drift_scaling_sbj",
+                                            drift_scaling_sbj, 0);
       {
         current_statement__ = 102;
         lp_accum__.add(
@@ -1637,8 +1637,6 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
          std::vector<double>(N, std::numeric_limits<double>::quiet_NaN());
       std::vector<double> alpha_sbj =
          std::vector<double>(L, std::numeric_limits<double>::quiet_NaN());
-      std::vector<double> drift_scaling_sbj =
-         std::vector<double>(L, std::numeric_limits<double>::quiet_NaN());
       std::vector<double> threshold_sbj =
          std::vector<double>(L, std::numeric_limits<double>::quiet_NaN());
       std::vector<double> ndt_sbj =
@@ -1647,13 +1645,15 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
          std::vector<double>(L, std::numeric_limits<double>::quiet_NaN());
       std::vector<double> drift_asym_sbj =
          std::vector<double>(L, std::numeric_limits<double>::quiet_NaN());
+      std::vector<double> drift_scaling_sbj =
+         std::vector<double>(L, std::numeric_limits<double>::quiet_NaN());
       double transf_mu_alpha = std::numeric_limits<double>::quiet_NaN();
-      double transf_mu_drift_scaling =
-         std::numeric_limits<double>::quiet_NaN();
       double transf_mu_threshold = std::numeric_limits<double>::quiet_NaN();
       double transf_mu_ndt = std::numeric_limits<double>::quiet_NaN();
       double transf_mu_slop = std::numeric_limits<double>::quiet_NaN();
       double transf_mu_drift_asym = std::numeric_limits<double>::quiet_NaN();
+      double transf_mu_drift_scaling =
+         std::numeric_limits<double>::quiet_NaN();
       out__.write(mu_alpha);
       out__.write(mu_ndt);
       out__.write(mu_threshold);
@@ -1680,18 +1680,18 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
       current_statement__ = 43;
       transf_mu_alpha = stan::math::Phi(mu_alpha);
       current_statement__ = 44;
-      transf_mu_drift_scaling = stan::math::log(
-                                  (1 + stan::math::exp(mu_drift_scaling)));
-      current_statement__ = 45;
       transf_mu_threshold = stan::math::log(
                               (1 + stan::math::exp(mu_threshold)));
-      current_statement__ = 46;
+      current_statement__ = 45;
       transf_mu_ndt = stan::math::log((1 + stan::math::exp(mu_ndt)));
-      current_statement__ = 47;
+      current_statement__ = 46;
       transf_mu_slop = stan::math::log((1 + stan::math::exp(mu_slop)));
-      current_statement__ = 48;
+      current_statement__ = 47;
       transf_mu_drift_asym = stan::math::log(
                                (1 + stan::math::exp(mu_drift_asym)));
+      current_statement__ = 48;
+      transf_mu_drift_scaling = stan::math::log(
+                                  (1 + stan::math::exp(mu_drift_scaling)));
       current_statement__ = 56;
       for (int l = 1; l <= L; ++l) {
         current_statement__ = 49;
@@ -1702,15 +1702,6 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
                  stan::model::index_uni(l)) * sd_alpha))),
           "assigning variable alpha_sbj", stan::model::index_uni(l));
         current_statement__ = 50;
-        stan::model::assign(drift_scaling_sbj,
-          stan::math::log(
-            (1 +
-              stan::math::exp(
-                (mu_drift_scaling +
-                  (stan::model::rvalue(z_drift_scaling, "z_drift_scaling",
-                     stan::model::index_uni(l)) * sd_drift_scaling))))),
-          "assigning variable drift_scaling_sbj", stan::model::index_uni(l));
-        current_statement__ = 51;
         stan::model::assign(threshold_sbj,
           stan::math::log(
             (1 +
@@ -1719,7 +1710,7 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
                   (stan::model::rvalue(z_threshold, "z_threshold",
                      stan::model::index_uni(l)) * sd_threshold))))),
           "assigning variable threshold_sbj", stan::model::index_uni(l));
-        current_statement__ = 52;
+        current_statement__ = 51;
         stan::model::assign(ndt_sbj,
           stan::math::log(
             (1 +
@@ -1728,7 +1719,7 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
                   (stan::model::rvalue(z_ndt, "z_ndt",
                      stan::model::index_uni(l)) * sd_ndt))))),
           "assigning variable ndt_sbj", stan::model::index_uni(l));
-        current_statement__ = 53;
+        current_statement__ = 52;
         stan::model::assign(slop_sbj,
           stan::math::log(
             (1 +
@@ -1737,7 +1728,7 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
                   (stan::model::rvalue(z_slop, "z_slop",
                      stan::model::index_uni(l)) * sd_slop))))),
           "assigning variable slop_sbj", stan::model::index_uni(l));
-        current_statement__ = 54;
+        current_statement__ = 53;
         stan::model::assign(drift_asym_sbj,
           stan::math::log(
             (1 +
@@ -1746,6 +1737,15 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
                   (stan::model::rvalue(z_drift_asym, "z_drift_asym",
                      stan::model::index_uni(l)) * sd_drift_asym))))),
           "assigning variable drift_asym_sbj", stan::model::index_uni(l));
+        current_statement__ = 54;
+        stan::model::assign(drift_scaling_sbj,
+          stan::math::log(
+            (1 +
+              stan::math::exp(
+                (mu_drift_scaling +
+                  (stan::model::rvalue(z_drift_scaling, "z_drift_scaling",
+                     stan::model::index_uni(l)) * sd_drift_scaling))))),
+          "assigning variable drift_scaling_sbj", stan::model::index_uni(l));
       }
       current_statement__ = 96;
       for (int n = 1; n <= N; ++n) {
@@ -2016,18 +2016,18 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
       current_statement__ = 31;
       stan::math::check_less_or_equal(function__, "alpha_sbj", alpha_sbj, 1);
       current_statement__ = 32;
-      stan::math::check_greater_or_equal(function__, "drift_scaling_sbj",
-                                            drift_scaling_sbj, 0);
-      current_statement__ = 33;
       stan::math::check_greater_or_equal(function__, "threshold_sbj",
                                             threshold_sbj, 0);
-      current_statement__ = 34;
+      current_statement__ = 33;
       stan::math::check_greater_or_equal(function__, "ndt_sbj", ndt_sbj, 0);
-      current_statement__ = 35;
+      current_statement__ = 34;
       stan::math::check_greater_or_equal(function__, "slop_sbj", slop_sbj, 0);
-      current_statement__ = 36;
+      current_statement__ = 35;
       stan::math::check_greater_or_equal(function__, "drift_asym_sbj",
                                             drift_asym_sbj, 0);
+      current_statement__ = 36;
+      stan::math::check_greater_or_equal(function__, "drift_scaling_sbj",
+                                            drift_scaling_sbj, 0);
       if (emit_transformed_parameters__) {
         out__.write(ndt_t);
         out__.write(threshold_t);
@@ -2042,17 +2042,17 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
         out__.write(PE_inc);
         out__.write(Q_mean_pres);
         out__.write(alpha_sbj);
-        out__.write(drift_scaling_sbj);
         out__.write(threshold_sbj);
         out__.write(ndt_sbj);
         out__.write(slop_sbj);
         out__.write(drift_asym_sbj);
+        out__.write(drift_scaling_sbj);
         out__.write(transf_mu_alpha);
-        out__.write(transf_mu_drift_scaling);
         out__.write(transf_mu_threshold);
         out__.write(transf_mu_ndt);
         out__.write(transf_mu_slop);
         out__.write(transf_mu_drift_asym);
+        out__.write(transf_mu_drift_scaling);
       } 
       if (stan::math::logical_negation(emit_generated_quantities__)) {
         return ;
@@ -2179,10 +2179,10 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
       "z_alpha", "z_ndt", "z_threshold", "z_slop", "z_drift_asym",
       "z_drift_scaling", "ndt_t", "threshold_t", "drift_cor_t",
       "drift_inc_t", "Q", "Q_mean", "Q_min", "Q_min_t", "Q_max_t", "PE_cor",
-      "PE_inc", "Q_mean_pres", "alpha_sbj", "drift_scaling_sbj",
-      "threshold_sbj", "ndt_sbj", "slop_sbj", "drift_asym_sbj",
-      "transf_mu_alpha", "transf_mu_drift_scaling", "transf_mu_threshold",
-      "transf_mu_ndt", "transf_mu_slop", "transf_mu_drift_asym", "log_lik"};
+      "PE_inc", "Q_mean_pres", "alpha_sbj", "threshold_sbj", "ndt_sbj",
+      "slop_sbj", "drift_asym_sbj", "drift_scaling_sbj", "transf_mu_alpha",
+      "transf_mu_threshold", "transf_mu_ndt", "transf_mu_slop",
+      "transf_mu_drift_asym", "transf_mu_drift_scaling", "log_lik"};
     
     } // get_param_names() 
     
@@ -2311,11 +2311,6 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
       }
       for (int sym1__ = 1; sym1__ <= L; ++sym1__) {
         {
-          param_names__.emplace_back(std::string() + "drift_scaling_sbj" + '.' + std::to_string(sym1__));
-        } 
-      }
-      for (int sym1__ = 1; sym1__ <= L; ++sym1__) {
-        {
           param_names__.emplace_back(std::string() + "threshold_sbj" + '.' + std::to_string(sym1__));
         } 
       }
@@ -2334,12 +2329,17 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
           param_names__.emplace_back(std::string() + "drift_asym_sbj" + '.' + std::to_string(sym1__));
         } 
       }
+      for (int sym1__ = 1; sym1__ <= L; ++sym1__) {
+        {
+          param_names__.emplace_back(std::string() + "drift_scaling_sbj" + '.' + std::to_string(sym1__));
+        } 
+      }
       param_names__.emplace_back(std::string() + "transf_mu_alpha");
-      param_names__.emplace_back(std::string() + "transf_mu_drift_scaling");
       param_names__.emplace_back(std::string() + "transf_mu_threshold");
       param_names__.emplace_back(std::string() + "transf_mu_ndt");
       param_names__.emplace_back(std::string() + "transf_mu_slop");
       param_names__.emplace_back(std::string() + "transf_mu_drift_asym");
+      param_names__.emplace_back(std::string() + "transf_mu_drift_scaling");
     }
     
     if (emit_generated_quantities__) {
@@ -2444,11 +2444,6 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
       }
       for (int sym1__ = 1; sym1__ <= L; ++sym1__) {
         {
-          param_names__.emplace_back(std::string() + "drift_scaling_sbj" + '.' + std::to_string(sym1__));
-        } 
-      }
-      for (int sym1__ = 1; sym1__ <= L; ++sym1__) {
-        {
           param_names__.emplace_back(std::string() + "threshold_sbj" + '.' + std::to_string(sym1__));
         } 
       }
@@ -2467,12 +2462,17 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
           param_names__.emplace_back(std::string() + "drift_asym_sbj" + '.' + std::to_string(sym1__));
         } 
       }
+      for (int sym1__ = 1; sym1__ <= L; ++sym1__) {
+        {
+          param_names__.emplace_back(std::string() + "drift_scaling_sbj" + '.' + std::to_string(sym1__));
+        } 
+      }
       param_names__.emplace_back(std::string() + "transf_mu_alpha");
-      param_names__.emplace_back(std::string() + "transf_mu_drift_scaling");
       param_names__.emplace_back(std::string() + "transf_mu_threshold");
       param_names__.emplace_back(std::string() + "transf_mu_ndt");
       param_names__.emplace_back(std::string() + "transf_mu_slop");
       param_names__.emplace_back(std::string() + "transf_mu_drift_asym");
+      param_names__.emplace_back(std::string() + "transf_mu_drift_scaling");
     }
     
     if (emit_generated_quantities__) {
@@ -2487,13 +2487,13 @@ class hierRLRDM_2A_nonlin_model final : public model_base_crtp<hierRLRDM_2A_nonl
     
   inline std::string get_constrained_sizedtypes() const {
     
-    return std::string("[{\"name\":\"mu_alpha\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"mu_ndt\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"mu_threshold\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"mu_slop\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"mu_drift_asym\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"mu_drift_scaling\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"sd_alpha\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"sd_ndt\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"sd_threshold\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"sd_slop\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"sd_drift_asym\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"sd_drift_scaling\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"z_alpha\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"z_ndt\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"z_threshold\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"z_slop\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"z_drift_asym\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"z_drift_scaling\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"ndt_t\",\"type\":{\"name\":\"vector\",\"length\":" + std::to_string(N) + "},\"block\":\"transformed_parameters\"},{\"name\":\"threshold_t\",\"type\":{\"name\":\"vector\",\"length\":" + std::to_string(N) + "},\"block\":\"transformed_parameters\"},{\"name\":\"drift_cor_t\",\"type\":{\"name\":\"vector\",\"length\":" + std::to_string(N) + "},\"block\":\"transformed_parameters\"},{\"name\":\"drift_inc_t\",\"type\":{\"name\":\"vector\",\"length\":" + std::to_string(N) + "},\"block\":\"transformed_parameters\"},{\"name\":\"Q\",\"type\":{\"name\":\"vector\",\"length\":" + std::to_string(K) + "},\"block\":\"transformed_parameters\"},{\"name\":\"Q_mean\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"Q_min\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"Q_min_t\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"Q_max_t\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"PE_cor\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"PE_inc\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"Q_mean_pres\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(N) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"alpha_sbj\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"drift_scaling_sbj\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"threshold_sbj\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"ndt_sbj\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"slop_sbj\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"drift_asym_sbj\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"transf_mu_alpha\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"transf_mu_drift_scaling\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"transf_mu_threshold\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"transf_mu_ndt\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"transf_mu_slop\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"transf_mu_drift_asym\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"log_lik\",\"type\":{\"name\":\"vector\",\"length\":" + std::to_string(N) + "},\"block\":\"generated_quantities\"}]");
+    return std::string("[{\"name\":\"mu_alpha\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"mu_ndt\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"mu_threshold\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"mu_slop\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"mu_drift_asym\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"mu_drift_scaling\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"sd_alpha\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"sd_ndt\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"sd_threshold\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"sd_slop\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"sd_drift_asym\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"sd_drift_scaling\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"z_alpha\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"z_ndt\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"z_threshold\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"z_slop\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"z_drift_asym\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"z_drift_scaling\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"ndt_t\",\"type\":{\"name\":\"vector\",\"length\":" + std::to_string(N) + "},\"block\":\"transformed_parameters\"},{\"name\":\"threshold_t\",\"type\":{\"name\":\"vector\",\"length\":" + std::to_string(N) + "},\"block\":\"transformed_parameters\"},{\"name\":\"drift_cor_t\",\"type\":{\"name\":\"vector\",\"length\":" + std::to_string(N) + "},\"block\":\"transformed_parameters\"},{\"name\":\"drift_inc_t\",\"type\":{\"name\":\"vector\",\"length\":" + std::to_string(N) + "},\"block\":\"transformed_parameters\"},{\"name\":\"Q\",\"type\":{\"name\":\"vector\",\"length\":" + std::to_string(K) + "},\"block\":\"transformed_parameters\"},{\"name\":\"Q_mean\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"Q_min\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"Q_min_t\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"Q_max_t\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"PE_cor\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"PE_inc\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"Q_mean_pres\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(N) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"alpha_sbj\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"threshold_sbj\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"ndt_sbj\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"slop_sbj\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"drift_asym_sbj\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"drift_scaling_sbj\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"transf_mu_alpha\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"transf_mu_threshold\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"transf_mu_ndt\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"transf_mu_slop\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"transf_mu_drift_asym\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"transf_mu_drift_scaling\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"log_lik\",\"type\":{\"name\":\"vector\",\"length\":" + std::to_string(N) + "},\"block\":\"generated_quantities\"}]");
     
     } // get_constrained_sizedtypes() 
     
   inline std::string get_unconstrained_sizedtypes() const {
     
-    return std::string("[{\"name\":\"mu_alpha\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"mu_ndt\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"mu_threshold\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"mu_slop\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"mu_drift_asym\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"mu_drift_scaling\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"sd_alpha\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"sd_ndt\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"sd_threshold\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"sd_slop\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"sd_drift_asym\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"sd_drift_scaling\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"z_alpha\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"z_ndt\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"z_threshold\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"z_slop\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"z_drift_asym\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"z_drift_scaling\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"ndt_t\",\"type\":{\"name\":\"vector\",\"length\":" + std::to_string(N) + "},\"block\":\"transformed_parameters\"},{\"name\":\"threshold_t\",\"type\":{\"name\":\"vector\",\"length\":" + std::to_string(N) + "},\"block\":\"transformed_parameters\"},{\"name\":\"drift_cor_t\",\"type\":{\"name\":\"vector\",\"length\":" + std::to_string(N) + "},\"block\":\"transformed_parameters\"},{\"name\":\"drift_inc_t\",\"type\":{\"name\":\"vector\",\"length\":" + std::to_string(N) + "},\"block\":\"transformed_parameters\"},{\"name\":\"Q\",\"type\":{\"name\":\"vector\",\"length\":" + std::to_string(K) + "},\"block\":\"transformed_parameters\"},{\"name\":\"Q_mean\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"Q_min\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"Q_min_t\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"Q_max_t\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"PE_cor\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"PE_inc\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"Q_mean_pres\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(N) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"alpha_sbj\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"drift_scaling_sbj\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"threshold_sbj\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"ndt_sbj\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"slop_sbj\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"drift_asym_sbj\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"transf_mu_alpha\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"transf_mu_drift_scaling\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"transf_mu_threshold\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"transf_mu_ndt\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"transf_mu_slop\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"transf_mu_drift_asym\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"log_lik\",\"type\":{\"name\":\"vector\",\"length\":" + std::to_string(N) + "},\"block\":\"generated_quantities\"}]");
+    return std::string("[{\"name\":\"mu_alpha\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"mu_ndt\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"mu_threshold\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"mu_slop\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"mu_drift_asym\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"mu_drift_scaling\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"sd_alpha\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"sd_ndt\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"sd_threshold\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"sd_slop\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"sd_drift_asym\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"sd_drift_scaling\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"z_alpha\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"z_ndt\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"z_threshold\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"z_slop\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"z_drift_asym\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"z_drift_scaling\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"ndt_t\",\"type\":{\"name\":\"vector\",\"length\":" + std::to_string(N) + "},\"block\":\"transformed_parameters\"},{\"name\":\"threshold_t\",\"type\":{\"name\":\"vector\",\"length\":" + std::to_string(N) + "},\"block\":\"transformed_parameters\"},{\"name\":\"drift_cor_t\",\"type\":{\"name\":\"vector\",\"length\":" + std::to_string(N) + "},\"block\":\"transformed_parameters\"},{\"name\":\"drift_inc_t\",\"type\":{\"name\":\"vector\",\"length\":" + std::to_string(N) + "},\"block\":\"transformed_parameters\"},{\"name\":\"Q\",\"type\":{\"name\":\"vector\",\"length\":" + std::to_string(K) + "},\"block\":\"transformed_parameters\"},{\"name\":\"Q_mean\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"Q_min\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"Q_min_t\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"Q_max_t\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"PE_cor\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"PE_inc\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"Q_mean_pres\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(N) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"alpha_sbj\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"threshold_sbj\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"ndt_sbj\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"slop_sbj\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"drift_asym_sbj\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"drift_scaling_sbj\",\"type\":{\"name\":\"array\",\"length\":" + std::to_string(L) + ",\"element_type\":{\"name\":\"real\"}},\"block\":\"transformed_parameters\"},{\"name\":\"transf_mu_alpha\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"transf_mu_threshold\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"transf_mu_ndt\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"transf_mu_slop\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"transf_mu_drift_asym\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"transf_mu_drift_scaling\",\"type\":{\"name\":\"real\"},\"block\":\"transformed_parameters\"},{\"name\":\"log_lik\",\"type\":{\"name\":\"vector\",\"length\":" + std::to_string(N) + "},\"block\":\"generated_quantities\"}]");
     
     } // get_unconstrained_sizedtypes() 
     
