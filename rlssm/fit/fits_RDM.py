@@ -53,44 +53,24 @@ class RDMFittedModel_2A(FittedModel):
         if self.parameters_info['hierarchical_levels'] == 2:
             main_parameters = self.parameters_info['group_parameters_names_transf']
 
-            for p in self.parameters_info['individual_parameters_names']:
-                main_parameters = np.append(main_parameters, list_individual_variables(p, self.data_info['L']))
+            main_parameters = np.append(main_parameters, [p + '_sbj' for p in self.parameters_info['individual_parameters_names']])
+
+            # for p in self.parameters_info['individual_parameters_names']:
+            #     main_parameters = np.append(main_parameters, list_individual_variables(p, self.data_info['L']))
         else:
             main_parameters = self.parameters_info['parameters_names_transf']
 
-        # par_to_display = list(np.append(['chain', 'draw'], main_parameters))
-        #
-        # samples = self.stan_model.to_dataframe(pars=list(main_parameters),
-        #                                        permuted=True,
-        #                                        diagnostics=False,
-        #                                        inc_warmup=False)[par_to_display].reset_index(drop=True)
-        #
-        # # trial parameters
-        # f_label = self.family.split('_')[0]
-        # lba_labels = ['LBA_2A', 'ALBA_2A', 'RLLBA', 'RLALBA']
-        # if f_label in lba_labels or self.family in lba_labels:
-        #     trial_samples = self.stan_model.extract(['rel_sp_t',
-        #                                              'threshold_t',
-        #                                              'ndt_t',
-        #                                              'drift_cor_t',
-        #                                              'drift_inc_t'])
-        # else:
-        #     trial_samples = self.stan_model.extract(['drift_cor_t',
-        #                                              'drift_inc_t',
-        #                                              'threshold_t',
-        #                                              'ndt_t'])
+        samples = self.stan_model.draws_pd(vars=main_parameters) 
 
-        samples = self.stan_model.draws_pd()[main_parameters]  # TODO
-
-        trial_samples = {'drift_cor_t': None, 'drift_inc_t': None, 'threshold_t': None, 'ndt_t': None}
-        trial_samples['drift_cor_t'] = np.asarray(
-            self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'drift_cor_t' in i]])
-        trial_samples['drift_inc_t'] = np.asarray(
-            self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'drift_inc_t' in i]])
-        trial_samples['threshold_t'] = np.asarray(
-            self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'threshold_t' in i]])
-        trial_samples['ndt_t'] = np.asarray(
-            self.stan_model.draws_pd()[[i for i in self.stan_model.column_names if 'ndt_t' in i]])
+        trial_samples = {'drift_cor_t': None,
+                         'drift_inc_t': None,
+                         'threshold_t': None, 
+                         'ndt_t': None}
+        
+        trial_samples['drift_cor_t'] = np.asarray(self.stan_model.draws_pd(vars=['drift_cor_t']))
+        trial_samples['drift_inc_t'] = np.asarray(self.stan_model.draws_pd(vars=['drift_inc_t']))
+        trial_samples['threshold_t'] = np.asarray(self.stan_model.draws_pd(vars=['threshold_t']))
+        trial_samples['ndt_t'] = np.asarray(self.stan_model.draws_pd(vars=['ndt_t']))
 
         res = RDMModelResults_2A(self.model_label,
                                  self.data_info,
