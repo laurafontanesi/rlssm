@@ -103,6 +103,7 @@ data {
 
 	int<lower=1,upper=2> accuracy[N];				// 1-> correct, 2->incorrect
 	real<lower=0> rt[N];							// rt
+     int<lower=0, upper=1> feedback_type[N]; // feedback_type = 0 -> full feedback, feedback_type = 1 -> partial feedback
 
   vector[2] k_priors;
 	vector[2] sp_trial_var_priors;
@@ -133,51 +134,62 @@ parameters {
 
 
 transformed parameters {
-  vector<lower=0> [N] k_t;				    // trial-by-trial
+     vector<lower=0> [N] k_t;				    // trial-by-trial
 	vector<lower=0> [N] sp_trial_var_t;						// trial-by-trial
-  vector<lower=0> [N] ndt_t;				 // trial-by-trial ndt
+     vector<lower=0> [N] ndt_t;				 // trial-by-trial ndt
 	vector<lower=0> [N] drift_cor_t;				// trial-by-trial drift rate for predictions
 	vector<lower=0> [N] drift_inc_t;				// trial-by-trial drift rate for predictions
-
-  real PE_cor;			// prediction error correct option
+     
+     real PE_cor;			// prediction error correct option
 	real PE_inc;			// prediction error incorrect option
 	vector[K] Q;
 
-  real Q_mean;
+     real Q_mean;
 
-  real<lower=0> transf_k;
-  real<lower=0> transf_sp_trial_var;
-  real<lower=0> transf_ndt;
-  real<lower=0, upper=1> transf_alpha;
+     real<lower=0> transf_k;
+     real<lower=0> transf_sp_trial_var;
+     real<lower=0> transf_ndt;
+     real<lower=0, upper=1> transf_alpha;
 	real<lower=0> transf_drift_scaling;
 
-  transf_k = log(1 + exp(k));
+     transf_k = log(1 + exp(k));
 	transf_sp_trial_var = log(1 + exp(sp_trial_var));
 	transf_ndt = log(1 + exp(ndt));
-  transf_alpha = Phi(alpha);
+     transf_alpha = Phi(alpha);
 	transf_drift_scaling = log(1 + exp(drift_scaling));
 
 	for (n in 1:N) {
-    if (trial_block[n] == 1){
-			if (block_label[n] == 1){
-				Q = Q0;
-			} else{
-				Q_mean = mean(Q);
-				Q = rep_vector(Q_mean, K);
-			}
-		}
+         if (trial_block[n] == 1){
+     			if (block_label[n] == 1){
+     				Q = Q0;
+     			} else{
+     				Q_mean = mean(Q);
+     				Q = rep_vector(Q_mean, K);
+     			}
+     		}
 
-    PE_cor = f_cor[n] - Q[cor_option[n]];
+          PE_cor = f_cor[n] - Q[cor_option[n]];
 		PE_inc = f_inc[n] - Q[inc_option[n]];
 
-    k_t[n] = transf_k;
+          k_t[n] = transf_k;
 		sp_trial_var_t[n] = transf_sp_trial_var;
-    ndt_t[n] = transf_ndt;
-    drift_cor_t[n] = Q[cor_option[n]] * transf_drift_scaling;
-    drift_inc_t[n] = Q[inc_option[n]] * transf_drift_scaling;
+          ndt_t[n] = transf_ndt;
+          drift_cor_t[n] = Q[cor_option[n]] * transf_drift_scaling;
+          drift_inc_t[n] = Q[inc_option[n]] * transf_drift_scaling;
 
-    Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha*PE_cor;
-		Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha*PE_inc;
+          if (feedback_type[n] == 1){
+                if(accuracy[n] == 1){
+                  Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha*PE_cor;
+                }
+                else{
+                  Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha*PE_inc;
+                }
+              }
+              else{
+                Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha*PE_cor;
+                Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha*PE_inc;
+              }
+
 	}
 }
 

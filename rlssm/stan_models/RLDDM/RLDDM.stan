@@ -10,6 +10,7 @@ data {
 
 	int<lower=-1,upper=1> accuracy[N];				// accuracy (-1, 1)
 	real<lower=0> rt[N];							// rt
+	int<lower=0, upper=1> feedback_type[N]; // feedback_type = 0 -> full feedback, feedback_type = 1 -> partial feedback
 
 	real initial_value;								// intial value for learning in the first block
 
@@ -72,8 +73,19 @@ transformed parameters {
 		threshold_t[n] = transf_threshold;
 		ndt_t[n] = transf_ndt;
 
-		Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha*PE_cor;
-		Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha*PE_inc;
+		if (feedback_type[n] == 1){
+      if(accuracy[n] == 1){
+        Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha*PE_cor;
+      }
+      else{
+        Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha*PE_inc;
+      }
+    }
+    else{
+      Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha*PE_cor;
+      Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha*PE_inc;
+    }
+
 	}
 }
 model {

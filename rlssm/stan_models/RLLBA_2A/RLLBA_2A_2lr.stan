@@ -90,37 +90,38 @@ functions{
 
 data {
 	int<lower=1> N;									// number of data items
-  int<lower=1> K;               // number of options
-  real initial_value;
-  int<lower=1> block_label[N];					// block label
-  int<lower=1> trial_block[N];					// trial within block
+     int<lower=1> K;               // number of options
+     real initial_value;
+     int<lower=1> block_label[N];					// block label
+     int<lower=1> trial_block[N];					// trial within block
 
-  vector[N] f_cor;								// feedback correct option
+     vector[N] f_cor;								// feedback correct option
 	vector[N] f_inc;								// feedback incorrect option
 
-  int<lower=1, upper=K> cor_option[N];			// correct option
+     int<lower=1, upper=K> cor_option[N];			// correct option
 	int<lower=1, upper=K> inc_option[N];			// incorrect option
 
 	int<lower=1,upper=2> accuracy[N];				// 1-> correct, 2->incorrect
 	real<lower=0> rt[N];							// rt
+     int<lower=0, upper=1> feedback_type[N]; // feedback_type = 0 -> full feedback, feedback_type = 1 -> partial feedback
 
-  vector[2] k_priors;
+     vector[2] k_priors;
 	vector[2] sp_trial_var_priors;
-  vector[2] ndt_priors;
-  vector[2] alpha_pos_priors;						// mean and sd of the alpha_pos prior
+     vector[2] ndt_priors;
+     vector[2] alpha_pos_priors;						// mean and sd of the alpha_pos prior
 	vector[2] alpha_neg_priors;						// mean and sd of the alpha_neg prior
 	vector[2] drift_scaling_priors;			// mean and sd of the prior for scaling
 }
 
 transformed data {
 	vector[K] Q0;
-  matrix [N, 2] RT;
+     matrix [N, 2] RT;
 
-  Q0 = rep_vector(initial_value, K);
+     Q0 = rep_vector(initial_value, K);
 
-  for (n in 1:N){
-    RT[n, 1] = rt[n];
-    RT[n, 2] = accuracy[n];
+     for (n in 1:N){
+          RT[n, 1] = rt[n];
+          RT[n, 2] = accuracy[n];
   }
 }
 
@@ -180,17 +181,35 @@ transformed parameters {
     drift_cor_t[n] = Q[cor_option[n]] * transf_drift_scaling;
     drift_inc_t[n] = Q[inc_option[n]] * transf_drift_scaling;
 
-    if (PE_cor >= 0) {
-			Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha_pos*PE_cor;
-		} else {
-			Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha_neg*PE_cor;
-		}
-		if (PE_inc >= 0) {
-			Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha_pos*PE_inc;
-		} else {
-			Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha_neg*PE_inc;
-		}
-	}
+    if (feedback_type[n] == 1){
+      if(accuracy[n] == 1){
+        if (PE_cor >= 0) {
+          Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha_pos*PE_cor;
+        } else {
+          Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha_neg*PE_cor;
+        }
+      }
+      else{
+        if (PE_inc >= 0) {
+          Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha_pos*PE_inc;
+        } else {
+          Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha_neg*PE_inc;
+        }
+      }
+    }
+    else{
+      if (PE_cor >= 0) {
+        Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha_pos*PE_cor;
+      } else {
+        Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha_neg*PE_cor;
+      }
+      if (PE_inc >= 0) {
+        Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha_pos*PE_inc;
+      } else {
+        Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha_neg*PE_inc;
+      }
+    }
+
 }
 
 model {

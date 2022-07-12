@@ -108,6 +108,7 @@ data {
 
 	int<lower=1,upper=2> accuracy[N];				// 1-> correct, 2->incorrect
 	real<lower=0> rt[N];							// rt
+     int<lower=0, upper=1> feedback_type[N]; // feedback_type = 0 -> full feedback, feedback_type = 1 -> partial feedback
 
   vector[4] k_priors;
 	vector[4] sp_trial_var_priors;
@@ -206,9 +207,20 @@ transformed parameters {
     drift_cor_t[n] = Q[cor_option[n]] * drift_scaling_sbj[participant[n]];
     drift_inc_t[n] = Q[inc_option[n]] * drift_scaling_sbj[participant[n]];
 
-    Q[cor_option[n]] = Q[cor_option[n]] + alpha_sbj[participant[n]]*PE_cor;
-		Q[inc_option[n]] = Q[inc_option[n]] + alpha_sbj[participant[n]]*PE_inc;
-	}
+    if (feedback_type[n] == 1){
+      if(accuracy[n] == 1){
+        Q[cor_option[n]] = Q[cor_option[n]] + alpha_sbj[participant[n]]*PE_cor;
+      }
+      else{
+        Q[inc_option[n]] = Q[inc_option[n]] + alpha_sbj[participant[n]]*PE_inc;
+      }
+    }
+    else{
+      Q[cor_option[n]] = Q[cor_option[n]] + alpha_sbj[participant[n]]*PE_cor;
+      Q[inc_option[n]] = Q[inc_option[n]] + alpha_sbj[participant[n]]*PE_inc;
+    }
+
+     }
 }
 
 model {

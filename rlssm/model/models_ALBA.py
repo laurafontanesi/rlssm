@@ -403,6 +403,9 @@ class RLALBAModel_2A(Model):
             - *accuracy*, 0 if the incorrect option was chosen,
               1 if the correct option was chosen.
 
+            - *feedback_type*, 0 if the complete feedback was presented,
+              1 if the partial feedback was presented.
+
             If the model is hierarchical, also include:
 
             - *participant*, the participant number.
@@ -533,6 +536,7 @@ class RLALBAModel_2A(Model):
                      'block_label': data['block_label'].values.astype(int),
                      'rt': data['rt'].values,
                      'accuracy': data['accuracy_rescale'].values.astype(int),
+                     'feedback_type': data['feedback_type'].values.astype(int),
                      'initial_value': initial_value_learning}
 
         if self.hierarchical_levels == 2:
