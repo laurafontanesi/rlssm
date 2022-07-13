@@ -11,3 +11,6 @@ class TestModelCreationRDM(unittest.TestCase):
         rdm_model = RDModel_2A(hierarchical_levels=hier_levels)
 
         check_pkl_file_existence(model_name=model_name, hier_levels=hier_levels)
+
+        # Test if the priors can be retrieved
+        _ = rdm_model.priors

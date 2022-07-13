@@ -21,7 +21,8 @@ class TestFitALBA(unittest.TestCase):
                               iter_sampling=500,
                               iter_warmup=500,
                               chains=2,
-                              parallel_chains=2)
+                              parallel_chains=2,
+                              ndt_priors={'mu': 0, 'sd': .1})
 
     def test_fit_ALBA_hier(self):
         hier_levels = 2
@@ -43,4 +44,5 @@ class TestFitALBA(unittest.TestCase):
                               iter_sampling=500,
                               iter_warmup=500,
                               chains=2,
-                              parallel_chains=2)
+                              parallel_chains=2,
+                              ndt_priors={'mu_mu': -1, 'sd_mu': .5, 'mu_sd': 0, 'sd_sd': 1})
