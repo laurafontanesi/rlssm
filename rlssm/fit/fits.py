@@ -26,6 +26,7 @@ class FittedModel(object):
         self.stan_model = stan_model
         self.model_label = model_label
         self.family = family
+        self.priors = priors
 
         # Print mcmc diagnostics...
         if print_diagnostics:
@@ -193,6 +194,7 @@ class ModelResults(object):
                  model_label,
                  data_info,
                  parameters_info,
+                 priors,
                  rhat,
                  waic,
                  last_values,
@@ -201,7 +203,7 @@ class ModelResults(object):
         self.model_label = model_label
         self.data_info = data_info
         self.parameters_info = parameters_info
-        # self.priors = priors
+        self.priors = priors
         self.rhat = rhat
         self.waic = waic
         self.last_values = last_values

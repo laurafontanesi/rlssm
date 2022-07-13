@@ -9,6 +9,28 @@ from rlssm.utility.utils import list_individual_variables
 
 
 class RLFittedModel_2A(FittedModel):
+
+    def __init__(self,
+                 stan_model,
+                 data,
+                 hierarchical_levels,
+                 model_label,
+                 family,
+                 n_parameters_individual,
+                 n_parameters_trial,
+                 print_diagnostics,
+                 priors):
+        self.family = family
+        super().__init__(stan_model,
+                         data,
+                         hierarchical_levels,
+                         model_label,
+                         family,
+                         n_parameters_individual,
+                         n_parameters_trial,
+                         print_diagnostics,
+                         priors)
+
     def extract_results(self, include_rhat, include_waic, pointwise_waic, include_last_values):
         if include_rhat:
             rhat = self.get_rhat()
@@ -45,11 +67,13 @@ class RLFittedModel_2A(FittedModel):
         res = RLModelResults_2A(self.model_label,
                                 self.data_info,
                                 self.parameters_info,
+                                self.priors,
                                 rhat,
                                 waic,
                                 last_values,
                                 samples,
-                                trial_samples)
+                                trial_samples,
+                                self.family)
         return res
 
 
@@ -62,6 +86,28 @@ class RLModelResults_2A(ModelResults):
     estimated posterior predictives distributions.
 
     """
+
+    def __init__(self,
+                 model_label,
+                 data_info,
+                 parameters_info,
+                 priors,
+                 rhat,
+                 waic,
+                 last_values,
+                 samples,
+                 trial_samples,
+                 family):
+        self.family = family
+        super().__init__(model_label,
+                         data_info,
+                         parameters_info,
+                         priors,
+                         rhat,
+                         waic,
+                         last_values,
+                         samples,
+                         trial_samples)
 
     def get_posterior_predictives(self, n_posterior_predictives=500):
         """Calculates posterior predictives of choices.
