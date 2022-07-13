@@ -1,6 +1,7 @@
 import os
 import unittest
 
+import numpy as np
 from matplotlib import pyplot as plt
 
 from rlssm.model.models_ARDM import RLARDModel_2A
@@ -13,6 +14,7 @@ class TestPlotRLARDM(unittest.TestCase):
         model = RLARDModel_2A(hierarchical_levels=1)
 
         data = load_example_dataset(hierarchical_levels=1)
+        data['feedback_type'] = np.array(1)
 
         model_fit = model.fit(data,
                               K=4,

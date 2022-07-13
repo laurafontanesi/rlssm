@@ -11,3 +11,6 @@ class TestModelCreationRLALBA(unittest.TestCase):
         rlalba_model = RLALBAModel_2A(hierarchical_levels=hier_levels)
 
         check_pkl_file_existence(model_name=model_name, hier_levels=hier_levels)
+
+        # Test if the priors can be retrieved
+        _ = rlalba_model.priors
