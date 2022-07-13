@@ -165,7 +165,6 @@ model {
      ws ~ normal(ws_priors[1], ws_priors[2]);
      wd ~ normal(wd_priors[1], wd_priors[2]);
      drift_variability ~ normal(drift_variability_priors[1], drift_variability_priors[2]);
-
      RT ~ lba(k_t, sp_trial_var_t, drift_cor_t, drift_inc_t, ndt_t, drift_variability_t);
 }
 

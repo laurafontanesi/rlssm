@@ -306,7 +306,7 @@ class RLALBAModel_2A(Model):
 
         self.separate_learning_rates = separate_learning_rates
 
-        self.n_parameters_individual = 7  # k, sp_trial_var, ndt, v0, ws, wd, learning rate
+        self.n_parameters_individual = 8  # k, sp_trial_var, ndt, v0, ws, wd, learning rate, drift variability
         self.n_parameters_trial = 0
 
         # Define default priors
@@ -320,7 +320,8 @@ class RLALBAModel_2A(Model):
                 alpha_neg_priors={'mu': 0, 'sd': 1},
                 v0_priors={'mu': 9, 'sd': 2},
                 ws_priors={'mu': 0, 'sd': 2},
-                wd_priors={'mu': 3, 'sd': 3}
+                wd_priors={'mu': 3, 'sd': 3},
+                drift_variability_priors={'mu': 1, 'sd': 1}
             )
         else:
             self.priors = dict(
@@ -332,7 +333,8 @@ class RLALBAModel_2A(Model):
                 alpha_neg_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': .1},
                 v0_priors={'mu_mu': 9, 'sd_mu': 3, 'mu_sd': 2, 'sd_sd': 1},
                 ws_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 2, 'sd_sd': 1},
-                wd_priors={'mu_mu': 3, 'sd_mu': 1, 'mu_sd': 3, 'sd_sd': 1}
+                wd_priors={'mu_mu': 3, 'sd_mu': 1, 'mu_sd': 3, 'sd_sd': 1},
+                drift_variability_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 1, 'sd_sd': 1}
             )
 
         # Set up model label and priors for mechanisms
@@ -363,6 +365,7 @@ class RLALBAModel_2A(Model):
             alpha_priors=None,
             alpha_pos_priors=None,
             alpha_neg_priors=None,
+            drift_variability_priors=None,
             include_rhat=True,
             include_waic=True,
             pointwise_waic=False,
@@ -468,7 +471,12 @@ class RLALBAModel_2A(Model):
             (only meaningful if separate_learning_rates is True).
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
-
+        
+        drift_variability_priors : dict, default None
+            Priors for the drift-variability parameter.
+            In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+            In case it is a hierarchical model: Means and standard deviations of the hyper priors.
+        
         include_rhat : bool, default True
             Whether to calculate the Gelman-Rubin convergence diagnostic r hat
             (Gelman & Rubin, 1992).
@@ -525,6 +533,8 @@ class RLALBAModel_2A(Model):
             self.priors['alpha_pos_priors'] = alpha_pos_priors
         if alpha_neg_priors is not None:
             self.priors['alpha_neg_priors'] = alpha_neg_priors
+        if drift_variability_priors is not None:
+            self.priors['drift_variability_priors'] = drift_variability_priors
 
         data_dict = {'N': N,
                      'K': K,
