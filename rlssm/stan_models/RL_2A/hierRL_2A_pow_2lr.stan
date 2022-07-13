@@ -11,6 +11,7 @@ data {
 	int<lower=1, upper=K> inc_option[N];			// incorrect option
 	int<lower=1> block_label[N];					// block label
 	int<lower=-1,upper=1> accuracy[N];				// accuracy (0, 1)
+	int<lower=0, upper=1> feedback_type[N]; // feedback_type = 0 -> full feedback, feedback_type = 1 -> partial feedback
 	real initial_value;								// intial value for learning in the first block
 	vector[4] alpha_pos_priors;						// mean and sd of the mu_alpha_pos prior and sd_alpha_pos prior
 	vector[4] alpha_neg_priors;						// mean and sd of the mu_alpha_neg prior and sd_alpha_neg prior
@@ -82,16 +83,35 @@ transformed parameters {
 		sensitivity_t[n] = (times_seen[n]/scaling_sbj[participant[n]])^consistency_sbj[participant[n]];
 		log_p_t[n] = sensitivity_t[n]*Q[cor_option[n]] - log(exp(sensitivity_t[n]*Q[cor_option[n]]) + exp(sensitivity_t[n]*Q[inc_option[n]]));
 
-		if (PE_cor >= 0) {
-			Q[cor_option[n]] = Q[cor_option[n]] + alpha_pos_sbj[participant[n]]*PE_cor;
-		} else {
-			Q[cor_option[n]] = Q[cor_option[n]] + alpha_neg_sbj[participant[n]]*PE_cor;
-		}
-		if (PE_inc >= 0) {
-			Q[inc_option[n]] = Q[inc_option[n]] + alpha_pos_sbj[participant[n]]*PE_inc;
-		} else {
-			Q[inc_option[n]] = Q[inc_option[n]] + alpha_neg_sbj[participant[n]]*PE_inc;
-		}
+		if (feedback_type[n] == 1){
+      if(accuracy[n] == 1){
+        if (PE_cor >= 0) {
+          Q[cor_option[n]] = Q[cor_option[n]] + alpha_pos_sbj[participant[n]]*PE_cor;
+        } else {
+          Q[cor_option[n]] = Q[cor_option[n]] + alpha_neg_sbj[participant[n]]*PE_cor;
+        }
+      }
+      else{
+        if (PE_inc >= 0) {
+          Q[inc_option[n]] = Q[inc_option[n]] + alpha_pos_sbj[participant[n]]*PE_inc;
+        } else {
+          Q[inc_option[n]] = Q[inc_option[n]] + alpha_neg_sbj[participant[n]]*PE_inc;
+        }
+      }
+    }
+    else{
+      if (PE_cor >= 0) {
+        Q[cor_option[n]] = Q[cor_option[n]] + alpha_pos_sbj[participant[n]]*PE_cor;
+      } else {
+        Q[cor_option[n]] = Q[cor_option[n]] + alpha_neg_sbj[participant[n]]*PE_cor;
+      }
+      if (PE_inc >= 0) {
+        Q[inc_option[n]] = Q[inc_option[n]] + alpha_pos_sbj[participant[n]]*PE_inc;
+      } else {
+        Q[inc_option[n]] = Q[inc_option[n]] + alpha_neg_sbj[participant[n]]*PE_inc;
+      }
+    }
+
 	}
 }
 model {

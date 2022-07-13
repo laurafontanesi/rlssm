@@ -9,6 +9,7 @@ data {
 	int<lower=1, upper=K> inc_option[N];			// incorrect option
 	int<lower=1> block_label[N];					// block label
 	int<lower=-1,upper=1> accuracy[N];				// accuracy (0, 1)
+	int<lower=0, upper=1> feedback_type[N]; // feedback_type = 0 -> full feedback, feedback_type = 1 -> partial feedback
 	real initial_value;								// intial value for learning in the first block
 	vector[2] alpha_pos_priors;						// mean and sd of the alpha_pos prior
 	vector[2] alpha_neg_priors;						// mean and sd of the alpha_neg prior
@@ -59,16 +60,35 @@ transformed parameters {
 		sensitivity_t[n] = (times_seen[n]/transf_scaling)^transf_consistency;
 		log_p_t[n] = sensitivity_t[n]*Q[cor_option[n]] - log(exp(sensitivity_t[n]*Q[cor_option[n]]) + exp(sensitivity_t[n]*Q[inc_option[n]]));
 
-		if (PE_cor >= 0) {
-			Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha_pos*PE_cor;
-		} else {
-			Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha_neg*PE_cor;
-		}
-		if (PE_inc >= 0) {
-			Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha_pos*PE_inc;
-		} else {
-			Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha_neg*PE_inc;
-		}
+		if (feedback_type[n] == 1){
+      if(accuracy[n] == 1){
+        if (PE_cor >= 0) {
+          Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha_pos*PE_cor;
+        } else {
+          Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha_neg*PE_cor;
+        }
+      }
+      else{
+        if (PE_inc >= 0) {
+          Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha_pos*PE_inc;
+        } else {
+          Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha_neg*PE_inc;
+        }
+      }
+    }
+    else{
+      if (PE_cor >= 0) {
+        Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha_pos*PE_cor;
+      } else {
+        Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha_neg*PE_cor;
+      }
+      if (PE_inc >= 0) {
+        Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha_pos*PE_inc;
+      } else {
+        Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha_neg*PE_inc;
+      }
+    }
+    
 	}
 }
 model {

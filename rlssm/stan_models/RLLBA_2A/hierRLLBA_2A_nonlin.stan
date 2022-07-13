@@ -157,7 +157,7 @@ parameters {
   real z_slop[L];
   real z_drift_asym[L];
   real z_drift_scaling[L];    // scaling
-  real z_drift_variability[L];    // scaling
+  real z_drift_variability[L];    
 }
 
 transformed parameters {
@@ -285,10 +285,10 @@ model {
 }
 
 generated quantities {
-    vector[N] log_lik;
-    {
-      for (n in 1:N){
-        log_lik[n] = lba_lpdf(block(RT, n, 1, 1, 2)| segment(k_t, n, 1), segment(sp_trial_var_t, n, 1), segment(drift_cor_t, n, 1), segment(drift_inc_t, n, 1), segment(ndt_t, n, 1), segment(drift_variability_t, n, 1));
-      }
+  vector[N] log_lik;
+  {
+    for (n in 1:N){
+      log_lik[n] = lba_lpdf(block(RT, n, 1, 1, 2)| segment(k_t, n, 1), segment(sp_trial_var_t, n, 1), segment(drift_cor_t, n, 1), segment(drift_inc_t, n, 1), segment(ndt_t, n, 1), segment(drift_variability_t, n, 1));
     }
+  }
 }

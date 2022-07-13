@@ -46,7 +46,7 @@ functions{
 
      }
 
-     real lba_lpdf(matrix RT, vector k, vector sp_trial_var, vector drift_cor, vector drift_inc, vector ndt){
+     real lba_lpdf(matrix RT, vector k, vector sp_trial_var, vector drift_cor, vector drift_inc, vector ndt, vector s){
 
           real t;
           real b;
@@ -55,8 +55,6 @@ functions{
           vector[rows(RT)] prob;
           real out;
           real prob_neg;
-          real s;
-          s = 1;
 
           for (i in 1:rows(RT)){
                b = sp_trial_var[i] + k[i];
@@ -65,14 +63,14 @@ functions{
                     cdf = 1;
 
                     if(RT[i,2] == 1){
-                      pdf = lba_pdf(t, b, sp_trial_var[i], drift_cor[i], s);
-                      cdf = 1-lba_cdf(t, b, sp_trial_var[i], drift_inc[i], s);
+                      pdf = lba_pdf(t, b, sp_trial_var[i], drift_cor[i], s[i]);
+                      cdf = 1-lba_cdf(t, b, sp_trial_var[i], drift_inc[i], s[i]);
                     }
                     else{
-                      pdf = lba_pdf(t, b, sp_trial_var[i], drift_inc[i], s);
-                      cdf = 1-lba_cdf(t, b, sp_trial_var[i], drift_cor[i], s);
+                      pdf = lba_pdf(t, b, sp_trial_var[i], drift_inc[i], s[i]);
+                      cdf = 1-lba_cdf(t, b, sp_trial_var[i], drift_cor[i], s[i]);
                     }
-                    prob_neg = Phi(-drift_cor[i]/s) * Phi(-drift_inc[i]/s);
+                    prob_neg = Phi(-drift_cor[i]/s[i]) * Phi(-drift_inc[i]/s[i]);
                     prob[i] = pdf*cdf;
                     prob[i] = prob[i]/(1-prob_neg);
                     if(prob[i] < 1e-10){
@@ -103,6 +101,7 @@ data {
 
 	int<lower=1,upper=2> accuracy[N];				// 1-> correct, 2->incorrect
 	real<lower=0> rt[N];							// rt
+  int<lower=0, upper=1> feedback_type[N]; // feedback_type = 0 -> full feedback, feedback_type = 1 -> partial feedback
 
   vector[2] k_priors;
 	vector[2] sp_trial_var_priors;
@@ -110,27 +109,29 @@ data {
   vector[2] alpha_pos_priors;						// mean and sd of the alpha_pos prior
 	vector[2] alpha_neg_priors;						// mean and sd of the alpha_neg prior
 	vector[2] drift_scaling_priors;			// mean and sd of the prior for scaling
+  vector[2] drift_variability_priors;
 }
 
 transformed data {
 	vector[K] Q0;
-  matrix [N, 2] RT;
+     matrix [N, 2] RT;
 
-  Q0 = rep_vector(initial_value, K);
+     Q0 = rep_vector(initial_value, K);
 
-  for (n in 1:N){
-    RT[n, 1] = rt[n];
-    RT[n, 2] = accuracy[n];
+     for (n in 1:N){
+          RT[n, 1] = rt[n];
+          RT[n, 2] = accuracy[n];
   }
 }
 
 parameters {
-   real k;
-   real sp_trial_var;
-   real ndt;
-   real alpha_pos;
- 	 real alpha_neg;
-   real drift_scaling;    // scaling
+  real k;
+  real sp_trial_var;
+  real ndt;
+  real alpha_pos;
+  real alpha_neg;
+  real drift_scaling;    // scaling
+  real drift_variability;
 }
 
 
@@ -140,6 +141,7 @@ transformed parameters {
   vector<lower=0> [N] ndt_t;				 // trial-by-trial ndt
 	vector<lower=0> [N] drift_cor_t;				// trial-by-trial drift rate for predictions
 	vector<lower=0> [N] drift_inc_t;				// trial-by-trial drift rate for predictions
+  vector<lower=0> [N] drift_variability_t;
 
   real PE_cor;			// prediction error correct option
 	real PE_inc;			// prediction error incorrect option
@@ -153,6 +155,7 @@ transformed parameters {
   real<lower=0, upper=1> transf_alpha_pos;
 	real<lower=0, upper=1> transf_alpha_neg;
 	real<lower=0> transf_drift_scaling;
+  real<lower=0> transf_drift_variability;
 
   transf_k = log(1 + exp(k));
 	transf_sp_trial_var = log(1 + exp(sp_trial_var));
@@ -160,6 +163,7 @@ transformed parameters {
   transf_alpha_pos = Phi(alpha_pos);
 	transf_alpha_neg = Phi(alpha_neg);
 	transf_drift_scaling = log(1 + exp(drift_scaling));
+  transf_drift_variability = log(1 + exp(drift_variability));
 
 	for (n in 1:N) {
     if (trial_block[n] == 1){
@@ -179,36 +183,56 @@ transformed parameters {
     ndt_t[n] = transf_ndt;
     drift_cor_t[n] = Q[cor_option[n]] * transf_drift_scaling;
     drift_inc_t[n] = Q[inc_option[n]] * transf_drift_scaling;
+    drift_variability_t[n] = transf_drift_variability;
 
-    if (PE_cor >= 0) {
-			Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha_pos*PE_cor;
-		} else {
-			Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha_neg*PE_cor;
-		}
-		if (PE_inc >= 0) {
-			Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha_pos*PE_inc;
-		} else {
-			Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha_neg*PE_inc;
-		}
-	}
+    if (feedback_type[n] == 1){
+      if(accuracy[n] == 1){
+        if (PE_cor >= 0) {
+          Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha_pos*PE_cor;
+        } else {
+          Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha_neg*PE_cor;
+        }
+      }
+      else{
+        if (PE_inc >= 0) {
+          Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha_pos*PE_inc;
+        } else {
+          Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha_neg*PE_inc;
+        }
+      }
+    }
+    else{
+      if (PE_cor >= 0) {
+        Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha_pos*PE_cor;
+      } else {
+        Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha_neg*PE_cor;
+      }
+      if (PE_inc >= 0) {
+        Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha_pos*PE_inc;
+      } else {
+        Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha_neg*PE_inc;
+      }
+    }
+
 }
 
 model {
-     k ~ normal(k_priors[1], k_priors[2]);
-     sp_trial_var ~ normal(sp_trial_var_priors[1], sp_trial_var_priors[2]);
-     ndt ~ normal(ndt_priors[1], ndt_priors[2]);
-     alpha_pos ~ normal(alpha_pos_priors[1], alpha_pos_priors[2]);
-   	 alpha_neg ~ normal(alpha_neg_priors[1], alpha_neg_priors[2]);
-   	 drift_scaling ~ normal(drift_scaling_priors[1], drift_scaling_priors[2]);
+  k ~ normal(k_priors[1], k_priors[2]);
+  sp_trial_var ~ normal(sp_trial_var_priors[1], sp_trial_var_priors[2]);
+  ndt ~ normal(ndt_priors[1], ndt_priors[2]);
+  alpha_pos ~ normal(alpha_pos_priors[1], alpha_pos_priors[2]);
+  alpha_neg ~ normal(alpha_neg_priors[1], alpha_neg_priors[2]);
+  drift_scaling ~ normal(drift_scaling_priors[1], drift_scaling_priors[2]);
+  drift_variability ~ normal(drift_variability_priors[1], drift_variability_priors[2]);
 
-     RT ~ lba(k_t, sp_trial_var_t, drift_cor_t, drift_inc_t, ndt_t);
+  RT ~ lba(k_t, sp_trial_var_t, drift_cor_t, drift_inc_t, ndt_t, drift_variability_t);
 }
 
 generated quantities {
-    vector[N] log_lik;
-  	{
-    	for (n in 1:N){
-    		log_lik[n] = lba_lpdf(block(RT, n, 1, 1, 2)| segment(k_t, n, 1), segment(sp_trial_var_t, n, 1), segment(drift_cor_t, n, 1), segment(drift_inc_t, n, 1), segment(ndt_t, n, 1));
-    	}
+  vector[N] log_lik;
+	{
+  	for (n in 1:N){
+  		log_lik[n] = lba_lpdf(block(RT, n, 1, 1, 2)| segment(k_t, n, 1), segment(sp_trial_var_t, n, 1), segment(drift_cor_t, n, 1), segment(drift_inc_t, n, 1), segment(ndt_t, n, 1), segment(drift_variability_t, n, 1));
   	}
+	}
 }

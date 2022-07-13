@@ -61,6 +61,7 @@ data{
   int<lower=1, upper=2> accuracy[N];				// accuracy (1->cor, 2->inc)
 
   real<lower=0> rt[N];							// reaction time
+  int<lower=0, upper=1> feedback_type[N]; // feedback_type = 0 -> full feedback, feedback_type = 1 -> partial feedback
 
   vector[2] alpha_priors;             // mean and sd of the prior for alpha
 	vector[2] drift_scaling_priors;			// mean and sd of the prior for scaling
@@ -129,8 +130,18 @@ transformed parameters {
     threshold_t[n] = transf_threshold;
 		ndt_t[n] = transf_ndt;
 
-    Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha*PE_cor;
-		Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha*PE_inc;
+    if (feedback_type[n] == 1){
+      if(accuracy[n] == 1){
+        Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha*PE_cor;
+      }
+      else{
+        Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha*PE_inc;
+      }
+    }
+    else{
+      Q[cor_option[n]] = Q[cor_option[n]] + transf_alpha*PE_cor;
+      Q[inc_option[n]] = Q[inc_option[n]] + transf_alpha*PE_inc;
+    }
 
   }
 

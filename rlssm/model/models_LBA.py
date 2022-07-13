@@ -393,6 +393,9 @@ class RLLBAModel_2A(Model):
 
             - *accuracy*, 0 if the incorrect option was chosen,
               1 if the correct option was chosen.
+              
+            - *feedback_type*, 0 if the complete feedback was presented,
+              1 if the partial feedback was presented.
 
             If the model is hierarchical, also include:
 
