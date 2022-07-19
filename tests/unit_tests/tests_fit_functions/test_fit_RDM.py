@@ -25,6 +25,8 @@ class TestFitRDM(unittest.TestCase):
                               chains=2,
                               parallel_chains=2)
 
+        assert not model_fit.get_posterior_predictives_df(100).empty, "Posterior predictives could not be retrieved"
+
     def test_fit_RDM_hier(self):
         hier_levels = 2
 
@@ -47,3 +49,5 @@ class TestFitRDM(unittest.TestCase):
                               iter_warmup=500,
                               chains=2,
                               parallel_chains=2)
+
+        assert not model_fit.get_posterior_predictives_df(100).empty, "Posterior predictives could not be retrieved"

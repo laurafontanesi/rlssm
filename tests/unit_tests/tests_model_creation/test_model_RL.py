@@ -12,5 +12,4 @@ class TestModelCreationRL(unittest.TestCase):
 
         check_pkl_file_existence(model_name=model_name, hier_levels=hier_levels)
 
-        # Test if the priors can be retrieved
-        _ = rl_model.priors
+        assert rl_model.priors is not None, "Priors of the model cannot be retrieved"
