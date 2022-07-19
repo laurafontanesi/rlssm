@@ -331,7 +331,7 @@ class RLLBAModel_2A(Model):
             self.model_label += '_nonlin'
             self.n_parameters_individual += 2
         else:
-            self.priors.pop('drift_scaling_priors', None)
+            # self.priors.pop('drift_scaling_priors', None)
             self.priors.pop('slop_priors', None)
 
         # Set the stan model path
