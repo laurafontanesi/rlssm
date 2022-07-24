@@ -1,6 +1,9 @@
 import os
+
+from rlssm.version import *
 from setuptools import setup, find_packages
-PACKAGES = find_packages()
+
+PACKAGES = find_packages(exclude=['tests.unit_tests*'])
 
 # Get version and release info, which is all stored in rlssm/version.py
 ver_file = os.path.join('rlssm', 'version.py')
@@ -25,7 +28,6 @@ opts = dict(name=NAME,
             install_requires=REQUIRES,
             include_package_data=True,
             requires=REQUIRES)
-
 
 if __name__ == '__main__':
     setup(**opts)
