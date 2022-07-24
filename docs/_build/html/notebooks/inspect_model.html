@@ -388,19 +388,19 @@ div.rendered_html tbody tr:hover {
 <section id="How-to-inspect-model-fit-results">
 <h1>How to inspect model fit results<a class="headerlink" href="#How-to-inspect-model-fit-results" title="Permalink to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">rlssm</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rlssm.utility.utils</span> <span class="kn">import</span> <span class="n">load_model_results</span>
 
 <span class="c1"># load non-hierarchical DDM fit:</span>
-<span class="n">model_fit_ddm</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">load_model_results</span><span class="p">(</span><span class="s1">&#39;/Users/laurafontanesi/git/rlssm/docs/notebooks/DDM.pkl&#39;</span><span class="p">)</span>
+<span class="n">model_fit_ddm</span> <span class="o">=</span> <span class="n">load_model_results</span><span class="p">(</span><span class="s1">&#39;DDM.pkl&#39;</span><span class="p">)</span>
 
 <span class="c1"># load non-hierarchical LBA fit:</span>
-<span class="n">model_fit_lba</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">load_model_results</span><span class="p">(</span><span class="s1">&#39;/Users/laurafontanesi/git/rlssm/docs/notebooks/LBA_2A.pkl&#39;</span><span class="p">)</span>
+<span class="n">model_fit_lba</span> <span class="o">=</span> <span class="n">load_model_results</span><span class="p">(</span><span class="s1">&#39;LBA_2A.pkl&#39;</span><span class="p">)</span>
 
 <span class="c1"># load hierarchical RL fit:</span>
-<span class="n">model_fit_rl</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">load_model_results</span><span class="p">(</span><span class="s1">&#39;/Users/laurafontanesi/git/rlssm/docs/notebooks/hierRL_2A.pkl&#39;</span><span class="p">)</span>
+<span class="n">model_fit_rl</span> <span class="o">=</span> <span class="n">load_model_results</span><span class="p">(</span><span class="s1">&#39;hierRL_2A.pkl&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -408,7 +408,7 @@ div.rendered_html tbody tr:hover {
 <h2>Posteriors<a class="headerlink" href="#Posteriors" title="Permalink to this heading"></a></h2>
 <p>The posterior samples are stored in <code class="docutils literal notranslate"><span class="pre">samples</span></code>:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">samples</span>
@@ -416,7 +416,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -438,8 +438,6 @@ div.rendered_html tbody tr:hover {
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>chain</th>
-      <th>draw</th>
       <th>transf_drift</th>
       <th>transf_threshold</th>
       <th>transf_ndt</th>
@@ -448,99 +446,77 @@ div.rendered_html tbody tr:hover {
   <tbody>
     <tr>
       <th>0</th>
-      <td>0</td>
-      <td>339</td>
-      <td>0.603124</td>
-      <td>1.290092</td>
-      <td>0.239343</td>
+      <td>0.717709</td>
+      <td>1.19665</td>
+      <td>0.252328</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0</td>
-      <td>784</td>
-      <td>0.795615</td>
-      <td>1.308542</td>
-      <td>0.240124</td>
+      <td>0.862188</td>
+      <td>1.27886</td>
+      <td>0.240830</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0</td>
-      <td>250</td>
-      <td>0.766659</td>
-      <td>1.299046</td>
-      <td>0.238052</td>
+      <td>0.677173</td>
+      <td>1.29392</td>
+      <td>0.245740</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0</td>
-      <td>498</td>
-      <td>0.909609</td>
-      <td>1.293544</td>
-      <td>0.242449</td>
+      <td>0.845948</td>
+      <td>1.27007</td>
+      <td>0.242185</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0</td>
-      <td>854</td>
-      <td>0.894703</td>
-      <td>1.304357</td>
-      <td>0.235697</td>
+      <td>0.630892</td>
+      <td>1.23442</td>
+      <td>0.242828</td>
     </tr>
     <tr>
       <th>...</th>
       <td>...</td>
       <td>...</td>
       <td>...</td>
-      <td>...</td>
-      <td>...</td>
     </tr>
     <tr>
-      <th>1995</th>
-      <td>1</td>
-      <td>482</td>
-      <td>0.893670</td>
-      <td>1.245259</td>
-      <td>0.245646</td>
+      <th>3995</th>
+      <td>0.623901</td>
+      <td>1.26809</td>
+      <td>0.245883</td>
     </tr>
     <tr>
-      <th>1996</th>
-      <td>1</td>
-      <td>882</td>
-      <td>0.862621</td>
-      <td>1.228198</td>
-      <td>0.248502</td>
+      <th>3996</th>
+      <td>1.032070</td>
+      <td>1.24095</td>
+      <td>0.249789</td>
     </tr>
     <tr>
-      <th>1997</th>
-      <td>1</td>
-      <td>571</td>
-      <td>0.732467</td>
-      <td>1.281621</td>
-      <td>0.235845</td>
+      <th>3997</th>
+      <td>0.817378</td>
+      <td>1.24481</td>
+      <td>0.250297</td>
     </tr>
     <tr>
-      <th>1998</th>
-      <td>1</td>
-      <td>403</td>
-      <td>0.767313</td>
-      <td>1.278530</td>
-      <td>0.243468</td>
+      <th>3998</th>
+      <td>0.612785</td>
+      <td>1.24213</td>
+      <td>0.248828</td>
     </tr>
     <tr>
-      <th>1999</th>
-      <td>1</td>
-      <td>998</td>
-      <td>0.812562</td>
-      <td>1.285636</td>
-      <td>0.242826</td>
+      <th>3999</th>
+      <td>0.589170</td>
+      <td>1.23884</td>
+      <td>0.247377</td>
     </tr>
   </tbody>
 </table>
-<p>2000 rows × 5 columns</p>
+<p>4000 rows × 3 columns</p>
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_rl</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -548,7 +524,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -570,8 +546,6 @@ div.rendered_html tbody tr:hover {
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>chain</th>
-      <th>draw</th>
       <th>transf_mu_alpha</th>
       <th>transf_mu_sensitivity</th>
       <th>alpha_sbj[1]</th>
@@ -580,6 +554,8 @@ div.rendered_html tbody tr:hover {
       <th>alpha_sbj[4]</th>
       <th>alpha_sbj[5]</th>
       <th>alpha_sbj[6]</th>
+      <th>alpha_sbj[7]</th>
+      <th>alpha_sbj[8]</th>
       <th>...</th>
       <th>sensitivity_sbj[18]</th>
       <th>sensitivity_sbj[19]</th>
@@ -596,204 +572,204 @@ div.rendered_html tbody tr:hover {
   <tbody>
     <tr>
       <th>count</th>
-      <td>2000.000000</td>
-      <td>2000.000000</td>
-      <td>2000.000000</td>
-      <td>2000.000000</td>
-      <td>2000.000000</td>
-      <td>2000.000000</td>
-      <td>2000.000000</td>
-      <td>2000.000000</td>
-      <td>2000.000000</td>
-      <td>2000.000000</td>
+      <td>3000.000000</td>
+      <td>3000.000000</td>
+      <td>3000.000000</td>
+      <td>3000.000000</td>
+      <td>3000.000000</td>
+      <td>3000.000000</td>
+      <td>3000.000000</td>
+      <td>3000.000000</td>
+      <td>3000.000000</td>
+      <td>3000.000000</td>
       <td>...</td>
-      <td>2000.000000</td>
-      <td>2000.000000</td>
-      <td>2000.000000</td>
-      <td>2000.000000</td>
-      <td>2000.000000</td>
-      <td>2000.000000</td>
-      <td>2000.000000</td>
-      <td>2000.000000</td>
-      <td>2000.000000</td>
-      <td>2000.000000</td>
+      <td>3000.000000</td>
+      <td>3000.000000</td>
+      <td>3000.000000</td>
+      <td>3000.000000</td>
+      <td>3000.000000</td>
+      <td>3000.000000</td>
+      <td>3000.000000</td>
+      <td>3000.000000</td>
+      <td>3000.000000</td>
+      <td>3000.000000</td>
     </tr>
     <tr>
       <th>mean</th>
-      <td>0.500000</td>
-      <td>499.500000</td>
-      <td>0.215143</td>
-      <td>0.459187</td>
-      <td>0.118446</td>
-      <td>0.038598</td>
-      <td>0.153991</td>
-      <td>0.125686</td>
-      <td>0.228167</td>
-      <td>0.176434</td>
+      <td>0.214249</td>
+      <td>0.457826</td>
+      <td>0.118764</td>
+      <td>0.040489</td>
+      <td>0.151461</td>
+      <td>0.127157</td>
+      <td>0.226088</td>
+      <td>0.172311</td>
+      <td>0.104653</td>
+      <td>0.277969</td>
       <td>...</td>
-      <td>0.186011</td>
-      <td>0.222761</td>
-      <td>0.345018</td>
-      <td>0.675645</td>
-      <td>0.594302</td>
-      <td>0.733052</td>
-      <td>0.380368</td>
-      <td>0.400283</td>
-      <td>0.207491</td>
-      <td>0.255721</td>
+      <td>0.185939</td>
+      <td>0.221454</td>
+      <td>0.346289</td>
+      <td>0.674229</td>
+      <td>0.588112</td>
+      <td>0.731539</td>
+      <td>0.379161</td>
+      <td>0.400781</td>
+      <td>0.202393</td>
+      <td>0.253733</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>0.500125</td>
-      <td>288.747186</td>
-      <td>0.026105</td>
-      <td>0.031864</td>
-      <td>0.049484</td>
-      <td>0.046423</td>
-      <td>0.070357</td>
-      <td>0.053255</td>
-      <td>0.081044</td>
-      <td>0.086367</td>
+      <td>0.025522</td>
+      <td>0.032404</td>
+      <td>0.049736</td>
+      <td>0.052076</td>
+      <td>0.068048</td>
+      <td>0.052428</td>
+      <td>0.080731</td>
+      <td>0.086851</td>
+      <td>0.033651</td>
+      <td>0.122217</td>
       <td>...</td>
-      <td>0.142018</td>
-      <td>0.035984</td>
-      <td>0.051357</td>
-      <td>0.129893</td>
-      <td>0.112983</td>
-      <td>0.162488</td>
-      <td>0.062239</td>
-      <td>0.142786</td>
-      <td>0.119114</td>
-      <td>0.064612</td>
+      <td>0.141403</td>
+      <td>0.037154</td>
+      <td>0.051928</td>
+      <td>0.131797</td>
+      <td>0.110670</td>
+      <td>0.151292</td>
+      <td>0.063514</td>
+      <td>0.142466</td>
+      <td>0.116487</td>
+      <td>0.061875</td>
     </tr>
     <tr>
       <th>min</th>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.137208</td>
-      <td>0.371670</td>
-      <td>0.013977</td>
-      <td>0.004837</td>
-      <td>0.016532</td>
-      <td>0.021659</td>
-      <td>0.030638</td>
-      <td>0.016090</td>
+      <td>0.142302</td>
+      <td>0.357274</td>
+      <td>0.013515</td>
+      <td>0.003605</td>
+      <td>0.006582</td>
+      <td>0.013048</td>
+      <td>0.030101</td>
+      <td>0.016365</td>
+      <td>0.028384</td>
+      <td>0.030795</td>
       <td>...</td>
-      <td>0.033029</td>
-      <td>0.134701</td>
-      <td>0.226670</td>
-      <td>0.383286</td>
-      <td>0.293426</td>
-      <td>0.361626</td>
-      <td>0.216227</td>
-      <td>0.165044</td>
-      <td>0.050049</td>
-      <td>0.129987</td>
+      <td>0.027643</td>
+      <td>0.127073</td>
+      <td>0.213504</td>
+      <td>0.341765</td>
+      <td>0.319400</td>
+      <td>0.344394</td>
+      <td>0.189188</td>
+      <td>0.174441</td>
+      <td>0.036081</td>
+      <td>0.124421</td>
     </tr>
     <tr>
       <th>25%</th>
-      <td>0.000000</td>
-      <td>249.750000</td>
-      <td>0.197125</td>
-      <td>0.437836</td>
-      <td>0.081938</td>
-      <td>0.017878</td>
-      <td>0.103897</td>
-      <td>0.087518</td>
-      <td>0.172536</td>
-      <td>0.111644</td>
+      <td>0.196320</td>
+      <td>0.435416</td>
+      <td>0.082543</td>
+      <td>0.018560</td>
+      <td>0.103149</td>
+      <td>0.088693</td>
+      <td>0.168907</td>
+      <td>0.105195</td>
+      <td>0.081160</td>
+      <td>0.181664</td>
       <td>...</td>
-      <td>0.074628</td>
-      <td>0.197551</td>
-      <td>0.308241</td>
-      <td>0.585866</td>
-      <td>0.514762</td>
-      <td>0.616664</td>
-      <td>0.336826</td>
-      <td>0.297846</td>
-      <td>0.116860</td>
-      <td>0.211426</td>
+      <td>0.075370</td>
+      <td>0.196641</td>
+      <td>0.309365</td>
+      <td>0.584314</td>
+      <td>0.513500</td>
+      <td>0.621587</td>
+      <td>0.334911</td>
+      <td>0.297599</td>
+      <td>0.115723</td>
+      <td>0.211779</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>0.500000</td>
-      <td>499.500000</td>
-      <td>0.214402</td>
-      <td>0.457982</td>
-      <td>0.111285</td>
-      <td>0.027213</td>
-      <td>0.142031</td>
-      <td>0.118346</td>
-      <td>0.222287</td>
-      <td>0.162954</td>
+      <td>0.213179</td>
+      <td>0.456558</td>
+      <td>0.112714</td>
+      <td>0.026869</td>
+      <td>0.142702</td>
+      <td>0.119975</td>
+      <td>0.221424</td>
+      <td>0.158769</td>
+      <td>0.099517</td>
+      <td>0.267643</td>
       <td>...</td>
-      <td>0.127833</td>
-      <td>0.218959</td>
-      <td>0.340830</td>
-      <td>0.661773</td>
-      <td>0.582411</td>
-      <td>0.714372</td>
-      <td>0.373471</td>
-      <td>0.366054</td>
-      <td>0.177753</td>
-      <td>0.242781</td>
+      <td>0.127223</td>
+      <td>0.217333</td>
+      <td>0.341615</td>
+      <td>0.657663</td>
+      <td>0.574439</td>
+      <td>0.712999</td>
+      <td>0.372571</td>
+      <td>0.371449</td>
+      <td>0.172813</td>
+      <td>0.242840</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>1.000000</td>
-      <td>749.250000</td>
-      <td>0.231833</td>
-      <td>0.478926</td>
-      <td>0.146284</td>
-      <td>0.043262</td>
-      <td>0.191607</td>
-      <td>0.154902</td>
-      <td>0.278837</td>
-      <td>0.228109</td>
+      <td>0.230834</td>
+      <td>0.479130</td>
+      <td>0.146820</td>
+      <td>0.042471</td>
+      <td>0.189205</td>
+      <td>0.157566</td>
+      <td>0.278585</td>
+      <td>0.224940</td>
+      <td>0.124438</td>
+      <td>0.360791</td>
       <td>...</td>
-      <td>0.266526</td>
-      <td>0.242577</td>
-      <td>0.375535</td>
-      <td>0.752205</td>
-      <td>0.657723</td>
-      <td>0.831164</td>
-      <td>0.416691</td>
-      <td>0.473252</td>
-      <td>0.266407</td>
-      <td>0.286889</td>
+      <td>0.268954</td>
+      <td>0.241431</td>
+      <td>0.375152</td>
+      <td>0.745119</td>
+      <td>0.649353</td>
+      <td>0.820376</td>
+      <td>0.414369</td>
+      <td>0.471044</td>
+      <td>0.257922</td>
+      <td>0.281974</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>1.000000</td>
-      <td>999.000000</td>
-      <td>0.322323</td>
-      <td>0.602965</td>
-      <td>0.386474</td>
-      <td>0.812427</td>
-      <td>0.538177</td>
-      <td>0.378176</td>
-      <td>0.540157</td>
-      <td>0.527946</td>
+      <td>0.307686</td>
+      <td>0.586162</td>
+      <td>0.373628</td>
+      <td>0.767424</td>
+      <td>0.483079</td>
+      <td>0.390912</td>
+      <td>0.624768</td>
+      <td>0.528733</td>
+      <td>0.264562</td>
+      <td>0.745650</td>
       <td>...</td>
-      <td>0.879778</td>
-      <td>0.582695</td>
-      <td>0.697668</td>
-      <td>1.244169</td>
-      <td>1.158730</td>
-      <td>1.626704</td>
-      <td>0.705096</td>
-      <td>1.150375</td>
-      <td>0.990639</td>
-      <td>0.711207</td>
+      <td>1.133140</td>
+      <td>0.627477</td>
+      <td>0.745796</td>
+      <td>1.292460</td>
+      <td>1.261130</td>
+      <td>1.429330</td>
+      <td>0.695992</td>
+      <td>1.393890</td>
+      <td>1.031570</td>
+      <td>0.680204</td>
     </tr>
   </tbody>
 </table>
-<p>8 rows × 58 columns</p>
+<p>8 rows × 56 columns</p>
 </div></div>
 </div>
 <p>You can simply plot the model’s posteriors using <code class="docutils literal notranslate"><span class="pre">plot_posteriors</span></code>:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">plot_posteriors</span><span class="p">();</span>
@@ -809,7 +785,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>By default, 95% HDIs are shown, but you can also choose to have the posteriors without intervals or BCIs, and change the alpha level:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_rl</span><span class="o">.</span><span class="n">plot_posteriors</span><span class="p">(</span><span class="n">show_intervals</span><span class="o">=</span><span class="s1">&#39;BCI&#39;</span><span class="p">,</span> <span class="n">alpha_intervals</span><span class="o">=</span><span class="mf">.01</span><span class="p">);</span>
@@ -827,7 +803,7 @@ div.rendered_html tbody tr:hover {
 <h3>Trial-level<a class="headerlink" href="#Trial-level" title="Permalink to this heading"></a></h3>
 <p>Depending on the model specification, you can also extract certain trial-level parameters as numpy ordered dictionaries of n_samples X n_trials shape:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">trial_samples</span><span class="p">[</span><span class="s1">&#39;drift_t&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
@@ -835,16 +811,16 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(2000, 400)
+(4000, 400)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">trial_samples</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
@@ -852,16 +828,16 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-odict_keys([&#39;drift_t&#39;, &#39;threshold_t&#39;, &#39;ndt_t&#39;])
+dict_keys([&#39;drift_t&#39;, &#39;threshold_t&#39;, &#39;ndt_t&#39;])
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_lba</span><span class="o">.</span><span class="n">trial_samples</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="c1"># for the LBA</span>
@@ -869,17 +845,17 @@ odict_keys([&#39;drift_t&#39;, &#39;threshold_t&#39;, &#39;ndt_t&#39;])
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-odict_keys([&#39;k_t&#39;, &#39;A_t&#39;, &#39;tau_t&#39;, &#39;drift_cor_t&#39;, &#39;drift_inc_t&#39;])
+dict_keys([&#39;k_t&#39;, &#39;sp_trial_var_t&#39;, &#39;ndt_t&#39;, &#39;drift_cor_t&#39;, &#39;drift_inc_t&#39;, &#39;drift_trial_var&#39;, &#39;drift_variability_t&#39;])
 </pre></div></div>
 </div>
 <p>In the case of a RL model fit on choices alone, you can extract the log probability of accuracy=1 for each trial:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_rl</span><span class="o">.</span><span class="n">trial_samples</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
@@ -887,16 +863,16 @@ odict_keys([&#39;k_t&#39;, &#39;A_t&#39;, &#39;tau_t&#39;, &#39;drift_cor_t&#39;
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-odict_keys([&#39;log_p_t&#39;])
+dict_keys([&#39;log_p_t&#39;])
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_rl</span><span class="o">.</span><span class="n">trial_samples</span><span class="p">[</span><span class="s1">&#39;log_p_t&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
@@ -904,12 +880,12 @@ odict_keys([&#39;log_p_t&#39;])
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(2000, 6464)
+(3000, 6464)
 </pre></div></div>
 </div>
 </section>
@@ -918,7 +894,7 @@ odict_keys([&#39;log_p_t&#39;])
 <h2>Posterior predictives<a class="headerlink" href="#Posterior-predictives" title="Permalink to this heading"></a></h2>
 <p>With <code class="docutils literal notranslate"><span class="pre">get_posterior_predictives_df</span></code> you get posterior predictives as pandas DataFrames of <code class="docutils literal notranslate"><span class="pre">n_posterior_predictives</span></code> X <code class="docutils literal notranslate"><span class="pre">n_trials</span></code> shape:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pp</span> <span class="o">=</span> <span class="n">model_fit_rl</span><span class="o">.</span><span class="n">get_posterior_predictives_df</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
@@ -927,7 +903,7 @@ odict_keys([&#39;log_p_t&#39;])
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1009,14 +985,14 @@ odict_keys([&#39;log_p_t&#39;])
       <th>1</th>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
-      <td>0</td>
+      <td>1</td>
       <td>...</td>
       <td>0</td>
       <td>1</td>
@@ -1027,11 +1003,11 @@ odict_keys([&#39;log_p_t&#39;])
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0</td>
+      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
@@ -1043,13 +1019,13 @@ odict_keys([&#39;log_p_t&#39;])
       <td>1</td>
       <td>...</td>
       <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
     </tr>
@@ -1057,11 +1033,11 @@ odict_keys([&#39;log_p_t&#39;])
       <th>3</th>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
-      <td>0</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
-      <td>1</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
@@ -1070,7 +1046,7 @@ odict_keys([&#39;log_p_t&#39;])
       <td>1</td>
       <td>1</td>
       <td>0</td>
-      <td>0</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
@@ -1079,34 +1055,34 @@ odict_keys([&#39;log_p_t&#39;])
     </tr>
     <tr>
       <th>4</th>
-      <td>0</td>
       <td>1</td>
       <td>0</td>
-      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
+      <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>0</td>
       <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>5</th>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
       <td>0</td>
+      <td>0</td>
+      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>0</td>
@@ -1117,13 +1093,13 @@ odict_keys([&#39;log_p_t&#39;])
       <td>0</td>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
       <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1152,60 +1128,60 @@ odict_keys([&#39;log_p_t&#39;])
     <tr>
       <th>996</th>
       <td>1</td>
-      <td>1</td>
-      <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>...</td>
       <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
       <td>1</td>
       <td>1</td>
     </tr>
     <tr>
       <th>997</th>
-      <td>1</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
       <td>1</td>
+      <td>1</td>
+      <td>0</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>...</td>
+      <td>1</td>
+      <td>1</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
       <td>0</td>
-      <td>0</td>
-      <td>0</td>
       <td>1</td>
-      <td>0</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
     </tr>
     <tr>
       <th>998</th>
+      <td>1</td>
+      <td>1</td>
       <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
@@ -1213,33 +1189,33 @@ odict_keys([&#39;log_p_t&#39;])
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
-      <td>0</td>
     </tr>
     <tr>
       <th>999</th>
       <td>1</td>
       <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>0</td>
       <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>...</td>
-      <td>0</td>
-      <td>0</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
@@ -1259,9 +1235,9 @@ odict_keys([&#39;log_p_t&#39;])
       <td>1</td>
       <td>...</td>
       <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>0</td>
-      <td>1</td>
-      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
@@ -1276,7 +1252,7 @@ odict_keys([&#39;log_p_t&#39;])
 </div>
 <p>For the DDM, you have additional parameters to tweak the DDM simulations, and you get a DataFrame with a hierarchical column index, for RTs and for accuracy:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pp</span> <span class="o">=</span> <span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">get_posterior_predictives_df</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">.001</span><span class="p">)</span>
@@ -1285,7 +1261,7 @@ odict_keys([&#39;log_p_t&#39;])
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1367,120 +1343,120 @@ odict_keys([&#39;log_p_t&#39;])
   <tbody>
     <tr>
       <th>1</th>
-      <td>0.383343</td>
-      <td>0.662343</td>
-      <td>0.639343</td>
-      <td>0.748343</td>
-      <td>0.775343</td>
-      <td>1.179343</td>
-      <td>1.619343</td>
-      <td>0.398343</td>
-      <td>1.047343</td>
-      <td>0.329343</td>
+      <td>0.579328</td>
+      <td>0.307328</td>
+      <td>0.442328</td>
+      <td>0.450328</td>
+      <td>0.685328</td>
+      <td>0.495328</td>
+      <td>0.562328</td>
+      <td>0.584328</td>
+      <td>0.328328</td>
+      <td>0.557328</td>
       <td>...</td>
-      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.994124</td>
-      <td>0.333124</td>
-      <td>0.549124</td>
-      <td>0.848124</td>
-      <td>1.027124</td>
-      <td>0.310124</td>
-      <td>0.425124</td>
-      <td>0.601124</td>
-      <td>0.476124</td>
-      <td>0.536124</td>
+      <td>0.589830</td>
+      <td>1.349830</td>
+      <td>1.107830</td>
+      <td>1.312830</td>
+      <td>1.418830</td>
+      <td>0.525830</td>
+      <td>0.492830</td>
+      <td>0.582830</td>
+      <td>0.702830</td>
+      <td>1.414830</td>
       <td>...</td>
       <td>1.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>0.0</td>
       <td>1.0</td>
       <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>1.307052</td>
-      <td>0.686052</td>
-      <td>0.457052</td>
-      <td>0.343052</td>
-      <td>0.367052</td>
-      <td>0.612052</td>
-      <td>0.284052</td>
-      <td>0.650052</td>
-      <td>0.381052</td>
-      <td>0.615052</td>
+      <td>0.335740</td>
+      <td>0.335740</td>
+      <td>0.408740</td>
+      <td>0.395740</td>
+      <td>0.406740</td>
+      <td>0.754740</td>
+      <td>0.323740</td>
+      <td>0.544740</td>
+      <td>0.672740</td>
+      <td>0.839740</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>0.0</td>
       <td>1.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.642449</td>
-      <td>0.535449</td>
-      <td>0.388449</td>
-      <td>0.470449</td>
-      <td>0.649449</td>
-      <td>0.523449</td>
-      <td>0.338449</td>
-      <td>0.557449</td>
-      <td>0.581449</td>
-      <td>0.606449</td>
+      <td>0.469185</td>
+      <td>0.741185</td>
+      <td>0.410185</td>
+      <td>1.002185</td>
+      <td>0.442185</td>
+      <td>0.352185</td>
+      <td>1.940185</td>
+      <td>0.629185</td>
+      <td>0.828185</td>
+      <td>0.553185</td>
       <td>...</td>
       <td>1.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.842697</td>
-      <td>1.535697</td>
-      <td>0.721697</td>
-      <td>0.316697</td>
-      <td>0.708697</td>
-      <td>1.516697</td>
-      <td>0.363697</td>
-      <td>0.751697</td>
-      <td>0.417697</td>
-      <td>0.544697</td>
+      <td>0.360828</td>
+      <td>0.579828</td>
+      <td>0.534828</td>
+      <td>0.453828</td>
+      <td>0.302828</td>
+      <td>0.440828</td>
+      <td>0.876828</td>
+      <td>0.754828</td>
+      <td>0.615828</td>
+      <td>0.396828</td>
       <td>...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
       <td>0.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
       <td>0.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1511,18 +1487,18 @@ odict_keys([&#39;log_p_t&#39;])
     </tr>
     <tr>
       <th>96</th>
-      <td>0.496667</td>
-      <td>0.334667</td>
-      <td>0.872667</td>
-      <td>0.771667</td>
-      <td>0.389667</td>
-      <td>0.434667</td>
-      <td>0.425667</td>
-      <td>1.027667</td>
-      <td>0.433667</td>
-      <td>0.358667</td>
+      <td>1.027233</td>
+      <td>0.620233</td>
+      <td>0.322233</td>
+      <td>0.319233</td>
+      <td>0.460233</td>
+      <td>1.063233</td>
+      <td>0.812233</td>
+      <td>0.473233</td>
+      <td>0.907233</td>
+      <td>0.532233</td>
       <td>...</td>
-      <td>1.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1530,97 +1506,95 @@ odict_keys([&#39;log_p_t&#39;])
       <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>1.0</td>
+      <td>0.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>97</th>
-      <td>0.328090</td>
-      <td>0.558090</td>
-      <td>0.444090</td>
-      <td>0.516090</td>
-      <td>1.467090</td>
-      <td>0.736090</td>
-      <td>1.013090</td>
-      <td>0.312090</td>
-      <td>0.405090</td>
-      <td>0.328090</td>
+      <td>0.294155</td>
+      <td>0.747155</td>
+      <td>0.590155</td>
+      <td>0.425155</td>
+      <td>0.395155</td>
+      <td>1.066155</td>
+      <td>0.401155</td>
+      <td>0.452155</td>
+      <td>0.465155</td>
+      <td>0.874155</td>
       <td>...</td>
       <td>1.0</td>
-      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
     </tr>
     <tr>
       <th>98</th>
-      <td>0.424736</td>
-      <td>0.395736</td>
-      <td>0.576736</td>
-      <td>0.411736</td>
-      <td>0.324736</td>
-      <td>0.497736</td>
-      <td>0.520736</td>
-      <td>0.741736</td>
-      <td>0.510736</td>
-      <td>1.300736</td>
+      <td>0.836374</td>
+      <td>0.749374</td>
+      <td>0.449374</td>
+      <td>0.784374</td>
+      <td>0.376374</td>
+      <td>0.500374</td>
+      <td>1.025374</td>
+      <td>0.384374</td>
+      <td>0.439374</td>
+      <td>0.302374</td>
       <td>...</td>
       <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>1.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>0.0</td>
       <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
       <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>1.000664</td>
-      <td>0.364664</td>
-      <td>0.521664</td>
-      <td>0.370664</td>
-      <td>0.387664</td>
-      <td>0.732664</td>
-      <td>0.794664</td>
-      <td>0.369664</td>
-      <td>0.780664</td>
-      <td>0.353664</td>
+      <td>0.539820</td>
+      <td>1.072820</td>
+      <td>0.399820</td>
+      <td>0.315820</td>
+      <td>0.571820</td>
+      <td>0.310820</td>
+      <td>0.284820</td>
+      <td>0.737820</td>
+      <td>0.489820</td>
+      <td>0.400820</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>0.0</td>
       <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>0.0</td>
       <td>1.0</td>
-      <td>0.0</td>
     </tr>
     <tr>
       <th>100</th>
-      <td>0.956275</td>
-      <td>0.396275</td>
-      <td>0.968275</td>
-      <td>0.416275</td>
-      <td>0.418275</td>
-      <td>1.048275</td>
-      <td>1.015275</td>
-      <td>0.706275</td>
-      <td>0.383275</td>
-      <td>0.395275</td>
+      <td>0.364635</td>
+      <td>0.683635</td>
+      <td>0.843635</td>
+      <td>0.759635</td>
+      <td>0.339635</td>
+      <td>0.699635</td>
+      <td>0.623635</td>
+      <td>0.929635</td>
+      <td>0.564635</td>
+      <td>0.647635</td>
       <td>...</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>0.0</td>
@@ -1628,6 +1602,8 @@ odict_keys([&#39;log_p_t&#39;])
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
     </tr>
   </tbody>
 </table>
@@ -1637,7 +1613,7 @@ odict_keys([&#39;log_p_t&#39;])
 <p>You can also have posterior predictive summaries with <code class="docutils literal notranslate"><span class="pre">get_posterior_predictives_summary</span></code>.</p>
 <p>Only mean accuracy for RL models fit on choices alone, and also mean RTs, skewness and quantiles for lower and upper boundaries for models fitted on RTs as well.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_rl</span><span class="o">.</span><span class="n">get_posterior_predictives_summary</span><span class="p">()</span>
@@ -1645,7 +1621,7 @@ odict_keys([&#39;log_p_t&#39;])
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1677,23 +1653,23 @@ odict_keys([&#39;log_p_t&#39;])
   <tbody>
     <tr>
       <th>1</th>
-      <td>0.799814</td>
+      <td>0.797494</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.802754</td>
+      <td>0.799969</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.803373</td>
+      <td>0.794400</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.800743</td>
+      <td>0.808787</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.806312</td>
+      <td>0.797649</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1701,23 +1677,23 @@ odict_keys([&#39;log_p_t&#39;])
     </tr>
     <tr>
       <th>496</th>
-      <td>0.804301</td>
+      <td>0.801052</td>
     </tr>
     <tr>
       <th>497</th>
-      <td>0.809561</td>
-    </tr>
-    <tr>
-      <th>498</th>
       <td>0.807550</td>
     </tr>
     <tr>
+      <th>498</th>
+      <td>0.802444</td>
+    </tr>
+    <tr>
       <th>499</th>
-      <td>0.800588</td>
+      <td>0.801825</td>
     </tr>
     <tr>
       <th>500</th>
-      <td>0.793472</td>
+      <td>0.800897</td>
     </tr>
   </tbody>
 </table>
@@ -1725,7 +1701,7 @@ odict_keys([&#39;log_p_t&#39;])
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">get_posterior_predictives_summary</span><span class="p">()</span>
@@ -1733,7 +1709,7 @@ odict_keys([&#39;log_p_t&#39;])
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1789,83 +1765,83 @@ odict_keys([&#39;log_p_t&#39;])
   <tbody>
     <tr>
       <th>1</th>
-      <td>0.6650</td>
-      <td>0.670093</td>
-      <td>2.045784</td>
-      <td>0.346243</td>
-      <td>0.460143</td>
-      <td>0.568843</td>
-      <td>0.761643</td>
-      <td>1.152343</td>
-      <td>0.351843</td>
-      <td>0.434843</td>
-      <td>0.550343</td>
-      <td>0.720843</td>
-      <td>1.103843</td>
+      <td>0.7000</td>
+      <td>0.603093</td>
+      <td>2.122648</td>
+      <td>0.367028</td>
+      <td>0.437728</td>
+      <td>0.542328</td>
+      <td>0.723928</td>
+      <td>1.095928</td>
+      <td>0.355328</td>
+      <td>0.434028</td>
+      <td>0.503828</td>
+      <td>0.604628</td>
+      <td>0.920528</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.7500</td>
-      <td>0.658724</td>
-      <td>1.576743</td>
-      <td>0.392724</td>
-      <td>0.471524</td>
-      <td>0.565624</td>
-      <td>0.725624</td>
-      <td>1.049824</td>
-      <td>0.348024</td>
-      <td>0.423524</td>
-      <td>0.567624</td>
-      <td>0.703324</td>
-      <td>1.168924</td>
+      <td>0.7725</td>
+      <td>0.611410</td>
+      <td>3.040186</td>
+      <td>0.346830</td>
+      <td>0.414830</td>
+      <td>0.525830</td>
+      <td>0.695830</td>
+      <td>0.968830</td>
+      <td>0.339830</td>
+      <td>0.420630</td>
+      <td>0.524830</td>
+      <td>0.653030</td>
+      <td>1.008830</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.7025</td>
-      <td>0.669302</td>
-      <td>2.188532</td>
-      <td>0.363052</td>
-      <td>0.480652</td>
-      <td>0.589052</td>
-      <td>0.779852</td>
-      <td>1.210852</td>
-      <td>0.348052</td>
-      <td>0.455052</td>
-      <td>0.546052</td>
-      <td>0.723052</td>
-      <td>1.068052</td>
+      <td>0.7275</td>
+      <td>0.686985</td>
+      <td>2.001093</td>
+      <td>0.368140</td>
+      <td>0.455540</td>
+      <td>0.558740</td>
+      <td>0.713740</td>
+      <td>1.022940</td>
+      <td>0.349740</td>
+      <td>0.460740</td>
+      <td>0.579740</td>
+      <td>0.781740</td>
+      <td>1.170740</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.7875</td>
-      <td>0.640931</td>
-      <td>2.890019</td>
-      <td>0.361849</td>
-      <td>0.446049</td>
-      <td>0.526449</td>
-      <td>0.699049</td>
-      <td>1.110649</td>
-      <td>0.363849</td>
-      <td>0.432649</td>
-      <td>0.543449</td>
-      <td>0.695449</td>
-      <td>0.987649</td>
+      <td>0.7075</td>
+      <td>0.623600</td>
+      <td>1.327933</td>
+      <td>0.373385</td>
+      <td>0.449985</td>
+      <td>0.557185</td>
+      <td>0.712385</td>
+      <td>1.133385</td>
+      <td>0.336185</td>
+      <td>0.413585</td>
+      <td>0.516185</td>
+      <td>0.682185</td>
+      <td>1.016585</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.7625</td>
-      <td>0.632817</td>
-      <td>1.456125</td>
-      <td>0.338897</td>
-      <td>0.389897</td>
-      <td>0.481697</td>
-      <td>0.626897</td>
-      <td>1.060897</td>
-      <td>0.361097</td>
-      <td>0.442697</td>
-      <td>0.559697</td>
-      <td>0.754097</td>
-      <td>1.007497</td>
+      <td>0.6600</td>
+      <td>0.616691</td>
+      <td>1.690637</td>
+      <td>0.350328</td>
+      <td>0.429828</td>
+      <td>0.549328</td>
+      <td>0.716328</td>
+      <td>1.036328</td>
+      <td>0.344828</td>
+      <td>0.430728</td>
+      <td>0.512828</td>
+      <td>0.662928</td>
+      <td>0.941228</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1885,83 +1861,83 @@ odict_keys([&#39;log_p_t&#39;])
     </tr>
     <tr>
       <th>496</th>
-      <td>0.6950</td>
-      <td>0.615908</td>
-      <td>1.971778</td>
-      <td>0.352350</td>
-      <td>0.408850</td>
-      <td>0.505750</td>
-      <td>0.665450</td>
-      <td>0.982550</td>
-      <td>0.337250</td>
-      <td>0.435350</td>
-      <td>0.543750</td>
-      <td>0.687050</td>
-      <td>1.004750</td>
+      <td>0.7500</td>
+      <td>0.633288</td>
+      <td>1.744174</td>
+      <td>0.360446</td>
+      <td>0.474046</td>
+      <td>0.550646</td>
+      <td>0.662546</td>
+      <td>0.990046</td>
+      <td>0.354346</td>
+      <td>0.440346</td>
+      <td>0.557646</td>
+      <td>0.689646</td>
+      <td>1.003046</td>
     </tr>
     <tr>
       <th>497</th>
-      <td>0.8025</td>
-      <td>0.651565</td>
-      <td>2.103909</td>
-      <td>0.376220</td>
-      <td>0.435420</td>
-      <td>0.567020</td>
-      <td>0.728620</td>
-      <td>1.113820</td>
-      <td>0.352020</td>
-      <td>0.434020</td>
-      <td>0.536020</td>
-      <td>0.710020</td>
-      <td>1.085020</td>
+      <td>0.7350</td>
+      <td>0.626251</td>
+      <td>1.708344</td>
+      <td>0.369431</td>
+      <td>0.459931</td>
+      <td>0.567431</td>
+      <td>0.734431</td>
+      <td>1.098431</td>
+      <td>0.364731</td>
+      <td>0.458231</td>
+      <td>0.525431</td>
+      <td>0.667831</td>
+      <td>1.014331</td>
     </tr>
     <tr>
       <th>498</th>
       <td>0.7525</td>
-      <td>0.604910</td>
-      <td>1.602822</td>
-      <td>0.328585</td>
-      <td>0.448785</td>
-      <td>0.573785</td>
-      <td>0.717585</td>
-      <td>0.966385</td>
-      <td>0.340785</td>
-      <td>0.429785</td>
-      <td>0.519785</td>
-      <td>0.662785</td>
-      <td>0.956785</td>
+      <td>0.650620</td>
+      <td>1.737055</td>
+      <td>0.377348</td>
+      <td>0.480748</td>
+      <td>0.591748</td>
+      <td>0.756348</td>
+      <td>1.205548</td>
+      <td>0.348748</td>
+      <td>0.424748</td>
+      <td>0.549748</td>
+      <td>0.690748</td>
+      <td>1.067748</td>
     </tr>
     <tr>
       <th>499</th>
-      <td>0.7425</td>
-      <td>0.624212</td>
-      <td>1.663869</td>
-      <td>0.346202</td>
-      <td>0.433202</td>
-      <td>0.536402</td>
-      <td>0.619802</td>
-      <td>0.957202</td>
-      <td>0.347602</td>
-      <td>0.451402</td>
-      <td>0.552402</td>
-      <td>0.722202</td>
-      <td>1.003002</td>
+      <td>0.7800</td>
+      <td>0.626368</td>
+      <td>1.493517</td>
+      <td>0.336625</td>
+      <td>0.459025</td>
+      <td>0.620725</td>
+      <td>0.765025</td>
+      <td>1.098525</td>
+      <td>0.355925</td>
+      <td>0.446725</td>
+      <td>0.545225</td>
+      <td>0.688525</td>
+      <td>0.942425</td>
     </tr>
     <tr>
       <th>500</th>
       <td>0.7625</td>
-      <td>0.636005</td>
-      <td>2.907804</td>
-      <td>0.344582</td>
-      <td>0.429582</td>
-      <td>0.522382</td>
-      <td>0.681182</td>
-      <td>1.085382</td>
-      <td>0.350382</td>
-      <td>0.440582</td>
-      <td>0.537382</td>
-      <td>0.698582</td>
-      <td>1.021982</td>
+      <td>0.637399</td>
+      <td>2.078619</td>
+      <td>0.344294</td>
+      <td>0.418894</td>
+      <td>0.540894</td>
+      <td>0.693094</td>
+      <td>0.855494</td>
+      <td>0.340894</td>
+      <td>0.428494</td>
+      <td>0.534894</td>
+      <td>0.693694</td>
+      <td>1.146094</td>
     </tr>
   </tbody>
 </table>
@@ -1970,15 +1946,24 @@ odict_keys([&#39;log_p_t&#39;])
 </div>
 <p>You can also specify which quantiles you are interested in:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_lba</span><span class="o">.</span><span class="n">get_posterior_predictives_summary</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">quantiles</span><span class="o">=</span><span class="p">[</span><span class="mf">.1</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">.9</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/andrei/PycharmProjects/rlssm/rlssm/fit/fits_LBA.py:173: UserWarning: Cannot have more posterior predictive samples than posterior samples. Will continue with n_posterior_predictives=100
+  pp_rt, pp_acc = self.get_posterior_predictives(n_posterior_predictives, **kwargs)
+</pre></div></div>
+</div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -2026,63 +2011,63 @@ odict_keys([&#39;log_p_t&#39;])
   <tbody>
     <tr>
       <th>1</th>
-      <td>0.858333</td>
-      <td>1.721248</td>
-      <td>1.746695</td>
-      <td>1.477207</td>
-      <td>1.835347</td>
-      <td>2.437212</td>
-      <td>1.289665</td>
-      <td>1.589248</td>
-      <td>2.239182</td>
+      <td>0.829167</td>
+      <td>1.753300</td>
+      <td>0.174493</td>
+      <td>1.523816</td>
+      <td>1.728478</td>
+      <td>2.286540</td>
+      <td>1.153288</td>
+      <td>1.708179</td>
+      <td>2.391702</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.850000</td>
-      <td>1.711749</td>
-      <td>2.070015</td>
-      <td>1.353934</td>
-      <td>1.743663</td>
-      <td>2.418908</td>
-      <td>1.249635</td>
-      <td>1.564929</td>
-      <td>2.175558</td>
+      <td>0.925000</td>
+      <td>1.636785</td>
+      <td>0.121633</td>
+      <td>1.702577</td>
+      <td>1.903884</td>
+      <td>2.165853</td>
+      <td>1.127508</td>
+      <td>1.562667</td>
+      <td>2.160312</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.812500</td>
-      <td>1.737245</td>
-      <td>1.874562</td>
-      <td>1.516550</td>
-      <td>1.909714</td>
-      <td>2.711531</td>
-      <td>1.215915</td>
-      <td>1.550399</td>
-      <td>2.272305</td>
+      <td>0.775000</td>
+      <td>1.705099</td>
+      <td>0.228576</td>
+      <td>1.504233</td>
+      <td>1.821859</td>
+      <td>2.184460</td>
+      <td>1.044622</td>
+      <td>1.603953</td>
+      <td>2.409075</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.875000</td>
-      <td>1.629739</td>
-      <td>1.314279</td>
-      <td>1.337575</td>
-      <td>1.594347</td>
-      <td>2.075680</td>
-      <td>1.219060</td>
-      <td>1.536317</td>
-      <td>2.125802</td>
+      <td>0.866667</td>
+      <td>1.821112</td>
+      <td>-0.005845</td>
+      <td>1.582099</td>
+      <td>1.861148</td>
+      <td>2.415493</td>
+      <td>1.112720</td>
+      <td>1.827975</td>
+      <td>2.453325</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.841667</td>
-      <td>1.648190</td>
-      <td>2.309592</td>
-      <td>1.304721</td>
-      <td>1.557302</td>
-      <td>2.144594</td>
-      <td>1.228440</td>
-      <td>1.531487</td>
-      <td>2.100375</td>
+      <td>0.866667</td>
+      <td>1.735519</td>
+      <td>0.140312</td>
+      <td>1.443032</td>
+      <td>1.741435</td>
+      <td>2.307425</td>
+      <td>1.033040</td>
+      <td>1.722988</td>
+      <td>2.487626</td>
     </tr>
     <tr>
       <th>...</th>
@@ -2097,73 +2082,73 @@ odict_keys([&#39;log_p_t&#39;])
       <td>...</td>
     </tr>
     <tr>
-      <th>196</th>
-      <td>0.883333</td>
-      <td>1.719413</td>
-      <td>2.057477</td>
-      <td>1.576292</td>
-      <td>1.939482</td>
-      <td>2.982563</td>
-      <td>1.218782</td>
-      <td>1.544592</td>
-      <td>2.283167</td>
+      <th>96</th>
+      <td>0.854167</td>
+      <td>1.763710</td>
+      <td>0.150697</td>
+      <td>1.444318</td>
+      <td>1.808859</td>
+      <td>2.295962</td>
+      <td>1.106630</td>
+      <td>1.726433</td>
+      <td>2.449523</td>
     </tr>
     <tr>
-      <th>197</th>
+      <th>97</th>
+      <td>0.887500</td>
+      <td>1.723832</td>
+      <td>0.124932</td>
+      <td>1.529092</td>
+      <td>1.817219</td>
+      <td>2.078675</td>
+      <td>1.150373</td>
+      <td>1.674132</td>
+      <td>2.352047</td>
+    </tr>
+    <tr>
+      <th>98</th>
+      <td>0.937500</td>
+      <td>1.695637</td>
+      <td>0.030883</td>
+      <td>1.736310</td>
+      <td>1.914860</td>
+      <td>2.029197</td>
+      <td>1.125555</td>
+      <td>1.681367</td>
+      <td>2.250532</td>
+    </tr>
+    <tr>
+      <th>99</th>
       <td>0.908333</td>
-      <td>1.623029</td>
-      <td>1.669531</td>
-      <td>1.286818</td>
-      <td>1.684597</td>
-      <td>2.031900</td>
-      <td>1.211736</td>
-      <td>1.512554</td>
-      <td>2.172847</td>
+      <td>1.746476</td>
+      <td>-0.060062</td>
+      <td>1.705520</td>
+      <td>1.906129</td>
+      <td>2.156059</td>
+      <td>1.109492</td>
+      <td>1.750625</td>
+      <td>2.342846</td>
     </tr>
     <tr>
-      <th>198</th>
-      <td>0.891667</td>
-      <td>167.991497</td>
-      <td>15.491932</td>
-      <td>1.290854</td>
-      <td>1.626846</td>
-      <td>3.500035</td>
-      <td>1.209622</td>
-      <td>1.526332</td>
-      <td>2.445680</td>
-    </tr>
-    <tr>
-      <th>199</th>
-      <td>0.904167</td>
-      <td>1.672464</td>
-      <td>4.330050</td>
-      <td>1.579026</td>
-      <td>2.011868</td>
-      <td>2.988423</td>
-      <td>1.209593</td>
-      <td>1.535032</td>
-      <td>1.992702</td>
-    </tr>
-    <tr>
-      <th>200</th>
-      <td>0.891667</td>
-      <td>1.662455</td>
-      <td>1.442103</td>
-      <td>1.374941</td>
-      <td>1.719873</td>
-      <td>2.295363</td>
-      <td>1.249559</td>
-      <td>1.578828</td>
-      <td>2.195988</td>
+      <th>100</th>
+      <td>0.875000</td>
+      <td>1.738689</td>
+      <td>0.194148</td>
+      <td>1.472822</td>
+      <td>1.774733</td>
+      <td>2.261526</td>
+      <td>1.101367</td>
+      <td>1.712212</td>
+      <td>2.406713</td>
     </tr>
   </tbody>
 </table>
-<p>200 rows × 9 columns</p>
+<p>100 rows × 9 columns</p>
 </div></div>
 </div>
 <p>Finally, you can get summary for grouping variables (e.g., experimental conditions, trial blocks, etc.) in your data:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_lba</span><span class="o">.</span><span class="n">get_grouped_posterior_predictives_summary</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
@@ -2172,8 +2157,17 @@ odict_keys([&#39;log_p_t&#39;])
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/andrei/PycharmProjects/rlssm/rlssm/fit/fits_LBA.py:173: UserWarning: Cannot have more posterior predictive samples than posterior samples. Will continue with n_posterior_predictives=100
+  pp_rt, pp_acc = self.get_posterior_predictives(n_posterior_predictives, **kwargs)
+</pre></div></div>
+</div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -2224,63 +2218,63 @@ odict_keys([&#39;log_p_t&#39;])
     <tr>
       <th rowspan="5" valign="top">1</th>
       <th>1</th>
-      <td>0.8875</td>
-      <td>1.742559</td>
-      <td>0.838222</td>
-      <td>1.958646</td>
-      <td>1.402651</td>
-      <td>2.265617</td>
-      <td>1.637518</td>
-      <td>2.414924</td>
-      <td>1.812356</td>
+      <td>0.8250</td>
+      <td>1.718735</td>
+      <td>0.172229</td>
+      <td>1.653732</td>
+      <td>1.338551</td>
+      <td>1.951279</td>
+      <td>1.632689</td>
+      <td>2.096885</td>
+      <td>1.984132</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.8250</td>
-      <td>1.667581</td>
-      <td>2.036401</td>
-      <td>1.490616</td>
-      <td>1.386556</td>
-      <td>1.690442</td>
-      <td>1.539333</td>
-      <td>1.996045</td>
-      <td>1.740201</td>
+      <td>0.9750</td>
+      <td>1.620113</td>
+      <td>0.171192</td>
+      <td>1.666122</td>
+      <td>1.321811</td>
+      <td>1.681589</td>
+      <td>1.570161</td>
+      <td>1.697056</td>
+      <td>1.896569</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.7875</td>
-      <td>1.727859</td>
-      <td>1.586878</td>
-      <td>1.890115</td>
-      <td>1.314495</td>
-      <td>2.045244</td>
-      <td>1.469067</td>
-      <td>2.167337</td>
-      <td>1.671310</td>
+      <td>0.8875</td>
+      <td>1.788441</td>
+      <td>0.289405</td>
+      <td>1.651215</td>
+      <td>1.468415</td>
+      <td>1.784749</td>
+      <td>1.665270</td>
+      <td>2.135992</td>
+      <td>2.033820</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.8500</td>
-      <td>1.683817</td>
-      <td>6.404095</td>
-      <td>1.440239</td>
-      <td>1.336986</td>
-      <td>1.638169</td>
-      <td>1.467766</td>
-      <td>1.874202</td>
-      <td>1.667109</td>
+      <td>0.9125</td>
+      <td>1.710564</td>
+      <td>0.297824</td>
+      <td>1.788257</td>
+      <td>1.335879</td>
+      <td>2.104282</td>
+      <td>1.582917</td>
+      <td>2.234939</td>
+      <td>1.989770</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.9000</td>
-      <td>1.625880</td>
-      <td>2.086927</td>
-      <td>1.694815</td>
-      <td>1.334574</td>
-      <td>1.804016</td>
-      <td>1.481553</td>
-      <td>1.877418</td>
-      <td>1.693119</td>
+      <td>0.9125</td>
+      <td>1.730842</td>
+      <td>0.078011</td>
+      <td>1.523436</td>
+      <td>1.442943</td>
+      <td>1.618799</td>
+      <td>1.715971</td>
+      <td>1.714907</td>
+      <td>2.049910</td>
     </tr>
     <tr>
       <th>...</th>
@@ -2297,68 +2291,68 @@ odict_keys([&#39;log_p_t&#39;])
     </tr>
     <tr>
       <th rowspan="5" valign="top">3</th>
-      <th>196</th>
-      <td>0.9000</td>
-      <td>1.725673</td>
-      <td>1.756656</td>
-      <td>1.776924</td>
-      <td>1.402891</td>
-      <td>1.912637</td>
-      <td>1.556986</td>
-      <td>1.987094</td>
-      <td>1.743893</td>
+      <th>96</th>
+      <td>0.8250</td>
+      <td>1.754408</td>
+      <td>0.095044</td>
+      <td>1.527736</td>
+      <td>1.426556</td>
+      <td>1.705102</td>
+      <td>1.768600</td>
+      <td>1.802312</td>
+      <td>2.085204</td>
     </tr>
     <tr>
-      <th>197</th>
-      <td>0.8500</td>
-      <td>1.699036</td>
-      <td>2.265547</td>
-      <td>1.630694</td>
-      <td>1.350169</td>
-      <td>1.696332</td>
-      <td>1.519048</td>
-      <td>2.194706</td>
-      <td>1.645663</td>
+      <th>97</th>
+      <td>0.8875</td>
+      <td>1.677931</td>
+      <td>0.135942</td>
+      <td>1.736514</td>
+      <td>1.395131</td>
+      <td>1.825153</td>
+      <td>1.614284</td>
+      <td>1.872564</td>
+      <td>1.876648</td>
     </tr>
     <tr>
-      <th>198</th>
-      <td>0.9125</td>
-      <td>1.772827</td>
-      <td>3.916904</td>
-      <td>1.515939</td>
-      <td>1.358824</td>
-      <td>1.594244</td>
-      <td>1.478403</td>
-      <td>2.743708</td>
-      <td>1.674592</td>
+      <th>98</th>
+      <td>0.9500</td>
+      <td>1.635251</td>
+      <td>0.190669</td>
+      <td>1.848763</td>
+      <td>1.250129</td>
+      <td>1.890923</td>
+      <td>1.543695</td>
+      <td>1.944683</td>
+      <td>1.888064</td>
     </tr>
     <tr>
-      <th>199</th>
+      <th>99</th>
+      <td>0.9500</td>
+      <td>1.825450</td>
+      <td>-0.134695</td>
+      <td>2.210354</td>
+      <td>1.502201</td>
+      <td>2.238145</td>
+      <td>1.774805</td>
+      <td>2.264940</td>
+      <td>2.163013</td>
+    </tr>
+    <tr>
+      <th>100</th>
       <td>0.8375</td>
-      <td>1.717850</td>
-      <td>2.060856</td>
-      <td>1.609815</td>
-      <td>1.404633</td>
-      <td>1.786825</td>
-      <td>1.567322</td>
-      <td>1.928092</td>
-      <td>1.769137</td>
-    </tr>
-    <tr>
-      <th>200</th>
-      <td>0.8500</td>
-      <td>1.685803</td>
-      <td>0.829624</td>
-      <td>1.469060</td>
-      <td>1.422103</td>
-      <td>1.654015</td>
-      <td>1.567095</td>
-      <td>1.986281</td>
-      <td>1.827734</td>
+      <td>1.721073</td>
+      <td>0.431813</td>
+      <td>1.589977</td>
+      <td>1.427311</td>
+      <td>1.625806</td>
+      <td>1.604059</td>
+      <td>1.875737</td>
+      <td>1.873138</td>
     </tr>
   </tbody>
 </table>
-<p>600 rows × 9 columns</p>
+<p>300 rows × 9 columns</p>
 </div></div>
 </div>
 </section>
@@ -2367,7 +2361,7 @@ odict_keys([&#39;log_p_t&#39;])
 <p>You can plot posterior predictives similarly, both <strong>ungrouped</strong> (across all trials) or <strong>grouped</strong> (across conditions, trial blocks, etc.plot_mean_posterior_predictives).</p>
 <p>For RT models, you have both <strong>mean plots</strong>, and <strong>quantile plots</strong>:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">plot_mean_posterior_predictives</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">200</span><span class="p">);</span>
@@ -2383,22 +2377,31 @@ odict_keys([&#39;log_p_t&#39;])
 </div>
 <p>Quantile plots have 2 main visualization options, “shades” and “lines”, and you can specify again which quantiles you want, which in tervals and alpha levels:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_lba</span><span class="o">.</span><span class="n">plot_quantiles_posterior_predictives</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">200</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/andrei/PycharmProjects/rlssm/rlssm/fit/fits_LBA.py:173: UserWarning: Cannot have more posterior predictive samples than posterior samples. Will continue with n_posterior_predictives=100
+  pp_rt, pp_acc = self.get_posterior_predictives(n_posterior_predictives, **kwargs)
+</pre></div></div>
+</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_inspect_model_33_0.png" src="../_images/notebooks_inspect_model_33_0.png" />
+<img alt="../_images/notebooks_inspect_model_33_1.png" src="../_images/notebooks_inspect_model_33_1.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_lba</span><span class="o">.</span><span class="n">plot_quantiles_posterior_predictives</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
@@ -2407,15 +2410,24 @@ odict_keys([&#39;log_p_t&#39;])
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/andrei/PycharmProjects/rlssm/rlssm/fit/fits_LBA.py:173: UserWarning: Cannot have more posterior predictive samples than posterior samples. Will continue with n_posterior_predictives=100
+  pp_rt, pp_acc = self.get_posterior_predictives(n_posterior_predictives, **kwargs)
+</pre></div></div>
+</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_inspect_model_34_0.png" src="../_images/notebooks_inspect_model_34_0.png" />
+<img alt="../_images/notebooks_inspect_model_34_1.png" src="../_images/notebooks_inspect_model_34_1.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_lba</span><span class="o">.</span><span class="n">plot_quantiles_grouped_posterior_predictives</span><span class="p">(</span>
@@ -2434,7 +2446,7 @@ odict_keys([&#39;log_p_t&#39;])
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define new grouping variables:</span>
@@ -2456,7 +2468,7 @@ odict_keys([&#39;log_p_t&#39;])
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>

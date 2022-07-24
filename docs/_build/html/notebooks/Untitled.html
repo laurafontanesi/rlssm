@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>&lt;no title&gt; &mdash; rlssm 0.1.dev documentation</title>
+  <title>Check existence of priors in different models &mdash; rlssm 0.1.dev documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -87,7 +87,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>&lt;no title&gt;</li>
+      <li>Check existence of priors in different models</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/notebooks/Untitled.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -375,8 +375,10 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
+<section id="Check-existence-of-priors-in-different-models">
+<h1>Check existence of priors in different models<a class="headerlink" href="#Check-existence-of-priors-in-different-models" title="Permalink to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">rlssm</span>
@@ -384,7 +386,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">RLDDModel</span><span class="p">(</span><span class="n">hierarchical_levels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">separate_learning_rates</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -400,7 +402,7 @@ Using cached StanModel
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">priors</span>
@@ -408,7 +410,7 @@ Using cached StanModel
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -421,7 +423,7 @@ Using cached StanModel
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">ALBAModel_2A</span><span class="p">(</span><span class="n">hierarchical_levels</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -437,7 +439,7 @@ Using cached StanModel
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">priors</span>
@@ -445,21 +447,22 @@ Using cached StanModel
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 {&#39;k_priors&#39;: {&#39;mu&#39;: 1, &#39;sd&#39;: 1},
- &#39;A_priors&#39;: {&#39;mu&#39;: 0.3, &#39;sd&#39;: 1},
- &#39;tau_priors&#39;: {&#39;mu&#39;: 0, &#39;sd&#39;: 1},
+ &#39;sp_trial_var_priors&#39;: {&#39;mu&#39;: 0.3, &#39;sd&#39;: 1},
+ &#39;ndt_priors&#39;: {&#39;mu&#39;: 0, &#39;sd&#39;: 1},
  &#39;v0_priors&#39;: {&#39;mu&#39;: 9, &#39;sd&#39;: 2},
  &#39;ws_priors&#39;: {&#39;mu&#39;: 0, &#39;sd&#39;: 2},
- &#39;wd_priors&#39;: {&#39;mu&#39;: 3, &#39;sd&#39;: 3}}
+ &#39;wd_priors&#39;: {&#39;mu&#39;: 3, &#39;sd&#39;: 3},
+ &#39;drift_variability_priors&#39;: {&#39;mu&#39;: 1, &#39;sd&#39;: 1}}
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">RLLBAModel_2A</span><span class="p">(</span><span class="n">hierarchical_levels</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -475,7 +478,7 @@ Using cached StanModel
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">priors</span>
@@ -483,20 +486,22 @@ Using cached StanModel
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;k_priors&#39;: {&#39;mu&#39;: 1, &#39;sd&#39;: 1},
- &#39;A_priors&#39;: {&#39;mu&#39;: 0.3, &#39;sd&#39;: 1},
- &#39;tau_priors&#39;: {&#39;mu&#39;: 0, &#39;sd&#39;: 1},
- &#39;alpha_priors&#39;: {&#39;mu&#39;: 0, &#39;sd&#39;: 1},
- &#39;drift_scaling_priors&#39;: {&#39;mu&#39;: 0, &#39;sd&#39;: 0.5}}
+{&#39;alpha_priors&#39;: {&#39;mu&#39;: 0, &#39;sd&#39;: 1},
+ &#39;k_priors&#39;: {&#39;mu&#39;: 1, &#39;sd&#39;: 1},
+ &#39;ndt_priors&#39;: {&#39;mu&#39;: 0, &#39;sd&#39;: 1},
+ &#39;sp_trial_var_priors&#39;: {&#39;mu&#39;: 0.3, &#39;sd&#39;: 1},
+ &#39;drift_asym_priors&#39;: {&#39;mu&#39;: 0, &#39;sd&#39;: 1},
+ &#39;drift_scaling_priors&#39;: {&#39;mu&#39;: 2, &#39;sd&#39;: 1},
+ &#39;drift_variability_priors&#39;: {&#39;mu&#39;: 1, &#39;sd&#39;: 1}}
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">ARDModel_2A</span><span class="p">(</span><span class="n">hierarchical_levels</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -506,13 +511,13 @@ Using cached StanModel
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area stderr docutils container">
+<div class="output_area docutils container">
 <div class="highlight"><pre>
-INFO:pystan:COMPILING THE C++ CODE FOR MODEL anon_model_15021e72184f262ca4fde1a7c069aefc NOW.
+Using cached StanModel
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">priors</span>
@@ -520,7 +525,7 @@ INFO:pystan:COMPILING THE C++ CODE FOR MODEL anon_model_15021e72184f262ca4fde1a7
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -533,7 +538,7 @@ INFO:pystan:COMPILING THE C++ CODE FOR MODEL anon_model_15021e72184f262ca4fde1a7
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">RLARDModel_2A</span><span class="p">(</span><span class="n">hierarchical_levels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">separate_learning_rates</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -543,13 +548,13 @@ INFO:pystan:COMPILING THE C++ CODE FOR MODEL anon_model_15021e72184f262ca4fde1a7
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area stderr docutils container">
+<div class="output_area docutils container">
 <div class="highlight"><pre>
-INFO:pystan:COMPILING THE C++ CODE FOR MODEL anon_model_3173f418600d69519607e7d069898707 NOW.
+Using cached StanModel
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">priors</span>
@@ -557,7 +562,7 @@ INFO:pystan:COMPILING THE C++ CODE FOR MODEL anon_model_3173f418600d69519607e7d0
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -571,14 +576,7 @@ INFO:pystan:COMPILING THE C++ CODE FOR MODEL anon_model_3173f418600d69519607e7d0
  &#39;wd_priors&#39;: {&#39;mu&#39;: 3, &#39;sd&#39;: 3}}
 </pre></div></div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-</div>
+</section>
 
 
            </div>

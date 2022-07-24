@@ -9,7 +9,7 @@ Make sure you have the dependencies installed first.
 
 Dependencies
 ------------
-- cmdstanpy=1.0.2
+- cmdstanpy=1.0.4
 - pandas
 - scipy
 - seaborn
@@ -19,7 +19,7 @@ Conda environment (suggested)
 
 If you have Anaconda or miniconda installed and you would like to create a separate environment for the rlssm package, do the following::
 
-	conda create --n stanenv python=3 pandas scipy seaborn cmdstanpy=1.0.2
+	conda create --n stanenv python=3 pandas scipy seaborn cmdstanpy=1.0.4
 	conda activate stanenv
 	pip install rlssm
 
@@ -45,7 +45,7 @@ Copy the two clangs and modify the following::
 
 Install pystan and rlssm and test again whether the compiler works::
 
-	conda install -c conda-forge cmdstanpy=1.0.2
+	conda install -c conda-forge cmdstanpy=1.0.4
 	pip install rlssm
 	python tests/test_compiler.py
 

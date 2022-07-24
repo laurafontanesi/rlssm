@@ -397,7 +397,10 @@ learning).</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">rlssm</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rlssm.model.models_DDM</span> <span class="kn">import</span> <span class="n">DDModel</span>
+<span class="kn">from</span> <span class="nn">rlssm.model.models_RL</span> <span class="kn">import</span> <span class="n">RLModel_2A</span>
+<span class="kn">from</span> <span class="nn">rlssm.utility.load_data</span> <span class="kn">import</span> <span class="n">load_example_dataset</span>
+<span class="kn">from</span> <span class="nn">rlssm.utility.utils</span> <span class="kn">import</span> <span class="n">load_model_results</span>
 </pre></div>
 </div>
 </div>
@@ -407,7 +410,7 @@ learning).</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_ddm</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">DDModel</span><span class="p">(</span><span class="n">hierarchical_levels</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_ddm</span> <span class="o">=</span> <span class="n">DDModel</span><span class="p">(</span><span class="n">hierarchical_levels</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -496,7 +499,7 @@ Using cached StanModel
       <td>0.5</td>
       <td>1.3</td>
       <td>0.23</td>
-      <td>0.895</td>
+      <td>0.319</td>
       <td>1.0</td>
     </tr>
     <tr>
@@ -505,8 +508,8 @@ Using cached StanModel
       <td>0.5</td>
       <td>1.3</td>
       <td>0.23</td>
-      <td>0.475</td>
-      <td>1.0</td>
+      <td>0.858</td>
+      <td>0.0</td>
     </tr>
     <tr>
       <th>3</th>
@@ -514,7 +517,7 @@ Using cached StanModel
       <td>0.5</td>
       <td>1.3</td>
       <td>0.23</td>
-      <td>0.540</td>
+      <td>0.401</td>
       <td>1.0</td>
     </tr>
     <tr>
@@ -523,7 +526,7 @@ Using cached StanModel
       <td>0.5</td>
       <td>1.3</td>
       <td>0.23</td>
-      <td>0.332</td>
+      <td>0.416</td>
       <td>1.0</td>
     </tr>
     <tr>
@@ -532,7 +535,7 @@ Using cached StanModel
       <td>0.5</td>
       <td>1.3</td>
       <td>0.23</td>
-      <td>0.602</td>
+      <td>0.522</td>
       <td>1.0</td>
     </tr>
   </tbody>
@@ -561,7 +564,7 @@ Using cached StanModel
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-20:58:17 - cmdstanpy - INFO - CmdStan start processing
+10:22:50 - cmdstanpy - INFO - CmdStan start processing
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -579,13 +582,13 @@ ndt_priors {&#39;mu&#39;: 0, &#39;sd&#39;: 0.1}
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "8c3aa1f9c63a43aa805a24c13e1945ac"}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "5235c270b673472f861f11bedbcc5932"}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "14823b263a71454191415151bf406441"}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "81473824b9874de2bba9b1e1502b20ce"}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -600,15 +603,51 @@ ndt_priors {&#39;mu&#39;: 0, &#39;sd&#39;: 0.1}
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-20:58:17 - cmdstanpy - INFO - CmdStan done processing.
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-
+10:23:02 - cmdstanpy - INFO - CmdStan done processing.
+10:23:02 - cmdstanpy - WARNING - Non-fatal error during sampling:
+Exception: wiener_lpdf: Random variable  = 0.319, but must be greater than nondecision time = 0.578729 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.319, but must be greater than nondecision time = 0.648211 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.319, but must be greater than nondecision time = 1.17118 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.319, but must be greater than nondecision time = 1.18819 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.28, but must be greater than nondecision time = 0.280395 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.319, but must be greater than nondecision time = 80.8202 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.319, but must be greater than nondecision time = 19.1147 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.319, but must be greater than nondecision time = 3.7066 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.319, but must be greater than nondecision time = 0.601903 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Nondecision time[1] is 0, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.319, but must be greater than nondecision time = 0.37691 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.297, but must be greater than nondecision time = 0.300521 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.297, but must be greater than nondecision time = 0.298749 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+Exception: wiener_lpdf: Random variable  = 0.286, but must be greater than nondecision time = 0.290036 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.319, but must be greater than nondecision time = 0.487683 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.319, but must be greater than nondecision time = 1.40855 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.319, but must be greater than nondecision time = 0.555949 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.319, but must be greater than nondecision time = 0.657909 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.319, but must be greater than nondecision time = 0.455684 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.319, but must be greater than nondecision time = 129.932 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.319, but must be greater than nondecision time = 31.4826 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.319, but must be greater than nondecision time = 7.08131 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.319, but must be greater than nondecision time = 1.1986 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.319, but must be greater than nondecision time = 0.404855 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.286, but must be greater than nondecision time = 0.287259 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.319, but must be greater than nondecision time = 106.181 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.319, but must be greater than nondecision time = 0.454008 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.276, but must be greater than nondecision time = 0.278578 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.286, but must be greater than nondecision time = 0.293387 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.319, but must be greater than nondecision time = 0.392222 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.286, but must be greater than nondecision time = 0.2912 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+        Exception: wiener_lpdf: Random variable  = 0.319, but must be greater than nondecision time = 0.321864 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
+Consider re-running with show_console=True if the above output is unclear!
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -616,87 +655,225 @@ ndt_priors {&#39;mu&#39;: 0, &#39;sd&#39;: 0.1}
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">RuntimeError</span>                              Traceback (most recent call last)
-Input <span class="ansi-green-fg">In [5]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 2&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">      1</span> <span style="color: rgb(95,135,135)"># Run 2 chains, with 2000 samples each, 1000 of which warmup, with custom priors:</span>
-<span class="ansi-green-fg">----&gt; 2</span> model_fit_ddm <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">model_ddm</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">fit</span><span class="ansi-yellow-bg">(</span>
-<span class="ansi-green-intense-fg ansi-bold">      3</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">data_ddm</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">      4</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">drift_priors</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">{</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">mu</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg">:</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.5</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">sd</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg">:</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">1</span><span class="ansi-yellow-bg">}</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">      5</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">threshold_priors</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">{</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">mu</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg">:</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">0</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">sd</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg">:</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.5</span><span class="ansi-yellow-bg">}</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">      6</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">ndt_priors</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">{</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">mu</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg">:</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">0</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">sd</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg">:</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.1</span><span class="ansi-yellow-bg">}</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">      7</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">chains</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">2</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">      8</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">iter_warmup</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">1000</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">      9</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">iter_sampling</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">2000</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">     10</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">thin</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">1</span><span class="ansi-yellow-bg">)</span>
 
-File <span class="ansi-green-fg">~/PycharmProjects/rlssm/rlssm/model/models_DDM.py:406</span>, in <span class="ansi-cyan-fg">DDModel.fit</span><span class="ansi-blue-fg">(self, data, drift_priors, threshold_priors, ndt_priors, rel_sp_priors, starting_point, drift_trial_mu_priors, drift_trial_sd_priors, rel_sp_trial_mu_priors, rel_sp_trial_sd_priors, corr_matrix_prior, beta_trial_mu_priors, beta_trial_sd_priors, regression_coefficients_priors, include_rhat, include_waic, include_last_values, pointwise_waic, print_diagnostics, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    403</span>     <span style="color: rgb(0,135,0)">print</span>(par, <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>priors[par])
-<span class="ansi-green-intense-fg ansi-bold">    405</span> <span style="color: rgb(95,135,135)"># start sampling...</span>
-<span class="ansi-green-fg">--&gt; 406</span> fitted_model <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">compiled_model</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">sample</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">data_dict</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    408</span> fitted_model <span style="color: rgb(98,98,98)">=</span> DDMFittedModel(fitted_model,
-<span class="ansi-green-intense-fg ansi-bold">    409</span>                               data,
-<span class="ansi-green-intense-fg ansi-bold">    410</span>                               <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>hierarchical_levels,
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">    421</span>                               <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>drift_starting_point_beta_correlation,
-<span class="ansi-green-intense-fg ansi-bold">    422</span>                               <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>drift_starting_point_regression)
-<span class="ansi-green-intense-fg ansi-bold">    424</span> res <span style="color: rgb(98,98,98)">=</span> fitted_model<span style="color: rgb(98,98,98)">.</span>extract_results(include_rhat,
-<span class="ansi-green-intense-fg ansi-bold">    425</span>                                    include_waic,
-<span class="ansi-green-intense-fg ansi-bold">    426</span>                                    pointwise_waic,
-<span class="ansi-green-intense-fg ansi-bold">    427</span>                                    include_last_values)
-
-File <span class="ansi-green-fg">~/.local/lib/python3.8/site-packages/cmdstanpy/model.py:1188</span>, in <span class="ansi-cyan-fg">CmdStanModel.sample</span><span class="ansi-blue-fg">(self, data, chains, parallel_chains, threads_per_chain, seed, chain_ids, inits, iter_warmup, iter_sampling, save_warmup, thin, max_treedepth, metric, step_size, adapt_engaged, adapt_delta, adapt_init_phase, adapt_metric_window, adapt_step_size, fixed_param, output_dir, sig_figs, save_latent_dynamics, save_profile, show_progress, show_console, refresh, time_fmt, force_one_process_per_chain)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1181</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> runset<span style="color: rgb(98,98,98)">.</span>_check_retcodes():
-<span class="ansi-green-intense-fg ansi-bold">   1182</span>     msg <span style="color: rgb(98,98,98)">=</span> (
-<span class="ansi-green-intense-fg ansi-bold">   1183</span>         <span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">Error during sampling:</span><span class="ansi-bold" style="color: rgb(175,95,0)">\n</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>errors<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span class="ansi-bold" style="color: rgb(175,95,0)">\n</span><span style="color: rgb(175,0,0)">&#39;</span>
-<span class="ansi-green-intense-fg ansi-bold">   1184</span>         <span style="color: rgb(98,98,98)">+</span> <span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">Command and output files:</span><span class="ansi-bold" style="color: rgb(175,95,0)">\n</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span><span style="color: rgb(0,135,0)">repr</span>(runset)<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span class="ansi-bold" style="color: rgb(175,95,0)">\n</span><span style="color: rgb(175,0,0)">&#39;</span>
-<span class="ansi-green-intense-fg ansi-bold">   1185</span>         <span style="color: rgb(98,98,98)">+</span> <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">Consider re-running with show_console=True if the above</span><span style="color: rgb(175,0,0)">&#39;</span>
-<span class="ansi-green-intense-fg ansi-bold">   1186</span>         <span style="color: rgb(98,98,98)">+</span> <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)"> output is unclear!</span><span style="color: rgb(175,0,0)">&#39;</span>
-<span class="ansi-green-intense-fg ansi-bold">   1187</span>     )
-<span class="ansi-green-fg">-&gt; 1188</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">RuntimeError</span>(msg)
-<span class="ansi-green-intense-fg ansi-bold">   1189</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> errors:
-<span class="ansi-green-intense-fg ansi-bold">   1190</span>     msg <span style="color: rgb(98,98,98)">=</span> (
-<span class="ansi-green-intense-fg ansi-bold">   1191</span>         <span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">Non-fatal error during sampling:</span><span class="ansi-bold" style="color: rgb(175,95,0)">\n</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>errors<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span class="ansi-bold" style="color: rgb(175,95,0)">\n</span><span style="color: rgb(175,0,0)">&#39;</span>
-<span class="ansi-green-intense-fg ansi-bold">   1192</span>         <span style="color: rgb(98,98,98)">+</span> <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">Consider re-running with show_console=True if the above</span><span style="color: rgb(175,0,0)">&#39;</span>
-<span class="ansi-green-intense-fg ansi-bold">   1193</span>         <span style="color: rgb(98,98,98)">+</span> <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)"> output is unclear!</span><span style="color: rgb(175,0,0)">&#39;</span>
-<span class="ansi-green-intense-fg ansi-bold">   1194</span>     )
-
-<span class="ansi-red-fg">RuntimeError</span>: Error during sampling:
-
-Command and output files:
-RunSet: chains=2, chain_ids=[1, 2], num_processes=2
- cmd (chain 1):
-        [&#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM&#39;, &#39;id=1&#39;, &#39;random&#39;, &#39;seed=11404&#39;, &#39;data&#39;, &#39;file=/tmp/tmpput6g169/dp4ommhz.json&#39;, &#39;output&#39;, &#39;file=/tmp/tmpput6g169/DDMmn5glang/DDM-20220705205817_1.csv&#39;, &#39;method=sample&#39;, &#39;num_samples=2000&#39;, &#39;num_warmup=1000&#39;, &#39;thin=1&#39;, &#39;algorithm=hmc&#39;, &#39;adapt&#39;, &#39;engaged=1&#39;]
- retcodes=[-1, -1]
- per-chain output files (showing chain 1 only):
- csv_file:
-        /tmp/tmpput6g169/DDMmn5glang/DDM-20220705205817_1.csv
- console_msgs (if any):
-        /tmp/tmpput6g169/DDMmn5glang/DDM-20220705205817_0-stdout.txt
-Consider re-running with show_console=True if the above output is unclear!
+Checks MCMC diagnostics:
+n_eff / iter looks reasonable for all parameters
+0 of 4000 iterations saturated the maximum tree depth of 10 (0.0%)
+E-BFMI indicated no pathological behavior
+0.0 of 4000 iterations ended with a divergence (0.0%)
 </pre></div></div>
 </div>
 </section>
 <section id="Learning-example-(hierarchical,-real-data)">
 <h2>Learning example (hierarchical, real data)<a class="headerlink" href="#Learning-example-(hierarchical,-real-data)" title="Permalink to this heading"></a></h2>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_rl</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">RLModel_2A</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_rl</span> <span class="o">=</span> <span class="n">RLModel_2A</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+10:23:33 - cmdstanpy - INFO - compiling stan file /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/hierRL_2A.stan to exe file /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/hierRL_2A
+10:23:46 - cmdstanpy - INFO - compiled model executable: /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/hierRL_2A
+10:23:46 - cmdstanpy - WARNING - Stan compiler has produced 12 warnings:
+10:23:46 - cmdstanpy - WARNING -
+--- Translating Stan model to C++ code ---
+bin/stanc  --o=/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/hierRL_2A.hpp /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/hierRL_2A.stan
+Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/hierRL_2A.stan&#39;, line 5, column 1: Declaration
+    of arrays by placing brackets after a variable name is deprecated and
+    will be removed in Stan 2.32.0. Instead use the array keyword before the
+    type. This can be changed automatically using the auto-format flag to
+    stanc
+Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/hierRL_2A.stan&#39;, line 6, column 1: Declaration
+    of arrays by placing brackets after a variable name is deprecated and
+    will be removed in Stan 2.32.0. Instead use the array keyword before the
+    type. This can be changed automatically using the auto-format flag to
+    stanc
+Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/hierRL_2A.stan&#39;, line 9, column 1: Declaration
+    of arrays by placing brackets after a variable name is deprecated and
+    will be removed in Stan 2.32.0. Instead use the array keyword before the
+    type. This can be changed automatically using the auto-format flag to
+    stanc
+Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/hierRL_2A.stan&#39;, line 10, column 1: Declaration
+    of arrays by placing brackets after a variable name is deprecated and
+    will be removed in Stan 2.32.0. Instead use the array keyword before the
+    type. This can be changed automatically using the auto-format flag to
+    stanc
+Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/hierRL_2A.stan&#39;, line 11, column 1: Declaration
+    of arrays by placing brackets after a variable name is deprecated and
+    will be removed in Stan 2.32.0. Instead use the array keyword before the
+    type. This can be changed automatically using the auto-format flag to
+    stanc
+Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/hierRL_2A.stan&#39;, line 12, column 1: Declaration
+    of arrays by placing brackets after a variable name is deprecated and
+    will be removed in Stan 2.32.0. Instead use the array keyword before the
+    type. This can be changed automatically using the auto-format flag to
+    stanc
+Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/hierRL_2A.stan&#39;, line 13, column 1: Declaration
+    of arrays by placing brackets after a variable name is deprecated and
+    will be removed in Stan 2.32.0. Instead use the array keyword before the
+    type. This can be changed automatically using the auto-format flag to
+    stanc
+Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/hierRL_2A.stan&#39;, line 29, column 1: Declaration
+    of arrays by placing brackets after a variable name is deprecated and
+    will be removed in Stan 2.32.0. Instead use the array keyword before the
+    type. This can be changed automatically using the auto-format flag to
+    stanc
+Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/hierRL_2A.stan&#39;, line 30, column 1: Declaration
+    of arrays by placing brackets after a variable name is deprecated and
+    will be removed in Stan 2.32.0. Instead use the array keyword before the
+    type. This can be changed automatically using the auto-format flag to
+    stanc
+Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/hierRL_2A.stan&#39;, line 33, column 1: Declaration
+    of arrays by placing brackets after a variable name is deprecated and
+    will be removed in Stan 2.32.0. Instead use the array keyword before the
+    type. This can be changed automatically using the auto-format flag to
+    stanc
+Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/hierRL_2A.stan&#39;, line 40, column 1: Declaration
+    of arrays by placing brackets after a variable name is deprecated and
+    will be removed in Stan 2.32.0. Instead use the array keyword before the
+    type. This can be changed automatically using the auto-format flag to
+    stanc
+Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/hierRL_2A.stan&#39;, line 41, column 1: Declaration
+    of arrays by placing brackets after a variable name is deprecated and
+    will be removed in Stan 2.32.0. Instead use the array keyword before the
+    type. This can be changed automatically using the auto-format flag to
+    stanc
+
+--- Compiling, linking C++ code ---
+g++ -std=c++1y -pthread -D_REENTRANT -Wno-sign-compare -Wno-ignored-attributes      -I stan/lib/stan_math/lib/tbb_2020.3/include    -O3 -I src -I stan/src -I lib/rapidjson_1.1.0/ -I lib/CLI11-1.9.1/ -I stan/lib/stan_math/ -I stan/lib/stan_math/lib/eigen_3.3.9 -I stan/lib/stan_math/lib/boost_1.78.0 -I stan/lib/stan_math/lib/sundials_6.1.1/include -I stan/lib/stan_math/lib/sundials_6.1.1/src/sundials    -DBOOST_DISABLE_ASSERTS          -c -Wno-ignored-attributes   -x c++ -o /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/hierRL_2A.o /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/hierRL_2A.hpp
+g++ -std=c++1y -pthread -D_REENTRANT -Wno-sign-compare -Wno-ignored-attributes      -I stan/lib/stan_math/lib/tbb_2020.3/include    -O3 -I src -I stan/src -I lib/rapidjson_1.1.0/ -I lib/CLI11-1.9.1/ -I stan/lib/stan_math/ -I stan/lib/stan_math/lib/eigen_3.3.9 -I stan/lib/stan_math/lib/boost_1.78.0 -I stan/lib/stan_math/lib/sundials_6.1.1/include -I stan/lib/stan_math/lib/sundials_6.1.1/src/sundials    -DBOOST_DISABLE_ASSERTS                -Wl,-L,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34; -Wl,-rpath,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34;      /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/hierRL_2A.o src/cmdstan/main.o        -Wl,-L,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34; -Wl,-rpath,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34;   stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_nvecserial.a stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_cvodes.a stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_idas.a stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_kinsol.a  stan/lib/stan_math/lib/tbb/libtbb.so.2 -o /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/hierRL_2A
+rm -f /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/hierRL_2A.o
+
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import some example data:</span>
-<span class="n">data_rl</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">load_example_dataset</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">data_rl</span> <span class="o">=</span> <span class="n">load_example_dataset</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
 
 <span class="n">data_rl</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>participant</th>
+      <th>block_label</th>
+      <th>trial_block</th>
+      <th>f_cor</th>
+      <th>f_inc</th>
+      <th>cor_option</th>
+      <th>inc_option</th>
+      <th>times_seen</th>
+      <th>rt</th>
+      <th>accuracy</th>
+      <th>feedback_type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>43</td>
+      <td>39</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.244082</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>60</td>
+      <td>50</td>
+      <td>4</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1.101821</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>44</td>
+      <td>36</td>
+      <td>4</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1.029923</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>1</td>
+      <td>4</td>
+      <td>55</td>
+      <td>55</td>
+      <td>4</td>
+      <td>3</td>
+      <td>2</td>
+      <td>1.368007</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>1</td>
+      <td>5</td>
+      <td>52</td>
+      <td>49</td>
+      <td>4</td>
+      <td>3</td>
+      <td>3</td>
+      <td>1.039329</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
 </div>
 <p>Since this learning model is only fit on choices, <code class="docutils literal notranslate"><span class="pre">rt</span></code> are not required.</p>
 <p>Other columns/indexes that should be included are:</p>
@@ -717,16 +894,127 @@ Consider re-running with show_console=True if the above output is unclear!
 <ul class="simple">
 <li><p><em>times_seen</em>, average number of times the presented options have been seen in a learning session.</p></li>
 </ul>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_rl</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>participant</th>
+      <th>block_label</th>
+      <th>trial_block</th>
+      <th>f_cor</th>
+      <th>f_inc</th>
+      <th>cor_option</th>
+      <th>inc_option</th>
+      <th>times_seen</th>
+      <th>rt</th>
+      <th>accuracy</th>
+      <th>feedback_type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>43</td>
+      <td>39</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.244082</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>60</td>
+      <td>50</td>
+      <td>4</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1.101821</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>44</td>
+      <td>36</td>
+      <td>4</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1.029923</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>1</td>
+      <td>4</td>
+      <td>55</td>
+      <td>55</td>
+      <td>4</td>
+      <td>3</td>
+      <td>2</td>
+      <td>1.368007</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>1</td>
+      <td>5</td>
+      <td>52</td>
+      <td>49</td>
+      <td>4</td>
+      <td>3</td>
+      <td>3</td>
+      <td>1.039329</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run 2 chains, with 3000 samples each, 1000 of which warmup, with thinning and custom priors:</span>
@@ -744,125 +1032,635 @@ Consider re-running with show_console=True if the above output is unclear!
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+10:23:46 - cmdstanpy - INFO - CmdStan start processing
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Fitting the model using the priors:
+alpha_priors {&#39;mu_mu&#39;: -0.3, &#39;sd_mu&#39;: 0.1, &#39;mu_sd&#39;: 0, &#39;sd_sd&#39;: 0.1}
+sensitivity_priors {&#39;mu_mu&#39;: -0.1, &#39;sd_mu&#39;: 0.1, &#39;mu_sd&#39;: 0, &#39;sd_sd&#39;: 0.1}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "4aee2626e68141e4ab325b18c2809cdb"}</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "bf79b4f0f84347a2973cc978be6bedc4"}</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+10:33:50 - cmdstanpy - INFO - CmdStan done processing.
+10:33:50 - cmdstanpy - WARNING - Non-fatal error during sampling:
+Exception: bernoulli_lpmf: Probability parameter[1] is -nan, but must be in the interval [0, 1] (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/hierRL_2A.stan&#39;, line 93, column 1 to column 36)
+Exception: bernoulli_lpmf: Probability parameter[1] is -nan, but must be in the interval [0, 1] (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/hierRL_2A.stan&#39;, line 93, column 1 to column 36)
+Consider re-running with show_console=True if the above output is unclear!
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+</pre></div></div>
+</div>
 </section>
 <section id="Diagnostics">
 <h2>Diagnostics<a class="headerlink" href="#Diagnostics" title="Permalink to this heading"></a></h2>
 <p>As you can see, the MCMC diagnostics are already printed by default (if you do not want this, you can set <code class="docutils literal notranslate"><span class="pre">print_diagnostics</span></code> to <code class="docutils literal notranslate"><span class="pre">False</span></code>). I refer to <a class="reference external" href="https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html">https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html</a> for an excellent explanation of what these diagnostics actually mean and how to assess them.</p>
 <p>On top of these, you can also check the convergence of the chains and the WAIC:</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">rhat</span>
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rhat</th>
+      <th>variable</th>
+    </tr>
+    <tr>
+      <th>name</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>lp__</th>
+      <td>1.000950</td>
+      <td>lp__</td>
+    </tr>
+    <tr>
+      <th>drift</th>
+      <td>0.999803</td>
+      <td>drift</td>
+    </tr>
+    <tr>
+      <th>threshold</th>
+      <td>1.000970</td>
+      <td>threshold</td>
+    </tr>
+    <tr>
+      <th>ndt</th>
+      <td>1.001540</td>
+      <td>ndt</td>
+    </tr>
+    <tr>
+      <th>drift_ll[1]</th>
+      <td>0.999803</td>
+      <td>drift_ll[1]</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>log_lik[396]</th>
+      <td>0.999742</td>
+      <td>log_lik[396]</td>
+    </tr>
+    <tr>
+      <th>log_lik[397]</th>
+      <td>0.999549</td>
+      <td>log_lik[397]</td>
+    </tr>
+    <tr>
+      <th>log_lik[398]</th>
+      <td>1.000550</td>
+      <td>log_lik[398]</td>
+    </tr>
+    <tr>
+      <th>log_lik[399]</th>
+      <td>1.000480</td>
+      <td>log_lik[399]</td>
+    </tr>
+    <tr>
+      <th>log_lik[400]</th>
+      <td>0.999688</td>
+      <td>log_lik[400]</td>
+    </tr>
+  </tbody>
+</table>
+<p>2007 rows × 2 columns</p>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_rl</span><span class="o">.</span><span class="n">rhat</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rhat</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>12814.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>1.000063</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>0.000642</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.999334</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>0.999588</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>0.999881</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>1.000330</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>1.003980</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">waic</span>
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;lppd&#39;: -227.17666381208397,
+ &#39;p_waic&#39;: 3.154874729405787,
+ &#39;waic&#39;: 460.6630770829795,
+ &#39;waic_se&#39;: 47.04475174479631}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_rl</span><span class="o">.</span><span class="n">waic</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;lppd&#39;: -2632.7741983632436,
+ &#39;p_waic&#39;: 53.07031584968287,
+ &#39;waic&#39;: 5371.689028425853,
+ &#39;waic_se&#39;: 94.01724051075693}
+</pre></div></div>
 </div>
 <p>If you want to also see the point-wise WAIC, you can set <code class="docutils literal notranslate"><span class="pre">pointwise_waic</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
 </section>
 <section id="Save-the-results">
 <h2>Save the results<a class="headerlink" href="#Save-the-results" title="Permalink to this heading"></a></h2>
 <p>By default, the model fit results are saved in the same folder, using the <code class="docutils literal notranslate"><span class="pre">model_label</span></code> as filename. you can specify a different location using the <code class="docutils literal notranslate"><span class="pre">filename</span></code> argument.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/DDM.pkl
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_rl</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/hierRL_2A.pkl
+</pre></div></div>
+</div>
 </section>
 <section id="Re-load-previously-saved-results">
 <h2>Re-load previously saved results<a class="headerlink" href="#Re-load-previously-saved-results" title="Permalink to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_ddm</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">load_model_results</span><span class="p">(</span><span class="s1">&#39;/Users/laurafontanesi/git/rlssm/docs/notebooks/DDM.pkl&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_ddm</span> <span class="o">=</span> <span class="n">load_model_results</span><span class="p">(</span><span class="s1">&#39;DDM.pkl&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_rl</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">load_model_results</span><span class="p">(</span><span class="s1">&#39;/Users/laurafontanesi/git/rlssm/docs/notebooks/hierRL_2A.pkl&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_rl</span> <span class="o">=</span> <span class="n">load_model_results</span><span class="p">(</span><span class="s1">&#39;hierRL_2A.pkl&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <p>The data the model was fit on are stored in <code class="docutils literal notranslate"><span class="pre">data_info</span></code>:</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_rl</span><span class="o">.</span><span class="n">data_info</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>index</th>
+      <th>participant</th>
+      <th>block_label</th>
+      <th>trial_block</th>
+      <th>f_cor</th>
+      <th>f_inc</th>
+      <th>cor_option</th>
+      <th>inc_option</th>
+      <th>times_seen</th>
+      <th>rt</th>
+      <th>accuracy</th>
+      <th>feedback_type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>43</td>
+      <td>39</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.244082</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>60</td>
+      <td>50</td>
+      <td>4</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1.101821</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>44</td>
+      <td>36</td>
+      <td>4</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1.029923</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>4</td>
+      <td>55</td>
+      <td>55</td>
+      <td>4</td>
+      <td>3</td>
+      <td>2</td>
+      <td>1.368007</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>5</td>
+      <td>52</td>
+      <td>49</td>
+      <td>4</td>
+      <td>3</td>
+      <td>3</td>
+      <td>1.039329</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>6459</th>
+      <td>6459</td>
+      <td>27</td>
+      <td>3</td>
+      <td>76</td>
+      <td>37</td>
+      <td>36</td>
+      <td>2</td>
+      <td>1</td>
+      <td>39</td>
+      <td>1.875327</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6460</th>
+      <td>6460</td>
+      <td>27</td>
+      <td>3</td>
+      <td>77</td>
+      <td>58</td>
+      <td>41</td>
+      <td>4</td>
+      <td>2</td>
+      <td>39</td>
+      <td>1.696957</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6461</th>
+      <td>6461</td>
+      <td>27</td>
+      <td>3</td>
+      <td>78</td>
+      <td>64</td>
+      <td>49</td>
+      <td>4</td>
+      <td>3</td>
+      <td>38</td>
+      <td>2.059956</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6462</th>
+      <td>6462</td>
+      <td>27</td>
+      <td>3</td>
+      <td>79</td>
+      <td>44</td>
+      <td>37</td>
+      <td>3</td>
+      <td>1</td>
+      <td>39</td>
+      <td>1.623731</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6463</th>
+      <td>6463</td>
+      <td>27</td>
+      <td>3</td>
+      <td>80</td>
+      <td>51</td>
+      <td>51</td>
+      <td>4</td>
+      <td>3</td>
+      <td>40</td>
+      <td>1.115363</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>6464 rows × 12 columns</p>
+</div></div>
+</div>
 <p>The priors are stored in <code class="docutils literal notranslate"><span class="pre">priors</span></code>:</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">priors</span>
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;drift_priors&#39;: {&#39;mu&#39;: 0.5, &#39;sd&#39;: 1},
+ &#39;threshold_priors&#39;: {&#39;mu&#39;: 0, &#39;sd&#39;: 0.5},
+ &#39;ndt_priors&#39;: {&#39;mu&#39;: 0, &#39;sd&#39;: 0.1}}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_rl</span><span class="o">.</span><span class="n">priors</span>
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;alpha_priors&#39;: {&#39;mu_mu&#39;: -0.3, &#39;sd_mu&#39;: 0.1, &#39;mu_sd&#39;: 0, &#39;sd_sd&#39;: 0.1},
+ &#39;sensitivity_priors&#39;: {&#39;mu_mu&#39;: -0.1, &#39;sd_mu&#39;: 0.1, &#39;mu_sd&#39;: 0, &#39;sd_sd&#39;: 0.1}}
+</pre></div></div>
+</div>
 <p>And different parameter information are stored in <code class="docutils literal notranslate"><span class="pre">parameter_info</span></code>:</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">parameters_info</span>
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;hierarchical_levels&#39;: 1,
+ &#39;n_parameters_individual&#39;: 3,
+ &#39;n_parameters_trial&#39;: 0,
+ &#39;n_posterior_samples&#39;: 2000,
+ &#39;parameters_names&#39;: [&#39;drift&#39;, &#39;threshold&#39;, &#39;ndt&#39;],
+ &#39;parameters_names_transf&#39;: [&#39;transf_drift&#39;, &#39;transf_threshold&#39;, &#39;transf_ndt&#39;],
+ &#39;parameters_names_all&#39;: [&#39;drift&#39;, &#39;threshold&#39;, &#39;ndt&#39;]}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_rl</span><span class="o">.</span><span class="n">waic</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;lppd&#39;: -2632.7741983632436,
+ &#39;p_waic&#39;: 53.07031584968287,
+ &#39;waic&#39;: 5371.689028425853,
+ &#39;waic_se&#39;: 94.01724051075693}
+</pre></div></div>
 </div>
 <p>And, of course, you can inspect the model’s posteriors, see <a class="reference external" href="https://rlssm.readthedocs.io/en/latest/notebooks/inspect_model.html">How to inspect a model</a> for more details on this.</p>
 </section>

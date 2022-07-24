@@ -1,28 +1,34 @@
 {
  "cells": [
   {
-   "cell_type": "code",
-   "execution_count": 1,
-   "id": "weighted-liabilities",
-   "metadata": {
-    "pycharm": {
-     "name": "#%%\n"
-    }
-   },
-   "outputs": [],
+   "cell_type": "markdown",
    "source": [
-    "import rlssm"
-   ]
+    "# Check existence of priors in different models"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "pycharm": {
+     "name": "#%% md\n"
+    }
+   }
   },
   {
    "cell_type": "code",
-   "execution_count": 2,
-   "id": "elegant-velvet",
+   "execution_count": 24,
+   "outputs": [],
+   "source": [
+    "import rlssm"
+   ],
    "metadata": {
+    "collapsed": false,
     "pycharm": {
      "name": "#%%\n"
     }
-   },
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
    "outputs": [
     {
      "name": "stdout",
@@ -34,11 +40,17 @@
    ],
    "source": [
     "model = rlssm.RLDDModel(hierarchical_levels=1, separate_learning_rates=True)"
-   ]
+   ],
+   "metadata": {
+    "collapsed": false,
+    "pycharm": {
+     "name": "#%%\n"
+    }
+   }
   },
   {
    "cell_type": "code",
-   "execution_count": 3,
+   "execution_count": 26,
    "id": "pursuant-ground",
    "metadata": {
     "pycharm": {
@@ -48,15 +60,9 @@
    "outputs": [
     {
      "data": {
-      "text/plain": [
-       "{'alpha_pos_priors': {'mu': 0, 'sd': 1},\n",
-       " 'alpha_neg_priors': {'mu': 0, 'sd': 1},\n",
-       " 'drift_scaling_priors': {'mu': 1, 'sd': 50},\n",
-       " 'threshold_priors': {'mu': 1, 'sd': 5},\n",
-       " 'ndt_priors': {'mu': 1, 'sd': 1}}"
-      ]
+      "text/plain": "{'alpha_pos_priors': {'mu': 0, 'sd': 1},\n 'alpha_neg_priors': {'mu': 0, 'sd': 1},\n 'drift_scaling_priors': {'mu': 1, 'sd': 50},\n 'threshold_priors': {'mu': 1, 'sd': 5},\n 'ndt_priors': {'mu': 1, 'sd': 1}}"
      },
-     "execution_count": 3,
+     "execution_count": 26,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -67,7 +73,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 4,
+   "execution_count": 27,
    "id": "rough-monthly",
    "metadata": {
     "pycharm": {
@@ -89,7 +95,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 5,
+   "execution_count": 28,
    "id": "acquired-verse",
    "metadata": {
     "pycharm": {
@@ -99,16 +105,9 @@
    "outputs": [
     {
      "data": {
-      "text/plain": [
-       "{'k_priors': {'mu': 1, 'sd': 1},\n",
-       " 'A_priors': {'mu': 0.3, 'sd': 1},\n",
-       " 'tau_priors': {'mu': 0, 'sd': 1},\n",
-       " 'v0_priors': {'mu': 9, 'sd': 2},\n",
-       " 'ws_priors': {'mu': 0, 'sd': 2},\n",
-       " 'wd_priors': {'mu': 3, 'sd': 3}}"
-      ]
+      "text/plain": "{'k_priors': {'mu': 1, 'sd': 1},\n 'sp_trial_var_priors': {'mu': 0.3, 'sd': 1},\n 'ndt_priors': {'mu': 0, 'sd': 1},\n 'v0_priors': {'mu': 9, 'sd': 2},\n 'ws_priors': {'mu': 0, 'sd': 2},\n 'wd_priors': {'mu': 3, 'sd': 3},\n 'drift_variability_priors': {'mu': 1, 'sd': 1}}"
      },
-     "execution_count": 5,
+     "execution_count": 28,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -119,7 +118,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 6,
+   "execution_count": 29,
    "id": "marine-reverse",
    "metadata": {
     "pycharm": {
@@ -141,7 +140,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 7,
+   "execution_count": 30,
    "id": "palestinian-morris",
    "metadata": {
     "pycharm": {
@@ -151,15 +150,9 @@
    "outputs": [
     {
      "data": {
-      "text/plain": [
-       "{'k_priors': {'mu': 1, 'sd': 1},\n",
-       " 'A_priors': {'mu': 0.3, 'sd': 1},\n",
-       " 'tau_priors': {'mu': 0, 'sd': 1},\n",
-       " 'alpha_priors': {'mu': 0, 'sd': 1},\n",
-       " 'drift_scaling_priors': {'mu': 0, 'sd': 0.5}}"
-      ]
+      "text/plain": "{'alpha_priors': {'mu': 0, 'sd': 1},\n 'k_priors': {'mu': 1, 'sd': 1},\n 'ndt_priors': {'mu': 0, 'sd': 1},\n 'sp_trial_var_priors': {'mu': 0.3, 'sd': 1},\n 'drift_asym_priors': {'mu': 0, 'sd': 1},\n 'drift_scaling_priors': {'mu': 2, 'sd': 1},\n 'drift_variability_priors': {'mu': 1, 'sd': 1}}"
      },
-     "execution_count": 7,
+     "execution_count": 30,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -170,7 +163,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 8,
+   "execution_count": 31,
    "id": "banner-surgeon",
    "metadata": {
     "pycharm": {
@@ -179,10 +172,10 @@
    },
    "outputs": [
     {
-     "name": "stderr",
+     "name": "stdout",
      "output_type": "stream",
      "text": [
-      "INFO:pystan:COMPILING THE C++ CODE FOR MODEL anon_model_15021e72184f262ca4fde1a7c069aefc NOW.\n"
+      "Using cached StanModel\n"
      ]
     }
    ],
@@ -192,7 +185,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 9,
+   "execution_count": 32,
    "id": "blond-soccer",
    "metadata": {
     "pycharm": {
@@ -202,15 +195,9 @@
    "outputs": [
     {
      "data": {
-      "text/plain": [
-       "{'threshold_priors': {'mu': 0, 'sd': 5},\n",
-       " 'ndt_priors': {'mu': 0, 'sd': 5},\n",
-       " 'v0_priors': {'mu': 9, 'sd': 2},\n",
-       " 'ws_priors': {'mu': 0, 'sd': 2},\n",
-       " 'wd_priors': {'mu': 3, 'sd': 3}}"
-      ]
+      "text/plain": "{'threshold_priors': {'mu': 0, 'sd': 5},\n 'ndt_priors': {'mu': 0, 'sd': 5},\n 'v0_priors': {'mu': 9, 'sd': 2},\n 'ws_priors': {'mu': 0, 'sd': 2},\n 'wd_priors': {'mu': 3, 'sd': 3}}"
      },
-     "execution_count": 9,
+     "execution_count": 32,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -221,7 +208,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 17,
+   "execution_count": 33,
    "id": "knowing-onion",
    "metadata": {
     "pycharm": {
@@ -230,10 +217,10 @@
    },
    "outputs": [
     {
-     "name": "stderr",
+     "name": "stdout",
      "output_type": "stream",
      "text": [
-      "INFO:pystan:COMPILING THE C++ CODE FOR MODEL anon_model_3173f418600d69519607e7d069898707 NOW.\n"
+      "Using cached StanModel\n"
      ]
     }
    ],
@@ -243,7 +230,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 18,
+   "execution_count": 34,
    "id": "critical-reset",
    "metadata": {
     "pycharm": {
@@ -253,17 +240,9 @@
    "outputs": [
     {
      "data": {
-      "text/plain": [
-       "{'threshold_priors': {'mu': 0, 'sd': 5},\n",
-       " 'ndt_priors': {'mu': 0, 'sd': 5},\n",
-       " 'alpha_pos_priors': {'mu': 0, 'sd': 1},\n",
-       " 'alpha_neg_priors': {'mu': 0, 'sd': 1},\n",
-       " 'v0_priors': {'mu': 9, 'sd': 2},\n",
-       " 'ws_priors': {'mu': 0, 'sd': 2},\n",
-       " 'wd_priors': {'mu': 3, 'sd': 3}}"
-      ]
+      "text/plain": "{'threshold_priors': {'mu': 0, 'sd': 5},\n 'ndt_priors': {'mu': 0, 'sd': 5},\n 'alpha_pos_priors': {'mu': 0, 'sd': 1},\n 'alpha_neg_priors': {'mu': 0, 'sd': 1},\n 'v0_priors': {'mu': 9, 'sd': 2},\n 'ws_priors': {'mu': 0, 'sd': 2},\n 'wd_priors': {'mu': 3, 'sd': 3}}"
      },
-     "execution_count": 18,
+     "execution_count": 34,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -271,18 +250,6 @@
    "source": [
     "model.priors"
    ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "formed-springer",
-   "metadata": {
-    "pycharm": {
-     "name": "#%%\n"
-    }
-   },
-   "outputs": [],
-   "source": []
   }
  ],
  "metadata": {

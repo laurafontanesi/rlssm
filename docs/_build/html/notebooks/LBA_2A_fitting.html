@@ -399,8 +399,10 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">rlssm</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">rlssm.utility.load_data</span> <span class="kn">import</span> <span class="n">load_example_dataset</span>
+<span class="kn">from</span> <span class="nn">rlssm.model.models_LBA</span> <span class="kn">import</span> <span class="n">LBAModel_2A</span>
 </pre></div>
 </div>
 </div>
@@ -411,7 +413,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import some example data:</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">load_example_dataset</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">load_example_dataset</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 
 <span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -455,68 +457,68 @@ div.rendered_html tbody tr:hover {
   <tbody>
     <tr>
       <th>0</th>
+      <td>11</td>
+      <td>1</td>
+      <td>1</td>
+      <td>59</td>
+      <td>44</td>
+      <td>4</td>
       <td>3</td>
       <td>1</td>
+      <td>1.462756</td>
       <td>1</td>
-      <td>50</td>
-      <td>41</td>
-      <td>3</td>
-      <td>1</td>
-      <td>1</td>
-      <td>2.456584</td>
-      <td>0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>3</td>
+      <td>11</td>
       <td>1</td>
       <td>2</td>
-      <td>48</td>
-      <td>34</td>
-      <td>3</td>
-      <td>1</td>
-      <td>2</td>
-      <td>2.170168</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>3</td>
-      <td>1</td>
-      <td>3</td>
-      <td>52</td>
-      <td>46</td>
+      <td>53</td>
+      <td>44</td>
       <td>4</td>
       <td>2</td>
       <td>1</td>
-      <td>1.494957</td>
+      <td>1.256185</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>3</td>
+      <th>2</th>
+      <td>11</td>
       <td>1</td>
-      <td>4</td>
+      <td>3</td>
+      <td>64</td>
       <td>55</td>
-      <td>48</td>
       <td>4</td>
       <td>3</td>
       <td>2</td>
-      <td>1.779351</td>
+      <td>1.264878</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11</td>
+      <td>1</td>
+      <td>4</td>
+      <td>47</td>
+      <td>36</td>
+      <td>3</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1.399706</td>
       <td>0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>3</td>
+      <td>11</td>
       <td>1</td>
       <td>5</td>
-      <td>48</td>
-      <td>52</td>
+      <td>54</td>
+      <td>55</td>
       <td>4</td>
       <td>3</td>
-      <td>3</td>
-      <td>1.853335</td>
-      <td>0</td>
+      <td>4</td>
+      <td>1.381221</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -529,16 +531,61 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">LBAModel_2A</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">LBAModel_2A</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-Using cached StanModel
+15:10:04 - cmdstanpy - INFO - compiling stan file /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.stan to exe file /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A
+15:10:11 - cmdstanpy - INFO - compiled model executable: /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A
+15:10:11 - cmdstanpy - WARNING - Stan compiler has produced 8 warnings:
+15:10:11 - cmdstanpy - WARNING -
+--- Translating Stan model to C++ code ---
+bin/stanc  --o=/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.hpp /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.stan
+Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.stan&#39;, line 92, column 1: Declaration
+    of arrays by placing brackets after a variable name is deprecated and
+    will be removed in Stan 2.32.0. Instead use the array keyword before the
+    type. This can be changed automatically using the auto-format flag to
+    stanc
+Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.stan&#39;, line 93, column 1: Declaration
+    of arrays by placing brackets after a variable name is deprecated and
+    will be removed in Stan 2.32.0. Instead use the array keyword before the
+    type. This can be changed automatically using the auto-format flag to
+    stanc
+Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.stan&#39;, line 16, column 25: normal_log
+    is deprecated and will be removed in Stan 2.32.0. Use normal_lpdf
+    instead. This can be automatically changed using the canonicalize flag
+    for stanc
+Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.stan&#39;, line 18, column 25: normal_log
+    is deprecated and will be removed in Stan 2.32.0. Use normal_lpdf
+    instead. This can be automatically changed using the canonicalize flag
+    for stanc
+Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.stan&#39;, line 41, column 30: normal_log
+    is deprecated and will be removed in Stan 2.32.0. Use normal_lpdf
+    instead. This can be automatically changed using the canonicalize flag
+    for stanc
+Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.stan&#39;, line 42, column 30: normal_log
+    is deprecated and will be removed in Stan 2.32.0. Use normal_lpdf
+    instead. This can be automatically changed using the canonicalize flag
+    for stanc
+Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.stan&#39;, line 67, column 30: Use
+    of lba_cdf without a vertical bar (|) between the first two arguments of
+    a CDF is deprecated and will be removed in Stan 2.32.0. This can be
+    automatically changed using the canonicalize flag for stanc
+Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.stan&#39;, line 71, column 30: Use
+    of lba_cdf without a vertical bar (|) between the first two arguments of
+    a CDF is deprecated and will be removed in Stan 2.32.0. This can be
+    automatically changed using the canonicalize flag for stanc
+
+--- Compiling, linking C++ code ---
+g++ -std=c++1y -pthread -D_REENTRANT -Wno-sign-compare -Wno-ignored-attributes      -I stan/lib/stan_math/lib/tbb_2020.3/include    -O3 -I src -I stan/src -I lib/rapidjson_1.1.0/ -I lib/CLI11-1.9.1/ -I stan/lib/stan_math/ -I stan/lib/stan_math/lib/eigen_3.3.9 -I stan/lib/stan_math/lib/boost_1.78.0 -I stan/lib/stan_math/lib/sundials_6.1.1/include -I stan/lib/stan_math/lib/sundials_6.1.1/src/sundials    -DBOOST_DISABLE_ASSERTS          -c -Wno-ignored-attributes   -x c++ -o /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.o /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.hpp
+g++ -std=c++1y -pthread -D_REENTRANT -Wno-sign-compare -Wno-ignored-attributes      -I stan/lib/stan_math/lib/tbb_2020.3/include    -O3 -I src -I stan/src -I lib/rapidjson_1.1.0/ -I lib/CLI11-1.9.1/ -I stan/lib/stan_math/ -I stan/lib/stan_math/lib/eigen_3.3.9 -I stan/lib/stan_math/lib/boost_1.78.0 -I stan/lib/stan_math/lib/sundials_6.1.1/include -I stan/lib/stan_math/lib/sundials_6.1.1/src/sundials    -DBOOST_DISABLE_ASSERTS                -Wl,-L,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34; -Wl,-rpath,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34;      /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.o src/cmdstan/main.o        -Wl,-L,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34; -Wl,-rpath,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34;   stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_nvecserial.a stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_cvodes.a stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_idas.a stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_kinsol.a  stan/lib/stan_math/lib/tbb/libtbb.so.2 -o /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A
+rm -f /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.o
+
 </pre></div></div>
 </div>
 </section>
@@ -574,7 +621,7 @@ Using cached StanModel
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-20:59:22 - cmdstanpy - INFO - CmdStan start processing
+15:10:11 - cmdstanpy - INFO - CmdStan start processing
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -594,13 +641,13 @@ drift_variability_priors {&#39;mu&#39;: 1, &#39;sd&#39;: 1}
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "10c185c42c3b408e8d484ca26a0816da"}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "3f0b5c7c3f5b48b1bf178b2fb1866428"}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "8e19aac169424979a602bdde11d544b6"}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "01fa613811bf4f659d0c79876dcc1cba"}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -615,10 +662,7 @@ drift_variability_priors {&#39;mu&#39;: 1, &#39;sd&#39;: 1}
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-20:59:50 - cmdstanpy - INFO - CmdStan done processing.
-20:59:50 - cmdstanpy - WARNING - Non-fatal error during sampling:
-Exception: Exception: Exception: Phi: x is -nan, but must be not nan! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.stan&#39;, line 39, column 10 to column 45) (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.stan&#39;, line 71, column 22 to column 81) (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.stan&#39;, line 161, column 5 to column 89)
-Consider re-running with show_console=True if the above output is unclear!
+15:10:22 - cmdstanpy - INFO - CmdStan done processing.
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -679,27 +723,27 @@ E-BFMI indicated no pathological behavior
   <tbody>
     <tr>
       <th>lp__</th>
-      <td>1.003650</td>
+      <td>0.997761</td>
       <td>lp__</td>
     </tr>
     <tr>
       <th>k</th>
-      <td>0.998454</td>
+      <td>1.015140</td>
       <td>k</td>
     </tr>
     <tr>
       <th>sp_trial_var</th>
-      <td>0.996282</td>
+      <td>1.015530</td>
       <td>sp_trial_var</td>
     </tr>
     <tr>
       <th>ndt</th>
-      <td>1.012480</td>
+      <td>0.993204</td>
       <td>ndt</td>
     </tr>
     <tr>
       <th>drift_cor</th>
-      <td>0.992578</td>
+      <td>1.025230</td>
       <td>drift_cor</td>
     </tr>
     <tr>
@@ -708,33 +752,33 @@ E-BFMI indicated no pathological behavior
       <td>...</td>
     </tr>
     <tr>
+      <th>log_lik[235]</th>
+      <td>0.995173</td>
+      <td>log_lik[235]</td>
+    </tr>
+    <tr>
       <th>log_lik[236]</th>
-      <td>0.992739</td>
+      <td>0.996574</td>
       <td>log_lik[236]</td>
     </tr>
     <tr>
       <th>log_lik[237]</th>
-      <td>1.014240</td>
+      <td>0.994769</td>
       <td>log_lik[237]</td>
     </tr>
     <tr>
       <th>log_lik[238]</th>
-      <td>1.002040</td>
+      <td>0.994911</td>
       <td>log_lik[238]</td>
     </tr>
     <tr>
       <th>log_lik[239]</th>
-      <td>0.994369</td>
+      <td>1.000240</td>
       <td>log_lik[239]</td>
-    </tr>
-    <tr>
-      <th>log_lik[240]</th>
-      <td>1.003460</td>
-      <td>log_lik[240]</td>
     </tr>
   </tbody>
 </table>
-<p>1693 rows × 2 columns</p>
+<p>1686 rows × 2 columns</p>
 </div></div>
 </div>
 </section>
@@ -754,10 +798,10 @@ E-BFMI indicated no pathological behavior
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;lppd&#39;: -122.79016478643794,
- &#39;p_waic&#39;: 3.9069219189241746,
- &#39;waic&#39;: 253.39417341072422,
- &#39;waic_se&#39;: 34.484284027933136}
+{&#39;lppd&#39;: -215.04599879160781,
+ &#39;p_waic&#39;: 3.892240387155754,
+ &#39;waic&#39;: 437.87647835752716,
+ &#39;waic_se&#39;: 29.315632534663862}
 </pre></div></div>
 </div>
 </section>
@@ -834,66 +878,66 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
     </tr>
     <tr>
       <th>mean</th>
-      <td>1.497072</td>
-      <td>1.577284</td>
-      <td>0.615589</td>
-      <td>3.175861</td>
-      <td>1.706322</td>
-      <td>1.033466</td>
+      <td>1.839728</td>
+      <td>1.441905</td>
+      <td>0.377720</td>
+      <td>2.272362</td>
+      <td>1.589044</td>
+      <td>0.749673</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>0.681916</td>
-      <td>0.658089</td>
-      <td>0.112266</td>
-      <td>0.874656</td>
-      <td>0.509706</td>
-      <td>0.308777</td>
+      <td>0.620611</td>
+      <td>0.674104</td>
+      <td>0.109018</td>
+      <td>0.688844</td>
+      <td>0.470559</td>
+      <td>0.241927</td>
     </tr>
     <tr>
       <th>min</th>
-      <td>0.490696</td>
-      <td>0.205277</td>
-      <td>0.157454</td>
-      <td>1.257090</td>
-      <td>0.602607</td>
-      <td>0.401229</td>
+      <td>0.619713</td>
+      <td>0.162487</td>
+      <td>0.117633</td>
+      <td>0.882371</td>
+      <td>0.610564</td>
+      <td>0.240842</td>
     </tr>
     <tr>
       <th>25%</th>
-      <td>0.927396</td>
-      <td>1.042838</td>
-      <td>0.540393</td>
-      <td>2.619733</td>
-      <td>1.334880</td>
-      <td>0.822739</td>
+      <td>1.395320</td>
+      <td>0.968676</td>
+      <td>0.302152</td>
+      <td>1.745590</td>
+      <td>1.238690</td>
+      <td>0.581931</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>1.384900</td>
-      <td>1.588635</td>
-      <td>0.629509</td>
-      <td>3.140250</td>
-      <td>1.692355</td>
-      <td>1.015335</td>
+      <td>1.763500</td>
+      <td>1.343310</td>
+      <td>0.385110</td>
+      <td>2.209385</td>
+      <td>1.500390</td>
+      <td>0.719154</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>1.949345</td>
-      <td>2.027640</td>
-      <td>0.699986</td>
-      <td>3.795478</td>
-      <td>2.081795</td>
-      <td>1.237730</td>
+      <td>2.218960</td>
+      <td>1.836955</td>
+      <td>0.445925</td>
+      <td>2.739920</td>
+      <td>1.912740</td>
+      <td>0.896444</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>3.544740</td>
-      <td>3.156850</td>
-      <td>0.808865</td>
-      <td>5.446150</td>
-      <td>3.018930</td>
-      <td>1.926370</td>
+      <td>4.005270</td>
+      <td>3.473310</td>
+      <td>0.604554</td>
+      <td>4.416350</td>
+      <td>3.047190</td>
+      <td>1.555090</td>
     </tr>
   </tbody>
 </table>
@@ -984,6 +1028,7 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
       <th>9</th>
       <th>10</th>
       <th>...</th>
+      <th>230</th>
       <th>231</th>
       <th>232</th>
       <th>233</th>
@@ -993,7 +1038,6 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
       <th>237</th>
       <th>238</th>
       <th>239</th>
-      <th>240</th>
     </tr>
     <tr>
       <th>sample</th>
@@ -1023,23 +1067,23 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
   <tbody>
     <tr>
       <th>1</th>
-      <td>1.183546</td>
-      <td>1.364944</td>
-      <td>1.616725</td>
-      <td>1.605419</td>
-      <td>1.089678</td>
-      <td>1.400675</td>
-      <td>1.135932</td>
-      <td>1.123553</td>
-      <td>1.084159</td>
-      <td>1.255094</td>
+      <td>1.693165</td>
+      <td>1.902963</td>
+      <td>1.487277</td>
+      <td>1.183152</td>
+      <td>1.298121</td>
+      <td>1.648833</td>
+      <td>1.252733</td>
+      <td>1.579188</td>
+      <td>1.639454</td>
+      <td>1.325097</td>
       <td>...</td>
       <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
       <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1047,16 +1091,16 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
     </tr>
     <tr>
       <th>2</th>
-      <td>1.576325</td>
-      <td>1.519411</td>
-      <td>1.692919</td>
-      <td>1.670994</td>
-      <td>1.141044</td>
-      <td>1.170342</td>
-      <td>1.090486</td>
-      <td>1.106510</td>
-      <td>1.419247</td>
-      <td>1.113583</td>
+      <td>1.454376</td>
+      <td>1.296875</td>
+      <td>1.288511</td>
+      <td>1.521330</td>
+      <td>1.284421</td>
+      <td>1.398700</td>
+      <td>1.523004</td>
+      <td>1.724085</td>
+      <td>1.428141</td>
+      <td>1.513045</td>
       <td>...</td>
       <td>0.0</td>
       <td>1.0</td>
@@ -1071,16 +1115,16 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
     </tr>
     <tr>
       <th>3</th>
-      <td>1.425449</td>
-      <td>1.163523</td>
-      <td>1.368799</td>
-      <td>1.325493</td>
-      <td>1.311212</td>
-      <td>1.194266</td>
-      <td>1.165015</td>
-      <td>1.466742</td>
-      <td>1.149893</td>
-      <td>1.287333</td>
+      <td>1.310099</td>
+      <td>1.550863</td>
+      <td>1.455303</td>
+      <td>1.799894</td>
+      <td>1.506182</td>
+      <td>1.586193</td>
+      <td>1.346588</td>
+      <td>1.547969</td>
+      <td>1.438542</td>
+      <td>1.702133</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1095,21 +1139,21 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
     </tr>
     <tr>
       <th>4</th>
-      <td>1.284083</td>
-      <td>1.343105</td>
-      <td>1.420682</td>
-      <td>1.266277</td>
-      <td>1.405464</td>
-      <td>1.415870</td>
-      <td>1.267516</td>
-      <td>1.428130</td>
-      <td>1.343332</td>
-      <td>1.305044</td>
+      <td>1.301761</td>
+      <td>1.658232</td>
+      <td>1.583796</td>
+      <td>1.586956</td>
+      <td>1.638872</td>
+      <td>1.633680</td>
+      <td>1.462750</td>
+      <td>1.674229</td>
+      <td>1.408486</td>
+      <td>1.591842</td>
       <td>...</td>
       <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1119,16 +1163,16 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
     </tr>
     <tr>
       <th>5</th>
-      <td>1.504018</td>
-      <td>1.466872</td>
-      <td>1.538393</td>
-      <td>1.160328</td>
-      <td>1.164173</td>
-      <td>1.544946</td>
-      <td>1.325153</td>
-      <td>1.642987</td>
-      <td>1.372256</td>
-      <td>1.457608</td>
+      <td>1.508389</td>
+      <td>1.701388</td>
+      <td>1.649837</td>
+      <td>1.504857</td>
+      <td>1.700781</td>
+      <td>1.371294</td>
+      <td>1.685847</td>
+      <td>1.598446</td>
+      <td>1.404466</td>
+      <td>1.708828</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1138,8 +1182,8 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1167,23 +1211,23 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
     </tr>
     <tr>
       <th>96</th>
-      <td>1.219824</td>
-      <td>1.418087</td>
-      <td>1.118213</td>
-      <td>1.238899</td>
-      <td>1.128005</td>
-      <td>1.232200</td>
-      <td>1.561760</td>
-      <td>1.178684</td>
-      <td>1.483256</td>
-      <td>1.302946</td>
+      <td>1.394518</td>
+      <td>1.281766</td>
+      <td>1.204888</td>
+      <td>1.265453</td>
+      <td>1.512276</td>
+      <td>1.531050</td>
+      <td>1.514394</td>
+      <td>1.750419</td>
+      <td>1.229132</td>
+      <td>1.205551</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>1.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1191,40 +1235,40 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
     </tr>
     <tr>
       <th>97</th>
-      <td>1.636007</td>
-      <td>1.492624</td>
-      <td>1.118810</td>
-      <td>1.139576</td>
-      <td>1.640280</td>
-      <td>1.371594</td>
-      <td>1.079900</td>
-      <td>1.402737</td>
-      <td>1.441459</td>
-      <td>1.536818</td>
+      <td>1.814250</td>
+      <td>1.491318</td>
+      <td>1.660379</td>
+      <td>1.135034</td>
+      <td>1.718851</td>
+      <td>1.459324</td>
+      <td>1.492663</td>
+      <td>1.497887</td>
+      <td>1.569534</td>
+      <td>1.202619</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>98</th>
-      <td>1.249828</td>
-      <td>1.531754</td>
-      <td>1.333652</td>
-      <td>1.258257</td>
-      <td>1.271951</td>
-      <td>1.389582</td>
-      <td>1.405658</td>
-      <td>1.394606</td>
-      <td>1.456438</td>
-      <td>1.221342</td>
+      <td>1.706058</td>
+      <td>1.546548</td>
+      <td>1.586624</td>
+      <td>1.614529</td>
+      <td>1.275392</td>
+      <td>1.962393</td>
+      <td>1.287594</td>
+      <td>1.465445</td>
+      <td>1.642311</td>
+      <td>1.722285</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1232,27 +1276,27 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
+      <td>0.0</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>1.122231</td>
-      <td>1.598481</td>
-      <td>1.309456</td>
-      <td>1.485651</td>
-      <td>1.564683</td>
-      <td>1.405006</td>
-      <td>1.553835</td>
-      <td>1.367322</td>
-      <td>1.170697</td>
-      <td>1.609261</td>
+      <td>1.785258</td>
+      <td>1.459177</td>
+      <td>1.776970</td>
+      <td>1.651715</td>
+      <td>1.685184</td>
+      <td>1.419596</td>
+      <td>1.470481</td>
+      <td>1.434782</td>
+      <td>1.363967</td>
+      <td>1.437656</td>
       <td>...</td>
       <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1263,16 +1307,16 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
     </tr>
     <tr>
       <th>100</th>
-      <td>1.484311</td>
-      <td>1.245769</td>
-      <td>1.362472</td>
-      <td>1.229014</td>
-      <td>1.520313</td>
-      <td>1.308754</td>
-      <td>1.256234</td>
-      <td>1.314763</td>
-      <td>1.429952</td>
-      <td>1.381695</td>
+      <td>1.359884</td>
+      <td>1.606504</td>
+      <td>1.473639</td>
+      <td>1.535191</td>
+      <td>1.346491</td>
+      <td>1.639143</td>
+      <td>1.384854</td>
+      <td>1.371414</td>
+      <td>1.649957</td>
+      <td>1.632702</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1287,7 +1331,7 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
     </tr>
   </tbody>
 </table>
-<p>100 rows × 480 columns</p>
+<p>100 rows × 478 columns</p>
 </div></div>
 </div>
 <div class="nbinput docutils container">
@@ -1356,83 +1400,83 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
   <tbody>
     <tr>
       <th>1</th>
-      <td>0.908333</td>
-      <td>1.351170</td>
-      <td>0.081850</td>
-      <td>1.370503</td>
-      <td>1.402379</td>
-      <td>1.456921</td>
-      <td>1.516156</td>
-      <td>1.605373</td>
-      <td>1.089305</td>
-      <td>1.202466</td>
-      <td>1.318360</td>
-      <td>1.442767</td>
-      <td>1.611225</td>
+      <td>0.815900</td>
+      <td>1.506881</td>
+      <td>0.090940</td>
+      <td>1.465163</td>
+      <td>1.516061</td>
+      <td>1.569249</td>
+      <td>1.681783</td>
+      <td>1.809532</td>
+      <td>1.202057</td>
+      <td>1.320569</td>
+      <td>1.471750</td>
+      <td>1.615649</td>
+      <td>1.821377</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.937500</td>
-      <td>1.369974</td>
-      <td>0.083806</td>
-      <td>1.451170</td>
-      <td>1.474599</td>
-      <td>1.504709</td>
-      <td>1.549811</td>
-      <td>1.624481</td>
-      <td>1.134182</td>
-      <td>1.238473</td>
-      <td>1.341397</td>
-      <td>1.470029</td>
-      <td>1.622969</td>
+      <td>0.974895</td>
+      <td>1.524620</td>
+      <td>-0.088865</td>
+      <td>1.646729</td>
+      <td>1.656079</td>
+      <td>1.687289</td>
+      <td>1.719758</td>
+      <td>1.731679</td>
+      <td>1.311520</td>
+      <td>1.411978</td>
+      <td>1.526479</td>
+      <td>1.617892</td>
+      <td>1.717321</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>1.000000</td>
-      <td>1.320460</td>
-      <td>-0.054377</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>1.199565</td>
-      <td>1.256421</td>
-      <td>1.316261</td>
-      <td>1.390138</td>
-      <td>1.440001</td>
+      <td>0.899582</td>
+      <td>1.500411</td>
+      <td>0.101180</td>
+      <td>1.522173</td>
+      <td>1.543227</td>
+      <td>1.574857</td>
+      <td>1.598814</td>
+      <td>1.722459</td>
+      <td>1.266971</td>
+      <td>1.371277</td>
+      <td>1.493742</td>
+      <td>1.571779</td>
+      <td>1.735415</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>1.000000</td>
-      <td>1.370931</td>
-      <td>-0.090826</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>1.289254</td>
-      <td>1.326916</td>
-      <td>1.375670</td>
-      <td>1.416675</td>
-      <td>1.448248</td>
+      <td>0.907950</td>
+      <td>1.542380</td>
+      <td>0.077783</td>
+      <td>1.578516</td>
+      <td>1.674281</td>
+      <td>1.702402</td>
+      <td>1.721476</td>
+      <td>1.778359</td>
+      <td>1.271154</td>
+      <td>1.382164</td>
+      <td>1.527199</td>
+      <td>1.646209</td>
+      <td>1.783636</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.879167</td>
-      <td>1.338468</td>
-      <td>0.091321</td>
-      <td>1.236310</td>
-      <td>1.294457</td>
-      <td>1.333365</td>
-      <td>1.400824</td>
-      <td>1.499225</td>
-      <td>1.045345</td>
-      <td>1.182412</td>
-      <td>1.336481</td>
-      <td>1.477776</td>
-      <td>1.635398</td>
+      <td>1.000000</td>
+      <td>1.510223</td>
+      <td>0.282133</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.359764</td>
+      <td>1.420596</td>
+      <td>1.488938</td>
+      <td>1.583493</td>
+      <td>1.674560</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1452,83 +1496,83 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
     </tr>
     <tr>
       <th>96</th>
-      <td>0.987500</td>
-      <td>1.355308</td>
-      <td>0.078612</td>
-      <td>1.441660</td>
-      <td>1.461455</td>
-      <td>1.481250</td>
-      <td>1.540897</td>
-      <td>1.600544</td>
-      <td>1.115122</td>
-      <td>1.235986</td>
-      <td>1.334987</td>
-      <td>1.469866</td>
-      <td>1.609801</td>
+      <td>0.903766</td>
+      <td>1.483504</td>
+      <td>-0.049382</td>
+      <td>1.518616</td>
+      <td>1.554548</td>
+      <td>1.590052</td>
+      <td>1.639551</td>
+      <td>1.679960</td>
+      <td>1.235786</td>
+      <td>1.343565</td>
+      <td>1.449838</td>
+      <td>1.597214</td>
+      <td>1.721766</td>
     </tr>
     <tr>
       <th>97</th>
-      <td>0.929167</td>
-      <td>1.325799</td>
-      <td>0.131479</td>
-      <td>1.334706</td>
-      <td>1.355270</td>
-      <td>1.388523</td>
-      <td>1.420327</td>
-      <td>1.531333</td>
-      <td>1.093944</td>
-      <td>1.195269</td>
-      <td>1.296096</td>
-      <td>1.430200</td>
-      <td>1.577682</td>
+      <td>0.945607</td>
+      <td>1.481258</td>
+      <td>-0.044627</td>
+      <td>1.506861</td>
+      <td>1.560533</td>
+      <td>1.620913</td>
+      <td>1.687283</td>
+      <td>1.775614</td>
+      <td>1.159605</td>
+      <td>1.331281</td>
+      <td>1.477233</td>
+      <td>1.626482</td>
+      <td>1.776323</td>
     </tr>
     <tr>
       <th>98</th>
-      <td>1.000000</td>
-      <td>1.301221</td>
-      <td>0.043355</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>1.107730</td>
-      <td>1.211163</td>
-      <td>1.294686</td>
-      <td>1.393938</td>
-      <td>1.493629</td>
+      <td>0.861925</td>
+      <td>1.528642</td>
+      <td>-0.016929</td>
+      <td>1.438256</td>
+      <td>1.501325</td>
+      <td>1.580577</td>
+      <td>1.659805</td>
+      <td>1.737549</td>
+      <td>1.142393</td>
+      <td>1.327456</td>
+      <td>1.525686</td>
+      <td>1.702791</td>
+      <td>1.893376</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>0.983333</td>
-      <td>1.366179</td>
-      <td>0.046120</td>
-      <td>1.545306</td>
-      <td>1.549452</td>
-      <td>1.556749</td>
-      <td>1.563695</td>
-      <td>1.565733</td>
-      <td>1.139000</td>
-      <td>1.260973</td>
-      <td>1.354378</td>
-      <td>1.459849</td>
-      <td>1.583354</td>
+      <td>0.891213</td>
+      <td>1.561589</td>
+      <td>-0.143608</td>
+      <td>1.603221</td>
+      <td>1.619747</td>
+      <td>1.641722</td>
+      <td>1.665872</td>
+      <td>1.739506</td>
+      <td>1.346551</td>
+      <td>1.439885</td>
+      <td>1.548740</td>
+      <td>1.664568</td>
+      <td>1.756083</td>
     </tr>
     <tr>
       <th>100</th>
       <td>1.000000</td>
-      <td>1.398333</td>
-      <td>0.009498</td>
+      <td>1.500229</td>
+      <td>0.074384</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>1.244427</td>
-      <td>1.313766</td>
-      <td>1.396258</td>
-      <td>1.486090</td>
-      <td>1.551681</td>
+      <td>1.360505</td>
+      <td>1.423669</td>
+      <td>1.496606</td>
+      <td>1.573833</td>
+      <td>1.652999</td>
     </tr>
   </tbody>
 </table>
@@ -1656,63 +1700,63 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
       <th rowspan="5" valign="top">1</th>
       <th rowspan="5" valign="top">AB</th>
       <th>1</th>
-      <td>1.0</td>
-      <td>1.346622</td>
-      <td>0.038190</td>
-      <td>NaN</td>
-      <td>1.246052</td>
-      <td>NaN</td>
-      <td>1.343261</td>
-      <td>NaN</td>
-      <td>1.459109</td>
+      <td>0.80</td>
+      <td>1.534562</td>
+      <td>-0.186347</td>
+      <td>1.728193</td>
+      <td>1.319202</td>
+      <td>1.758502</td>
+      <td>1.508531</td>
+      <td>1.772696</td>
+      <td>1.610643</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.9</td>
-      <td>1.396116</td>
-      <td>-0.008277</td>
-      <td>1.484449</td>
-      <td>1.264219</td>
-      <td>1.488372</td>
-      <td>1.341708</td>
-      <td>1.492294</td>
-      <td>1.504826</td>
+      <td>1.00</td>
+      <td>1.528863</td>
+      <td>0.283451</td>
+      <td>NaN</td>
+      <td>1.490206</td>
+      <td>NaN</td>
+      <td>1.536145</td>
+      <td>NaN</td>
+      <td>1.557814</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>1.0</td>
-      <td>1.347069</td>
-      <td>-0.271303</td>
-      <td>NaN</td>
-      <td>1.297130</td>
-      <td>NaN</td>
-      <td>1.345260</td>
-      <td>NaN</td>
-      <td>1.416530</td>
+      <td>0.85</td>
+      <td>1.577855</td>
+      <td>-0.115510</td>
+      <td>1.549813</td>
+      <td>1.490936</td>
+      <td>1.550730</td>
+      <td>1.574247</td>
+      <td>1.628157</td>
+      <td>1.654209</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>1.0</td>
-      <td>1.367459</td>
-      <td>-0.273305</td>
-      <td>NaN</td>
-      <td>1.339520</td>
-      <td>NaN</td>
-      <td>1.374498</td>
-      <td>NaN</td>
-      <td>1.411171</td>
+      <td>0.90</td>
+      <td>1.623910</td>
+      <td>-0.246256</td>
+      <td>1.649095</td>
+      <td>1.511793</td>
+      <td>1.676528</td>
+      <td>1.587238</td>
+      <td>1.703960</td>
+      <td>1.749424</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.8</td>
-      <td>1.393105</td>
-      <td>-0.042693</td>
-      <td>1.335630</td>
-      <td>1.271462</td>
-      <td>1.344036</td>
-      <td>1.392219</td>
-      <td>1.370857</td>
-      <td>1.549008</td>
+      <td>1.00</td>
+      <td>1.525588</td>
+      <td>-0.024913</td>
+      <td>NaN</td>
+      <td>1.452423</td>
+      <td>NaN</td>
+      <td>1.525061</td>
+      <td>NaN</td>
+      <td>1.606272</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1732,63 +1776,63 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
       <th rowspan="5" valign="top">3</th>
       <th rowspan="5" valign="top">CD</th>
       <th>96</th>
-      <td>0.8</td>
-      <td>1.347445</td>
-      <td>0.230255</td>
-      <td>1.463140</td>
-      <td>1.142039</td>
-      <td>1.466645</td>
-      <td>1.260682</td>
-      <td>1.475158</td>
-      <td>1.372035</td>
+      <td>0.95</td>
+      <td>1.507860</td>
+      <td>0.358764</td>
+      <td>1.747676</td>
+      <td>1.428625</td>
+      <td>1.747676</td>
+      <td>1.478917</td>
+      <td>1.747676</td>
+      <td>1.559225</td>
     </tr>
     <tr>
       <th>97</th>
-      <td>0.9</td>
-      <td>1.317313</td>
-      <td>-0.431412</td>
-      <td>1.450728</td>
-      <td>1.186740</td>
-      <td>1.461376</td>
-      <td>1.319384</td>
-      <td>1.472024</td>
-      <td>1.458631</td>
+      <td>0.95</td>
+      <td>1.581117</td>
+      <td>-0.560141</td>
+      <td>1.528396</td>
+      <td>1.543824</td>
+      <td>1.528396</td>
+      <td>1.570441</td>
+      <td>1.528396</td>
+      <td>1.719674</td>
     </tr>
     <tr>
       <th>98</th>
-      <td>1.0</td>
-      <td>1.314295</td>
-      <td>0.297978</td>
-      <td>NaN</td>
-      <td>1.240378</td>
-      <td>NaN</td>
-      <td>1.288117</td>
-      <td>NaN</td>
-      <td>1.377662</td>
+      <td>0.90</td>
+      <td>1.474218</td>
+      <td>0.237693</td>
+      <td>1.576321</td>
+      <td>1.338095</td>
+      <td>1.625512</td>
+      <td>1.440581</td>
+      <td>1.674702</td>
+      <td>1.577617</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>1.0</td>
-      <td>1.296240</td>
-      <td>0.508829</td>
-      <td>NaN</td>
-      <td>1.180083</td>
-      <td>NaN</td>
-      <td>1.251044</td>
-      <td>NaN</td>
-      <td>1.395654</td>
+      <td>0.90</td>
+      <td>1.581566</td>
+      <td>-0.484731</td>
+      <td>1.651426</td>
+      <td>1.496155</td>
+      <td>1.681999</td>
+      <td>1.585303</td>
+      <td>1.712573</td>
+      <td>1.681528</td>
     </tr>
     <tr>
       <th>100</th>
-      <td>1.0</td>
-      <td>1.434916</td>
-      <td>-0.311766</td>
+      <td>1.00</td>
+      <td>1.471428</td>
+      <td>0.444475</td>
       <td>NaN</td>
-      <td>1.351149</td>
+      <td>1.409952</td>
       <td>NaN</td>
-      <td>1.460699</td>
+      <td>1.430162</td>
       <td>NaN</td>
-      <td>1.526745</td>
+      <td>1.538831</td>
     </tr>
   </tbody>
 </table>
@@ -1858,63 +1902,63 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
     <tr>
       <th rowspan="5" valign="top">1</th>
       <th>1</th>
-      <td>0.966667</td>
-      <td>1.334242</td>
-      <td>0.211127</td>
-      <td>1.388847</td>
-      <td>1.206436</td>
-      <td>1.388847</td>
-      <td>1.354761</td>
-      <td>1.388847</td>
-      <td>1.424085</td>
+      <td>0.866667</td>
+      <td>1.538936</td>
+      <td>-0.080940</td>
+      <td>1.726778</td>
+      <td>1.332940</td>
+      <td>1.777266</td>
+      <td>1.503743</td>
+      <td>1.809169</td>
+      <td>1.708005</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.933333</td>
-      <td>1.401069</td>
-      <td>-0.052059</td>
-      <td>1.459300</td>
-      <td>1.317267</td>
-      <td>1.461746</td>
-      <td>1.412713</td>
-      <td>1.464193</td>
-      <td>1.482805</td>
+      <td>1.000000</td>
+      <td>1.479032</td>
+      <td>0.309335</td>
+      <td>NaN</td>
+      <td>1.349146</td>
+      <td>NaN</td>
+      <td>1.424252</td>
+      <td>NaN</td>
+      <td>1.620771</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>1.000000</td>
-      <td>1.322158</td>
-      <td>-0.054984</td>
-      <td>NaN</td>
-      <td>1.266166</td>
-      <td>NaN</td>
-      <td>1.309195</td>
-      <td>NaN</td>
-      <td>1.383934</td>
+      <td>0.933333</td>
+      <td>1.484095</td>
+      <td>-0.054575</td>
+      <td>1.570224</td>
+      <td>1.334003</td>
+      <td>1.601713</td>
+      <td>1.513079</td>
+      <td>1.633202</td>
+      <td>1.564252</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>1.000000</td>
-      <td>1.371884</td>
-      <td>-0.113772</td>
-      <td>NaN</td>
-      <td>1.341697</td>
-      <td>NaN</td>
-      <td>1.362876</td>
-      <td>NaN</td>
-      <td>1.420300</td>
+      <td>0.966667</td>
+      <td>1.511202</td>
+      <td>0.413283</td>
+      <td>1.593129</td>
+      <td>1.355346</td>
+      <td>1.593129</td>
+      <td>1.463328</td>
+      <td>1.593129</td>
+      <td>1.589374</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.833333</td>
-      <td>1.367192</td>
-      <td>-0.028940</td>
-      <td>1.278983</td>
-      <td>1.207284</td>
-      <td>1.395487</td>
-      <td>1.378716</td>
-      <td>1.401898</td>
-      <td>1.537772</td>
+      <td>1.000000</td>
+      <td>1.542602</td>
+      <td>0.006582</td>
+      <td>NaN</td>
+      <td>1.446807</td>
+      <td>NaN</td>
+      <td>1.544260</td>
+      <td>NaN</td>
+      <td>1.630757</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1933,62 +1977,62 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
       <th rowspan="5" valign="top">8</th>
       <th>96</th>
       <td>1.000000</td>
-      <td>1.352677</td>
-      <td>0.023876</td>
+      <td>1.514466</td>
+      <td>-0.276282</td>
       <td>NaN</td>
-      <td>1.207528</td>
+      <td>1.483921</td>
       <td>NaN</td>
-      <td>1.344366</td>
+      <td>1.513852</td>
       <td>NaN</td>
-      <td>1.503778</td>
+      <td>1.558092</td>
     </tr>
     <tr>
       <th>97</th>
-      <td>0.933333</td>
-      <td>1.310182</td>
-      <td>0.130377</td>
-      <td>1.472385</td>
-      <td>1.146520</td>
-      <td>1.489642</td>
-      <td>1.257619</td>
-      <td>1.506899</td>
-      <td>1.452143</td>
+      <td>0.896552</td>
+      <td>1.526485</td>
+      <td>-0.374503</td>
+      <td>1.512730</td>
+      <td>1.406130</td>
+      <td>1.513389</td>
+      <td>1.528486</td>
+      <td>1.538217</td>
+      <td>1.729295</td>
     </tr>
     <tr>
       <th>98</th>
-      <td>1.000000</td>
-      <td>1.297683</td>
-      <td>0.040928</td>
-      <td>NaN</td>
-      <td>1.235014</td>
-      <td>NaN</td>
-      <td>1.297713</td>
-      <td>NaN</td>
-      <td>1.348092</td>
+      <td>0.896552</td>
+      <td>1.450706</td>
+      <td>0.428468</td>
+      <td>1.525831</td>
+      <td>1.237706</td>
+      <td>1.529278</td>
+      <td>1.349474</td>
+      <td>1.581125</td>
+      <td>1.585942</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>1.000000</td>
-      <td>1.344417</td>
-      <td>0.110634</td>
-      <td>NaN</td>
-      <td>1.212390</td>
-      <td>NaN</td>
-      <td>1.379767</td>
-      <td>NaN</td>
-      <td>1.431506</td>
+      <td>0.931034</td>
+      <td>1.611712</td>
+      <td>-0.389879</td>
+      <td>1.622358</td>
+      <td>1.547153</td>
+      <td>1.627996</td>
+      <td>1.626622</td>
+      <td>1.633633</td>
+      <td>1.696974</td>
     </tr>
     <tr>
       <th>100</th>
       <td>1.000000</td>
-      <td>1.394485</td>
-      <td>0.357007</td>
+      <td>1.505358</td>
+      <td>-0.078567</td>
       <td>NaN</td>
-      <td>1.345426</td>
+      <td>1.441680</td>
       <td>NaN</td>
-      <td>1.358845</td>
+      <td>1.515855</td>
       <td>NaN</td>
-      <td>1.433055</td>
+      <td>1.553035</td>
     </tr>
   </tbody>
 </table>

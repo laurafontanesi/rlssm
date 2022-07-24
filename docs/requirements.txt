@@ -6,6 +6,5 @@ numpy
 pandas
 seaborn
 scipy
-pystan==2.19
-seaborn
+cmdstanpy==1.0.4
 rlssm

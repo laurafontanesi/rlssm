@@ -27,24 +27,6 @@ class LBAModel_2A(Model):
 
         hierarchical_levels : int
             Set to 1 for individual data and to 2 for grouped data.
-
-        Attributes
-        ----------
-        model_label : str
-            The label of the fully specified model.
-
-        n_parameters_individual : int
-            The number of individual parameters of the fully specified model.
-
-        n_parameters_trial : int
-            The number of parameters that are estimated at a trial level.
-
-        stan_model_path : str
-            The location of the stan model code.
-
-        compiled_model : StanModel
-            The compiled stan model.
-
         """
 
         super().__init__(hierarchical_levels, "LBA_2A")
@@ -263,24 +245,6 @@ class RLLBAModel_2A(Model):
         nonlinear_mapping : bool, default False
              By default, the mapping between value differences and drift-rate is linear.
              If set to True, a non-linear mapping function is estimated.
-
-        Attributes
-        ----------
-        model_label : str
-            The label of the fully specified model.
-
-        n_parameters_individual : int
-            The number of individual parameters of the fully specified model.
-
-        n_parameters_trial : int
-            The number of parameters that are estimated at a trial level.
-
-        stan_model_path : str
-            The location of the stan model code.
-
-        compiled_model : StanModel
-            The compiled stan model.
-
         """
         super().__init__(hierarchical_levels, "RLLBA_2A")
 

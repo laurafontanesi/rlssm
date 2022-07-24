@@ -396,7 +396,9 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">rlssm</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rlssm.utility.load_data</span> <span class="kn">import</span> <span class="n">load_example_dataset</span>
+<span class="kn">from</span> <span class="nn">rlssm.model.models_RL</span> <span class="kn">import</span> <span class="n">RLModel_2A</span>
+
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </pre></div>
 </div>
@@ -408,7 +410,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import some example data:</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">load_example_dataset</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">load_example_dataset</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 
 <span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -452,68 +454,68 @@ div.rendered_html tbody tr:hover {
   <tbody>
     <tr>
       <th>0</th>
-      <td>23</td>
+      <td>15</td>
       <td>1</td>
       <td>1</td>
-      <td>39</td>
-      <td>33</td>
-      <td>2</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1.305523</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>23</td>
-      <td>1</td>
-      <td>2</td>
       <td>50</td>
-      <td>41</td>
+      <td>28</td>
       <td>3</td>
       <td>1</td>
       <td>1</td>
-      <td>0.916909</td>
+      <td>2.630658</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>15</td>
+      <td>1</td>
+      <td>2</td>
+      <td>52</td>
+      <td>44</td>
+      <td>3</td>
+      <td>1</td>
+      <td>2</td>
+      <td>2.718299</td>
       <td>1</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>23</td>
+      <td>15</td>
       <td>1</td>
       <td>3</td>
-      <td>44</td>
-      <td>43</td>
-      <td>4</td>
+      <td>30</td>
+      <td>38</td>
       <td>2</td>
       <td>1</td>
-      <td>0.737469</td>
-      <td>0</td>
+      <td>2</td>
+      <td>2.382882</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>23</td>
+      <td>15</td>
       <td>1</td>
       <td>4</td>
-      <td>51</td>
-      <td>30</td>
-      <td>3</td>
-      <td>1</td>
+      <td>64</td>
+      <td>45</td>
+      <td>4</td>
       <td>2</td>
-      <td>0.764511</td>
-      <td>0</td>
+      <td>1</td>
+      <td>2.167205</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>23</td>
+      <td>15</td>
       <td>1</td>
       <td>5</td>
-      <td>62</td>
       <td>48</td>
-      <td>4</td>
+      <td>26</td>
       <td>3</td>
-      <td>2</td>
-      <td>0.721492</td>
       <td>1</td>
+      <td>3</td>
+      <td>2.748257</td>
+      <td>0</td>
     </tr>
   </tbody>
 </table>
@@ -527,9 +529,9 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># you can &quot;turn on and off&quot; different mechanisms:</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">rlssm</span><span class="o">.</span><span class="n">RLModel_2A</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-                         <span class="n">increasing_sensitivity</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-                         <span class="n">separate_learning_rates</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">RLModel_2A</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                   <span class="n">increasing_sensitivity</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                   <span class="n">separate_learning_rates</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -538,10 +540,10 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-21:00:34 - cmdstanpy - INFO - compiling stan file /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr.stan to exe file /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr
-21:00:55 - cmdstanpy - INFO - compiled model executable: /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr
-21:00:55 - cmdstanpy - WARNING - Stan compiler has produced 6 warnings:
-21:00:55 - cmdstanpy - WARNING -
+15:10:57 - cmdstanpy - INFO - compiling stan file /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr.stan to exe file /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr
+15:11:05 - cmdstanpy - INFO - compiled model executable: /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr
+15:11:05 - cmdstanpy - WARNING - Stan compiler has produced 6 warnings:
+15:11:05 - cmdstanpy - WARNING -
 --- Translating Stan model to C++ code ---
 bin/stanc  --o=/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr.hpp /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr.stan
 Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr.stan&#39;, line 4, column 1: Declaration
@@ -641,7 +643,7 @@ rm -f /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr.o
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-21:00:55 - cmdstanpy - INFO - CmdStan start processing
+15:11:05 - cmdstanpy - INFO - CmdStan start processing
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -659,13 +661,13 @@ alpha_neg_priors {&#39;mu&#39;: 0, &#39;sd&#39;: 1}
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "e2f30166e7854958a50e8031e8aa95e4"}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "69f3215401164433aa3f88477b077e4f"}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "41ed73e4b4334885932963ca21837b51"}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "c3dd9a7324014f5a982263e7458e67fb"}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -680,7 +682,10 @@ alpha_neg_priors {&#39;mu&#39;: 0, &#39;sd&#39;: 1}
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-21:00:58 - cmdstanpy - INFO - CmdStan done processing.
+15:11:06 - cmdstanpy - INFO - CmdStan done processing.
+15:11:06 - cmdstanpy - WARNING - Non-fatal error during sampling:
+Exception: bernoulli_lpmf: Probability parameter[1] is -nan, but must be in the interval [0, 1] (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr.stan&#39;, line 72, column 1 to column 36)
+Consider re-running with show_console=True if the above output is unclear!
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -742,22 +747,22 @@ E-BFMI indicated no pathological behavior
   <tbody>
     <tr>
       <th>lp__</th>
-      <td>1.000160</td>
+      <td>1.000020</td>
       <td>lp__</td>
     </tr>
     <tr>
       <th>alpha_pos</th>
-      <td>1.000490</td>
+      <td>0.999835</td>
       <td>alpha_pos</td>
     </tr>
     <tr>
       <th>alpha_neg</th>
-      <td>1.001110</td>
+      <td>1.000770</td>
       <td>alpha_neg</td>
     </tr>
     <tr>
       <th>sensitivity</th>
-      <td>1.000180</td>
+      <td>0.999913</td>
       <td>sensitivity</td>
     </tr>
     <tr>
@@ -771,33 +776,33 @@ E-BFMI indicated no pathological behavior
       <td>...</td>
     </tr>
     <tr>
+      <th>log_lik[235]</th>
+      <td>0.999834</td>
+      <td>log_lik[235]</td>
+    </tr>
+    <tr>
       <th>log_lik[236]</th>
-      <td>0.999807</td>
+      <td>0.999857</td>
       <td>log_lik[236]</td>
     </tr>
     <tr>
       <th>log_lik[237]</th>
-      <td>0.999868</td>
+      <td>0.999838</td>
       <td>log_lik[237]</td>
     </tr>
     <tr>
       <th>log_lik[238]</th>
-      <td>1.000870</td>
+      <td>0.999702</td>
       <td>log_lik[238]</td>
     </tr>
     <tr>
       <th>log_lik[239]</th>
-      <td>1.000760</td>
+      <td>1.000370</td>
       <td>log_lik[239]</td>
-    </tr>
-    <tr>
-      <th>log_lik[240]</th>
-      <td>1.000790</td>
-      <td>log_lik[240]</td>
     </tr>
   </tbody>
 </table>
-<p>494 rows × 2 columns</p>
+<p>492 rows × 2 columns</p>
 </div></div>
 </div>
 </section>
@@ -817,10 +822,10 @@ E-BFMI indicated no pathological behavior
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;lppd&#39;: -45.589196520972045,
- &#39;p_waic&#39;: 2.263547576970158,
- &#39;waic&#39;: 95.70548819588441,
- &#39;waic_se&#39;: 15.68670935506546}
+{&#39;lppd&#39;: -75.48875619791505,
+ &#39;p_waic&#39;: 2.60430602430708,
+ &#39;waic&#39;: 156.18612444444426,
+ &#39;waic_se&#39;: 17.113938998620164}
 </pre></div></div>
 </div>
 </section>
@@ -871,45 +876,45 @@ E-BFMI indicated no pathological behavior
     </tr>
     <tr>
       <th>mean</th>
-      <td>0.023927</td>
-      <td>0.641457</td>
-      <td>1.120518</td>
+      <td>0.133288</td>
+      <td>0.358379</td>
+      <td>0.362473</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>0.005310</td>
-      <td>0.208560</td>
-      <td>0.249965</td>
+      <td>0.047736</td>
+      <td>0.134856</td>
+      <td>0.058300</td>
     </tr>
     <tr>
       <th>min</th>
-      <td>0.008970</td>
-      <td>0.057170</td>
-      <td>0.510431</td>
+      <td>0.014110</td>
+      <td>0.054714</td>
+      <td>0.212198</td>
     </tr>
     <tr>
       <th>25%</th>
-      <td>0.020014</td>
-      <td>0.497326</td>
-      <td>0.947728</td>
+      <td>0.100332</td>
+      <td>0.260266</td>
+      <td>0.322085</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>0.023994</td>
-      <td>0.662173</td>
-      <td>1.088200</td>
+      <td>0.126734</td>
+      <td>0.345488</td>
+      <td>0.357639</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>0.027084</td>
-      <td>0.803360</td>
-      <td>1.263625</td>
+      <td>0.157665</td>
+      <td>0.442098</td>
+      <td>0.395848</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>0.054973</td>
-      <td>0.999632</td>
-      <td>2.792790</td>
+      <td>0.490280</td>
+      <td>0.924686</td>
+      <td>0.866057</td>
     </tr>
   </tbody>
 </table>
@@ -998,6 +1003,7 @@ E-BFMI indicated no pathological behavior
       <th>9</th>
       <th>10</th>
       <th>...</th>
+      <th>230</th>
       <th>231</th>
       <th>232</th>
       <th>233</th>
@@ -1007,7 +1013,6 @@ E-BFMI indicated no pathological behavior
       <th>237</th>
       <th>238</th>
       <th>239</th>
-      <th>240</th>
     </tr>
     <tr>
       <th>sample</th>
@@ -1037,21 +1042,21 @@ E-BFMI indicated no pathological behavior
   <tbody>
     <tr>
       <th>1</th>
-      <td>1</td>
-      <td>0</td>
       <td>0</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
-      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>...</td>
       <td>1</td>
+      <td>0</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
@@ -1062,14 +1067,14 @@ E-BFMI indicated no pathological behavior
     <tr>
       <th>2</th>
       <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
       <td>1</td>
       <td>0</td>
       <td>0</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>1</td>
       <td>...</td>
       <td>1</td>
@@ -1087,19 +1092,19 @@ E-BFMI indicated no pathological behavior
       <th>3</th>
       <td>1</td>
       <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
       <td>1</td>
       <td>...</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
@@ -1109,45 +1114,45 @@ E-BFMI indicated no pathological behavior
     </tr>
     <tr>
       <th>4</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>...</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
       <td>0</td>
       <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>0</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>...</td>
+      <td>0</td>
+      <td>0</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
@@ -1181,24 +1186,24 @@ E-BFMI indicated no pathological behavior
     </tr>
     <tr>
       <th>996</th>
+      <td>0</td>
+      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>0</td>
       <td>0</td>
-      <td>0</td>
       <td>1</td>
-      <td>0</td>
-      <td>0</td>
       <td>1</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>...</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
@@ -1208,40 +1213,40 @@ E-BFMI indicated no pathological behavior
       <td>1</td>
       <td>1</td>
       <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
       <td>0</td>
       <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
       <td>1</td>
       <td>...</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
     </tr>
     <tr>
       <th>998</th>
       <td>0</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>0</td>
       <td>1</td>
-      <td>0</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>...</td>
       <td>1</td>
-      <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
@@ -1253,15 +1258,15 @@ E-BFMI indicated no pathological behavior
     </tr>
     <tr>
       <th>999</th>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
       <td>1</td>
       <td>...</td>
       <td>1</td>
@@ -1279,13 +1284,13 @@ E-BFMI indicated no pathological behavior
       <th>1000</th>
       <td>0</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>0</td>
       <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>1</td>
       <td>...</td>
       <td>1</td>
@@ -1301,7 +1306,7 @@ E-BFMI indicated no pathological behavior
     </tr>
   </tbody>
 </table>
-<p>1000 rows × 240 columns</p>
+<p>1000 rows × 239 columns</p>
 </div></div>
 </div>
 <div class="nbinput docutils container">
@@ -1346,23 +1351,23 @@ E-BFMI indicated no pathological behavior
   <tbody>
     <tr>
       <th>1</th>
-      <td>0.925000</td>
+      <td>0.853556</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.895833</td>
+      <td>0.866109</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.858333</td>
+      <td>0.807531</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.900000</td>
+      <td>0.857741</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.937500</td>
+      <td>0.832636</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1370,23 +1375,23 @@ E-BFMI indicated no pathological behavior
     </tr>
     <tr>
       <th>996</th>
-      <td>0.908333</td>
+      <td>0.815900</td>
     </tr>
     <tr>
       <th>997</th>
-      <td>0.895833</td>
+      <td>0.845188</td>
     </tr>
     <tr>
       <th>998</th>
-      <td>0.883333</td>
+      <td>0.891213</td>
     </tr>
     <tr>
       <th>999</th>
-      <td>0.933333</td>
+      <td>0.874477</td>
     </tr>
     <tr>
       <th>1000</th>
-      <td>0.908333</td>
+      <td>0.882845</td>
     </tr>
   </tbody>
 </table>
@@ -1492,7 +1497,7 @@ E-BFMI indicated no pathological behavior
       <th rowspan="5" valign="top">1</th>
       <th rowspan="5" valign="top">AB</th>
       <th>1</th>
-      <td>0.25</td>
+      <td>0.50</td>
     </tr>
     <tr>
       <th>2</th>
@@ -1504,7 +1509,7 @@ E-BFMI indicated no pathological behavior
     </tr>
     <tr>
       <th>4</th>
-      <td>0.75</td>
+      <td>1.00</td>
     </tr>
     <tr>
       <th>5</th>
@@ -1522,27 +1527,27 @@ E-BFMI indicated no pathological behavior
       <th rowspan="5" valign="top">8</th>
       <th rowspan="5" valign="top">CD</th>
       <th>496</th>
-      <td>1.00</td>
+      <td>0.75</td>
     </tr>
     <tr>
       <th>497</th>
-      <td>1.00</td>
+      <td>0.75</td>
     </tr>
     <tr>
       <th>498</th>
-      <td>1.00</td>
+      <td>0.75</td>
     </tr>
     <tr>
       <th>499</th>
-      <td>1.00</td>
+      <td>0.75</td>
     </tr>
     <tr>
       <th>500</th>
-      <td>1.00</td>
+      <td>0.75</td>
     </tr>
   </tbody>
 </table>
-<p>47000 rows × 1 columns</p>
+<p>46000 rows × 1 columns</p>
 </div></div>
 </div>
 <div class="nbinput docutils container">

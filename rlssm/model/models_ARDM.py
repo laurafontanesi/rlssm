@@ -27,24 +27,6 @@ class ARDModel_2A(Model):
 
         hierarchical_levels : int
             Set to 1 for individual data and to 2 for grouped data.
-
-        Attributes
-        ----------
-        model_label : str
-            The label of the fully specified model.
-
-        n_parameters_individual : int
-            The number of individual parameters of the fully specified model.
-
-        n_parameters_trial : int
-            The number of parameters that are estimated at a trial level.
-
-        stan_model_path : str
-            The location of the stan model code.
-
-        compiled_model : StanModel
-            The compiled stan model.
-
         """
         super().__init__(hierarchical_levels, "ARDM_2A")
 
@@ -261,24 +243,6 @@ class RLARDModel_2A(Model):
              By default, there is only one learning rate.
              If set to True, separate learning rates are estimated
              for positive and negative prediction errors.
-
-        Attributes
-        ----------
-        model_label : str
-            The label of the fully specified model.
-
-        n_parameters_individual : int
-            The number of individual parameters of the fully specified model.
-
-        n_parameters_trial : int
-            The number of parameters that are estimated at a trial level.
-
-        stan_model_path : str
-            The location of the stan model code.
-
-        compiled_model : StanModel
-            The compiled stan model.
-
         """
         super().__init__(hierarchical_levels, "RLARDM_2A")
 

@@ -13,7 +13,6 @@ class DDModel(Model):
 
     The underlying stan model will be compiled if no previously compiled model is found.
     After initializing the model, it can be fitted to a particular dataset using cmdstanpy.
-
     """
 
     def __init__(self,
@@ -32,10 +31,11 @@ class DDModel(Model):
 
         Parameters
         ----------
-
         hierarchical_levels : int
             Set to 1 for individual data and to 2 for grouped data.
 
+        Optional Parameters
+        -------------------
         starting_point_bias : bool, default False
             By default, there is no starting point bias.
             If set to True, the starting point bias is estimated.
@@ -64,24 +64,6 @@ class DDModel(Model):
             If True, two regression coefficients are estimated, for trial drift
             and relative starting point, and an external variable beta.
             Only relevant when drift_variability and starting_point_variability are True.
-
-        Attributes
-        ----------
-        model_label : str
-            The label of the fully specified model.
-
-        n_parameters_individual : int
-            The number of individual parameters of the fully specified model.
-
-        n_parameters_trial : int
-            The number of parameters that are estimated at a trial level.
-
-        stan_model_path : str
-            The location of the stan model code.
-
-        compiled_model : StanModel
-            The compiled stan model.
-
         """
         super().__init__(hierarchical_levels, "DDM")
 
@@ -462,6 +444,9 @@ class RLDDModel(Model):
         hierarchical_levels : int
              Set to 1 for individual data and to 2 for grouped data.
 
+        Optional Parameters
+        -------------------
+
         nonlinear_mapping : bool, default False
              By default, the mapping between value differences and drift-rate is linear.
              If set to True, a non-linear mapping function is estimated.
@@ -475,24 +460,6 @@ class RLDDModel(Model):
              By default, the threshold is independent on the presented options.
              If set to True, the threshold can decrease or increase
              depending on the average value of the presented options.
-
-        Attributes
-        ----------
-        model_label : str
-            The label of the fully specified model.
-
-        n_parameters_individual : int
-            The number of individual parameters of the fully specified model.
-
-        n_parameters_trial : int
-            The number of parameters that are estimated at a trial level.
-
-        stan_model_path : str
-            The location of the stan model code.
-
-        compiled_model : StanModel
-            The compiled stan model.
-
         """
         super().__init__(hierarchical_levels, "RLDDM")
 
