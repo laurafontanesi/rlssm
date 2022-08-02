@@ -4,13 +4,7 @@
 __pycache__/
 dist/
 build/
-.idea
 
 # pystan cashed models
-/pkl_files
 cached*.pkl
 *.pkl
-
-# ignore the stan cached files (hpp and with no extension); only allow .stan files
-rlssm/stan_models/**/*
-!rlssm/stan_models/**/*.stan

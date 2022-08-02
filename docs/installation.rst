@@ -3,13 +3,13 @@ Installation
 
 You can install the rlssm package using ``pip install rlssm``, or get it directly from `GitHub`_.
 
-Make sure you have the dependencies installed first.
+Make sure you have the dependecies installed first.
 
 .. _Github: https://github.com/laurafontanesi/rlssm
 
 Dependencies
 ------------
-- cmdstanpy=1.0.2
+- pystan=2.19
 - pandas
 - scipy
 - seaborn
@@ -17,9 +17,9 @@ Dependencies
 Conda environment (suggested)
 -----------------------------
 
-If you have Anaconda or miniconda installed and you would like to create a separate environment for the rlssm package, do the following::
+If you have Andaconda or miniconda installed and you would like to create a separate environment for the rlssm package, do the following::
 
-	conda create --n stanenv python=3 pandas scipy seaborn cmdstanpy=1.0.2
+	conda create --n stanenv python=3 pandas scipy seaborn pystan=2.19
 	conda activate stanenv
 	pip install rlssm
 
@@ -45,7 +45,7 @@ Copy the two clangs and modify the following::
 
 Install pystan and rlssm and test again whether the compiler works::
 
-	conda install -c conda-forge cmdstanpy=1.0.2
+	conda install -c conda-forge pystan=2.19
 	pip install rlssm
 	python tests/test_compiler.py
 
