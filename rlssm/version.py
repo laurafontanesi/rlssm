@@ -36,7 +36,7 @@ sequential sampling models (DDM, RDM, LBA, ALBA, and ARDM),
 and combinations of the two, using Bayesian parameter estimation.
 
 Parameter estimation is done at an individual or hierarchical level
-using ``CmdStanPy``, the Python Interface to Stan.
+using ``PyStan``, the Python Interface to Stan.
 Stan performs Bayesian inference using the No-U-Turn sampler,
 a variant of Hamiltonian Monte Carlo.
 
@@ -72,4 +72,4 @@ MINOR = _version_minor
 MICRO = _version_micro
 VERSION = __version__
 PACKAGE_DATA = {'rlssm': [pjoin('data', '*')]}
-REQUIRES = ["numpy", "pandas", "cmdstanpy"]
+REQUIRES = ["numpy", "pandas", "pystan"]

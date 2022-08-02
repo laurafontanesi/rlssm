@@ -1,36 +1,68 @@
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ModelResults class for DDMs (or RLDDMs) &mdash; rlssm 0.1.dev documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ModelResults class for DDMs (or RLDDMs) &mdash; rlssm 0.1.dev documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../_static/js/theme.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="ModelResults class for race (or RL+race) models" href="modelresult_race.html" />
     <link rel="prev" title="ModelResults class for RL models" href="modelresult_RL.html" /> 
 </head>
 
-<body class="wy-body-for-nav"> 
+<body class="wy-body-for-nav">
+
+   
   <div class="wy-grid-for-nav">
+    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
+          
+
+          
             <a href="../index.html" class="icon icon-home"> rlssm
+          
+
+          
           </a>
+
+          
+            
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -38,20 +70,30 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Getting started:</span></p>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">How to:</span></p>
+<p class="caption"><span class="caption-text">How to:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../notebooks/initialize_model.html">How to initialize a model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../notebooks/fit_model.html">How to fit a model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../notebooks/inspect_model.html">How to inspect model fit results</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<p class="caption"><span class="caption-text">Examples:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../notebooks/DDM_fitting.html">Fit the DDM on individual data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../notebooks/DDM_hierarchical_fitting.html">Fit the DDM on hierarchical data</a></li>
@@ -62,7 +104,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../notebooks/RLDDM_fitting.html">Fit the RLDDM on individual data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../notebooks/LBA_2A_fitting.html">Fit the LBA on individual data</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
+<p class="caption"><span class="caption-text">API Reference:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="model_classes.html">Model classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modelresult_RL.html">ModelResults class for RL models</a></li>
@@ -78,30 +120,68 @@
 <li class="toctree-l1"><a class="reference internal" href="../simulations/simulateRL.html">Simulate data with RL models, RLDDMs, and RL+race models</a></li>
 </ul>
 
+            
+          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">rlssm</a>
+        
       </nav>
 
+
       <div class="wy-nav-content">
+        
         <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
       <li>ModelResults class for DDMs (or RLDDMs)</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
+        
+            
             <a href="../_sources/models/modelresult_DDM.rst.txt" rel="nofollow"> View page source</a>
+          
+        
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-             
+            
   
 <style>
 /* CSS overrides for sphinx_rtd_theme */
@@ -126,8 +206,8 @@
     text-align: unset;
 }
 </style>
-<section id="modelresults-class-for-ddms-or-rlddms">
-<h1>ModelResults class for DDMs (or RLDDMs)<a class="headerlink" href="#modelresults-class-for-ddms-or-rlddms" title="Permalink to this heading"></a></h1>
+<div class="section" id="modelresults-class-for-ddms-or-rlddms">
+<h1>ModelResults class for DDMs (or RLDDMs)<a class="headerlink" href="#modelresults-class-for-ddms-or-rlddms" title="Permalink to this headline">¶</a></h1>
 <p>There is one class to inspect model fits of <strong>DDM or combinations of RL and DDM (fitted on choices and response times)</strong>: <a class="reference internal" href="#ddmodelresults"><span class="std std-ref">DDModelResults</span></a>.</p>
 <p>The main functions of this class are:</p>
 <ul class="simple">
@@ -136,14 +216,14 @@
 <li><p>To visualize and make interval-based (either Bayesian Credible Intervals or Higher Density Intervals) inferences on the <strong>posterior distributions</strong> of the model’s parameters. This is important when specific hypotheses were made about the parameters’ values.</p></li>
 <li><p>To calculate and visualize <strong>posterior predictive distributions</strong> of the observed data. This step is important to assess the qualitative fit of the model to the data. Qualitative fit should be assessed not only when comparing different competing models, but also when a single candidate model is fitted. Different ways of calculating posterior predictive distributions are provided, together with different plotting options. In general, emphasis is given to calculating posterior predictive distributions across conditions. This allows us to assess whether a certain behavioral pattern observed in the data (e.g., due to experimental manipulations) can also be reproduced by the model. Finally, posterior predictives are available not only for mean choices and response times, but also for other summary statistics of the response times distributions (i.e., skewness and quantiles).</p></li>
 </ul>
-<section id="all-models">
-<h2>All models<a class="headerlink" href="#all-models" title="Permalink to this heading"></a></h2>
+<div class="section" id="all-models">
+<h2>All models<a class="headerlink" href="#all-models" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="modelresults"></span><dl class="py class">
-<dt class="sig sig-object py" id="rlssm.fits_DDM.ModelResults">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rlssm.fits_DDM.</span></span><span class="sig-name descname"><span class="pre">ModelResults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">priors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rhat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">waic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trial_samples</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fits_DDM.ModelResults" title="Permalink to this definition"></a></dt>
+<dt id="rlssm.fits_DDM.ModelResults">
+<em class="property">class </em><code class="sig-prename descclassname">rlssm.fits_DDM.</code><code class="sig-name descname">ModelResults</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_label</span></em>, <em class="sig-param"><span class="n">data_info</span></em>, <em class="sig-param"><span class="n">parameters_info</span></em>, <em class="sig-param"><span class="n">priors</span></em>, <em class="sig-param"><span class="n">rhat</span></em>, <em class="sig-param"><span class="n">waic</span></em>, <em class="sig-param"><span class="n">last_values</span></em>, <em class="sig-param"><span class="n">samples</span></em>, <em class="sig-param"><span class="n">trial_samples</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fits_DDM.ModelResults" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="py method">
-<dt class="sig sig-object py" id="rlssm.fits_DDM.ModelResults.plot_posteriors">
-<span class="sig-name descname"><span class="pre">plot_posteriors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gridsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clip</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_intervals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'HDI'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_intervals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intervals_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fits_DDM.ModelResults.plot_posteriors" title="Permalink to this definition"></a></dt>
+<dt id="rlssm.fits_DDM.ModelResults.plot_posteriors">
+<code class="sig-name descname">plot_posteriors</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">gridsize</span><span class="o">=</span><span class="default_value">100</span></em>, <em class="sig-param"><span class="n">clip</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">show_intervals</span><span class="o">=</span><span class="default_value">'HDI'</span></em>, <em class="sig-param"><span class="n">alpha_intervals</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">intervals_kws</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fits_DDM.ModelResults.plot_posteriors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots posterior predictives of the model’s parameters.</p>
 <p>If the model is hierarchical, then only the group parameters are plotted.
 In particular, group means are plotted in the first row
@@ -151,7 +231,7 @@ and group standard deviations are plotted in the second row.
 By default, 95 percent HDI are shown.
 The kernel density estimation is calculated using scipy.stats.gaussian_kde.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>gridsize</strong> (<em>int</em><em>, </em><em>default to 100</em>) – Resolution of the kernel density estimation function, default to 100.</p></li>
 <li><p><strong>clip</strong> (<em>tuple of</em><em> (</em><em>float</em><em>, </em><em>float</em><em>)</em><em>, </em><em>optional</em>) – Range for the kernel density estimation function.
@@ -164,27 +244,29 @@ Default is 5 percent which gives 95 percent BCIs and HDIs.</p></li>
 <li><p><strong>intervals_kws</strong> (<em>dict</em>) – Additional arguments for <cite>matplotlib.axes.Axes.fill_between</cite>
 that shows shaded intervals.
 By default, they are 50 percent transparent.</p></li>
-<li><p><strong>**kwargs</strong> – Additional parameters for seaborn.FacetGrid.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>g</strong></p>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><p><strong>**kwargs</strong> – Additional parameters for seaborn.FacetGrid.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>seaborn.FacetGrid</p>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>g</strong></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>seaborn.FacetGrid</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="rlssm.fits_DDM.ModelResults.to_pickle">
-<span class="sig-name descname"><span class="pre">to_pickle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fits_DDM.ModelResults.to_pickle" title="Permalink to this definition"></a></dt>
+<dt id="rlssm.fits_DDM.ModelResults.to_pickle">
+<code class="sig-name descname">to_pickle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fits_DDM.ModelResults.to_pickle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pickle the fitted model’s results object to file.</p>
 <p>This can be used to store the model’s result
 and read them and inspect them at a later stage,
 without having to refit the model.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>filename</strong> (<em>str</em><em>, </em><em>optional</em>) – File path where the pickled object will be stored.
 If not specified, is set to</p>
 </dd>
@@ -193,12 +275,12 @@ If not specified, is set to</p>
 
 </dd></dl>
 
-</section>
-<section id="diffusion-decision-models">
-<h2>Diffusion decision models<a class="headerlink" href="#diffusion-decision-models" title="Permalink to this heading"></a></h2>
+</div>
+<div class="section" id="diffusion-decision-models">
+<h2>Diffusion decision models<a class="headerlink" href="#diffusion-decision-models" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="ddmodelresults"></span><dl class="py class">
-<dt class="sig sig-object py" id="rlssm.fits_DDM.DDModelResults">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rlssm.fits_DDM.</span></span><span class="sig-name descname"><span class="pre">DDModelResults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">priors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rhat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">waic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trial_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_point_bias</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_variability</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_point_variability</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fits_DDM.DDModelResults" title="Permalink to this definition"></a></dt>
+<dt id="rlssm.fits_DDM.DDModelResults">
+<em class="property">class </em><code class="sig-prename descclassname">rlssm.fits_DDM.</code><code class="sig-name descname">DDModelResults</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_label</span></em>, <em class="sig-param"><span class="n">data_info</span></em>, <em class="sig-param"><span class="n">parameters_info</span></em>, <em class="sig-param"><span class="n">priors</span></em>, <em class="sig-param"><span class="n">rhat</span></em>, <em class="sig-param"><span class="n">waic</span></em>, <em class="sig-param"><span class="n">last_values</span></em>, <em class="sig-param"><span class="n">samples</span></em>, <em class="sig-param"><span class="n">trial_samples</span></em>, <em class="sig-param"><span class="n">starting_point_bias</span></em>, <em class="sig-param"><span class="n">drift_variability</span></em>, <em class="sig-param"><span class="n">starting_point_variability</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fits_DDM.DDModelResults" title="Permalink to this definition">¶</a></dt>
 <dd><p>DDModelResults allows to perform various model checks
 on fitted DDM and RLDDM models.</p>
 <p>In particular, this can be used to to visualize the estimated
@@ -206,15 +288,15 @@ posterior distributions and to calculate and visualize the
 estimated posterior predictives distributions.</p>
 <blockquote>
 <div><dl class="field-list simple">
-<dt class="field-odd">show-inheritance<span class="colon">:</span></dt>
+<dt class="field-odd">show-inheritance</dt>
 <dd class="field-odd"><p></p></dd>
-<dt class="field-even">inherited-members<span class="colon">:</span></dt>
+<dt class="field-even">inherited-members</dt>
 <dd class="field-even"><p></p></dd>
 </dl>
 </div></blockquote>
 <dl class="py method">
-<dt class="sig sig-object py" id="rlssm.fits_DDM.DDModelResults.get_grouped_posterior_predictives_summary">
-<span class="sig-name descname"><span class="pre">get_grouped_posterior_predictives_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grouping_vars</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_posterior_predictives</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantiles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fits_DDM.DDModelResults.get_grouped_posterior_predictives_summary" title="Permalink to this definition"></a></dt>
+<dt id="rlssm.fits_DDM.DDModelResults.get_grouped_posterior_predictives_summary">
+<code class="sig-name descname">get_grouped_posterior_predictives_summary</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">grouping_vars</span></em>, <em class="sig-param"><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="default_value">500</span></em>, <em class="sig-param"><span class="n">quantiles</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fits_DDM.DDModelResults.get_grouped_posterior_predictives_summary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates summary of posterior predictives of choices and response times,
 separately for a list of grouping variables.</p>
 <p>The mean proportion of choices (in this case coded as accuracy) is calculated
@@ -225,7 +307,7 @@ Response times are summarized using mean, skewness, and quantiles.</p>
 posterior predictives will be collapsed
 for all combinations of levels of the reward and difficulty variables.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>grouping_vars</strong> (<em>list of strings</em>) – They should be existing grouping variables in the data.</p></li>
 <li><p><strong>n_posterior_predictives</strong> (<em>int</em>) – Number of posterior samples to use for posterior predictives calculation.
@@ -233,6 +315,10 @@ If n_posterior_predictives is bigger than the posterior samples,
 then calculation will continue with the total number of posterior samples.</p></li>
 <li><p><strong>quantiles</strong> (<em>list of floats</em>) – Quantiles to summarize response times distributions
 (separately for correct/incorrect) with.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>noise_constant</strong> (<em>float</em>) – Scaling factor of the diffusion decision model.
 If changed, drift and threshold would be scaled accordingly.
 Not to be changed in most applications.</p></li>
@@ -242,29 +328,31 @@ Making this higher might make the function a bit slower.</p></li>
 Lower values of dt make the function more precise but much slower.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>out</strong> – Pandas DataFrame.
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>out</strong> – Pandas DataFrame.
 The columns contains the mean accuracy for each posterior sample,
 as well as mean response times, response times skewness and response times quantiles.
 The row index is a pandas.MultIndex, with the grouping variables as higher level
 and number of samples as lower level.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>DataFrame</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>DataFrame</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="rlssm.fits_DDM.DDModelResults.get_posterior_predictives">
-<span class="sig-name descname"><span class="pre">get_posterior_predictives</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_posterior_predictives</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fits_DDM.DDModelResults.get_posterior_predictives" title="Permalink to this definition"></a></dt>
+<dt id="rlssm.fits_DDM.DDModelResults.get_posterior_predictives">
+<code class="sig-name descname">get_posterior_predictives</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="default_value">500</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fits_DDM.DDModelResults.get_posterior_predictives" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates posterior predictives of choices and response times.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>n_posterior_predictives</strong> (<em>int</em>) – Number of posterior samples to use for posterior predictives calculation.
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>n_posterior_predictives</strong> (<em>int</em>) – Number of posterior samples to use for posterior predictives calculation.
 If n_posterior_predictives is bigger than the posterior samples,
-then calculation will continue with the total number of posterior samples.</p></li>
+then calculation will continue with the total number of posterior samples.</p>
+</dd>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>noise_constant</strong> (<em>float</em>) – Scaling factor of the diffusion decision model.
 If changed, drift and threshold would be scaled accordingly.
 Not to be changed in most applications.</p></li>
@@ -274,8 +362,8 @@ Making this higher might make the function a bit slower.</p></li>
 Lower values of dt make the function more precise but much slower.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><ul class="simple">
 <li><p><strong>pp_rt</strong> (<em>np.ndarray</em>) – Array of shape (n_samples, n_trials) containing predicted response times.</p></li>
 <li><p><strong>pp_acc</strong> (<em>np.ndarray</em>) – Array of shape (n_samples, n_trials) containing predicted choices.</p></li>
 </ul>
@@ -285,15 +373,17 @@ Lower values of dt make the function more precise but much slower.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="rlssm.fits_DDM.DDModelResults.get_posterior_predictives_df">
-<span class="sig-name descname"><span class="pre">get_posterior_predictives_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_posterior_predictives</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fits_DDM.DDModelResults.get_posterior_predictives_df" title="Permalink to this definition"></a></dt>
+<dt id="rlssm.fits_DDM.DDModelResults.get_posterior_predictives_df">
+<code class="sig-name descname">get_posterior_predictives_df</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="default_value">500</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fits_DDM.DDModelResults.get_posterior_predictives_df" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates posterior predictives of choices and response times.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>n_posterior_predictives</strong> (<em>int</em>) – Number of posterior samples to use for posterior predictives calculation.
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>n_posterior_predictives</strong> (<em>int</em>) – Number of posterior samples to use for posterior predictives calculation.
 If n_posterior_predictives is bigger than the posterior samples,
-then calculation will continue with the total number of posterior samples.</p></li>
+then calculation will continue with the total number of posterior samples.</p>
+</dd>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>noise_constant</strong> (<em>float</em>) – Scaling factor of the diffusion decision model.
 If changed, drift and threshold would be scaled accordingly.
 Not to be changed in most applications.</p></li>
@@ -303,25 +393,25 @@ Making this higher might make the function a bit slower.</p></li>
 Lower values of dt make the function more precise but much slower.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>out</strong> – Data frame of shape (n_samples, n_trials*2).
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>out</strong> – Data frame of shape (n_samples, n_trials*2).
 Response times and accuracy are provided as hierarchical column indeces.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>DataFrame</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>DataFrame</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="rlssm.fits_DDM.DDModelResults.get_posterior_predictives_summary">
-<span class="sig-name descname"><span class="pre">get_posterior_predictives_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_posterior_predictives</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantiles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fits_DDM.DDModelResults.get_posterior_predictives_summary" title="Permalink to this definition"></a></dt>
+<dt id="rlssm.fits_DDM.DDModelResults.get_posterior_predictives_summary">
+<code class="sig-name descname">get_posterior_predictives_summary</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="default_value">500</span></em>, <em class="sig-param"><span class="n">quantiles</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fits_DDM.DDModelResults.get_posterior_predictives_summary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates summary of posterior predictives of choices and response times.</p>
 <p>The mean proportion of choices (in this case coded as accuracy) is calculated
 for each posterior sample across all trials.
 Response times are summarized using mean, skewness, and quantiles.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n_posterior_predictives</strong> (<em>int</em>) – Number of posterior samples to use for posterior predictives calculation.
 If n_posterior_predictives is bigger than the posterior samples,
@@ -329,6 +419,10 @@ then calculation will continue with the total number of posterior samples.</p></
 <li><p><strong>quantiles</strong> (<em>list of floats</em>) – Quantiles to summarize response times distributions
 (separately for correct/incorrect) with.
 Default to [.1, .3, .5, .7, .9].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>noise_constant</strong> (<em>float</em>) – Scaling factor of the diffusion decision model.
 If changed, drift and threshold would be scaled accordingly.
 Not to be changed in most applications.</p></li>
@@ -338,33 +432,37 @@ Making this higher might make the function a bit slower.</p></li>
 Lower values of dt make the function more precise but much slower.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>out</strong> – Pandas DataFrame, where every row corresponds to a posterior sample.
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>out</strong> – Pandas DataFrame, where every row corresponds to a posterior sample.
 The columns contains the mean accuracy for each posterior sample,
 as well as mean response times, response times skewness and response times quantiles.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>DataFrame</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>DataFrame</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="rlssm.fits_DDM.DDModelResults.plot_mean_grouped_posterior_predictives">
-<span class="sig-name descname"><span class="pre">plot_mean_grouped_posterior_predictives</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grouping_vars</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_posterior_predictives</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(20,</span> <span class="pre">8)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_pred_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fits_DDM.DDModelResults.plot_mean_grouped_posterior_predictives" title="Permalink to this definition"></a></dt>
+<dt id="rlssm.fits_DDM.DDModelResults.plot_mean_grouped_posterior_predictives">
+<code class="sig-name descname">plot_mean_grouped_posterior_predictives</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">grouping_vars</span></em>, <em class="sig-param"><span class="n">n_posterior_predictives</span></em>, <em class="sig-param"><span class="n">figsize</span><span class="o">=</span><span class="default_value">20, 8</span></em>, <em class="sig-param"><span class="n">post_pred_kws</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fits_DDM.DDModelResults.plot_mean_grouped_posterior_predictives" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots the mean posterior predictives of choices and response times,
 separately for either 1 or 2 grouping variables.</p>
 <p>The first grouping variable will be plotted on the x-axis.
 The second grouping variable, if provided, will be showed
 with a different color per variable level.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>grouping_vars</strong> (<em>list of strings</em>) – They should be existing grouping variables in the data.
 The list should be of lenght 1 or 2.</p></li>
 <li><p><strong>n_posterior_predictives</strong> (<em>int</em>) – Number of posterior samples to use for posterior predictives calculation.
 If n_posterior_predictives is bigger than the posterior samples,
 then calculation will continue with the total number of posterior samples.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>x_order</strong> (<em>list of strings</em>) – Order to plot the levels of the first grouping variable in,
 otherwise the levels are inferred from the data objects.</p></li>
 <li><p><strong>hue_order</strong> (<em>lists of strings</em>) – Order to plot the levels of the second grouping variable (when provided) in,
@@ -373,39 +471,39 @@ otherwise the levels are inferred from the data objects.</p></li>
 Advised to specify hue_order when using this to avoid confusion.
 Only makes sense when the second grouping variable is provided.</p></li>
 <li><p><strong>show_data</strong> (<em>bool</em>) – Whether to show a vertical line for the mean data. Set to False to not show it.</p></li>
-<li><p><strong>show_intervals</strong> (<em>either &quot;HDI&quot;</em><em>, </em><em>&quot;BCI&quot;</em><em>, or </em><em>None</em>) – HDI is better when the distribution is not simmetrical.
+<li><p><strong>show_intervals</strong> (<em>either “HDI”, “BCI”, or None</em>) – HDI is better when the distribution is not simmetrical.
 If None, then no intervals are shown.</p></li>
 <li><p><strong>alpha_intervals</strong> (<em>float</em>) – Alpha level for the intervals.
 Default is 5 percent which gives 95 percent BCIs and HDIs.</p></li>
-<li><p><strong>palette</strong> (<em>palette name</em><em>, </em><em>list</em><em>, or </em><em>dict</em>) – Colors to use for the different levels of the second grouping variable (when provided).
+<li><p><strong>palette</strong> (<em>palette name, list, or dict</em>) – Colors to use for the different levels of the second grouping variable (when provided).
 Should be something that can be interpreted by color_palette(),
 or a dictionary mapping hue levels to matplotlib colors.</p></li>
 <li><p><strong>color</strong> (<em>matplotlib color</em>) – Color for both the mean data and intervals.
 Only used when there is 1 grouping variable.</p></li>
-<li><p><strong>ax</strong> (<em>matplotlib axis</em><em>, </em><em>optional</em>) – If provided, plot on this axis.
+<li><p><strong>ax</strong> (<em>matplotlib axis, optional</em>) – If provided, plot on this axis.
 Default is set to current Axes.</p></li>
-<li><p><strong>intervals_kws</strong> (<em>dictionary</em>) – <dl class="simple">
-<dt>Additional arguments for the matplotlib fill_between function</dt><dd><p>that shows shaded intervals.
+<li><dl class="simple">
+<dt><strong>intervals_kws</strong> (<em>dictionary</em>) –    Additional arguments for the matplotlib fill_between function</dt><dd><p>that shows shaded intervals.
 By default, they are 50 percent transparent.</p>
 </dd>
 <dt>post_pred_kws<span class="classifier">dictionary</span></dt><dd><p>Additional parameters to get_grouped_posterior_predictives_summary.</p>
 </dd>
 </dl>
-</p></li>
+</li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>fig</strong></p>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>fig</strong></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>matplotlib.figure.Figure</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>matplotlib.figure.Figure</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="rlssm.fits_DDM.DDModelResults.plot_mean_posterior_predictives">
-<span class="sig-name descname"><span class="pre">plot_mean_posterior_predictives</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_posterior_predictives</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(20,</span> <span class="pre">8)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_pred_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fits_DDM.DDModelResults.plot_mean_posterior_predictives" title="Permalink to this definition"></a></dt>
+<dt id="rlssm.fits_DDM.DDModelResults.plot_mean_posterior_predictives">
+<code class="sig-name descname">plot_mean_posterior_predictives</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_posterior_predictives</span></em>, <em class="sig-param"><span class="n">figsize</span><span class="o">=</span><span class="default_value">20, 8</span></em>, <em class="sig-param"><span class="n">post_pred_kws</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fits_DDM.DDModelResults.plot_mean_posterior_predictives" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots the mean posterior predictives of choices and response times.</p>
 <p>The mean proportion of choices (in this case coded as accuracy) is calculated
 for each posterior sample across all trials,
@@ -414,20 +512,24 @@ The mean accuracy in the data is plotted as vertical line.
 This allows to compare the real mean with the BCI or HDI of the predictions.
 The same is done for response times, and are plotted one next to each other.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n_posterior_predictives</strong> (<em>int</em>) – Number of posterior samples to use for posterior predictives calculation.
 If n_posterior_predictives is bigger than the posterior samples,
 then calculation will continue with the total number of posterior samples.</p></li>
 <li><p><strong>figsize</strong> (<em>tuple</em>) – figure size of the matplotlib figure</p></li>
+</ul>
+</dd>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>show_data</strong> (<em>bool</em>) – Whether to show a vertical line for the mean data. Set to False to not show it.</p></li>
 <li><p><strong>color</strong> (<em>matplotlib color</em>) – Color for both the mean data and intervals.</p></li>
-<li><p><strong>ax</strong> (<em>matplotlib axis</em><em>, </em><em>optional</em>) – If provided, plot on this axis.
+<li><p><strong>ax</strong> (<em>matplotlib axis, optional</em>) – If provided, plot on this axis.
 Default is set to current Axes.</p></li>
 <li><p><strong>gridsize</strong> (<em>int</em>) – Resolution of the kernel density estimation function, default to 100.</p></li>
 <li><p><strong>clip</strong> (<em>tuple</em>) – Range for the kernel density estimation function.
 Default is min and max values of the distribution.</p></li>
-<li><p><strong>show_intervals</strong> (<em>either &quot;HDI&quot;</em><em>, </em><em>&quot;BCI&quot;</em><em>, or </em><em>None</em>) – HDI is better when the distribution is not simmetrical.
+<li><p><strong>show_intervals</strong> (<em>either “HDI”, “BCI”, or None</em>) – HDI is better when the distribution is not simmetrical.
 If None, then no intervals are shown.</p></li>
 <li><p><strong>alpha_intervals</strong> (<em>float</em>) – Alpha level for the intervals.
 Default is 5 percent which gives 95 percent BCIs and HDIs.</p></li>
@@ -437,22 +539,22 @@ By default, they are 50 percent transparent.</p></li>
 <li><p><strong>post_pred_kws</strong> (<em>dictionary</em>) – Additional parameters to get_posterior_predictives_summary.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>fig</strong></p>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>fig</strong></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>matplotlib.figure.Figure</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>matplotlib.figure.Figure</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="rlssm.fits_DDM.DDModelResults.plot_quantiles_grouped_posterior_predictives">
-<span class="sig-name descname"><span class="pre">plot_quantiles_grouped_posterior_predictives</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_posterior_predictives</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grouping_var</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantiles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(20,</span> <span class="pre">8)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_pred_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fits_DDM.DDModelResults.plot_quantiles_grouped_posterior_predictives" title="Permalink to this definition"></a></dt>
+<dt id="rlssm.fits_DDM.DDModelResults.plot_quantiles_grouped_posterior_predictives">
+<code class="sig-name descname">plot_quantiles_grouped_posterior_predictives</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_posterior_predictives</span></em>, <em class="sig-param"><span class="n">grouping_var</span></em>, <em class="sig-param"><span class="n">quantiles</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">figsize</span><span class="o">=</span><span class="default_value">20, 8</span></em>, <em class="sig-param"><span class="n">post_pred_kws</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fits_DDM.DDModelResults.plot_quantiles_grouped_posterior_predictives" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots the quantiles of the posterior predictives of response times,
 separately for correct/incorrect responses, and 1 grouping variable.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n_posterior_predictives</strong> (<em>int</em>) – Number of posterior samples to use for posterior predictives calculation.
 If n_posterior_predictives is bigger than the posterior samples,
@@ -461,13 +563,17 @@ then calculation will continue with the total number of posterior samples.</p></
 <li><p><strong>quantiles</strong> (<em>list of floats</em>) – Quantiles to summarize response times distributions
 (separately for correct/incorrect) with.</p></li>
 <li><p><strong>figsize</strong> (<em>tuple</em>) – figure size of the matplotlib figure</p></li>
+</ul>
+</dd>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>show_data</strong> (<em>bool</em>) – Whether to show the quantiles of the data. Set to False to not show it.</p></li>
-<li><p><strong>show_intervals</strong> (<em>either &quot;HDI&quot;</em><em>, </em><em>&quot;BCI&quot;</em><em>, or </em><em>None</em>) – HDI is better when the distribution is not simmetrical.
+<li><p><strong>show_intervals</strong> (<em>either “HDI”, “BCI”, or None</em>) – HDI is better when the distribution is not simmetrical.
 If None, then no intervals are shown.</p></li>
 <li><p><strong>alpha_intervals</strong> (<em>float</em>) – Alpha level for the intervals.
 Default is 5 percent which gives 95 percent BCIs and HDIs.</p></li>
-<li><p><strong>kind</strong> (<em>either 'lines'</em><em> or </em><em>'shades'</em>) – Two different styles to plot quantile distributions.</p></li>
-<li><p><strong>palette</strong> (<em>palette name</em><em>, </em><em>list</em><em>, or </em><em>dict</em>) – Colors to use for the different levels of the second grouping variable (when provided).
+<li><p><strong>kind</strong> (<em>either ‘lines’ or ‘shades’</em>) – Two different styles to plot quantile distributions.</p></li>
+<li><p><strong>palette</strong> (<em>palette name, list, or dict</em>) – Colors to use for the different levels of the second grouping variable (when provided).
 Should be something that can be interpreted by color_palette(),
 or a dictionary mapping hue levels to matplotlib colors.</p></li>
 <li><p><strong>hue_order</strong> (<em>lists of strings</em>) – Order to plot the levels of the grouping variable in,
@@ -480,22 +586,22 @@ Advised to specify hue_order when using this to avoid confusion.</p></li>
 <li><p><strong>post_pred_kws</strong> (<em>dictionary</em>) – Additional parameters to get_grouped_posterior_predictives_summary.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>fig</strong></p>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>fig</strong></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>matplotlib.figure.Figure</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>matplotlib.figure.Figure</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="rlssm.fits_DDM.DDModelResults.plot_quantiles_posterior_predictives">
-<span class="sig-name descname"><span class="pre">plot_quantiles_posterior_predictives</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_posterior_predictives</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantiles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(20,</span> <span class="pre">8)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_pred_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fits_DDM.DDModelResults.plot_quantiles_posterior_predictives" title="Permalink to this definition"></a></dt>
+<dt id="rlssm.fits_DDM.DDModelResults.plot_quantiles_posterior_predictives">
+<code class="sig-name descname">plot_quantiles_posterior_predictives</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_posterior_predictives</span></em>, <em class="sig-param"><span class="n">quantiles</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">figsize</span><span class="o">=</span><span class="default_value">20, 8</span></em>, <em class="sig-param"><span class="n">post_pred_kws</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fits_DDM.DDModelResults.plot_quantiles_posterior_predictives" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots the quantiles of the posterior predictives of response times,
 separately for correct/incorrect responses.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n_posterior_predictives</strong> (<em>int</em>) – Number of posterior samples to use for posterior predictives calculation.
 If n_posterior_predictives is bigger than the posterior samples,
@@ -503,65 +609,87 @@ then calculation will continue with the total number of posterior samples.</p></
 <li><p><strong>quantiles</strong> (<em>list of floats</em>) – Quantiles to summarize response times distributions
 (separately for correct/incorrect) with.</p></li>
 <li><p><strong>figsize</strong> (<em>tuple</em>) – figure size of the matplotlib figure</p></li>
+</ul>
+</dd>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>show_data</strong> (<em>bool</em>) – Whether to show the quantiles of the data. Set to False to not show it.</p></li>
-<li><p><strong>show_intervals</strong> (<em>either &quot;HDI&quot;</em><em>, </em><em>&quot;BCI&quot;</em><em>, or </em><em>None</em>) – HDI is better when the distribution is not simmetrical.
+<li><p><strong>show_intervals</strong> (<em>either “HDI”, “BCI”, or None</em>) – HDI is better when the distribution is not simmetrical.
 If None, then no intervals are shown.</p></li>
 <li><p><strong>alpha_intervals</strong> (<em>float</em>) – Alpha level for the intervals.
 Default is 5 percent which gives 95 percent BCIs and HDIs.</p></li>
-<li><p><strong>kind</strong> (<em>either 'lines'</em><em> or </em><em>'shades'</em>) – Two different styles to plot quantile distributions.</p></li>
+<li><p><strong>kind</strong> (<em>either ‘lines’ or ‘shades’</em>) – Two different styles to plot quantile distributions.</p></li>
 <li><p><strong>color</strong> (<em>matplotlib color</em>) – Color for both the data and intervals.</p></li>
 <li><p><strong>scatter_kws</strong> (<em>dictionary</em>) – Additional plotting parameters to change how the data points are shown.</p></li>
 <li><p><strong>intervals_kws</strong> (<em>dictionary</em>) – Additional plotting parameters to change how the quantile distributions are shown.</p></li>
 <li><p><strong>post_pred_kws</strong> (<em>dictionary</em>) – Additional parameters to get_posterior_predictives_summary.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>fig</strong></p>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>fig</strong></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>matplotlib.figure.Figure</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>matplotlib.figure.Figure</p>
 </dd>
 </dl>
 </dd></dl>
 
 </dd></dl>
 
-</section>
-<section id="reinforcement-learning-diffusion-decision-models">
-<h2>Reinforcement learning diffusion decision models<a class="headerlink" href="#reinforcement-learning-diffusion-decision-models" title="Permalink to this heading"></a></h2>
+</div>
+<div class="section" id="reinforcement-learning-diffusion-decision-models">
+<h2>Reinforcement learning diffusion decision models<a class="headerlink" href="#reinforcement-learning-diffusion-decision-models" title="Permalink to this headline">¶</a></h2>
 <p>See <a class="reference internal" href="#ddmodelresults"><span class="std std-ref">DDModelResults</span></a>.</p>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>
+           
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="modelresult_RL.html" class="btn btn-neutral float-left" title="ModelResults class for RL models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="modelresult_race.html" class="btn btn-neutral float-right" title="ModelResults class for race (or RL+race) models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="modelresult_race.html" class="btn btn-neutral float-right" title="ModelResults class for race (or RL+race) models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="modelresult_RL.html" class="btn btn-neutral float-left" title="ModelResults class for RL models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
     </div>
+  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Laura Fontanesi.</p>
-  </div>
+    <p>
+        &copy; Copyright 2021, Laura Fontanesi
 
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
+
         </div>
       </div>
+
     </section>
+
   </div>
-  <script>
+  
+
+
+  <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
