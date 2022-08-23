@@ -389,22 +389,15 @@ div.rendered_html tbody tr:hover {
 </style>
 <section id="Parameter-recovery-of-the-DDM-with-starting-point-bias">
 <h1>Parameter recovery of the DDM with starting point bias<a class="headerlink" href="#Parameter-recovery-of-the-DDM-with-starting-point-bias" title="Permalink to this heading"></a></h1>
+<section id="Simulate-individual-data">
+<h2>Simulate individual data<a class="headerlink" href="#Simulate-individual-data" title="Permalink to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rlssm.random.random_DDM</span> <span class="kn">import</span> <span class="n">simulate_ddm</span>
-<span class="kn">from</span> <span class="nn">rlssm.model.models_DDM</span> <span class="kn">import</span> <span class="n">DDModel</span>
-</pre></div>
-</div>
-</div>
-<section id="Simulate-individual-data">
-<h2>Simulate individual data<a class="headerlink" href="#Simulate-individual-data" title="Permalink to this heading"></a></h2>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">simulate_ddm</span><span class="p">(</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">simulate_ddm</span><span class="p">(</span>
     <span class="n">n_trials</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span>
     <span class="n">gen_drift</span><span class="o">=</span><span class="mf">.8</span><span class="p">,</span>
     <span class="n">gen_threshold</span><span class="o">=</span><span class="mf">1.3</span><span class="p">,</span>
@@ -414,7 +407,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">describe</span><span class="p">()[[</span><span class="s1">&#39;rt&#39;</span><span class="p">,</span> <span class="s1">&#39;accuracy&#39;</span><span class="p">]]</span>
@@ -422,7 +415,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -456,37 +449,37 @@ div.rendered_html tbody tr:hover {
     </tr>
     <tr>
       <th>mean</th>
-      <td>0.613583</td>
-      <td>0.852500</td>
+      <td>0.601095</td>
+      <td>0.825000</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>0.325006</td>
-      <td>0.355048</td>
+      <td>0.326752</td>
+      <td>0.380443</td>
     </tr>
     <tr>
       <th>min</th>
-      <td>0.263000</td>
+      <td>0.262000</td>
       <td>0.000000</td>
     </tr>
     <tr>
       <th>25%</th>
-      <td>0.381500</td>
+      <td>0.371500</td>
       <td>1.000000</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>0.518500</td>
+      <td>0.494000</td>
       <td>1.000000</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>0.746000</td>
+      <td>0.699250</td>
       <td>1.000000</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>2.204000</td>
+      <td>1.818000</td>
       <td>1.000000</td>
     </tr>
   </tbody>
@@ -496,83 +489,21 @@ div.rendered_html tbody tr:hover {
 </section>
 <section id="Initialize-the-model">
 <h2>Initialize the model<a class="headerlink" href="#Initialize-the-model" title="Permalink to this heading"></a></h2>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">DDModel</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">starting_point_bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rlssm.model.models_DDM</span> <span class="kn">import</span> <span class="n">DDModel</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">DDModel</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">starting_point_bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-14:06:09 - cmdstanpy - INFO - compiling stan file /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan to exe file /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias
-14:06:24 - cmdstanpy - INFO - compiled model executable: /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias
-14:06:24 - cmdstanpy - WARNING - Stan compiler has produced 9 warnings:
-14:06:24 - cmdstanpy - WARNING -
---- Translating Stan model to C++ code ---
-bin/stanc  --o=/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.hpp /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 4, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 5, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 6, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 20, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 21, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 22, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 23, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 24, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 25, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-
---- Compiling, linking C++ code ---
-g++ -std=c++1y -pthread -D_REENTRANT -Wno-sign-compare -Wno-ignored-attributes      -I stan/lib/stan_math/lib/tbb_2020.3/include    -O3 -I src -I stan/src -I lib/rapidjson_1.1.0/ -I lib/CLI11-1.9.1/ -I stan/lib/stan_math/ -I stan/lib/stan_math/lib/eigen_3.3.9 -I stan/lib/stan_math/lib/boost_1.78.0 -I stan/lib/stan_math/lib/sundials_6.1.1/include -I stan/lib/stan_math/lib/sundials_6.1.1/src/sundials    -DBOOST_DISABLE_ASSERTS          -c -Wno-ignored-attributes   -x c++ -o /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.o /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.hpp
-g++ -std=c++1y -pthread -D_REENTRANT -Wno-sign-compare -Wno-ignored-attributes      -I stan/lib/stan_math/lib/tbb_2020.3/include    -O3 -I src -I stan/src -I lib/rapidjson_1.1.0/ -I lib/CLI11-1.9.1/ -I stan/lib/stan_math/ -I stan/lib/stan_math/lib/eigen_3.3.9 -I stan/lib/stan_math/lib/boost_1.78.0 -I stan/lib/stan_math/lib/sundials_6.1.1/include -I stan/lib/stan_math/lib/sundials_6.1.1/src/sundials    -DBOOST_DISABLE_ASSERTS                -Wl,-L,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34; -Wl,-rpath,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34;      /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.o src/cmdstan/main.o        -Wl,-L,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34; -Wl,-rpath,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34;   stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_nvecserial.a stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_cvodes.a stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_idas.a stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_kinsol.a  stan/lib/stan_math/lib/tbb/libtbb.so.2 -o /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias
-rm -f /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.o
-
-</pre></div></div>
 </div>
 </section>
 <section id="Fit">
 <h2>Fit<a class="headerlink" href="#Fit" title="Permalink to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># sampling parameters</span>
@@ -589,7 +520,7 @@ rm -f /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.o
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
@@ -607,14 +538,6 @@ rm -f /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.o
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-14:06:24 - cmdstanpy - INFO - CmdStan start processing
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Fitting the model using the priors:
@@ -628,71 +551,13 @@ rel_sp_priors {&#39;mu&#39;: 0, &#39;sd&#39;: 0.8}
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "68f3ef2886c3491fac3b0ff9c93b427f"}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "7fd668618f204973a110908137e6fa0a"}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "763658ecf0b34924b3aac31c4cbf353d"}</script></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-14:06:48 - cmdstanpy - INFO - CmdStan done processing.
-14:06:48 - cmdstanpy - WARNING - Non-fatal error during sampling:
-Exception: wiener_lpdf: Random variable  = 0.576, but must be greater than nondecision time = 0.665142 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.312, but must be greater than nondecision time = 0.313945 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.297, but must be greater than nondecision time = 0.307416 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.312, but must be greater than nondecision time = 0.357634 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.576, but must be greater than nondecision time = 0.693234 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.576, but must be greater than nondecision time = 130.635 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.576, but must be greater than nondecision time = 31.375 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.576, but must be greater than nondecision time = 6.49298 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.576, but must be greater than nondecision time = 0.821058 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.263, but must be greater than nondecision time = 0.277087 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.576, but must be greater than nondecision time = 5.74828 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.263, but must be greater than nondecision time = 0.27738 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.263, but must be greater than nondecision time = 0.284025 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.263, but must be greater than nondecision time = 0.292601 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.263, but must be greater than nondecision time = 0.279668 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.312, but must be greater than nondecision time = 0.385589 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.263, but must be greater than nondecision time = 0.271502 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-Exception: wiener_lpdf: Random variable  = 0.576, but must be greater than nondecision time = 1.8703 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.576, but must be greater than nondecision time = 0.749644 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.576, but must be greater than nondecision time = 1.07462 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.576, but must be greater than nondecision time = 0.646254 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.576, but must be greater than nondecision time = 1.90141 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.576, but must be greater than nondecision time = 45.5937 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.576, but must be greater than nondecision time = 10.074 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.576, but must be greater than nondecision time = 1.54178 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.312, but must be greater than nondecision time = 0.324034 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.576, but must be greater than nondecision time = 17.5954 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.263, but must be greater than nondecision time = 0.278461 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.263, but must be greater than nondecision time = 0.268035 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.263, but must be greater than nondecision time = 0.293662 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_bias.stan&#39;, line 52, column 1 to column 54)
-Consider re-running with show_console=True if the above output is unclear!
-</pre></div></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "d7cea2e40a8545c5b8cd0f30f6776060"}</script></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
@@ -710,7 +575,7 @@ E-BFMI indicated no pathological behavior
 <section id="get-Rhat">
 <h3>get Rhat<a class="headerlink" href="#get-Rhat" title="Permalink to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">rhat</span>
@@ -718,7 +583,7 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -752,27 +617,27 @@ E-BFMI indicated no pathological behavior
   <tbody>
     <tr>
       <th>lp__</th>
-      <td>1.001140</td>
+      <td>0.999818</td>
       <td>lp__</td>
     </tr>
     <tr>
       <th>drift</th>
-      <td>1.001710</td>
+      <td>1.002920</td>
       <td>drift</td>
     </tr>
     <tr>
       <th>threshold</th>
-      <td>0.999557</td>
+      <td>1.001350</td>
       <td>threshold</td>
     </tr>
     <tr>
       <th>ndt</th>
-      <td>1.001130</td>
+      <td>1.003280</td>
       <td>ndt</td>
     </tr>
     <tr>
       <th>rel_sp</th>
-      <td>1.003200</td>
+      <td>1.002370</td>
       <td>rel_sp</td>
     </tr>
     <tr>
@@ -782,27 +647,27 @@ E-BFMI indicated no pathological behavior
     </tr>
     <tr>
       <th>log_lik[396]</th>
-      <td>1.000650</td>
+      <td>1.003840</td>
       <td>log_lik[396]</td>
     </tr>
     <tr>
       <th>log_lik[397]</th>
-      <td>1.000030</td>
+      <td>1.004130</td>
       <td>log_lik[397]</td>
     </tr>
     <tr>
       <th>log_lik[398]</th>
-      <td>1.000490</td>
+      <td>1.001970</td>
       <td>log_lik[398]</td>
     </tr>
     <tr>
       <th>log_lik[399]</th>
-      <td>1.000030</td>
+      <td>1.001470</td>
       <td>log_lik[399]</td>
     </tr>
     <tr>
       <th>log_lik[400]</th>
-      <td>0.999870</td>
+      <td>1.000530</td>
       <td>log_lik[400]</td>
     </tr>
   </tbody>
@@ -814,7 +679,7 @@ E-BFMI indicated no pathological behavior
 <section id="calculate-wAIC">
 <h3>calculate wAIC<a class="headerlink" href="#calculate-wAIC" title="Permalink to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">waic</span>
@@ -822,15 +687,15 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;lppd&#39;: -140.33926607294404,
- &#39;p_waic&#39;: 3.6956692286428323,
- &#39;waic&#39;: 288.06987060317374,
- &#39;waic_se&#39;: 47.71193579144203}
+{&#39;lppd&#39;: -143.48130078806022,
+ &#39;p_waic&#39;: 3.8030450001386353,
+ &#39;waic&#39;: 294.5686915763977,
+ &#39;waic_se&#39;: 48.492086527586515}
 </pre></div></div>
 </div>
 </section>
@@ -838,7 +703,7 @@ E-BFMI indicated no pathological behavior
 <section id="Posteriors">
 <h2>Posteriors<a class="headerlink" href="#Posteriors" title="Permalink to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -846,7 +711,7 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -868,10 +733,10 @@ E-BFMI indicated no pathological behavior
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>transf_drift</th>
-      <th>transf_threshold</th>
       <th>transf_ndt</th>
+      <th>transf_threshold</th>
       <th>transf_rel_sp</th>
+      <th>transf_drift</th>
     </tr>
   </thead>
   <tbody>
@@ -884,59 +749,59 @@ E-BFMI indicated no pathological behavior
     </tr>
     <tr>
       <th>mean</th>
-      <td>1.004250</td>
-      <td>1.401450</td>
-      <td>0.224317</td>
-      <td>0.573476</td>
+      <td>0.227154</td>
+      <td>1.347566</td>
+      <td>0.585419</td>
+      <td>0.863216</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>0.108733</td>
-      <td>0.039354</td>
-      <td>0.006790</td>
-      <td>0.021410</td>
+      <td>0.005593</td>
+      <td>0.035651</td>
+      <td>0.019158</td>
+      <td>0.105316</td>
     </tr>
     <tr>
       <th>min</th>
-      <td>0.657066</td>
-      <td>1.259510</td>
-      <td>0.194524</td>
-      <td>0.489228</td>
+      <td>0.204707</td>
+      <td>1.247490</td>
+      <td>0.507420</td>
+      <td>0.484337</td>
     </tr>
     <tr>
       <th>25%</th>
-      <td>0.929530</td>
-      <td>1.373913</td>
-      <td>0.220298</td>
-      <td>0.559158</td>
+      <td>0.223648</td>
+      <td>1.323135</td>
+      <td>0.572606</td>
+      <td>0.789014</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>1.004775</td>
-      <td>1.400645</td>
-      <td>0.224729</td>
-      <td>0.574055</td>
+      <td>0.227517</td>
+      <td>1.345905</td>
+      <td>0.585508</td>
+      <td>0.863565</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>1.080070</td>
-      <td>1.427590</td>
-      <td>0.228915</td>
-      <td>0.587583</td>
+      <td>0.231100</td>
+      <td>1.372325</td>
+      <td>0.598611</td>
+      <td>0.935705</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>1.441360</td>
-      <td>1.544400</td>
-      <td>0.243794</td>
-      <td>0.642592</td>
+      <td>0.242389</td>
+      <td>1.487720</td>
+      <td>0.644303</td>
+      <td>1.193490</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
@@ -949,7 +814,7 @@ E-BFMI indicated no pathological behavior
 </div>
 <p>Here we plot the estimated posterior distributions against the generating parameters, to see whether the model parameters are recovering well:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">plot_posteriors</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">show_intervals</span><span class="o">=</span><span class="s1">&#39;HDI&#39;</span><span class="p">)</span>
@@ -963,7 +828,7 @@ E-BFMI indicated no pathological behavior
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_DDM_starting-point-bias_fitting_18_0.png" src="../_images/notebooks_DDM_starting-point-bias_fitting_18_0.png" />
+<img alt="../_images/notebooks_DDM_starting-point-bias_fitting_17_0.png" src="../_images/notebooks_DDM_starting-point-bias_fitting_17_0.png" />
 </div>
 </div>
 </section>

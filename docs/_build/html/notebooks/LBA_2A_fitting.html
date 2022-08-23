@@ -63,7 +63,6 @@
 <li class="toctree-l1"><a class="reference internal" href="RL_2A_hierarchical_fitting.html">Fit a RL model on hierarchical data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="RLDDM_fitting.html">Fit the RLDDM on individual data</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Fit the LBA on individual data</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#Import-individual-data">Import individual data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Initialize-the-model">Initialize the model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Fit">Fit</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#Get-rhat">Get rhat</a></li>
@@ -395,32 +394,21 @@ div.rendered_html tbody tr:hover {
 </style>
 <section id="Fit-the-LBA-on-individual-data">
 <h1>Fit the LBA on individual data<a class="headerlink" href="#Fit-the-LBA-on-individual-data" title="Permalink to this heading"></a></h1>
-<div class="nbinput nblast docutils container">
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rlssm.utility.load_data</span> <span class="kn">import</span> <span class="n">load_example_dataset</span>
 
-<span class="kn">from</span> <span class="nn">rlssm.utility.load_data</span> <span class="kn">import</span> <span class="n">load_example_dataset</span>
-<span class="kn">from</span> <span class="nn">rlssm.model.models_LBA</span> <span class="kn">import</span> <span class="n">LBAModel_2A</span>
-</pre></div>
-</div>
-</div>
-<section id="Import-individual-data">
-<h2>Import individual data<a class="headerlink" href="#Import-individual-data" title="Permalink to this heading"></a></h2>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import some example data:</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">load_example_dataset</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="c1"># import some example data:</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">load_example_dataset</span><span class="p">(</span><span class="n">hierarchical_levels</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -452,147 +440,101 @@ div.rendered_html tbody tr:hover {
       <th>times_seen</th>
       <th>rt</th>
       <th>accuracy</th>
+      <th>feedback_type</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>11</td>
+      <td>23</td>
       <td>1</td>
       <td>1</td>
-      <td>59</td>
-      <td>44</td>
-      <td>4</td>
-      <td>3</td>
+      <td>39</td>
+      <td>33</td>
+      <td>2</td>
       <td>1</td>
-      <td>1.462756</td>
       <td>1</td>
+      <td>1.305523</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>11</td>
+      <td>23</td>
       <td>1</td>
       <td>2</td>
-      <td>53</td>
-      <td>44</td>
-      <td>4</td>
-      <td>2</td>
+      <td>50</td>
+      <td>41</td>
+      <td>3</td>
       <td>1</td>
-      <td>1.256185</td>
+      <td>1</td>
+      <td>0.916909</td>
+      <td>1</td>
       <td>0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>11</td>
+      <td>23</td>
       <td>1</td>
       <td>3</td>
-      <td>64</td>
-      <td>55</td>
+      <td>44</td>
+      <td>43</td>
       <td>4</td>
-      <td>3</td>
       <td>2</td>
-      <td>1.264878</td>
       <td>1</td>
+      <td>0.737469</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>11</td>
+      <td>23</td>
       <td>1</td>
       <td>4</td>
-      <td>47</td>
-      <td>36</td>
+      <td>51</td>
+      <td>30</td>
       <td>3</td>
       <td>1</td>
       <td>2</td>
-      <td>1.399706</td>
+      <td>0.764511</td>
+      <td>0</td>
       <td>0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>11</td>
+      <td>23</td>
       <td>1</td>
       <td>5</td>
-      <td>54</td>
-      <td>55</td>
+      <td>62</td>
+      <td>48</td>
       <td>4</td>
       <td>3</td>
-      <td>4</td>
-      <td>1.381221</td>
+      <td>2</td>
+      <td>0.721492</td>
       <td>1</td>
+      <td>0</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
-</section>
 <section id="Initialize-the-model">
 <h2>Initialize the model<a class="headerlink" href="#Initialize-the-model" title="Permalink to this heading"></a></h2>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">LBAModel_2A</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rlssm.model.models_LBA</span> <span class="kn">import</span> <span class="n">LBAModel_2A</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">LBAModel_2A</span><span class="p">(</span><span class="n">hierarchical_levels</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-15:10:04 - cmdstanpy - INFO - compiling stan file /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.stan to exe file /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A
-15:10:11 - cmdstanpy - INFO - compiled model executable: /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A
-15:10:11 - cmdstanpy - WARNING - Stan compiler has produced 8 warnings:
-15:10:11 - cmdstanpy - WARNING -
---- Translating Stan model to C++ code ---
-bin/stanc  --o=/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.hpp /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.stan
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.stan&#39;, line 92, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.stan&#39;, line 93, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.stan&#39;, line 16, column 25: normal_log
-    is deprecated and will be removed in Stan 2.32.0. Use normal_lpdf
-    instead. This can be automatically changed using the canonicalize flag
-    for stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.stan&#39;, line 18, column 25: normal_log
-    is deprecated and will be removed in Stan 2.32.0. Use normal_lpdf
-    instead. This can be automatically changed using the canonicalize flag
-    for stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.stan&#39;, line 41, column 30: normal_log
-    is deprecated and will be removed in Stan 2.32.0. Use normal_lpdf
-    instead. This can be automatically changed using the canonicalize flag
-    for stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.stan&#39;, line 42, column 30: normal_log
-    is deprecated and will be removed in Stan 2.32.0. Use normal_lpdf
-    instead. This can be automatically changed using the canonicalize flag
-    for stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.stan&#39;, line 67, column 30: Use
-    of lba_cdf without a vertical bar (|) between the first two arguments of
-    a CDF is deprecated and will be removed in Stan 2.32.0. This can be
-    automatically changed using the canonicalize flag for stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.stan&#39;, line 71, column 30: Use
-    of lba_cdf without a vertical bar (|) between the first two arguments of
-    a CDF is deprecated and will be removed in Stan 2.32.0. This can be
-    automatically changed using the canonicalize flag for stanc
-
---- Compiling, linking C++ code ---
-g++ -std=c++1y -pthread -D_REENTRANT -Wno-sign-compare -Wno-ignored-attributes      -I stan/lib/stan_math/lib/tbb_2020.3/include    -O3 -I src -I stan/src -I lib/rapidjson_1.1.0/ -I lib/CLI11-1.9.1/ -I stan/lib/stan_math/ -I stan/lib/stan_math/lib/eigen_3.3.9 -I stan/lib/stan_math/lib/boost_1.78.0 -I stan/lib/stan_math/lib/sundials_6.1.1/include -I stan/lib/stan_math/lib/sundials_6.1.1/src/sundials    -DBOOST_DISABLE_ASSERTS          -c -Wno-ignored-attributes   -x c++ -o /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.o /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.hpp
-g++ -std=c++1y -pthread -D_REENTRANT -Wno-sign-compare -Wno-ignored-attributes      -I stan/lib/stan_math/lib/tbb_2020.3/include    -O3 -I src -I stan/src -I lib/rapidjson_1.1.0/ -I lib/CLI11-1.9.1/ -I stan/lib/stan_math/ -I stan/lib/stan_math/lib/eigen_3.3.9 -I stan/lib/stan_math/lib/boost_1.78.0 -I stan/lib/stan_math/lib/sundials_6.1.1/include -I stan/lib/stan_math/lib/sundials_6.1.1/src/sundials    -DBOOST_DISABLE_ASSERTS                -Wl,-L,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34; -Wl,-rpath,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34;      /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.o src/cmdstan/main.o        -Wl,-L,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34; -Wl,-rpath,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34;   stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_nvecserial.a stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_cvodes.a stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_idas.a stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_kinsol.a  stan/lib/stan_math/lib/tbb/libtbb.so.2 -o /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A
-rm -f /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.o
-
-</pre></div></div>
 </div>
 </section>
 <section id="Fit">
 <h2>Fit<a class="headerlink" href="#Fit" title="Permalink to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># sampling parameters</span>
@@ -604,84 +546,34 @@ rm -f /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/LBA_2A/LBA_2A.o
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
     <span class="n">data</span><span class="p">,</span>
-    <span class="n">thin</span> <span class="o">=</span> <span class="n">n_thin</span><span class="p">,</span>
+    <span class="n">thin</span><span class="o">=</span><span class="n">n_thin</span><span class="p">,</span>
     <span class="n">iter_warmup</span><span class="o">=</span><span class="n">n_warmup</span><span class="p">,</span>
     <span class="n">iter_sampling</span><span class="o">=</span><span class="n">n_sampling</span><span class="p">,</span>
-    <span class="n">chains</span> <span class="o">=</span> <span class="n">n_chains</span><span class="p">)</span>
+    <span class="n">chains</span><span class="o">=</span><span class="n">n_chains</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-15:10:11 - cmdstanpy - INFO - CmdStan start processing
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
 <div class="output_area docutils container">
-<div class="highlight"><pre>
-Fitting the model using the priors:
-drift_priors {&#39;mu&#39;: 1, &#39;sd&#39;: 5}
-k_priors {&#39;mu&#39;: 1, &#39;sd&#39;: 1}
-sp_trial_var_priors {&#39;mu&#39;: 0.3, &#39;sd&#39;: 1}
-ndt_priors {&#39;mu&#39;: 0, &#39;sd&#39;: 1}
-drift_variability_priors {&#39;mu&#39;: 1, &#39;sd&#39;: 1}
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "3f0b5c7c3f5b48b1bf178b2fb1866428"}</script></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "01fa613811bf4f659d0c79876dcc1cba"}</script></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-15:10:22 - cmdstanpy - INFO - CmdStan done processing.
-</pre></div></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "5f6a2a731eb6479e9152538036c57a7e"}</script></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<div class="highlight"><pre>
-
-Checks MCMC diagnostics:
-n_eff / iter looks reasonable for all parameters
-0 of 200 iterations saturated the maximum tree depth of 10 (0.0%)
-E-BFMI indicated no pathological behavior
-0.0 of 200 iterations ended with a divergence (0.0%)
-</pre></div></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "3a0d491335f848f4956e193eb640f670"}</script></div>
 </div>
 <section id="Get-rhat">
 <h3>Get rhat<a class="headerlink" href="#Get-rhat" title="Permalink to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">rhat</span>
@@ -689,7 +581,7 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -723,27 +615,27 @@ E-BFMI indicated no pathological behavior
   <tbody>
     <tr>
       <th>lp__</th>
-      <td>0.997761</td>
+      <td>1.005480</td>
       <td>lp__</td>
     </tr>
     <tr>
       <th>k</th>
-      <td>1.015140</td>
+      <td>0.999161</td>
       <td>k</td>
     </tr>
     <tr>
       <th>sp_trial_var</th>
-      <td>1.015530</td>
+      <td>1.002180</td>
       <td>sp_trial_var</td>
     </tr>
     <tr>
       <th>ndt</th>
-      <td>0.993204</td>
+      <td>1.025830</td>
       <td>ndt</td>
     </tr>
     <tr>
       <th>drift_cor</th>
-      <td>1.025230</td>
+      <td>0.998381</td>
       <td>drift_cor</td>
     </tr>
     <tr>
@@ -752,40 +644,40 @@ E-BFMI indicated no pathological behavior
       <td>...</td>
     </tr>
     <tr>
-      <th>log_lik[235]</th>
-      <td>0.995173</td>
-      <td>log_lik[235]</td>
-    </tr>
-    <tr>
       <th>log_lik[236]</th>
-      <td>0.996574</td>
+      <td>1.001630</td>
       <td>log_lik[236]</td>
     </tr>
     <tr>
       <th>log_lik[237]</th>
-      <td>0.994769</td>
+      <td>1.001660</td>
       <td>log_lik[237]</td>
     </tr>
     <tr>
       <th>log_lik[238]</th>
-      <td>0.994911</td>
+      <td>1.002940</td>
       <td>log_lik[238]</td>
     </tr>
     <tr>
       <th>log_lik[239]</th>
-      <td>1.000240</td>
+      <td>1.005290</td>
       <td>log_lik[239]</td>
+    </tr>
+    <tr>
+      <th>log_lik[240]</th>
+      <td>1.003130</td>
+      <td>log_lik[240]</td>
     </tr>
   </tbody>
 </table>
-<p>1686 rows × 2 columns</p>
+<p>1693 rows × 2 columns</p>
 </div></div>
 </div>
 </section>
 <section id="Get-WAIC">
 <h3>Get WAIC<a class="headerlink" href="#Get-WAIC" title="Permalink to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">waic</span>
@@ -793,22 +685,22 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;lppd&#39;: -215.04599879160781,
- &#39;p_waic&#39;: 3.892240387155754,
- &#39;waic&#39;: 437.87647835752716,
- &#39;waic_se&#39;: 29.315632534663862}
+{&#39;lppd&#39;: -209.63929848093088,
+ &#39;p_waic&#39;: 5.580290005218151,
+ &#39;waic&#39;: 430.43917697229807,
+ &#39;waic_se&#39;: 33.36819490491877}
 </pre></div></div>
 </div>
 </section>
 <section id="Save-results">
 <h3>Save results<a class="headerlink" href="#Save-results" title="Permalink to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">()</span>
@@ -828,7 +720,7 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
 <section id="Posteriors">
 <h2>Posteriors<a class="headerlink" href="#Posteriors" title="Permalink to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -836,7 +728,7 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -858,12 +750,12 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>transf_k</th>
-      <th>transf_sp_trial_var</th>
-      <th>transf_ndt</th>
       <th>transf_drift_cor</th>
       <th>transf_drift_inc</th>
+      <th>transf_k</th>
       <th>transf_drift_variability</th>
+      <th>transf_sp_trial_var</th>
+      <th>transf_ndt</th>
     </tr>
   </thead>
   <tbody>
@@ -878,96 +770,106 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
     </tr>
     <tr>
       <th>mean</th>
-      <td>1.839728</td>
-      <td>1.441905</td>
-      <td>0.377720</td>
-      <td>2.272362</td>
-      <td>1.589044</td>
-      <td>0.749673</td>
+      <td>2.047601</td>
+      <td>0.124005</td>
+      <td>0.148608</td>
+      <td>0.717350</td>
+      <td>2.524727</td>
+      <td>0.608417</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>0.620611</td>
-      <td>0.674104</td>
-      <td>0.109018</td>
-      <td>0.688844</td>
-      <td>0.470559</td>
-      <td>0.241927</td>
+      <td>0.561160</td>
+      <td>0.164409</td>
+      <td>0.176494</td>
+      <td>0.210643</td>
+      <td>0.689969</td>
+      <td>0.052633</td>
     </tr>
     <tr>
       <th>min</th>
-      <td>0.619713</td>
-      <td>0.162487</td>
-      <td>0.117633</td>
-      <td>0.882371</td>
-      <td>0.610564</td>
-      <td>0.240842</td>
+      <td>0.848488</td>
+      <td>0.000002</td>
+      <td>0.024047</td>
+      <td>0.286603</td>
+      <td>0.995520</td>
+      <td>0.342565</td>
     </tr>
     <tr>
       <th>25%</th>
-      <td>1.395320</td>
-      <td>0.968676</td>
-      <td>0.302152</td>
-      <td>1.745590</td>
-      <td>1.238690</td>
-      <td>0.581931</td>
+      <td>1.652352</td>
+      <td>0.010144</td>
+      <td>0.058384</td>
+      <td>0.577790</td>
+      <td>2.036367</td>
+      <td>0.599223</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>1.763500</td>
-      <td>1.343310</td>
-      <td>0.385110</td>
-      <td>2.209385</td>
-      <td>1.500390</td>
-      <td>0.719154</td>
+      <td>1.973920</td>
+      <td>0.053954</td>
+      <td>0.095118</td>
+      <td>0.676956</td>
+      <td>2.458300</td>
+      <td>0.624702</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>2.218960</td>
-      <td>1.836955</td>
-      <td>0.445925</td>
-      <td>2.739920</td>
-      <td>1.912740</td>
-      <td>0.896444</td>
+      <td>2.365442</td>
+      <td>0.181870</td>
+      <td>0.170793</td>
+      <td>0.853248</td>
+      <td>2.872838</td>
+      <td>0.637649</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>4.005270</td>
-      <td>3.473310</td>
-      <td>0.604554</td>
-      <td>4.416350</td>
-      <td>3.047190</td>
-      <td>1.555090</td>
+      <td>3.513060</td>
+      <td>0.975849</td>
+      <td>1.623890</td>
+      <td>1.334370</td>
+      <td>4.305020</td>
+      <td>0.661225</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">context</span> <span class="o">=</span> <span class="s2">&quot;talk&quot;</span><span class="p">,</span>
-        <span class="n">style</span> <span class="o">=</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span>
-        <span class="n">palette</span> <span class="o">=</span> <span class="s2">&quot;husl&quot;</span><span class="p">,</span>
-        <span class="n">rc</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">:(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">8</span><span class="p">)})</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s2">&quot;talk&quot;</span><span class="p">,</span>
+        <span class="n">style</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
+        <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;husl&quot;</span><span class="p">,</span>
+        <span class="n">rc</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">8</span><span class="p">)})</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">plot_posteriors</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">show_intervals</span><span class="o">=</span><span class="s1">&#39;HDI&#39;</span><span class="p">);</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">plot_posteriors</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">show_intervals</span><span class="o">=</span><span class="s1">&#39;HDI&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;seaborn.axisgrid.FacetGrid at 0x7f0af55e0fd0&gt;
+</pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_LBA_2A_fitting_18_0.png" src="../_images/notebooks_LBA_2A_fitting_18_0.png" />
+<img alt="../_images/notebooks_LBA_2A_fitting_16_1.png" src="../_images/notebooks_LBA_2A_fitting_16_1.png" />
 </div>
 </div>
 </section>
@@ -976,7 +878,7 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
 <section id="Ungrouped">
 <h3>Ungrouped<a class="headerlink" href="#Ungrouped" title="Permalink to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pp</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">get_posterior_predictives_df</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
@@ -985,7 +887,7 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1028,7 +930,6 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
       <th>9</th>
       <th>10</th>
       <th>...</th>
-      <th>230</th>
       <th>231</th>
       <th>232</th>
       <th>233</th>
@@ -1038,6 +939,7 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
       <th>237</th>
       <th>238</th>
       <th>239</th>
+      <th>240</th>
     </tr>
     <tr>
       <th>sample</th>
@@ -1067,20 +969,20 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
   <tbody>
     <tr>
       <th>1</th>
-      <td>1.693165</td>
-      <td>1.902963</td>
-      <td>1.487277</td>
-      <td>1.183152</td>
-      <td>1.298121</td>
-      <td>1.648833</td>
-      <td>1.252733</td>
-      <td>1.579188</td>
-      <td>1.639454</td>
-      <td>1.325097</td>
+      <td>0.757644</td>
+      <td>1.108808</td>
+      <td>1.396902</td>
+      <td>1.775288</td>
+      <td>1.303536</td>
+      <td>1.445848</td>
+      <td>1.431243</td>
+      <td>1.281831</td>
+      <td>1.785029</td>
+      <td>1.802090</td>
       <td>...</td>
       <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1091,18 +993,18 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
     </tr>
     <tr>
       <th>2</th>
-      <td>1.454376</td>
-      <td>1.296875</td>
-      <td>1.288511</td>
-      <td>1.521330</td>
-      <td>1.284421</td>
-      <td>1.398700</td>
-      <td>1.523004</td>
-      <td>1.724085</td>
-      <td>1.428141</td>
-      <td>1.513045</td>
+      <td>0.706857</td>
+      <td>0.857231</td>
+      <td>1.133825</td>
+      <td>1.188797</td>
+      <td>0.712983</td>
+      <td>0.939862</td>
+      <td>0.778845</td>
+      <td>0.909787</td>
+      <td>1.493907</td>
+      <td>1.537539</td>
       <td>...</td>
-      <td>0.0</td>
+      <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1115,22 +1017,22 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
     </tr>
     <tr>
       <th>3</th>
-      <td>1.310099</td>
-      <td>1.550863</td>
-      <td>1.455303</td>
-      <td>1.799894</td>
-      <td>1.506182</td>
-      <td>1.586193</td>
-      <td>1.346588</td>
-      <td>1.547969</td>
-      <td>1.438542</td>
-      <td>1.702133</td>
+      <td>1.878442</td>
+      <td>0.890460</td>
+      <td>1.599073</td>
+      <td>1.566467</td>
+      <td>1.324313</td>
+      <td>1.196744</td>
+      <td>0.990333</td>
+      <td>1.807161</td>
+      <td>1.646523</td>
+      <td>1.046169</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>1.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1139,21 +1041,21 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
     </tr>
     <tr>
       <th>4</th>
-      <td>1.301761</td>
-      <td>1.658232</td>
-      <td>1.583796</td>
-      <td>1.586956</td>
-      <td>1.638872</td>
-      <td>1.633680</td>
-      <td>1.462750</td>
-      <td>1.674229</td>
-      <td>1.408486</td>
-      <td>1.591842</td>
+      <td>1.077439</td>
+      <td>1.007013</td>
+      <td>1.063949</td>
+      <td>1.034365</td>
+      <td>1.034666</td>
+      <td>1.062056</td>
+      <td>0.856534</td>
+      <td>1.475899</td>
+      <td>0.837866</td>
+      <td>1.399693</td>
       <td>...</td>
       <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1163,16 +1065,16 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
     </tr>
     <tr>
       <th>5</th>
-      <td>1.508389</td>
-      <td>1.701388</td>
-      <td>1.649837</td>
-      <td>1.504857</td>
-      <td>1.700781</td>
-      <td>1.371294</td>
-      <td>1.685847</td>
-      <td>1.598446</td>
-      <td>1.404466</td>
-      <td>1.708828</td>
+      <td>1.694413</td>
+      <td>1.395849</td>
+      <td>0.707221</td>
+      <td>1.643653</td>
+      <td>1.030164</td>
+      <td>0.898334</td>
+      <td>0.966687</td>
+      <td>0.793045</td>
+      <td>1.746848</td>
+      <td>1.375565</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1211,23 +1113,23 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
     </tr>
     <tr>
       <th>96</th>
-      <td>1.394518</td>
-      <td>1.281766</td>
-      <td>1.204888</td>
-      <td>1.265453</td>
-      <td>1.512276</td>
-      <td>1.531050</td>
-      <td>1.514394</td>
-      <td>1.750419</td>
-      <td>1.229132</td>
-      <td>1.205551</td>
+      <td>0.885677</td>
+      <td>0.833945</td>
+      <td>1.593426</td>
+      <td>1.554544</td>
+      <td>0.949011</td>
+      <td>1.079648</td>
+      <td>0.994353</td>
+      <td>1.216335</td>
+      <td>1.200036</td>
+      <td>1.303270</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>0.0</td>
+      <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1235,40 +1137,40 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
     </tr>
     <tr>
       <th>97</th>
-      <td>1.814250</td>
-      <td>1.491318</td>
-      <td>1.660379</td>
-      <td>1.135034</td>
-      <td>1.718851</td>
-      <td>1.459324</td>
-      <td>1.492663</td>
-      <td>1.497887</td>
-      <td>1.569534</td>
-      <td>1.202619</td>
+      <td>0.917358</td>
+      <td>1.154760</td>
+      <td>0.683646</td>
+      <td>1.383080</td>
+      <td>0.791287</td>
+      <td>1.721880</td>
+      <td>1.293904</td>
+      <td>1.280431</td>
+      <td>1.506124</td>
+      <td>0.979617</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>98</th>
-      <td>1.706058</td>
-      <td>1.546548</td>
-      <td>1.586624</td>
-      <td>1.614529</td>
-      <td>1.275392</td>
-      <td>1.962393</td>
-      <td>1.287594</td>
-      <td>1.465445</td>
-      <td>1.642311</td>
-      <td>1.722285</td>
+      <td>0.770037</td>
+      <td>1.670640</td>
+      <td>1.835202</td>
+      <td>1.193962</td>
+      <td>1.479005</td>
+      <td>1.245409</td>
+      <td>1.085779</td>
+      <td>1.254409</td>
+      <td>0.967823</td>
+      <td>1.240168</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1276,27 +1178,27 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>1.785258</td>
-      <td>1.459177</td>
-      <td>1.776970</td>
-      <td>1.651715</td>
-      <td>1.685184</td>
-      <td>1.419596</td>
-      <td>1.470481</td>
-      <td>1.434782</td>
-      <td>1.363967</td>
-      <td>1.437656</td>
+      <td>1.413931</td>
+      <td>1.322566</td>
+      <td>1.073474</td>
+      <td>1.365895</td>
+      <td>0.910407</td>
+      <td>0.979064</td>
+      <td>1.632254</td>
+      <td>1.797901</td>
+      <td>1.782589</td>
+      <td>0.867214</td>
       <td>...</td>
       <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1307,16 +1209,16 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
     </tr>
     <tr>
       <th>100</th>
-      <td>1.359884</td>
-      <td>1.606504</td>
-      <td>1.473639</td>
-      <td>1.535191</td>
-      <td>1.346491</td>
-      <td>1.639143</td>
-      <td>1.384854</td>
-      <td>1.371414</td>
-      <td>1.649957</td>
-      <td>1.632702</td>
+      <td>1.265538</td>
+      <td>1.203942</td>
+      <td>1.132204</td>
+      <td>1.071142</td>
+      <td>1.467127</td>
+      <td>1.040021</td>
+      <td>1.480502</td>
+      <td>1.716082</td>
+      <td>1.106497</td>
+      <td>0.893333</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1331,11 +1233,11 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
     </tr>
   </tbody>
 </table>
-<p>100 rows × 478 columns</p>
+<p>100 rows × 480 columns</p>
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pp_summary</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">get_posterior_predictives_summary</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
@@ -1344,7 +1246,7 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1400,83 +1302,83 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
   <tbody>
     <tr>
       <th>1</th>
-      <td>0.815900</td>
-      <td>1.506881</td>
-      <td>0.090940</td>
-      <td>1.465163</td>
-      <td>1.516061</td>
-      <td>1.569249</td>
-      <td>1.681783</td>
-      <td>1.809532</td>
-      <td>1.202057</td>
-      <td>1.320569</td>
-      <td>1.471750</td>
-      <td>1.615649</td>
-      <td>1.821377</td>
+      <td>1.000000</td>
+      <td>1.273213</td>
+      <td>-0.032355</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.810937</td>
+      <td>1.063108</td>
+      <td>1.287993</td>
+      <td>1.497320</td>
+      <td>1.724954</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.974895</td>
-      <td>1.524620</td>
-      <td>-0.088865</td>
-      <td>1.646729</td>
-      <td>1.656079</td>
-      <td>1.687289</td>
-      <td>1.719758</td>
-      <td>1.731679</td>
-      <td>1.311520</td>
-      <td>1.411978</td>
-      <td>1.526479</td>
-      <td>1.617892</td>
-      <td>1.717321</td>
+      <td>1.000000</td>
+      <td>1.305921</td>
+      <td>0.139859</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.833882</td>
+      <td>1.073766</td>
+      <td>1.282428</td>
+      <td>1.494721</td>
+      <td>1.829483</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.899582</td>
-      <td>1.500411</td>
-      <td>0.101180</td>
-      <td>1.522173</td>
-      <td>1.543227</td>
-      <td>1.574857</td>
-      <td>1.598814</td>
-      <td>1.722459</td>
-      <td>1.266971</td>
-      <td>1.371277</td>
-      <td>1.493742</td>
-      <td>1.571779</td>
-      <td>1.735415</td>
+      <td>0.983333</td>
+      <td>1.284454</td>
+      <td>0.011104</td>
+      <td>1.170285</td>
+      <td>1.170901</td>
+      <td>1.319179</td>
+      <td>1.469398</td>
+      <td>1.481663</td>
+      <td>0.788842</td>
+      <td>1.018210</td>
+      <td>1.287657</td>
+      <td>1.528789</td>
+      <td>1.786646</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.907950</td>
-      <td>1.542380</td>
-      <td>0.077783</td>
-      <td>1.578516</td>
-      <td>1.674281</td>
-      <td>1.702402</td>
-      <td>1.721476</td>
-      <td>1.778359</td>
-      <td>1.271154</td>
-      <td>1.382164</td>
-      <td>1.527199</td>
-      <td>1.646209</td>
-      <td>1.783636</td>
+      <td>1.000000</td>
+      <td>1.198899</td>
+      <td>0.201609</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.775497</td>
+      <td>0.951485</td>
+      <td>1.194042</td>
+      <td>1.379832</td>
+      <td>1.665541</td>
     </tr>
     <tr>
       <th>5</th>
       <td>1.000000</td>
-      <td>1.510223</td>
-      <td>0.282133</td>
+      <td>1.195936</td>
+      <td>0.052867</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>1.359764</td>
-      <td>1.420596</td>
-      <td>1.488938</td>
-      <td>1.583493</td>
-      <td>1.674560</td>
+      <td>0.783412</td>
+      <td>1.005766</td>
+      <td>1.199304</td>
+      <td>1.375862</td>
+      <td>1.610243</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1496,83 +1398,83 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
     </tr>
     <tr>
       <th>96</th>
-      <td>0.903766</td>
-      <td>1.483504</td>
-      <td>-0.049382</td>
-      <td>1.518616</td>
-      <td>1.554548</td>
-      <td>1.590052</td>
-      <td>1.639551</td>
-      <td>1.679960</td>
-      <td>1.235786</td>
-      <td>1.343565</td>
-      <td>1.449838</td>
-      <td>1.597214</td>
-      <td>1.721766</td>
+      <td>0.962500</td>
+      <td>1.227683</td>
+      <td>0.157722</td>
+      <td>1.049146</td>
+      <td>1.089346</td>
+      <td>1.165270</td>
+      <td>1.225679</td>
+      <td>1.453707</td>
+      <td>0.784871</td>
+      <td>0.990887</td>
+      <td>1.225948</td>
+      <td>1.438254</td>
+      <td>1.721084</td>
     </tr>
     <tr>
       <th>97</th>
-      <td>0.945607</td>
-      <td>1.481258</td>
-      <td>-0.044627</td>
-      <td>1.506861</td>
-      <td>1.560533</td>
-      <td>1.620913</td>
-      <td>1.687283</td>
-      <td>1.775614</td>
-      <td>1.159605</td>
-      <td>1.331281</td>
-      <td>1.477233</td>
-      <td>1.626482</td>
-      <td>1.776323</td>
+      <td>0.979167</td>
+      <td>1.315878</td>
+      <td>-0.061779</td>
+      <td>1.084820</td>
+      <td>1.151455</td>
+      <td>1.280836</td>
+      <td>1.404760</td>
+      <td>1.536354</td>
+      <td>0.781770</td>
+      <td>1.074440</td>
+      <td>1.339248</td>
+      <td>1.579070</td>
+      <td>1.840763</td>
     </tr>
     <tr>
       <th>98</th>
-      <td>0.861925</td>
-      <td>1.528642</td>
-      <td>-0.016929</td>
-      <td>1.438256</td>
-      <td>1.501325</td>
-      <td>1.580577</td>
-      <td>1.659805</td>
-      <td>1.737549</td>
-      <td>1.142393</td>
-      <td>1.327456</td>
-      <td>1.525686</td>
-      <td>1.702791</td>
-      <td>1.893376</td>
+      <td>0.970833</td>
+      <td>1.295320</td>
+      <td>0.048601</td>
+      <td>1.234826</td>
+      <td>1.313793</td>
+      <td>1.481290</td>
+      <td>1.513085</td>
+      <td>1.666479</td>
+      <td>0.799866</td>
+      <td>1.020201</td>
+      <td>1.270688</td>
+      <td>1.542765</td>
+      <td>1.809246</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>0.891213</td>
-      <td>1.561589</td>
-      <td>-0.143608</td>
-      <td>1.603221</td>
-      <td>1.619747</td>
-      <td>1.641722</td>
-      <td>1.665872</td>
-      <td>1.739506</td>
-      <td>1.346551</td>
-      <td>1.439885</td>
-      <td>1.548740</td>
-      <td>1.664568</td>
-      <td>1.756083</td>
+      <td>0.987500</td>
+      <td>1.332758</td>
+      <td>-0.087134</td>
+      <td>1.384044</td>
+      <td>1.387071</td>
+      <td>1.390098</td>
+      <td>1.425226</td>
+      <td>1.460355</td>
+      <td>0.855403</td>
+      <td>1.127956</td>
+      <td>1.336752</td>
+      <td>1.573803</td>
+      <td>1.801232</td>
     </tr>
     <tr>
       <th>100</th>
       <td>1.000000</td>
-      <td>1.500229</td>
-      <td>0.074384</td>
+      <td>1.209750</td>
+      <td>0.113245</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>1.360505</td>
-      <td>1.423669</td>
-      <td>1.496606</td>
-      <td>1.573833</td>
-      <td>1.652999</td>
+      <td>0.753179</td>
+      <td>1.013163</td>
+      <td>1.181684</td>
+      <td>1.403235</td>
+      <td>1.681387</td>
     </tr>
   </tbody>
 </table>
@@ -1580,38 +1482,71 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">plot_mean_posterior_predictives</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">show_intervals</span><span class="o">=</span><span class="s1">&#39;HDI&#39;</span><span class="p">);</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">plot_mean_posterior_predictives</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">show_intervals</span><span class="o">=</span><span class="s1">&#39;HDI&#39;</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_LBA_2A_fitting_21_0.png" src="../_images/notebooks_LBA_2A_fitting_21_0.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_LBA_2A_fitting_23_0.png" src="../_images/notebooks_LBA_2A_fitting_23_0.png" />
+<img alt="../_images/notebooks_LBA_2A_fitting_21_1.png" src="../_images/notebooks_LBA_2A_fitting_21_1.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">plot_quantiles_posterior_predictives</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;shades&#39;</span><span class="p">);</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">plot_quantiles_posterior_predictives</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;shades&#39;</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_LBA_2A_fitting_22_0.png" src="../_images/notebooks_LBA_2A_fitting_22_0.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_LBA_2A_fitting_24_0.png" src="../_images/notebooks_LBA_2A_fitting_24_0.png" />
+<img alt="../_images/notebooks_LBA_2A_fitting_22_1.png" src="../_images/notebooks_LBA_2A_fitting_22_1.png" />
 </div>
 </div>
 </section>
 <section id="Grouped">
 <h3>Grouped<a class="headerlink" href="#Grouped" title="Permalink to this heading"></a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Define new grouping variables, in this case, for the different choice pairs, but any grouping var can do</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;choice_pair&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;AB&#39;</span>
+<span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">data</span><span class="o">.</span><span class="n">cor_option</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">inc_option</span> <span class="o">==</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;choice_pair&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;AC&#39;</span>
+<span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">data</span><span class="o">.</span><span class="n">cor_option</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">inc_option</span> <span class="o">==</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;choice_pair&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;BD&#39;</span>
+<span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">data</span><span class="o">.</span><span class="n">cor_option</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">inc_option</span> <span class="o">==</span> <span class="mi">3</span><span class="p">),</span> <span class="s1">&#39;choice_pair&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;CD&#39;</span>
+
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;block_bins&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">trial_block</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
@@ -1638,406 +1573,53 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">get_grouped_posterior_predictives_summary</span><span class="p">(</span>
-                <span class="n">grouping_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;block_label&#39;</span><span class="p">,</span> <span class="s1">&#39;choice_pair&#39;</span><span class="p">],</span>
-                <span class="n">quantiles</span><span class="o">=</span><span class="p">[</span><span class="mf">.3</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">.7</span><span class="p">],</span>
-                <span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">plot_mean_grouped_posterior_predictives</span><span class="p">(</span><span class="n">grouping_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;block_bins&#39;</span><span class="p">],</span>
+                                                  <span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                                                  <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
+<div class="nboutput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th></th>
-      <th></th>
-      <th>mean_accuracy</th>
-      <th>mean_rt</th>
-      <th>skewness</th>
-      <th>quant_30_rt_incorrect</th>
-      <th>quant_30_rt_correct</th>
-      <th>quant_50_rt_incorrect</th>
-      <th>quant_50_rt_correct</th>
-      <th>quant_70_rt_incorrect</th>
-      <th>quant_70_rt_correct</th>
-    </tr>
-    <tr>
-      <th>block_label</th>
-      <th>choice_pair</th>
-      <th>sample</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th rowspan="5" valign="top">1</th>
-      <th rowspan="5" valign="top">AB</th>
-      <th>1</th>
-      <td>0.80</td>
-      <td>1.534562</td>
-      <td>-0.186347</td>
-      <td>1.728193</td>
-      <td>1.319202</td>
-      <td>1.758502</td>
-      <td>1.508531</td>
-      <td>1.772696</td>
-      <td>1.610643</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>1.00</td>
-      <td>1.528863</td>
-      <td>0.283451</td>
-      <td>NaN</td>
-      <td>1.490206</td>
-      <td>NaN</td>
-      <td>1.536145</td>
-      <td>NaN</td>
-      <td>1.557814</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.85</td>
-      <td>1.577855</td>
-      <td>-0.115510</td>
-      <td>1.549813</td>
-      <td>1.490936</td>
-      <td>1.550730</td>
-      <td>1.574247</td>
-      <td>1.628157</td>
-      <td>1.654209</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.90</td>
-      <td>1.623910</td>
-      <td>-0.246256</td>
-      <td>1.649095</td>
-      <td>1.511793</td>
-      <td>1.676528</td>
-      <td>1.587238</td>
-      <td>1.703960</td>
-      <td>1.749424</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>1.00</td>
-      <td>1.525588</td>
-      <td>-0.024913</td>
-      <td>NaN</td>
-      <td>1.452423</td>
-      <td>NaN</td>
-      <td>1.525061</td>
-      <td>NaN</td>
-      <td>1.606272</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <th>...</th>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th rowspan="5" valign="top">3</th>
-      <th rowspan="5" valign="top">CD</th>
-      <th>96</th>
-      <td>0.95</td>
-      <td>1.507860</td>
-      <td>0.358764</td>
-      <td>1.747676</td>
-      <td>1.428625</td>
-      <td>1.747676</td>
-      <td>1.478917</td>
-      <td>1.747676</td>
-      <td>1.559225</td>
-    </tr>
-    <tr>
-      <th>97</th>
-      <td>0.95</td>
-      <td>1.581117</td>
-      <td>-0.560141</td>
-      <td>1.528396</td>
-      <td>1.543824</td>
-      <td>1.528396</td>
-      <td>1.570441</td>
-      <td>1.528396</td>
-      <td>1.719674</td>
-    </tr>
-    <tr>
-      <th>98</th>
-      <td>0.90</td>
-      <td>1.474218</td>
-      <td>0.237693</td>
-      <td>1.576321</td>
-      <td>1.338095</td>
-      <td>1.625512</td>
-      <td>1.440581</td>
-      <td>1.674702</td>
-      <td>1.577617</td>
-    </tr>
-    <tr>
-      <th>99</th>
-      <td>0.90</td>
-      <td>1.581566</td>
-      <td>-0.484731</td>
-      <td>1.651426</td>
-      <td>1.496155</td>
-      <td>1.681999</td>
-      <td>1.585303</td>
-      <td>1.712573</td>
-      <td>1.681528</td>
-    </tr>
-    <tr>
-      <th>100</th>
-      <td>1.00</td>
-      <td>1.471428</td>
-      <td>0.444475</td>
-      <td>NaN</td>
-      <td>1.409952</td>
-      <td>NaN</td>
-      <td>1.430162</td>
-      <td>NaN</td>
-      <td>1.538831</td>
-    </tr>
-  </tbody>
-</table>
-<p>1200 rows × 9 columns</p>
-</div></div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_LBA_2A_fitting_27_0.png" src="../_images/notebooks_LBA_2A_fitting_27_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_LBA_2A_fitting_27_1.png" src="../_images/notebooks_LBA_2A_fitting_27_1.png" />
+</div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">get_grouped_posterior_predictives_summary</span><span class="p">(</span>
-                <span class="n">grouping_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;block_bins&#39;</span><span class="p">],</span>
-                <span class="n">quantiles</span><span class="o">=</span><span class="p">[</span><span class="mf">.3</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">.7</span><span class="p">],</span>
-                <span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">plot_quantiles_grouped_posterior_predictives</span><span class="p">(</span>
+    <span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">grouping_var</span><span class="o">=</span><span class="s1">&#39;choice_pair&#39;</span><span class="p">,</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;shades&#39;</span><span class="p">,</span>
+    <span class="n">quantiles</span><span class="o">=</span><span class="p">[</span><span class="mf">.1</span><span class="p">,</span> <span class="mf">.3</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">.7</span><span class="p">,</span> <span class="mf">.9</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
+<div class="nboutput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th></th>
-      <th>mean_accuracy</th>
-      <th>mean_rt</th>
-      <th>skewness</th>
-      <th>quant_30_rt_incorrect</th>
-      <th>quant_30_rt_correct</th>
-      <th>quant_50_rt_incorrect</th>
-      <th>quant_50_rt_correct</th>
-      <th>quant_70_rt_incorrect</th>
-      <th>quant_70_rt_correct</th>
-    </tr>
-    <tr>
-      <th>block_bins</th>
-      <th>sample</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th rowspan="5" valign="top">1</th>
-      <th>1</th>
-      <td>0.866667</td>
-      <td>1.538936</td>
-      <td>-0.080940</td>
-      <td>1.726778</td>
-      <td>1.332940</td>
-      <td>1.777266</td>
-      <td>1.503743</td>
-      <td>1.809169</td>
-      <td>1.708005</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>1.000000</td>
-      <td>1.479032</td>
-      <td>0.309335</td>
-      <td>NaN</td>
-      <td>1.349146</td>
-      <td>NaN</td>
-      <td>1.424252</td>
-      <td>NaN</td>
-      <td>1.620771</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.933333</td>
-      <td>1.484095</td>
-      <td>-0.054575</td>
-      <td>1.570224</td>
-      <td>1.334003</td>
-      <td>1.601713</td>
-      <td>1.513079</td>
-      <td>1.633202</td>
-      <td>1.564252</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.966667</td>
-      <td>1.511202</td>
-      <td>0.413283</td>
-      <td>1.593129</td>
-      <td>1.355346</td>
-      <td>1.593129</td>
-      <td>1.463328</td>
-      <td>1.593129</td>
-      <td>1.589374</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>1.000000</td>
-      <td>1.542602</td>
-      <td>0.006582</td>
-      <td>NaN</td>
-      <td>1.446807</td>
-      <td>NaN</td>
-      <td>1.544260</td>
-      <td>NaN</td>
-      <td>1.630757</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th rowspan="5" valign="top">8</th>
-      <th>96</th>
-      <td>1.000000</td>
-      <td>1.514466</td>
-      <td>-0.276282</td>
-      <td>NaN</td>
-      <td>1.483921</td>
-      <td>NaN</td>
-      <td>1.513852</td>
-      <td>NaN</td>
-      <td>1.558092</td>
-    </tr>
-    <tr>
-      <th>97</th>
-      <td>0.896552</td>
-      <td>1.526485</td>
-      <td>-0.374503</td>
-      <td>1.512730</td>
-      <td>1.406130</td>
-      <td>1.513389</td>
-      <td>1.528486</td>
-      <td>1.538217</td>
-      <td>1.729295</td>
-    </tr>
-    <tr>
-      <th>98</th>
-      <td>0.896552</td>
-      <td>1.450706</td>
-      <td>0.428468</td>
-      <td>1.525831</td>
-      <td>1.237706</td>
-      <td>1.529278</td>
-      <td>1.349474</td>
-      <td>1.581125</td>
-      <td>1.585942</td>
-    </tr>
-    <tr>
-      <th>99</th>
-      <td>0.931034</td>
-      <td>1.611712</td>
-      <td>-0.389879</td>
-      <td>1.622358</td>
-      <td>1.547153</td>
-      <td>1.627996</td>
-      <td>1.626622</td>
-      <td>1.633633</td>
-      <td>1.696974</td>
-    </tr>
-    <tr>
-      <th>100</th>
-      <td>1.000000</td>
-      <td>1.505358</td>
-      <td>-0.078567</td>
-      <td>NaN</td>
-      <td>1.441680</td>
-      <td>NaN</td>
-      <td>1.515855</td>
-      <td>NaN</td>
-      <td>1.553035</td>
-    </tr>
-  </tbody>
-</table>
-<p>800 rows × 9 columns</p>
-</div></div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_LBA_2A_fitting_28_0.png" src="../_images/notebooks_LBA_2A_fitting_28_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_LBA_2A_fitting_28_1.png" src="../_images/notebooks_LBA_2A_fitting_28_1.png" />
+</div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
@@ -2045,7 +1627,7 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">plot_mean_grouped_posterior_predictives</span><span class="p">(</span><span class="n">grouping_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;block_bins&#39;</span><span class="p">],</span>
                                                   <span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-                                                  <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">8</span><span class="p">));</span>
+                                                  <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">8</span><span class="p">));</span>
 </pre></div>
 </div>
 </div>
@@ -2053,7 +1635,7 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_LBA_2A_fitting_30_0.png" src="../_images/notebooks_LBA_2A_fitting_30_0.png" />
+<img alt="../_images/notebooks_LBA_2A_fitting_29_0.png" src="../_images/notebooks_LBA_2A_fitting_29_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
@@ -2072,7 +1654,7 @@ Saving file as: /home/andrei/PycharmProjects/rlssm/docs/notebooks/LBA_2A.pkl
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_LBA_2A_fitting_31_0.png" src="../_images/notebooks_LBA_2A_fitting_31_0.png" />
+<img alt="../_images/notebooks_LBA_2A_fitting_30_0.png" src="../_images/notebooks_LBA_2A_fitting_30_0.png" />
 </div>
 </div>
 </section>

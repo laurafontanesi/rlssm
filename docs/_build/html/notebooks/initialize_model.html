@@ -394,101 +394,15 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rlssm.model.models_DDM</span> <span class="kn">import</span> <span class="n">DDModel</span>
-<span class="kn">from</span> <span class="nn">rlssm.model.models_DDM</span> <span class="kn">import</span> <span class="n">RLDDModel</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">RLDDModel</span><span class="p">(</span><span class="n">hierarchical_levels</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-15:08:33 - cmdstanpy - INFO - compiling stan file /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RLDDM/RLDDM.stan to exe file /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RLDDM/RLDDM
-15:08:41 - cmdstanpy - INFO - compiled model executable: /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RLDDM/RLDDM
-15:08:41 - cmdstanpy - WARNING - Stan compiler has produced 12 warnings:
-15:08:41 - cmdstanpy - WARNING -
---- Translating Stan model to C++ code ---
-bin/stanc  --o=/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RLDDM/RLDDM.hpp /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RLDDM/RLDDM.stan
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RLDDM/RLDDM.stan&#39;, line 4, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RLDDM/RLDDM.stan&#39;, line 7, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RLDDM/RLDDM.stan&#39;, line 8, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RLDDM/RLDDM.stan&#39;, line 9, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RLDDM/RLDDM.stan&#39;, line 11, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RLDDM/RLDDM.stan&#39;, line 12, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RLDDM/RLDDM.stan&#39;, line 33, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RLDDM/RLDDM.stan&#39;, line 34, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RLDDM/RLDDM.stan&#39;, line 35, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RLDDM/RLDDM.stan&#39;, line 36, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RLDDM/RLDDM.stan&#39;, line 41, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RLDDM/RLDDM.stan&#39;, line 42, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rlssm.model.models_DDM</span> <span class="kn">import</span> <span class="n">RLDDModel</span>
 
---- Compiling, linking C++ code ---
-g++ -std=c++1y -pthread -D_REENTRANT -Wno-sign-compare -Wno-ignored-attributes      -I stan/lib/stan_math/lib/tbb_2020.3/include    -O3 -I src -I stan/src -I lib/rapidjson_1.1.0/ -I lib/CLI11-1.9.1/ -I stan/lib/stan_math/ -I stan/lib/stan_math/lib/eigen_3.3.9 -I stan/lib/stan_math/lib/boost_1.78.0 -I stan/lib/stan_math/lib/sundials_6.1.1/include -I stan/lib/stan_math/lib/sundials_6.1.1/src/sundials    -DBOOST_DISABLE_ASSERTS          -c -Wno-ignored-attributes   -x c++ -o /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RLDDM/RLDDM.o /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RLDDM/RLDDM.hpp
-g++ -std=c++1y -pthread -D_REENTRANT -Wno-sign-compare -Wno-ignored-attributes      -I stan/lib/stan_math/lib/tbb_2020.3/include    -O3 -I src -I stan/src -I lib/rapidjson_1.1.0/ -I lib/CLI11-1.9.1/ -I stan/lib/stan_math/ -I stan/lib/stan_math/lib/eigen_3.3.9 -I stan/lib/stan_math/lib/boost_1.78.0 -I stan/lib/stan_math/lib/sundials_6.1.1/include -I stan/lib/stan_math/lib/sundials_6.1.1/src/sundials    -DBOOST_DISABLE_ASSERTS                -Wl,-L,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34; -Wl,-rpath,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34;      /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RLDDM/RLDDM.o src/cmdstan/main.o        -Wl,-L,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34; -Wl,-rpath,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34;   stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_nvecserial.a stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_cvodes.a stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_idas.a stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_kinsol.a  stan/lib/stan_math/lib/tbb/libtbb.so.2 -o /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RLDDM/RLDDM
-rm -f /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RLDDM/RLDDM.o
-
-</pre></div></div>
+<span class="n">model</span> <span class="o">=</span> <span class="n">RLDDModel</span><span class="p">(</span><span class="n">hierarchical_levels</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 <p>After initialization, you can inspect the model’s default priors. You can change these when you fit the model.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">priors</span>
@@ -496,7 +410,7 @@ rm -f /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RLDDM/RLDDM.o
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -509,92 +423,20 @@ rm -f /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RLDDM/RLDDM.o
 </div>
 <p>Note that, if this is the first time that you initialize this type of model, it’s going to take some time to compile it. Otherwise, the cashed model will be automatically loaded.</p>
 <p>By default, all mechanisms are “off”, meaning that the simplest model is fit, so you need to set alternative mechanisms to <code class="docutils literal notranslate"><span class="pre">True</span></code> to have them included in your model:</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_complex</span> <span class="o">=</span> <span class="n">DDModel</span><span class="p">(</span><span class="n">hierarchical_levels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rlssm.model.models_DDM</span> <span class="kn">import</span> <span class="n">DDModel</span>
+
+<span class="n">model_complex</span> <span class="o">=</span> <span class="n">DDModel</span><span class="p">(</span><span class="n">hierarchical_levels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                         <span class="n">drift_variability</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
                         <span class="n">starting_point_variability</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-15:08:41 - cmdstanpy - INFO - compiling stan file /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_driftvar_spvar.stan to exe file /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_driftvar_spvar
-15:08:49 - cmdstanpy - INFO - compiled model executable: /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_driftvar_spvar
-15:08:49 - cmdstanpy - WARNING - Stan compiler has produced 11 warnings:
-15:08:49 - cmdstanpy - WARNING -
---- Translating Stan model to C++ code ---
-bin/stanc  --o=/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_driftvar_spvar.hpp /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_driftvar_spvar.stan
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_driftvar_spvar.stan&#39;, line 4, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_driftvar_spvar.stan&#39;, line 5, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_driftvar_spvar.stan&#39;, line 6, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_driftvar_spvar.stan&#39;, line 22, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_driftvar_spvar.stan&#39;, line 23, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_driftvar_spvar.stan&#39;, line 26, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_driftvar_spvar.stan&#39;, line 27, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_driftvar_spvar.stan&#39;, line 28, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_driftvar_spvar.stan&#39;, line 29, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_driftvar_spvar.stan&#39;, line 30, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_driftvar_spvar.stan&#39;, line 31, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-
---- Compiling, linking C++ code ---
-g++ -std=c++1y -pthread -D_REENTRANT -Wno-sign-compare -Wno-ignored-attributes      -I stan/lib/stan_math/lib/tbb_2020.3/include    -O3 -I src -I stan/src -I lib/rapidjson_1.1.0/ -I lib/CLI11-1.9.1/ -I stan/lib/stan_math/ -I stan/lib/stan_math/lib/eigen_3.3.9 -I stan/lib/stan_math/lib/boost_1.78.0 -I stan/lib/stan_math/lib/sundials_6.1.1/include -I stan/lib/stan_math/lib/sundials_6.1.1/src/sundials    -DBOOST_DISABLE_ASSERTS          -c -Wno-ignored-attributes   -x c++ -o /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_driftvar_spvar.o /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_driftvar_spvar.hpp
-g++ -std=c++1y -pthread -D_REENTRANT -Wno-sign-compare -Wno-ignored-attributes      -I stan/lib/stan_math/lib/tbb_2020.3/include    -O3 -I src -I stan/src -I lib/rapidjson_1.1.0/ -I lib/CLI11-1.9.1/ -I stan/lib/stan_math/ -I stan/lib/stan_math/lib/eigen_3.3.9 -I stan/lib/stan_math/lib/boost_1.78.0 -I stan/lib/stan_math/lib/sundials_6.1.1/include -I stan/lib/stan_math/lib/sundials_6.1.1/src/sundials    -DBOOST_DISABLE_ASSERTS                -Wl,-L,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34; -Wl,-rpath,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34;      /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_driftvar_spvar.o src/cmdstan/main.o        -Wl,-L,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34; -Wl,-rpath,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34;   stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_nvecserial.a stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_cvodes.a stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_idas.a stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_kinsol.a  stan/lib/stan_math/lib/tbb/libtbb.so.2 -o /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_driftvar_spvar
-rm -f /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_driftvar_spvar.o
-
-</pre></div></div>
-</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_complex</span><span class="o">.</span><span class="n">priors</span>
@@ -602,7 +444,7 @@ rm -f /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_driftvar_spva
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -617,7 +459,7 @@ rm -f /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM_driftvar_spva
 </div>
 <p>You can check what are the possible mechanisms for each class in the <a class="reference external" href="https://rlssm.readthedocs.io/en/latest/models/model_classes.html">API reference</a> guide, or by typing:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>DDModel<span class="o">?</span>

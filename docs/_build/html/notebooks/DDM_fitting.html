@@ -58,14 +58,13 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Fit the DDM on individual data</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Import-the-data">Import the data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Initialize-the-model">Initialize the model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Fit">Fit</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Fit">Fit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Fit</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#get-Rhat">get Rhat</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#get-wAIC">get wAIC</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#Posteriors">Posteriors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Posterior-predictives">Posterior predictives</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#Ungrouped">Ungrouped</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Grouped">Grouped</a></li>
 </ul>
 </li>
@@ -394,31 +393,22 @@ div.rendered_html tbody tr:hover {
 </style>
 <section id="Fit-the-DDM-on-individual-data">
 <h1>Fit the DDM on individual data<a class="headerlink" href="#Fit-the-DDM-on-individual-data" title="Permalink to this heading"></a></h1>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="kn">from</span> <span class="nn">rlssm.model.models_DDM</span> <span class="kn">import</span> <span class="n">DDModel</span>
-<span class="kn">from</span> <span class="nn">rlssm.utility.load_data</span> <span class="kn">import</span> <span class="n">load_example_dataset</span>
-</pre></div>
-</div>
-</div>
 <section id="Import-the-data">
 <h2>Import the data<a class="headerlink" href="#Import-the-data" title="Permalink to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">load_example_dataset</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rlssm.utility.load_data</span> <span class="kn">import</span> <span class="n">load_example_dataset</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">load_example_dataset</span><span class="p">(</span><span class="n">hierarchical_levels</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -450,73 +440,79 @@ div.rendered_html tbody tr:hover {
       <th>times_seen</th>
       <th>rt</th>
       <th>accuracy</th>
+      <th>feedback_type</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>21</td>
+      <td>3</td>
       <td>1</td>
       <td>1</td>
-      <td>39</td>
-      <td>38</td>
-      <td>2</td>
+      <td>50</td>
+      <td>41</td>
+      <td>3</td>
       <td>1</td>
       <td>1</td>
-      <td>1.193522</td>
+      <td>2.456584</td>
+      <td>0</td>
       <td>0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>21</td>
+      <td>3</td>
       <td>1</td>
       <td>2</td>
-      <td>55</td>
-      <td>38</td>
-      <td>4</td>
-      <td>2</td>
+      <td>48</td>
+      <td>34</td>
+      <td>3</td>
       <td>1</td>
-      <td>1.344920</td>
+      <td>2</td>
+      <td>2.170168</td>
+      <td>1</td>
       <td>0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>21</td>
+      <td>3</td>
       <td>1</td>
       <td>3</td>
       <td>52</td>
-      <td>55</td>
+      <td>46</td>
       <td>4</td>
-      <td>3</td>
+      <td>2</td>
       <td>1</td>
-      <td>1.032342</td>
-      <td>1</td>
+      <td>1.494957</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>21</td>
+      <td>3</td>
       <td>1</td>
       <td>4</td>
-      <td>64</td>
-      <td>49</td>
+      <td>55</td>
+      <td>48</td>
       <td>4</td>
       <td>3</td>
       <td>2</td>
-      <td>1.201309</td>
+      <td>1.779351</td>
+      <td>0</td>
       <td>0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>21</td>
+      <td>3</td>
       <td>1</td>
       <td>5</td>
       <td>48</td>
-      <td>49</td>
+      <td>52</td>
       <td>4</td>
       <td>3</td>
       <td>3</td>
-      <td>1.163588</td>
-      <td>1</td>
+      <td>1.853335</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
   </tbody>
 </table>
@@ -526,67 +522,28 @@ div.rendered_html tbody tr:hover {
 <section id="Initialize-the-model">
 <h2>Initialize the model<a class="headerlink" href="#Initialize-the-model" title="Permalink to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">DDModel</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rlssm.model.models_DDM</span> <span class="kn">import</span> <span class="n">DDModel</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">DDModel</span><span class="p">(</span><span class="n">hierarchical_levels</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area stderr docutils container">
+<div class="output_area docutils container">
 <div class="highlight"><pre>
-14:02:05 - cmdstanpy - INFO - compiling stan file /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan to exe file /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM
-14:02:14 - cmdstanpy - INFO - compiled model executable: /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM
-14:02:14 - cmdstanpy - WARNING - Stan compiler has produced 6 warnings:
-14:02:14 - cmdstanpy - WARNING -
---- Translating Stan model to C++ code ---
-bin/stanc  --o=/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.hpp /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 4, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 5, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 18, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 19, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 20, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 21, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-
---- Compiling, linking C++ code ---
-g++ -std=c++1y -pthread -D_REENTRANT -Wno-sign-compare -Wno-ignored-attributes      -I stan/lib/stan_math/lib/tbb_2020.3/include    -O3 -I src -I stan/src -I lib/rapidjson_1.1.0/ -I lib/CLI11-1.9.1/ -I stan/lib/stan_math/ -I stan/lib/stan_math/lib/eigen_3.3.9 -I stan/lib/stan_math/lib/boost_1.78.0 -I stan/lib/stan_math/lib/sundials_6.1.1/include -I stan/lib/stan_math/lib/sundials_6.1.1/src/sundials    -DBOOST_DISABLE_ASSERTS          -c -Wno-ignored-attributes   -x c++ -o /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.o /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.hpp
-g++ -std=c++1y -pthread -D_REENTRANT -Wno-sign-compare -Wno-ignored-attributes      -I stan/lib/stan_math/lib/tbb_2020.3/include    -O3 -I src -I stan/src -I lib/rapidjson_1.1.0/ -I lib/CLI11-1.9.1/ -I stan/lib/stan_math/ -I stan/lib/stan_math/lib/eigen_3.3.9 -I stan/lib/stan_math/lib/boost_1.78.0 -I stan/lib/stan_math/lib/sundials_6.1.1/include -I stan/lib/stan_math/lib/sundials_6.1.1/src/sundials    -DBOOST_DISABLE_ASSERTS                -Wl,-L,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34; -Wl,-rpath,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34;      /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.o src/cmdstan/main.o        -Wl,-L,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34; -Wl,-rpath,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34;   stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_nvecserial.a stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_cvodes.a stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_idas.a stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_kinsol.a  stan/lib/stan_math/lib/tbb/libtbb.so.2 -o /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM
-rm -f /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.o
-
+Using cached StanModel
 </pre></div></div>
 </div>
 </section>
 <section id="Fit">
 <h2>Fit<a class="headerlink" href="#Fit" title="Permalink to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># sampling parameters</span>
@@ -598,15 +555,15 @@ rm -f /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.o
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
     <span class="n">data</span><span class="p">,</span>
-    <span class="n">thin</span> <span class="o">=</span> <span class="n">n_thin</span><span class="p">,</span>
+    <span class="n">thin</span><span class="o">=</span><span class="n">n_thin</span><span class="p">,</span>
     <span class="n">iter_warmup</span><span class="o">=</span><span class="n">n_warmup</span><span class="p">,</span>
     <span class="n">iter_sampling</span><span class="o">=</span><span class="n">n_sampling</span><span class="p">,</span>
-    <span class="n">chains</span> <span class="o">=</span> <span class="n">n_chains</span><span class="p">,</span>
+    <span class="n">chains</span><span class="o">=</span><span class="n">n_chains</span><span class="p">,</span>
     <span class="n">pointwise_waic</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -614,10 +571,43 @@ rm -f /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.o
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-14:02:14 - cmdstanpy - INFO - CmdStan start processing
-</pre></div></div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "30df2b8b757d438d8669d41a11e3b317"}</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "055f008b9a9b45ad9a56ecfc6f24d17a"}</script></div>
+</div>
+</section>
+<section id="id1">
+<h2>Fit<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># sampling parameters</span>
+<span class="n">n_warmup</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">n_sampling</span> <span class="o">=</span> <span class="mi">1500</span>
+<span class="n">n_chains</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">n_thin</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">thin</span><span class="o">=</span><span class="n">n_thin</span><span class="p">,</span>
+    <span class="n">iter_warmup</span><span class="o">=</span><span class="n">n_warmup</span><span class="p">,</span>
+    <span class="n">iter_sampling</span><span class="o">=</span><span class="n">n_sampling</span><span class="p">,</span>
+    <span class="n">chains</span><span class="o">=</span><span class="n">n_chains</span><span class="p">,</span>
+    <span class="n">pointwise_waic</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -634,64 +624,13 @@ ndt_priors {&#39;mu&#39;: 0, &#39;sd&#39;: 5}
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "be3764f79b274970b3fed3a760a83102"}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "ae4a529a17444854b66df598e14d0cee"}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "bca5469eed9549e78df68ed9be2ebb05"}</script></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-14:02:17 - cmdstanpy - INFO - CmdStan done processing.
-14:02:17 - cmdstanpy - WARNING - Non-fatal error during sampling:
-Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Random variable  = 1.19352, but must be greater than nondecision time = 31.0012 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Random variable  = 1.19352, but must be greater than nondecision time = 6.49707 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Random variable  = 1.19352, but must be greater than nondecision time = 11.4973 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Random variable  = 0.846314, but must be greater than nondecision time = 0.850744 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Random variable  = 0.997185, but must be greater than nondecision time = 1.0312 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Random variable  = 0.853511, but must be greater than nondecision time = 0.884317 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Random variable  = 1.19352, but must be greater than nondecision time = 4.57205 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Random variable  = 0.853511, but must be greater than nondecision time = 0.906532 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Random variable  = 1.19352, but must be greater than nondecision time = 329.336 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Random variable  = 1.19352, but must be greater than nondecision time = 82.3914 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Random variable  = 1.19352, but must be greater than nondecision time = 20.4743 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Random variable  = 1.19352, but must be greater than nondecision time = 5.37334 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Random variable  = 1.19352, but must be greater than nondecision time = 1.61015 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Random variable  = 0.91816, but must be greater than nondecision time = 0.931309 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Random variable  = 1.19352, but must be greater than nondecision time = 63.6282 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Random variable  = 0.997185, but must be greater than nondecision time = 1.01256 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Random variable  = 0.853511, but must be greater than nondecision time = 0.856158 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Random variable  = 0.853511, but must be greater than nondecision time = 0.855221 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Random variable  = 0.846314, but must be greater than nondecision time = 0.8473 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Random variable  = 1.19352, but must be greater than nondecision time = 1.39256 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Random variable  = 0.846314, but must be greater than nondecision time = 0.85171 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Random variable  = 0.853511, but must be greater than nondecision time = 0.895434 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Random variable  = 0.853511, but must be greater than nondecision time = 0.872443 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-        Exception: wiener_lpdf: Random variable  = 0.997185, but must be greater than nondecision time = 1.02963 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/DDM.stan&#39;, line 43, column 1 to column 59)
-Consider re-running with show_console=True if the above output is unclear!
-</pre></div></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "434db82568c04deb944d336c91a36e8b"}</script></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
@@ -701,15 +640,15 @@ Consider re-running with show_console=True if the above output is unclear!
 
 Checks MCMC diagnostics:
 n_eff / iter looks reasonable for all parameters
-0 of 1000 iterations saturated the maximum tree depth of 10 (0.0%)
+0 of 3000 iterations saturated the maximum tree depth of 10 (0.0%)
 E-BFMI indicated no pathological behavior
-0.0 of 1000 iterations ended with a divergence (0.0%)
+0.0 of 3000 iterations ended with a divergence (0.0%)
 </pre></div></div>
 </div>
 <section id="get-Rhat">
 <h3>get Rhat<a class="headerlink" href="#get-Rhat" title="Permalink to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">rhat</span>
@@ -717,7 +656,7 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -751,27 +690,27 @@ E-BFMI indicated no pathological behavior
   <tbody>
     <tr>
       <th>lp__</th>
-      <td>1.009090</td>
+      <td>1.002060</td>
       <td>lp__</td>
     </tr>
     <tr>
       <th>drift</th>
-      <td>1.007060</td>
+      <td>1.000440</td>
       <td>drift</td>
     </tr>
     <tr>
       <th>threshold</th>
-      <td>1.009290</td>
+      <td>1.001190</td>
       <td>threshold</td>
     </tr>
     <tr>
       <th>ndt</th>
-      <td>1.006180</td>
+      <td>0.999874</td>
       <td>ndt</td>
     </tr>
     <tr>
       <th>drift_ll[1]</th>
-      <td>1.007060</td>
+      <td>1.000440</td>
       <td>drift_ll[1]</td>
     </tr>
     <tr>
@@ -780,40 +719,40 @@ E-BFMI indicated no pathological behavior
       <td>...</td>
     </tr>
     <tr>
-      <th>log_lik[235]</th>
-      <td>0.999372</td>
-      <td>log_lik[235]</td>
-    </tr>
-    <tr>
       <th>log_lik[236]</th>
-      <td>0.998818</td>
+      <td>1.000890</td>
       <td>log_lik[236]</td>
     </tr>
     <tr>
       <th>log_lik[237]</th>
-      <td>0.999297</td>
+      <td>0.999597</td>
       <td>log_lik[237]</td>
     </tr>
     <tr>
       <th>log_lik[238]</th>
-      <td>0.998671</td>
+      <td>1.001380</td>
       <td>log_lik[238]</td>
     </tr>
     <tr>
       <th>log_lik[239]</th>
-      <td>0.999256</td>
+      <td>1.001020</td>
       <td>log_lik[239]</td>
+    </tr>
+    <tr>
+      <th>log_lik[240]</th>
+      <td>1.001420</td>
+      <td>log_lik[240]</td>
     </tr>
   </tbody>
 </table>
-<p>1202 rows × 2 columns</p>
+<p>1207 rows × 2 columns</p>
 </div></div>
 </div>
 </section>
 <section id="get-wAIC">
 <h3>get wAIC<a class="headerlink" href="#get-wAIC" title="Permalink to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">waic</span>
@@ -821,23 +760,43 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;lppd&#39;: -177.63528790213186,
- &#39;p_waic&#39;: 2.981915854117017,
- &#39;waic&#39;: 361.23440751249774,
- &#39;waic_se&#39;: 39.89792609117187}
+{&#39;lppd&#39;: -139.18139956067117,
+ &#39;p_waic&#39;: 3.6955078073836316,
+ &#39;waic&#39;: 285.7538147361096,
+ &#39;waic_se&#39;: 32.92392024070494}
 </pre></div></div>
 </div>
-</section>
-</section>
-<section id="Posteriors">
-<h2>Posteriors<a class="headerlink" href="#Posteriors" title="Permalink to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">plot_posteriors</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">show_intervals</span><span class="o">=</span><span class="s2">&quot;HDI&quot;</span><span class="p">,</span> <span class="n">alpha_intervals</span><span class="o">=</span><span class="mf">.05</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;seaborn.axisgrid.FacetGrid at 0x7fd4a3b32e20&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_DDM_fitting_15_1.png" src="../_images/notebooks_DDM_fitting_15_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -845,7 +804,7 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -868,77 +827,78 @@ E-BFMI indicated no pathological behavior
     <tr style="text-align: right;">
       <th></th>
       <th>transf_drift</th>
-      <th>transf_threshold</th>
       <th>transf_ndt</th>
+      <th>transf_threshold</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>count</th>
-      <td>1000.000000</td>
-      <td>1000.000000</td>
-      <td>1000.000000</td>
+      <td>3000.000000</td>
+      <td>3000.000000</td>
+      <td>3000.000000</td>
     </tr>
     <tr>
       <th>mean</th>
-      <td>1.279713</td>
-      <td>2.176140</td>
-      <td>0.739246</td>
+      <td>0.993156</td>
+      <td>0.882174</td>
+      <td>1.547798</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>0.088394</td>
-      <td>0.104516</td>
-      <td>0.018846</td>
+      <td>0.099622</td>
+      <td>0.008184</td>
+      <td>0.054414</td>
     </tr>
     <tr>
       <th>min</th>
-      <td>1.045470</td>
-      <td>1.841480</td>
-      <td>0.668498</td>
+      <td>0.618427</td>
+      <td>0.850453</td>
+      <td>1.350220</td>
     </tr>
     <tr>
       <th>25%</th>
-      <td>1.214558</td>
-      <td>2.104870</td>
-      <td>0.727898</td>
+      <td>0.927934</td>
+      <td>0.877171</td>
+      <td>1.511100</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>1.282315</td>
-      <td>2.163760</td>
-      <td>0.740895</td>
+      <td>0.991904</td>
+      <td>0.882857</td>
+      <td>1.545715</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>1.340863</td>
-      <td>2.241875</td>
-      <td>0.753184</td>
+      <td>1.060670</td>
+      <td>0.888255</td>
+      <td>1.583540</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>1.580960</td>
-      <td>2.549410</td>
-      <td>0.793210</td>
+      <td>1.335190</td>
+      <td>0.902249</td>
+      <td>1.712580</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">context</span> <span class="o">=</span> <span class="s2">&quot;talk&quot;</span><span class="p">,</span>
-        <span class="n">style</span> <span class="o">=</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span>
-        <span class="n">palette</span> <span class="o">=</span> <span class="s2">&quot;husl&quot;</span><span class="p">,</span>
-        <span class="n">rc</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">:(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">8</span><span class="p">)})</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s2">&quot;talk&quot;</span><span class="p">,</span>
+        <span class="n">style</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
+        <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;husl&quot;</span><span class="p">,</span>
+        <span class="n">rc</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">8</span><span class="p">)})</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">plot_posteriors</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">show_intervals</span><span class="o">=</span><span class="s2">&quot;HDI&quot;</span><span class="p">,</span> <span class="n">alpha_intervals</span><span class="o">=</span><span class="mf">.05</span><span class="p">);</span>
@@ -949,375 +909,61 @@ E-BFMI indicated no pathological behavior
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_DDM_fitting_16_0.png" src="../_images/notebooks_DDM_fitting_16_0.png" />
+<img alt="../_images/notebooks_DDM_fitting_18_0.png" src="../_images/notebooks_DDM_fitting_18_0.png" />
 </div>
 </div>
 </section>
+</section>
 <section id="Posterior-predictives">
 <h2>Posterior predictives<a class="headerlink" href="#Posterior-predictives" title="Permalink to this heading"></a></h2>
-<section id="Ungrouped">
-<h3>Ungrouped<a class="headerlink" href="#Ungrouped" title="Permalink to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pp</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">get_posterior_predictives_df</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
-<span class="n">pp</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">plot_mean_posterior_predictives</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">show_intervals</span><span class="o">=</span><span class="s1">&#39;HDI&#39;</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_DDM_fitting_20_0.png" src="../_images/notebooks_DDM_fitting_20_0.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead tr th {
-        text-align: left;
-    }
-
-    .dataframe thead tr:last-of-type th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr>
-      <th>variable</th>
-      <th colspan="10" halign="left">rt</th>
-      <th>...</th>
-      <th colspan="10" halign="left">accuracy</th>
-    </tr>
-    <tr>
-      <th>trial</th>
-      <th>1</th>
-      <th>2</th>
-      <th>3</th>
-      <th>4</th>
-      <th>5</th>
-      <th>6</th>
-      <th>7</th>
-      <th>8</th>
-      <th>9</th>
-      <th>10</th>
-      <th>...</th>
-      <th>230</th>
-      <th>231</th>
-      <th>232</th>
-      <th>233</th>
-      <th>234</th>
-      <th>235</th>
-      <th>236</th>
-      <th>237</th>
-      <th>238</th>
-      <th>239</th>
-    </tr>
-    <tr>
-      <th>sample</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1</th>
-      <td>1.013650</td>
-      <td>1.358650</td>
-      <td>0.916650</td>
-      <td>1.224650</td>
-      <td>0.909650</td>
-      <td>1.403650</td>
-      <td>0.847650</td>
-      <td>1.396650</td>
-      <td>1.040650</td>
-      <td>2.112650</td>
-      <td>...</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>1.172797</td>
-      <td>1.901797</td>
-      <td>1.592797</td>
-      <td>1.119797</td>
-      <td>2.186797</td>
-      <td>0.951797</td>
-      <td>1.711797</td>
-      <td>1.412797</td>
-      <td>1.067797</td>
-      <td>1.686797</td>
-      <td>...</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>2.726361</td>
-      <td>1.061361</td>
-      <td>1.188361</td>
-      <td>1.051361</td>
-      <td>1.023361</td>
-      <td>0.985361</td>
-      <td>1.057361</td>
-      <td>1.163361</td>
-      <td>1.399361</td>
-      <td>2.128361</td>
-      <td>...</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>1.663760</td>
-      <td>1.158760</td>
-      <td>0.912760</td>
-      <td>1.801760</td>
-      <td>0.994760</td>
-      <td>1.521760</td>
-      <td>1.087760</td>
-      <td>2.080760</td>
-      <td>1.599760</td>
-      <td>1.752760</td>
-      <td>...</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>2.369806</td>
-      <td>1.696806</td>
-      <td>2.284806</td>
-      <td>2.449806</td>
-      <td>1.807806</td>
-      <td>1.010806</td>
-      <td>1.646806</td>
-      <td>1.431806</td>
-      <td>0.959806</td>
-      <td>1.500806</td>
-      <td>...</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>96</th>
-      <td>1.703044</td>
-      <td>1.300044</td>
-      <td>1.212044</td>
-      <td>0.931044</td>
-      <td>1.899044</td>
-      <td>2.993044</td>
-      <td>1.099044</td>
-      <td>2.512044</td>
-      <td>1.458044</td>
-      <td>1.942044</td>
-      <td>...</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>97</th>
-      <td>3.551194</td>
-      <td>1.593194</td>
-      <td>1.343194</td>
-      <td>1.247194</td>
-      <td>1.128194</td>
-      <td>1.205194</td>
-      <td>1.009194</td>
-      <td>1.667194</td>
-      <td>1.173194</td>
-      <td>1.195194</td>
-      <td>...</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>98</th>
-      <td>1.601100</td>
-      <td>1.725100</td>
-      <td>1.843100</td>
-      <td>1.968100</td>
-      <td>0.955100</td>
-      <td>2.612100</td>
-      <td>1.424100</td>
-      <td>0.884100</td>
-      <td>1.514100</td>
-      <td>2.198100</td>
-      <td>...</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>99</th>
-      <td>1.015083</td>
-      <td>1.204083</td>
-      <td>1.493083</td>
-      <td>2.282083</td>
-      <td>1.105083</td>
-      <td>1.138083</td>
-      <td>1.514083</td>
-      <td>0.996083</td>
-      <td>1.052083</td>
-      <td>1.132083</td>
-      <td>...</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>100</th>
-      <td>0.936740</td>
-      <td>1.263740</td>
-      <td>1.320740</td>
-      <td>1.718740</td>
-      <td>4.062740</td>
-      <td>1.088740</td>
-      <td>1.252740</td>
-      <td>0.882740</td>
-      <td>2.999740</td>
-      <td>1.030740</td>
-      <td>...</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-    </tr>
-  </tbody>
-</table>
-<p>100 rows × 478 columns</p>
-</div></div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_DDM_fitting_20_1.png" src="../_images/notebooks_DDM_fitting_20_1.png" />
+</div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">plot_quantiles_posterior_predictives</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;shades&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_DDM_fitting_21_0.png" src="../_images/notebooks_DDM_fitting_21_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_DDM_fitting_21_1.png" src="../_images/notebooks_DDM_fitting_21_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pp_summary</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">get_posterior_predictives_summary</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
@@ -1326,7 +972,7 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1382,83 +1028,83 @@ E-BFMI indicated no pathological behavior
   <tbody>
     <tr>
       <th>1</th>
-      <td>0.962343</td>
-      <td>1.542826</td>
-      <td>1.620274</td>
-      <td>0.919050</td>
-      <td>1.014650</td>
-      <td>1.370650</td>
-      <td>1.614250</td>
-      <td>1.890250</td>
-      <td>0.978650</td>
-      <td>1.184050</td>
-      <td>1.387150</td>
-      <td>1.658350</td>
-      <td>2.367150</td>
+      <td>0.887500</td>
+      <td>1.382798</td>
+      <td>1.877329</td>
+      <td>1.018506</td>
+      <td>1.089906</td>
+      <td>1.159706</td>
+      <td>1.345106</td>
+      <td>1.696106</td>
+      <td>1.008306</td>
+      <td>1.109506</td>
+      <td>1.288706</td>
+      <td>1.488706</td>
+      <td>1.958506</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.966527</td>
-      <td>1.570998</td>
-      <td>2.195012</td>
-      <td>1.134297</td>
-      <td>1.356697</td>
-      <td>1.460297</td>
-      <td>1.800597</td>
-      <td>3.388497</td>
-      <td>0.949797</td>
-      <td>1.150797</td>
-      <td>1.329797</td>
-      <td>1.648797</td>
-      <td>2.399797</td>
+      <td>0.895833</td>
+      <td>1.406692</td>
+      <td>1.956740</td>
+      <td>1.018555</td>
+      <td>1.120955</td>
+      <td>1.295355</td>
+      <td>1.446955</td>
+      <td>2.232955</td>
+      <td>1.035955</td>
+      <td>1.159955</td>
+      <td>1.284355</td>
+      <td>1.468955</td>
+      <td>1.892555</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.933054</td>
-      <td>1.536687</td>
-      <td>2.004316</td>
-      <td>1.180361</td>
-      <td>1.301361</td>
-      <td>1.467361</td>
-      <td>1.608861</td>
-      <td>2.023861</td>
-      <td>0.966361</td>
-      <td>1.166961</td>
-      <td>1.332361</td>
-      <td>1.602561</td>
-      <td>2.334161</td>
+      <td>0.862500</td>
+      <td>1.456515</td>
+      <td>1.897001</td>
+      <td>1.059786</td>
+      <td>1.221386</td>
+      <td>1.299586</td>
+      <td>1.521786</td>
+      <td>1.781786</td>
+      <td>1.028586</td>
+      <td>1.170386</td>
+      <td>1.341586</td>
+      <td>1.544986</td>
+      <td>2.028186</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.987448</td>
-      <td>1.452923</td>
-      <td>1.428620</td>
-      <td>1.117360</td>
-      <td>1.118560</td>
-      <td>1.119760</td>
-      <td>1.122560</td>
-      <td>1.125360</td>
-      <td>1.009260</td>
-      <td>1.153760</td>
-      <td>1.321260</td>
-      <td>1.587260</td>
-      <td>2.112760</td>
+      <td>0.841667</td>
+      <td>1.412847</td>
+      <td>1.862418</td>
+      <td>1.034339</td>
+      <td>1.132739</td>
+      <td>1.319639</td>
+      <td>1.418239</td>
+      <td>1.910639</td>
+      <td>1.043139</td>
+      <td>1.167139</td>
+      <td>1.314139</td>
+      <td>1.528039</td>
+      <td>1.941439</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.979079</td>
-      <td>1.464153</td>
-      <td>2.254239</td>
-      <td>0.925406</td>
-      <td>1.002406</td>
-      <td>1.108806</td>
-      <td>1.171206</td>
-      <td>1.513206</td>
-      <td>1.011606</td>
-      <td>1.176706</td>
-      <td>1.346806</td>
-      <td>1.627906</td>
-      <td>2.064406</td>
+      <td>0.804167</td>
+      <td>1.376799</td>
+      <td>2.290501</td>
+      <td>1.026462</td>
+      <td>1.134262</td>
+      <td>1.289862</td>
+      <td>1.500262</td>
+      <td>2.059662</td>
+      <td>1.012062</td>
+      <td>1.096662</td>
+      <td>1.219862</td>
+      <td>1.413662</td>
+      <td>1.863862</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1478,135 +1124,97 @@ E-BFMI indicated no pathological behavior
     </tr>
     <tr>
       <th>96</th>
-      <td>0.962343</td>
-      <td>1.483161</td>
-      <td>1.862628</td>
-      <td>1.081644</td>
-      <td>1.116244</td>
-      <td>1.341044</td>
-      <td>1.516844</td>
-      <td>1.665844</td>
-      <td>1.007844</td>
-      <td>1.169644</td>
-      <td>1.338044</td>
-      <td>1.570644</td>
-      <td>2.194344</td>
+      <td>0.854167</td>
+      <td>1.371987</td>
+      <td>2.565065</td>
+      <td>1.097050</td>
+      <td>1.174650</td>
+      <td>1.215850</td>
+      <td>1.336450</td>
+      <td>1.637650</td>
+      <td>1.054850</td>
+      <td>1.167650</td>
+      <td>1.275850</td>
+      <td>1.465650</td>
+      <td>1.759450</td>
     </tr>
     <tr>
       <th>97</th>
-      <td>0.937238</td>
-      <td>1.510060</td>
-      <td>1.845455</td>
-      <td>1.017994</td>
-      <td>1.080394</td>
-      <td>1.230194</td>
-      <td>1.501194</td>
-      <td>2.076794</td>
-      <td>1.032494</td>
-      <td>1.188794</td>
-      <td>1.359194</td>
-      <td>1.587694</td>
-      <td>2.246194</td>
+      <td>0.837500</td>
+      <td>1.409335</td>
+      <td>2.687627</td>
+      <td>1.052597</td>
+      <td>1.192597</td>
+      <td>1.299197</td>
+      <td>1.460997</td>
+      <td>1.804397</td>
+      <td>1.026197</td>
+      <td>1.155197</td>
+      <td>1.289197</td>
+      <td>1.515197</td>
+      <td>1.867197</td>
     </tr>
     <tr>
       <th>98</th>
-      <td>0.916318</td>
-      <td>1.522908</td>
-      <td>1.428744</td>
-      <td>1.104900</td>
-      <td>1.221600</td>
-      <td>1.395600</td>
-      <td>1.477200</td>
-      <td>1.770300</td>
-      <td>1.000100</td>
-      <td>1.191100</td>
-      <td>1.417100</td>
-      <td>1.669100</td>
-      <td>2.223100</td>
+      <td>0.825000</td>
+      <td>1.396323</td>
+      <td>2.521695</td>
+      <td>1.016985</td>
+      <td>1.177185</td>
+      <td>1.301685</td>
+      <td>1.412585</td>
+      <td>1.891885</td>
+      <td>1.027685</td>
+      <td>1.133785</td>
+      <td>1.272685</td>
+      <td>1.477785</td>
+      <td>1.987085</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>0.899582</td>
-      <td>1.537819</td>
-      <td>2.159274</td>
-      <td>1.053483</td>
-      <td>1.129983</td>
-      <td>1.316083</td>
-      <td>1.584183</td>
-      <td>2.803783</td>
-      <td>1.004083</td>
-      <td>1.160283</td>
-      <td>1.327083</td>
-      <td>1.609283</td>
-      <td>2.296883</td>
+      <td>0.854167</td>
+      <td>1.362669</td>
+      <td>1.469335</td>
+      <td>1.022361</td>
+      <td>1.275561</td>
+      <td>1.413361</td>
+      <td>1.531961</td>
+      <td>2.202161</td>
+      <td>1.023161</td>
+      <td>1.115961</td>
+      <td>1.239361</td>
+      <td>1.434961</td>
+      <td>1.760161</td>
     </tr>
     <tr>
       <th>100</th>
-      <td>0.953975</td>
-      <td>1.508953</td>
-      <td>1.814365</td>
-      <td>0.977740</td>
-      <td>1.114740</td>
-      <td>1.241740</td>
-      <td>1.290740</td>
-      <td>1.612740</td>
-      <td>0.989640</td>
-      <td>1.117840</td>
-      <td>1.324240</td>
-      <td>1.662740</td>
-      <td>2.285040</td>
+      <td>0.804167</td>
+      <td>1.413133</td>
+      <td>1.744404</td>
+      <td>1.023837</td>
+      <td>1.119237</td>
+      <td>1.185437</td>
+      <td>1.394237</td>
+      <td>1.884437</td>
+      <td>1.041237</td>
+      <td>1.126637</td>
+      <td>1.288437</td>
+      <td>1.517837</td>
+      <td>2.031437</td>
     </tr>
   </tbody>
 </table>
 <p>100 rows × 13 columns</p>
 </div></div>
 </div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">plot_mean_posterior_predictives</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">show_intervals</span><span class="o">=</span><span class="s1">&#39;HDI&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/notebooks_DDM_fitting_21_0.png" src="../_images/notebooks_DDM_fitting_21_0.png" />
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">plot_quantiles_posterior_predictives</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;shades&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/notebooks_DDM_fitting_22_0.png" src="../_images/notebooks_DDM_fitting_22_0.png" />
-</div>
-</div>
-</section>
-<section id="Grouped">
-<h3>Grouped<a class="headerlink" href="#Grouped" title="Permalink to this heading"></a></h3>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-</pre></div>
-</div>
-</div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define new grouping variables, in this case, for the different choice pairs, but any grouping var can do</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Define new grouping variables, in this case, for the different choice pairs, but any grouping var can do</span>
 <span class="n">data</span><span class="p">[</span><span class="s1">&#39;choice_pair&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;AB&#39;</span>
 <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">data</span><span class="o">.</span><span class="n">cor_option</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">inc_option</span> <span class="o">==</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;choice_pair&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;AC&#39;</span>
 <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">data</span><span class="o">.</span><span class="n">cor_option</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">inc_option</span> <span class="o">==</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;choice_pair&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;BD&#39;</span>
@@ -1616,224 +1224,73 @@ E-BFMI indicated no pathological behavior
 </pre></div>
 </div>
 </div>
+<section id="Grouped">
+<h3>Grouped<a class="headerlink" href="#Grouped" title="Permalink to this heading"></a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">get_grouped_posterior_predictives_summary</span><span class="p">(</span>
-                <span class="n">grouping_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;block_label&#39;</span><span class="p">,</span> <span class="s1">&#39;choice_pair&#39;</span><span class="p">],</span>
-                <span class="n">quantiles</span><span class="o">=</span><span class="p">[</span><span class="mf">.3</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">.7</span><span class="p">],</span>
-                <span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">plot_mean_grouped_posterior_predictives</span><span class="p">(</span><span class="n">grouping_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;block_bins&#39;</span><span class="p">],</span>
+                                                  <span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                                                  <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
+<div class="nboutput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th></th>
-      <th></th>
-      <th>mean_accuracy</th>
-      <th>mean_rt</th>
-      <th>skewness</th>
-      <th>quant_30_rt_low</th>
-      <th>quant_30_rt_up</th>
-      <th>quant_50_rt_low</th>
-      <th>quant_50_rt_up</th>
-      <th>quant_70_rt_low</th>
-      <th>quant_70_rt_up</th>
-    </tr>
-    <tr>
-      <th>block_label</th>
-      <th>choice_pair</th>
-      <th>sample</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th rowspan="5" valign="top">1</th>
-      <th rowspan="5" valign="top">AB</th>
-      <th>1</th>
-      <td>0.894737</td>
-      <td>1.601597</td>
-      <td>1.692788</td>
-      <td>1.635150</td>
-      <td>1.288450</td>
-      <td>1.640150</td>
-      <td>1.508650</td>
-      <td>1.645150</td>
-      <td>1.757250</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.947368</td>
-      <td>1.390165</td>
-      <td>0.700905</td>
-      <td>1.137797</td>
-      <td>1.138797</td>
-      <td>1.137797</td>
-      <td>1.295797</td>
-      <td>1.137797</td>
-      <td>1.556597</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.894737</td>
-      <td>1.562729</td>
-      <td>1.164779</td>
-      <td>0.979061</td>
-      <td>1.272161</td>
-      <td>1.056861</td>
-      <td>1.434361</td>
-      <td>1.134661</td>
-      <td>1.810961</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>1.000000</td>
-      <td>1.325813</td>
-      <td>0.836935</td>
-      <td>NaN</td>
-      <td>1.201960</td>
-      <td>NaN</td>
-      <td>1.268760</td>
-      <td>NaN</td>
-      <td>1.394760</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>1.000000</td>
-      <td>1.252174</td>
-      <td>2.513407</td>
-      <td>NaN</td>
-      <td>1.070006</td>
-      <td>NaN</td>
-      <td>1.176806</td>
-      <td>NaN</td>
-      <td>1.342006</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <th>...</th>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th rowspan="5" valign="top">3</th>
-      <th rowspan="5" valign="top">CD</th>
-      <th>96</th>
-      <td>0.900000</td>
-      <td>1.633494</td>
-      <td>1.147059</td>
-      <td>1.394544</td>
-      <td>1.192844</td>
-      <td>1.505544</td>
-      <td>1.524544</td>
-      <td>1.616544</td>
-      <td>1.627044</td>
-    </tr>
-    <tr>
-      <th>97</th>
-      <td>1.000000</td>
-      <td>1.355044</td>
-      <td>1.789701</td>
-      <td>NaN</td>
-      <td>1.069194</td>
-      <td>NaN</td>
-      <td>1.184694</td>
-      <td>NaN</td>
-      <td>1.406194</td>
-    </tr>
-    <tr>
-      <th>98</th>
-      <td>0.950000</td>
-      <td>1.457600</td>
-      <td>0.939381</td>
-      <td>1.248100</td>
-      <td>1.218700</td>
-      <td>1.248100</td>
-      <td>1.381100</td>
-      <td>1.248100</td>
-      <td>1.552300</td>
-    </tr>
-    <tr>
-      <th>99</th>
-      <td>1.000000</td>
-      <td>1.456883</td>
-      <td>0.595735</td>
-      <td>NaN</td>
-      <td>1.274583</td>
-      <td>NaN</td>
-      <td>1.387583</td>
-      <td>NaN</td>
-      <td>1.620083</td>
-    </tr>
-    <tr>
-      <th>100</th>
-      <td>1.000000</td>
-      <td>1.304290</td>
-      <td>3.397532</td>
-      <td>NaN</td>
-      <td>1.089540</td>
-      <td>NaN</td>
-      <td>1.141740</td>
-      <td>NaN</td>
-      <td>1.280140</td>
-    </tr>
-  </tbody>
-</table>
-<p>1200 rows × 9 columns</p>
-</div></div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_DDM_fitting_25_0.png" src="../_images/notebooks_DDM_fitting_25_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_DDM_fitting_25_1.png" src="../_images/notebooks_DDM_fitting_25_1.png" />
+</div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">plot_quantiles_grouped_posterior_predictives</span><span class="p">(</span>
+    <span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">grouping_var</span><span class="o">=</span><span class="s1">&#39;choice_pair&#39;</span><span class="p">,</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;shades&#39;</span><span class="p">,</span>
+    <span class="n">quantiles</span><span class="o">=</span><span class="p">[</span><span class="mf">.1</span><span class="p">,</span> <span class="mf">.3</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">.7</span><span class="p">,</span> <span class="mf">.9</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_DDM_fitting_26_0.png" src="../_images/notebooks_DDM_fitting_26_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_DDM_fitting_26_1.png" src="../_images/notebooks_DDM_fitting_26_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">get_grouped_posterior_predictives_summary</span><span class="p">(</span>
-                <span class="n">grouping_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;block_bins&#39;</span><span class="p">],</span>
-                <span class="n">quantiles</span><span class="o">=</span><span class="p">[</span><span class="mf">.3</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">.7</span><span class="p">],</span>
-                <span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">grouping_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;block_bins&#39;</span><span class="p">],</span>
+    <span class="n">quantiles</span><span class="o">=</span><span class="p">[</span><span class="mf">.3</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">.7</span><span class="p">],</span>
+    <span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1885,62 +1342,62 @@ E-BFMI indicated no pathological behavior
       <th rowspan="5" valign="top">1</th>
       <th>1</th>
       <td>0.966667</td>
-      <td>1.435950</td>
-      <td>1.311441</td>
-      <td>1.117650</td>
-      <td>1.097250</td>
-      <td>1.117650</td>
-      <td>1.327650</td>
-      <td>1.117650</td>
-      <td>1.436250</td>
+      <td>1.362906</td>
+      <td>1.984083</td>
+      <td>1.566706</td>
+      <td>1.135906</td>
+      <td>1.566706</td>
+      <td>1.260706</td>
+      <td>1.566706</td>
+      <td>1.421306</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.933333</td>
-      <td>1.526530</td>
-      <td>0.873932</td>
-      <td>1.036297</td>
-      <td>1.246897</td>
-      <td>1.059297</td>
-      <td>1.419797</td>
-      <td>1.082297</td>
-      <td>1.655197</td>
+      <td>0.900000</td>
+      <td>1.389988</td>
+      <td>1.120600</td>
+      <td>1.187555</td>
+      <td>1.162955</td>
+      <td>1.240355</td>
+      <td>1.235355</td>
+      <td>1.377155</td>
+      <td>1.452755</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.933333</td>
-      <td>1.528894</td>
-      <td>1.454715</td>
-      <td>1.345861</td>
-      <td>1.203661</td>
-      <td>1.514861</td>
-      <td>1.326361</td>
-      <td>1.683861</td>
-      <td>1.554661</td>
+      <td>0.833333</td>
+      <td>1.450586</td>
+      <td>0.549996</td>
+      <td>1.103386</td>
+      <td>1.045786</td>
+      <td>1.342586</td>
+      <td>1.482586</td>
+      <td>1.944186</td>
+      <td>1.635186</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>1.000000</td>
-      <td>1.462393</td>
-      <td>0.408597</td>
-      <td>NaN</td>
-      <td>1.278260</td>
-      <td>NaN</td>
-      <td>1.418760</td>
-      <td>NaN</td>
-      <td>1.640660</td>
+      <td>0.866667</td>
+      <td>1.383772</td>
+      <td>2.542791</td>
+      <td>1.154439</td>
+      <td>1.135139</td>
+      <td>1.170139</td>
+      <td>1.255639</td>
+      <td>1.190139</td>
+      <td>1.472639</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.966667</td>
-      <td>1.435806</td>
-      <td>1.584210</td>
-      <td>1.281806</td>
-      <td>1.164006</td>
-      <td>1.281806</td>
-      <td>1.310806</td>
-      <td>1.281806</td>
-      <td>1.501806</td>
+      <td>0.766667</td>
+      <td>1.322162</td>
+      <td>3.525412</td>
+      <td>1.096862</td>
+      <td>1.142462</td>
+      <td>1.135862</td>
+      <td>1.178862</td>
+      <td>1.521662</td>
+      <td>1.248462</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1958,63 +1415,63 @@ E-BFMI indicated no pathological behavior
     <tr>
       <th rowspan="5" valign="top">8</th>
       <th>96</th>
-      <td>0.931034</td>
-      <td>1.405975</td>
-      <td>2.130693</td>
-      <td>1.204344</td>
-      <td>1.128844</td>
-      <td>1.264544</td>
-      <td>1.303044</td>
-      <td>1.324744</td>
-      <td>1.406044</td>
+      <td>0.800000</td>
+      <td>1.480183</td>
+      <td>1.028168</td>
+      <td>1.111350</td>
+      <td>1.371650</td>
+      <td>1.213350</td>
+      <td>1.508850</td>
+      <td>1.401850</td>
+      <td>1.617950</td>
     </tr>
     <tr>
       <th>97</th>
-      <td>0.931034</td>
-      <td>1.459815</td>
-      <td>1.635068</td>
-      <td>1.091394</td>
-      <td>1.213194</td>
-      <td>1.172194</td>
-      <td>1.331194</td>
-      <td>1.252994</td>
-      <td>1.536194</td>
+      <td>0.900000</td>
+      <td>1.446597</td>
+      <td>1.187158</td>
+      <td>1.222597</td>
+      <td>1.167397</td>
+      <td>1.332197</td>
+      <td>1.286197</td>
+      <td>1.553397</td>
+      <td>1.572397</td>
     </tr>
     <tr>
       <th>98</th>
-      <td>0.965517</td>
-      <td>1.418169</td>
-      <td>2.349669</td>
-      <td>2.019100</td>
-      <td>1.162300</td>
-      <td>2.019100</td>
-      <td>1.265100</td>
-      <td>2.019100</td>
-      <td>1.413100</td>
+      <td>0.933333</td>
+      <td>1.337318</td>
+      <td>1.460401</td>
+      <td>0.974885</td>
+      <td>1.130185</td>
+      <td>0.989685</td>
+      <td>1.274185</td>
+      <td>1.004485</td>
+      <td>1.454985</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>0.931034</td>
-      <td>1.461152</td>
-      <td>1.624322</td>
-      <td>1.269983</td>
-      <td>1.168883</td>
-      <td>1.290583</td>
-      <td>1.245083</td>
-      <td>1.311183</td>
-      <td>1.524883</td>
+      <td>0.833333</td>
+      <td>1.380261</td>
+      <td>2.457644</td>
+      <td>1.173161</td>
+      <td>1.111161</td>
+      <td>1.208361</td>
+      <td>1.222361</td>
+      <td>1.489961</td>
+      <td>1.466761</td>
     </tr>
     <tr>
       <th>100</th>
-      <td>0.896552</td>
-      <td>1.480878</td>
-      <td>0.543192</td>
-      <td>1.260340</td>
-      <td>1.073240</td>
-      <td>1.398740</td>
-      <td>1.398740</td>
-      <td>1.453940</td>
-      <td>1.779740</td>
+      <td>0.866667</td>
+      <td>1.449904</td>
+      <td>1.223034</td>
+      <td>1.407437</td>
+      <td>1.159937</td>
+      <td>1.655437</td>
+      <td>1.264437</td>
+      <td>1.896737</td>
+      <td>1.379937</td>
     </tr>
   </tbody>
 </table>
@@ -2022,12 +1479,12 @@ E-BFMI indicated no pathological behavior
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">plot_mean_grouped_posterior_predictives</span><span class="p">(</span><span class="n">grouping_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;block_bins&#39;</span><span class="p">],</span>
                                                   <span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-                                                  <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">8</span><span class="p">));</span>
+                                                  <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">8</span><span class="p">));</span>
 </pre></div>
 </div>
 </div>
@@ -2039,7 +1496,7 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">plot_quantiles_grouped_posterior_predictives</span><span class="p">(</span>

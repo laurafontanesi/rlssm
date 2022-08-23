@@ -392,32 +392,23 @@ div.rendered_html tbody tr:hover {
 </style>
 <section id="Fit-a-RL-model-on-individual-data">
 <h1>Fit a RL model on individual data<a class="headerlink" href="#Fit-a-RL-model-on-individual-data" title="Permalink to this heading"></a></h1>
-<div class="nbinput nblast docutils container">
+<section id="Import-individual-data">
+<h2>Import individual data<a class="headerlink" href="#Import-individual-data" title="Permalink to this heading"></a></h2>
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rlssm.utility.load_data</span> <span class="kn">import</span> <span class="n">load_example_dataset</span>
-<span class="kn">from</span> <span class="nn">rlssm.model.models_RL</span> <span class="kn">import</span> <span class="n">RLModel_2A</span>
 
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-</pre></div>
-</div>
-</div>
-<section id="Import-individual-data">
-<h2>Import individual data<a class="headerlink" href="#Import-individual-data" title="Permalink to this heading"></a></h2>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import some example data:</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">load_example_dataset</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="c1"># import some example data:</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">load_example_dataset</span><span class="p">(</span><span class="n">hierarchical_levels</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -449,72 +440,78 @@ div.rendered_html tbody tr:hover {
       <th>times_seen</th>
       <th>rt</th>
       <th>accuracy</th>
+      <th>feedback_type</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>15</td>
+      <td>14</td>
       <td>1</td>
       <td>1</td>
-      <td>50</td>
-      <td>28</td>
+      <td>59</td>
+      <td>47</td>
+      <td>4</td>
       <td>3</td>
       <td>1</td>
+      <td>1.610360</td>
       <td>1</td>
-      <td>2.630658</td>
-      <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>15</td>
+      <td>14</td>
       <td>1</td>
       <td>2</td>
-      <td>52</td>
-      <td>44</td>
-      <td>3</td>
-      <td>1</td>
+      <td>62</td>
+      <td>35</td>
+      <td>4</td>
       <td>2</td>
-      <td>2.718299</td>
       <td>1</td>
+      <td>1.500792</td>
+      <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>15</td>
+      <td>14</td>
       <td>1</td>
       <td>3</td>
-      <td>30</td>
-      <td>38</td>
+      <td>50</td>
+      <td>33</td>
+      <td>4</td>
       <td>2</td>
-      <td>1</td>
       <td>2</td>
-      <td>2.382882</td>
+      <td>1.139539</td>
       <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>15</td>
+      <td>14</td>
       <td>1</td>
       <td>4</td>
-      <td>64</td>
-      <td>45</td>
-      <td>4</td>
+      <td>46</td>
+      <td>35</td>
       <td>2</td>
       <td>1</td>
-      <td>2.167205</td>
+      <td>2</td>
+      <td>1.776485</td>
       <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>15</td>
+      <td>14</td>
       <td>1</td>
       <td>5</td>
-      <td>48</td>
-      <td>26</td>
+      <td>56</td>
+      <td>39</td>
       <td>3</td>
       <td>1</td>
-      <td>3</td>
-      <td>2.748257</td>
+      <td>2</td>
+      <td>1.678911</td>
+      <td>1</td>
       <td>0</td>
     </tr>
   </tbody>
@@ -525,67 +522,28 @@ div.rendered_html tbody tr:hover {
 <section id="Initialize-the-model">
 <h2>Initialize the model<a class="headerlink" href="#Initialize-the-model" title="Permalink to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># you can &quot;turn on and off&quot; different mechanisms:</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">RLModel_2A</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-                   <span class="n">increasing_sensitivity</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-                   <span class="n">separate_learning_rates</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rlssm.model.models_RL</span> <span class="kn">import</span> <span class="n">RLModel_2A</span>
+
+<span class="c1"># you can &quot;turn on and off&quot; different mechanisms:</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">RLModel_2A</span><span class="p">(</span><span class="n">hierarchical_levels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                   <span class="n">increasing_sensitivity</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                   <span class="n">separate_learning_rates</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area stderr docutils container">
+<div class="output_area docutils container">
 <div class="highlight"><pre>
-15:10:57 - cmdstanpy - INFO - compiling stan file /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr.stan to exe file /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr
-15:11:05 - cmdstanpy - INFO - compiled model executable: /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr
-15:11:05 - cmdstanpy - WARNING - Stan compiler has produced 6 warnings:
-15:11:05 - cmdstanpy - WARNING -
---- Translating Stan model to C++ code ---
-bin/stanc  --o=/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr.hpp /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr.stan
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr.stan&#39;, line 4, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr.stan&#39;, line 7, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr.stan&#39;, line 8, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr.stan&#39;, line 9, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr.stan&#39;, line 10, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-Warning in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr.stan&#39;, line 26, column 1: Declaration
-    of arrays by placing brackets after a variable name is deprecated and
-    will be removed in Stan 2.32.0. Instead use the array keyword before the
-    type. This can be changed automatically using the auto-format flag to
-    stanc
-
---- Compiling, linking C++ code ---
-g++ -std=c++1y -pthread -D_REENTRANT -Wno-sign-compare -Wno-ignored-attributes      -I stan/lib/stan_math/lib/tbb_2020.3/include    -O3 -I src -I stan/src -I lib/rapidjson_1.1.0/ -I lib/CLI11-1.9.1/ -I stan/lib/stan_math/ -I stan/lib/stan_math/lib/eigen_3.3.9 -I stan/lib/stan_math/lib/boost_1.78.0 -I stan/lib/stan_math/lib/sundials_6.1.1/include -I stan/lib/stan_math/lib/sundials_6.1.1/src/sundials    -DBOOST_DISABLE_ASSERTS          -c -Wno-ignored-attributes   -x c++ -o /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr.o /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr.hpp
-g++ -std=c++1y -pthread -D_REENTRANT -Wno-sign-compare -Wno-ignored-attributes      -I stan/lib/stan_math/lib/tbb_2020.3/include    -O3 -I src -I stan/src -I lib/rapidjson_1.1.0/ -I lib/CLI11-1.9.1/ -I stan/lib/stan_math/ -I stan/lib/stan_math/lib/eigen_3.3.9 -I stan/lib/stan_math/lib/boost_1.78.0 -I stan/lib/stan_math/lib/sundials_6.1.1/include -I stan/lib/stan_math/lib/sundials_6.1.1/src/sundials    -DBOOST_DISABLE_ASSERTS                -Wl,-L,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34; -Wl,-rpath,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34;      /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr.o src/cmdstan/main.o        -Wl,-L,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34; -Wl,-rpath,&#34;/home/andrei/.cmdstan/cmdstan-2.30.0/stan/lib/stan_math/lib/tbb&#34;   stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_nvecserial.a stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_cvodes.a stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_idas.a stan/lib/stan_math/lib/sundials_6.1.1/lib/libsundials_kinsol.a  stan/lib/stan_math/lib/tbb/libtbb.so.2 -o /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr
-rm -f /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr.o
-
+Using cached StanModel
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">priors</span>
@@ -593,7 +551,7 @@ rm -f /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr.o
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -607,7 +565,7 @@ rm -f /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr.o
 <section id="Fit">
 <h2>Fit<a class="headerlink" href="#Fit" title="Permalink to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># sampling parameters</span>
@@ -617,13 +575,13 @@ rm -f /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr.o
 <span class="n">n_thin</span> <span class="o">=</span> <span class="mi">1</span>
 
 <span class="c1"># learning parameters</span>
-<span class="n">K</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1"># n options in a learning block (participants see 2 at a time)</span>
-<span class="n">initial_value_learning</span> <span class="o">=</span> <span class="mf">27.5</span> <span class="c1"># initial learning value (Q0)</span>
+<span class="n">K</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># n options in a learning block (participants see 2 at a time)</span>
+<span class="n">initial_value_learning</span> <span class="o">=</span> <span class="mf">27.5</span>  <span class="c1"># initial learning value (Q0)</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
@@ -631,81 +589,30 @@ rm -f /home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr.o
     <span class="n">K</span><span class="p">,</span>
     <span class="n">initial_value_learning</span><span class="p">,</span>
     <span class="n">sensitivity_priors</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;mu&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
-    <span class="n">thin</span> <span class="o">=</span> <span class="n">n_thin</span><span class="p">,</span>
+    <span class="n">thin</span><span class="o">=</span><span class="n">n_thin</span><span class="p">,</span>
     <span class="n">iter_warmup</span><span class="o">=</span><span class="n">n_warmup</span><span class="p">,</span>
     <span class="n">iter_sampling</span><span class="o">=</span><span class="n">n_sampling</span><span class="p">,</span>
-    <span class="n">chains</span> <span class="o">=</span> <span class="n">n_chains</span><span class="p">)</span>
+    <span class="n">chains</span><span class="o">=</span><span class="n">n_chains</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-15:11:05 - cmdstanpy - INFO - CmdStan start processing
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
 <div class="output_area docutils container">
-<div class="highlight"><pre>
-Fitting the model using the priors:
-sensitivity_priors {&#39;mu&#39;: 0, &#39;sd&#39;: 5}
-alpha_pos_priors {&#39;mu&#39;: 0, &#39;sd&#39;: 1}
-alpha_neg_priors {&#39;mu&#39;: 0, &#39;sd&#39;: 1}
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "69f3215401164433aa3f88477b077e4f"}</script></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "c3dd9a7324014f5a982263e7458e67fb"}</script></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-15:11:06 - cmdstanpy - INFO - CmdStan done processing.
-15:11:06 - cmdstanpy - WARNING - Non-fatal error during sampling:
-Exception: bernoulli_lpmf: Probability parameter[1] is -nan, but must be in the interval [0, 1] (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/RL_2A/RL_2A_2lr.stan&#39;, line 72, column 1 to column 36)
-Consider re-running with show_console=True if the above output is unclear!
-</pre></div></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "57800d4484e04a7c824348430e7ce24a"}</script></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<div class="highlight"><pre>
-
-Checks MCMC diagnostics:
-n_eff / iter looks reasonable for all parameters
-0 of 4000 iterations saturated the maximum tree depth of 10 (0.0%)
-E-BFMI indicated no pathological behavior
-0.0 of 4000 iterations ended with a divergence (0.0%)
-</pre></div></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "bce211941fc041a8a2ef2e166e05718d"}</script></div>
 </div>
 </section>
 <section id="get-Rhat">
 <h2>get Rhat<a class="headerlink" href="#get-Rhat" title="Permalink to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">rhat</span>
@@ -713,7 +620,7 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -747,22 +654,22 @@ E-BFMI indicated no pathological behavior
   <tbody>
     <tr>
       <th>lp__</th>
-      <td>1.000020</td>
+      <td>1.000970</td>
       <td>lp__</td>
     </tr>
     <tr>
       <th>alpha_pos</th>
-      <td>0.999835</td>
+      <td>0.999736</td>
       <td>alpha_pos</td>
     </tr>
     <tr>
       <th>alpha_neg</th>
-      <td>1.000770</td>
+      <td>1.000520</td>
       <td>alpha_neg</td>
     </tr>
     <tr>
       <th>sensitivity</th>
-      <td>0.999913</td>
+      <td>1.000300</td>
       <td>sensitivity</td>
     </tr>
     <tr>
@@ -777,27 +684,27 @@ E-BFMI indicated no pathological behavior
     </tr>
     <tr>
       <th>log_lik[235]</th>
-      <td>0.999834</td>
+      <td>1.001980</td>
       <td>log_lik[235]</td>
     </tr>
     <tr>
       <th>log_lik[236]</th>
-      <td>0.999857</td>
+      <td>1.001290</td>
       <td>log_lik[236]</td>
     </tr>
     <tr>
       <th>log_lik[237]</th>
-      <td>0.999838</td>
+      <td>1.001550</td>
       <td>log_lik[237]</td>
     </tr>
     <tr>
       <th>log_lik[238]</th>
-      <td>0.999702</td>
+      <td>1.000350</td>
       <td>log_lik[238]</td>
     </tr>
     <tr>
       <th>log_lik[239]</th>
-      <td>1.000370</td>
+      <td>1.000210</td>
       <td>log_lik[239]</td>
     </tr>
   </tbody>
@@ -809,7 +716,7 @@ E-BFMI indicated no pathological behavior
 <section id="get-wAIC">
 <h2>get wAIC<a class="headerlink" href="#get-wAIC" title="Permalink to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">waic</span>
@@ -817,22 +724,22 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;lppd&#39;: -75.48875619791505,
- &#39;p_waic&#39;: 2.60430602430708,
- &#39;waic&#39;: 156.18612444444426,
- &#39;waic_se&#39;: 17.113938998620164}
+{&#39;lppd&#39;: -55.07845930061602,
+ &#39;p_waic&#39;: 3.9306374637991564,
+ &#39;waic&#39;: 118.01819352883035,
+ &#39;waic_se&#39;: 15.9638345983968}
 </pre></div></div>
 </div>
 </section>
 <section id="Posteriors">
 <h2>Posteriors<a class="headerlink" href="#Posteriors" title="Permalink to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -840,7 +747,7 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -863,8 +770,8 @@ E-BFMI indicated no pathological behavior
     <tr style="text-align: right;">
       <th></th>
       <th>transf_alpha_pos</th>
-      <th>transf_alpha_neg</th>
       <th>transf_sensitivity</th>
+      <th>transf_alpha_neg</th>
     </tr>
   </thead>
   <tbody>
@@ -876,64 +783,65 @@ E-BFMI indicated no pathological behavior
     </tr>
     <tr>
       <th>mean</th>
-      <td>0.133288</td>
-      <td>0.358379</td>
-      <td>0.362473</td>
+      <td>0.444514</td>
+      <td>0.529332</td>
+      <td>0.068970</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>0.047736</td>
-      <td>0.134856</td>
-      <td>0.058300</td>
+      <td>0.208792</td>
+      <td>0.093236</td>
+      <td>0.064849</td>
     </tr>
     <tr>
       <th>min</th>
-      <td>0.014110</td>
-      <td>0.054714</td>
-      <td>0.212198</td>
+      <td>0.063973</td>
+      <td>0.293867</td>
+      <td>0.009928</td>
     </tr>
     <tr>
       <th>25%</th>
-      <td>0.100332</td>
-      <td>0.260266</td>
-      <td>0.322085</td>
+      <td>0.281394</td>
+      <td>0.463385</td>
+      <td>0.028829</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>0.126734</td>
-      <td>0.345488</td>
-      <td>0.357639</td>
+      <td>0.406788</td>
+      <td>0.520701</td>
+      <td>0.045130</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>0.157665</td>
-      <td>0.442098</td>
-      <td>0.395848</td>
+      <td>0.564923</td>
+      <td>0.586167</td>
+      <td>0.081392</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>0.490280</td>
-      <td>0.924686</td>
-      <td>0.866057</td>
+      <td>0.999535</td>
+      <td>0.996451</td>
+      <td>0.541859</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">context</span> <span class="o">=</span> <span class="s2">&quot;talk&quot;</span><span class="p">,</span>
-        <span class="n">style</span> <span class="o">=</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span>
-        <span class="n">palette</span> <span class="o">=</span> <span class="s2">&quot;husl&quot;</span><span class="p">,</span>
-        <span class="n">rc</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">:(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">8</span><span class="p">)})</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s2">&quot;talk&quot;</span><span class="p">,</span>
+        <span class="n">style</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
+        <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;husl&quot;</span><span class="p">,</span>
+        <span class="n">rc</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">8</span><span class="p">)})</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">plot_posteriors</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">show_intervals</span><span class="o">=</span><span class="s2">&quot;HDI&quot;</span><span class="p">,</span> <span class="n">alpha_intervals</span><span class="o">=</span><span class="mf">.05</span><span class="p">);</span>
@@ -944,7 +852,7 @@ E-BFMI indicated no pathological behavior
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_RL_2A_fitting_17_0.png" src="../_images/notebooks_RL_2A_fitting_17_0.png" />
+<img alt="../_images/notebooks_RL_2A_fitting_16_0.png" src="../_images/notebooks_RL_2A_fitting_16_0.png" />
 </div>
 </div>
 </section>
@@ -953,7 +861,7 @@ E-BFMI indicated no pathological behavior
 <section id="Ungrouped">
 <h3>Ungrouped<a class="headerlink" href="#Ungrouped" title="Permalink to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pp</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">get_posterior_predictives_df</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
@@ -962,7 +870,7 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1044,32 +952,32 @@ E-BFMI indicated no pathological behavior
       <th>1</th>
       <td>0</td>
       <td>1</td>
-      <td>0</td>
       <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>...</td>
       <td>1</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>1</td>
       <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
       <td>1</td>
     </tr>
     <tr>
       <th>2</th>
       <td>1</td>
+      <td>0</td>
       <td>1</td>
-      <td>0</td>
-      <td>0</td>
+      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
@@ -1085,26 +993,26 @@ E-BFMI indicated no pathological behavior
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
+      <td>0</td>
       <td>1</td>
     </tr>
     <tr>
       <th>3</th>
       <td>1</td>
-      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
       <td>1</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>...</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
+      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
@@ -1114,12 +1022,12 @@ E-BFMI indicated no pathological behavior
     </tr>
     <tr>
       <th>4</th>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
-      <td>0</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
@@ -1128,10 +1036,10 @@ E-BFMI indicated no pathological behavior
       <td>1</td>
       <td>1</td>
       <td>1</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
@@ -1141,24 +1049,24 @@ E-BFMI indicated no pathological behavior
       <td>0</td>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
       <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>...</td>
       <td>0</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>1</td>
       <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1189,21 +1097,21 @@ E-BFMI indicated no pathological behavior
       <td>0</td>
       <td>1</td>
       <td>1</td>
+      <td>0</td>
+      <td>0</td>
       <td>1</td>
-      <td>0</td>
-      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>...</td>
-      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
@@ -1212,43 +1120,43 @@ E-BFMI indicated no pathological behavior
       <th>997</th>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
       <td>1</td>
       <td>1</td>
-      <td>...</td>
-      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
+      <td>...</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>1</td>
       <td>1</td>
     </tr>
     <tr>
       <th>998</th>
-      <td>0</td>
       <td>1</td>
-      <td>0</td>
       <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>...</td>
-      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
@@ -1258,11 +1166,11 @@ E-BFMI indicated no pathological behavior
     </tr>
     <tr>
       <th>999</th>
-      <td>1</td>
-      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
+      <td>0</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>0</td>
@@ -1278,16 +1186,16 @@ E-BFMI indicated no pathological behavior
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>1000</th>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
@@ -1310,7 +1218,7 @@ E-BFMI indicated no pathological behavior
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pp_summary</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">get_posterior_predictives_summary</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
@@ -1319,7 +1227,7 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1351,23 +1259,23 @@ E-BFMI indicated no pathological behavior
   <tbody>
     <tr>
       <th>1</th>
-      <td>0.853556</td>
+      <td>0.907950</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.866109</td>
+      <td>0.937238</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.807531</td>
+      <td>0.920502</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.857741</td>
+      <td>0.928870</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.832636</td>
+      <td>0.920502</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1375,23 +1283,23 @@ E-BFMI indicated no pathological behavior
     </tr>
     <tr>
       <th>996</th>
-      <td>0.815900</td>
+      <td>0.907950</td>
     </tr>
     <tr>
       <th>997</th>
-      <td>0.845188</td>
+      <td>0.882845</td>
     </tr>
     <tr>
       <th>998</th>
-      <td>0.891213</td>
+      <td>0.887029</td>
     </tr>
     <tr>
       <th>999</th>
-      <td>0.874477</td>
+      <td>0.912134</td>
     </tr>
     <tr>
       <th>1000</th>
-      <td>0.882845</td>
+      <td>0.887029</td>
     </tr>
   </tbody>
 </table>
@@ -1399,10 +1307,11 @@ E-BFMI indicated no pathological behavior
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 
 <span class="n">model_fit</span><span class="o">.</span><span class="n">plot_mean_posterior_predictives</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">show_intervals</span><span class="o">=</span><span class="s1">&#39;HDI&#39;</span><span class="p">)</span>
@@ -1418,25 +1327,20 @@ E-BFMI indicated no pathological behavior
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_RL_2A_fitting_22_0.png" src="../_images/notebooks_RL_2A_fitting_22_0.png" />
+<img alt="../_images/notebooks_RL_2A_fitting_21_0.png" src="../_images/notebooks_RL_2A_fitting_21_0.png" />
 </div>
 </div>
 </section>
 <section id="Grouped">
 <h3>Grouped<a class="headerlink" href="#Grouped" title="Permalink to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define new grouping variables, in this case, for the different choice pairs, but any grouping var can do</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Define new grouping variables, in this case, for the different choice pairs, but any grouping var can do</span>
 <span class="n">data</span><span class="p">[</span><span class="s1">&#39;choice_pair&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;AB&#39;</span>
 <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">data</span><span class="o">.</span><span class="n">cor_option</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">inc_option</span> <span class="o">==</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;choice_pair&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;AC&#39;</span>
 <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">data</span><span class="o">.</span><span class="n">cor_option</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">inc_option</span> <span class="o">==</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;choice_pair&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;BD&#39;</span>
@@ -1447,7 +1351,7 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">get_grouped_posterior_predictives_summary</span><span class="p">(</span><span class="n">grouping_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;block_label&#39;</span><span class="p">,</span> <span class="s1">&#39;block_bins&#39;</span><span class="p">,</span> <span class="s1">&#39;choice_pair&#39;</span><span class="p">],</span>
@@ -1456,7 +1360,7 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1497,23 +1401,23 @@ E-BFMI indicated no pathological behavior
       <th rowspan="5" valign="top">1</th>
       <th rowspan="5" valign="top">AB</th>
       <th>1</th>
-      <td>0.50</td>
+      <td>1.0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.50</td>
+      <td>1.0</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.00</td>
+      <td>1.0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>1.00</td>
+      <td>1.0</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.50</td>
+      <td>1.0</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1527,23 +1431,23 @@ E-BFMI indicated no pathological behavior
       <th rowspan="5" valign="top">8</th>
       <th rowspan="5" valign="top">CD</th>
       <th>496</th>
-      <td>0.75</td>
+      <td>1.0</td>
     </tr>
     <tr>
       <th>497</th>
-      <td>0.75</td>
+      <td>0.0</td>
     </tr>
     <tr>
       <th>498</th>
-      <td>0.75</td>
+      <td>1.0</td>
     </tr>
     <tr>
       <th>499</th>
-      <td>0.75</td>
+      <td>1.0</td>
     </tr>
     <tr>
       <th>500</th>
-      <td>0.75</td>
+      <td>0.0</td>
     </tr>
   </tbody>
 </table>
@@ -1551,16 +1455,17 @@ E-BFMI indicated no pathological behavior
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 
 <span class="n">model_fit</span><span class="o">.</span><span class="n">plot_mean_grouped_posterior_predictives</span><span class="p">(</span><span class="n">grouping_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;block_bins&#39;</span><span class="p">],</span> <span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-<span class="n">model_fit</span><span class="o">.</span><span class="n">plot_mean_grouped_posterior_predictives</span><span class="p">(</span><span class="n">grouping_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;block_bins&#39;</span><span class="p">,</span> <span class="s1">&#39;choice_pair&#39;</span><span class="p">],</span> <span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">model_fit</span><span class="o">.</span><span class="n">plot_mean_grouped_posterior_predictives</span><span class="p">(</span><span class="n">grouping_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;block_bins&#39;</span><span class="p">,</span> <span class="s1">&#39;choice_pair&#39;</span><span class="p">],</span>
+                                                  <span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
 <span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
 </pre></div>
@@ -1570,7 +1475,7 @@ E-BFMI indicated no pathological behavior
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_RL_2A_fitting_27_0.png" src="../_images/notebooks_RL_2A_fitting_27_0.png" />
+<img alt="../_images/notebooks_RL_2A_fitting_25_0.png" src="../_images/notebooks_RL_2A_fitting_25_0.png" />
 </div>
 </div>
 </section>

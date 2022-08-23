@@ -389,22 +389,15 @@ div.rendered_html tbody tr:hover {
 </style>
 <section id="Parameter-recovery-of-the-hierarchical-DDM-with-starting-point-bias">
 <h1>Parameter recovery of the hierarchical DDM with starting point bias<a class="headerlink" href="#Parameter-recovery-of-the-hierarchical-DDM-with-starting-point-bias" title="Permalink to this heading"></a></h1>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rlssm.random.random_DDM</span> <span class="kn">import</span> <span class="n">simulate_hier_ddm</span>
-<span class="kn">from</span> <span class="nn">rlssm.model.models_DDM</span> <span class="kn">import</span> <span class="n">DDModel</span>
-</pre></div>
-</div>
-</div>
 <section id="Simulate-group-data">
 <h2>Simulate group data<a class="headerlink" href="#Simulate-group-data" title="Permalink to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">simulate_hier_ddm</span><span class="p">(</span><span class="n">n_trials</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rlssm.random.random_DDM</span> <span class="kn">import</span> <span class="n">simulate_hier_ddm</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">simulate_hier_ddm</span><span class="p">(</span><span class="n">n_trials</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
                          <span class="n">n_participants</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
                          <span class="n">gen_mu_drift</span><span class="o">=</span><span class="mf">.6</span><span class="p">,</span> <span class="n">gen_sd_drift</span><span class="o">=</span><span class="mf">.1</span><span class="p">,</span>
                          <span class="n">gen_mu_threshold</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">gen_sd_threshold</span><span class="o">=</span><span class="mf">.1</span><span class="p">,</span>
@@ -414,7 +407,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -422,7 +415,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -467,47 +460,47 @@ div.rendered_html tbody tr:hover {
     <tr>
       <th rowspan="5" valign="top">1</th>
       <th>1</th>
-      <td>0.856968</td>
-      <td>0.69136</td>
-      <td>0.560748</td>
-      <td>0.528504</td>
-      <td>1.33036</td>
+      <td>0.997566</td>
+      <td>0.687824</td>
+      <td>0.677658</td>
+      <td>0.54481</td>
+      <td>0.762824</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.856968</td>
-      <td>0.69136</td>
-      <td>0.560748</td>
-      <td>0.528504</td>
-      <td>1.01736</td>
-      <td>1.0</td>
+      <td>0.997566</td>
+      <td>0.687824</td>
+      <td>0.677658</td>
+      <td>0.54481</td>
+      <td>0.782824</td>
+      <td>0.0</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.856968</td>
-      <td>0.69136</td>
-      <td>0.560748</td>
-      <td>0.528504</td>
-      <td>1.12036</td>
+      <td>0.997566</td>
+      <td>0.687824</td>
+      <td>0.677658</td>
+      <td>0.54481</td>
+      <td>1.317824</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.856968</td>
-      <td>0.69136</td>
-      <td>0.560748</td>
-      <td>0.528504</td>
-      <td>0.81236</td>
+      <td>0.997566</td>
+      <td>0.687824</td>
+      <td>0.677658</td>
+      <td>0.54481</td>
+      <td>0.889824</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.856968</td>
-      <td>0.69136</td>
-      <td>0.560748</td>
-      <td>0.528504</td>
-      <td>0.94836</td>
+      <td>0.997566</td>
+      <td>0.687824</td>
+      <td>0.677658</td>
+      <td>0.54481</td>
+      <td>1.135824</td>
       <td>1.0</td>
     </tr>
   </tbody>
@@ -515,7 +508,7 @@ div.rendered_html tbody tr:hover {
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;participant&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">()[[</span><span class="s1">&#39;rt&#39;</span><span class="p">,</span> <span class="s1">&#39;accuracy&#39;</span><span class="p">]]</span>
@@ -523,7 +516,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -595,16 +588,16 @@ div.rendered_html tbody tr:hover {
     <tr>
       <th>1</th>
       <td>200.0</td>
-      <td>0.886955</td>
-      <td>0.149759</td>
-      <td>0.708360</td>
-      <td>0.776110</td>
-      <td>0.833360</td>
-      <td>0.977860</td>
-      <td>1.486360</td>
+      <td>0.928674</td>
+      <td>0.168041</td>
+      <td>0.711824</td>
+      <td>0.810324</td>
+      <td>0.890324</td>
+      <td>1.013324</td>
+      <td>1.583824</td>
       <td>200.0</td>
-      <td>0.655</td>
-      <td>0.476561</td>
+      <td>0.725</td>
+      <td>0.447635</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>1.0</td>
@@ -614,16 +607,16 @@ div.rendered_html tbody tr:hover {
     <tr>
       <th>2</th>
       <td>200.0</td>
-      <td>0.996003</td>
-      <td>0.223616</td>
-      <td>0.711263</td>
-      <td>0.822763</td>
-      <td>0.941763</td>
-      <td>1.126013</td>
-      <td>1.970263</td>
+      <td>0.937076</td>
+      <td>0.219904</td>
+      <td>0.709391</td>
+      <td>0.781391</td>
+      <td>0.874391</td>
+      <td>1.010391</td>
+      <td>2.144391</td>
       <td>200.0</td>
-      <td>0.655</td>
-      <td>0.476561</td>
+      <td>0.735</td>
+      <td>0.442441</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>1.0</td>
@@ -633,16 +626,16 @@ div.rendered_html tbody tr:hover {
     <tr>
       <th>3</th>
       <td>200.0</td>
-      <td>0.933400</td>
-      <td>0.220667</td>
-      <td>0.708170</td>
-      <td>0.791920</td>
-      <td>0.864670</td>
-      <td>0.994920</td>
-      <td>2.023170</td>
+      <td>0.960827</td>
+      <td>0.214239</td>
+      <td>0.719352</td>
+      <td>0.825102</td>
+      <td>0.898852</td>
+      <td>1.024602</td>
+      <td>2.190352</td>
       <td>200.0</td>
-      <td>0.710</td>
-      <td>0.454901</td>
+      <td>0.685</td>
+      <td>0.465682</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>1.0</td>
@@ -652,16 +645,16 @@ div.rendered_html tbody tr:hover {
     <tr>
       <th>4</th>
       <td>200.0</td>
-      <td>0.936922</td>
-      <td>0.204043</td>
-      <td>0.723397</td>
-      <td>0.794397</td>
-      <td>0.868897</td>
-      <td>1.002647</td>
-      <td>1.965397</td>
+      <td>0.921799</td>
+      <td>0.179152</td>
+      <td>0.710364</td>
+      <td>0.782114</td>
+      <td>0.865864</td>
+      <td>1.017864</td>
+      <td>1.528364</td>
       <td>200.0</td>
-      <td>0.595</td>
-      <td>0.492124</td>
+      <td>0.630</td>
+      <td>0.484016</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>1.0</td>
@@ -671,16 +664,16 @@ div.rendered_html tbody tr:hover {
     <tr>
       <th>5</th>
       <td>200.0</td>
-      <td>0.891589</td>
-      <td>0.149670</td>
-      <td>0.716739</td>
-      <td>0.782489</td>
-      <td>0.860739</td>
-      <td>0.947739</td>
-      <td>1.700739</td>
+      <td>0.894215</td>
+      <td>0.159333</td>
+      <td>0.709410</td>
+      <td>0.770410</td>
+      <td>0.832410</td>
+      <td>0.968910</td>
+      <td>1.417410</td>
       <td>200.0</td>
-      <td>0.670</td>
-      <td>0.471393</td>
+      <td>0.665</td>
+      <td>0.473175</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>1.0</td>
@@ -690,16 +683,16 @@ div.rendered_html tbody tr:hover {
     <tr>
       <th>6</th>
       <td>200.0</td>
-      <td>0.938973</td>
-      <td>0.191488</td>
-      <td>0.716778</td>
-      <td>0.801528</td>
-      <td>0.886778</td>
-      <td>1.006278</td>
-      <td>1.803778</td>
+      <td>0.890137</td>
+      <td>0.153577</td>
+      <td>0.718092</td>
+      <td>0.784842</td>
+      <td>0.844092</td>
+      <td>0.960342</td>
+      <td>1.636092</td>
       <td>200.0</td>
-      <td>0.660</td>
-      <td>0.474898</td>
+      <td>0.705</td>
+      <td>0.457187</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>1.0</td>
@@ -709,18 +702,18 @@ div.rendered_html tbody tr:hover {
     <tr>
       <th>7</th>
       <td>200.0</td>
-      <td>0.947892</td>
-      <td>0.204146</td>
-      <td>0.721537</td>
-      <td>0.805287</td>
-      <td>0.896037</td>
-      <td>1.013537</td>
-      <td>1.896537</td>
+      <td>1.037216</td>
+      <td>0.281163</td>
+      <td>0.726326</td>
+      <td>0.819326</td>
+      <td>0.943826</td>
+      <td>1.148826</td>
+      <td>2.261326</td>
       <td>200.0</td>
-      <td>0.680</td>
-      <td>0.467647</td>
+      <td>0.770</td>
+      <td>0.421889</td>
       <td>0.0</td>
-      <td>0.0</td>
+      <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -728,16 +721,16 @@ div.rendered_html tbody tr:hover {
     <tr>
       <th>8</th>
       <td>200.0</td>
-      <td>0.942487</td>
-      <td>0.202270</td>
-      <td>0.713652</td>
-      <td>0.809652</td>
-      <td>0.895152</td>
-      <td>0.989902</td>
-      <td>1.793652</td>
+      <td>0.941757</td>
+      <td>0.194178</td>
+      <td>0.709367</td>
+      <td>0.798367</td>
+      <td>0.888867</td>
+      <td>1.022867</td>
+      <td>1.876367</td>
       <td>200.0</td>
-      <td>0.710</td>
-      <td>0.454901</td>
+      <td>0.695</td>
+      <td>0.461563</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>1.0</td>
@@ -747,16 +740,16 @@ div.rendered_html tbody tr:hover {
     <tr>
       <th>9</th>
       <td>200.0</td>
-      <td>0.943863</td>
-      <td>0.181200</td>
-      <td>0.743198</td>
-      <td>0.817698</td>
-      <td>0.880698</td>
-      <td>1.011198</td>
-      <td>1.629198</td>
+      <td>0.948363</td>
+      <td>0.222625</td>
+      <td>0.717818</td>
+      <td>0.803068</td>
+      <td>0.892318</td>
+      <td>1.011818</td>
+      <td>2.127818</td>
       <td>200.0</td>
-      <td>0.690</td>
-      <td>0.463654</td>
+      <td>0.650</td>
+      <td>0.478167</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>1.0</td>
@@ -766,16 +759,16 @@ div.rendered_html tbody tr:hover {
     <tr>
       <th>10</th>
       <td>200.0</td>
-      <td>0.909838</td>
-      <td>0.191812</td>
-      <td>0.711408</td>
-      <td>0.781158</td>
-      <td>0.849908</td>
-      <td>0.995658</td>
-      <td>2.103408</td>
+      <td>0.939092</td>
+      <td>0.180142</td>
+      <td>0.722577</td>
+      <td>0.810577</td>
+      <td>0.867077</td>
+      <td>1.013827</td>
+      <td>1.564577</td>
       <td>200.0</td>
-      <td>0.710</td>
-      <td>0.454901</td>
+      <td>0.660</td>
+      <td>0.474898</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>1.0</td>
@@ -790,10 +783,12 @@ div.rendered_html tbody tr:hover {
 <section id="Initialize-the-model">
 <h2>Initialize the model<a class="headerlink" href="#Initialize-the-model" title="Permalink to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">DDModel</span><span class="p">(</span><span class="n">hierarchical_levels</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">starting_point_bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rlssm.model.models_DDM</span> <span class="kn">import</span> <span class="n">DDModel</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">DDModel</span><span class="p">(</span><span class="n">hierarchical_levels</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">starting_point_bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -801,191 +796,46 @@ div.rendered_html tbody tr:hover {
 <section id="Fit">
 <h2>Fit<a class="headerlink" href="#Fit" title="Permalink to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># sampling parameters</span>
-<span class="n">n_warmup</span> <span class="o">=</span> <span class="mi">500</span>
-<span class="n">n_sampling</span> <span class="o">=</span> <span class="mi">2500</span>
+<span class="n">n_warmup</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">n_sampling</span> <span class="o">=</span> <span class="mi">2000</span>
 <span class="n">n_chains</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="n">n_thin</span> <span class="o">=</span> <span class="mi">1</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
     <span class="n">data</span><span class="p">,</span>
-    <span class="n">thin</span> <span class="o">=</span> <span class="n">n_thin</span><span class="p">,</span>
+    <span class="n">thin</span><span class="o">=</span><span class="n">n_thin</span><span class="p">,</span>
     <span class="n">iter_warmup</span><span class="o">=</span><span class="n">n_warmup</span><span class="p">,</span>
     <span class="n">iter_sampling</span><span class="o">=</span><span class="n">n_sampling</span><span class="p">,</span>
-    <span class="n">chains</span> <span class="o">=</span> <span class="n">n_chains</span><span class="p">)</span>
+    <span class="n">chains</span><span class="o">=</span><span class="n">n_chains</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-17:28:20 - cmdstanpy - INFO - CmdStan start processing
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
 <div class="output_area docutils container">
-<div class="highlight"><pre>
-Fitting the model using the priors:
-drift_priors {&#39;mu_mu&#39;: 1, &#39;sd_mu&#39;: 5, &#39;mu_sd&#39;: 0, &#39;sd_sd&#39;: 5}
-threshold_priors {&#39;mu_mu&#39;: 1, &#39;sd_mu&#39;: 3, &#39;mu_sd&#39;: 0, &#39;sd_sd&#39;: 3}
-ndt_priors {&#39;mu_mu&#39;: 1, &#39;sd_mu&#39;: 1, &#39;mu_sd&#39;: 0, &#39;sd_sd&#39;: 1}
-rel_sp_priors {&#39;mu_mu&#39;: 0, &#39;sd_mu&#39;: 1, &#39;mu_sd&#39;: 0, &#39;sd_sd&#39;: 1}
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "716b8d5d1b504d1681ebdf8db8b8b73c"}</script></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "7a339e4b37524089a704dfa52c4746c0"}</script></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-17:36:23 - cmdstanpy - INFO - CmdStan done processing.
-17:36:23 - cmdstanpy - WARNING - Non-fatal error during sampling:
-Exception: wiener_lpdf: Random variable  = 0.741263, but must be greater than nondecision time = 3.83459 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.81236, but must be greater than nondecision time = 0.925898 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.714408, but must be greater than nondecision time = 0.716191 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 1.33036, but must be greater than nondecision time = 5.70367 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.74836, but must be greater than nondecision time = 0.782027 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 1.33036, but must be greater than nondecision time = 1.69228 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.80017, but must be greater than nondecision time = 1.75231 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.937739, but must be greater than nondecision time = 1.28072 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Nondecision time[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Nondecision time[1] is 0, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Nondecision time[1] is 0, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.741263, but must be greater than nondecision time = 2.81057 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.718739, but must be greater than nondecision time = 0.722531 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.760778, but must be greater than nondecision time = 0.903851 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.741263, but must be greater than nondecision time = 7.98006 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.741263, but must be greater than nondecision time = 0.754252 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.732739, but must be greater than nondecision time = 0.735276 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.741263, but must be greater than nondecision time = 0.767229 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.716739, but must be greater than nondecision time = 0.716972 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.71136, but must be greater than nondecision time = 0.716078 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.70817, but must be greater than nondecision time = 0.71588 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.71136, but must be greater than nondecision time = 0.712615 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.71736, but must be greater than nondecision time = 0.727389 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.71136, but must be greater than nondecision time = 0.717036 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.70817, but must be greater than nondecision time = 0.70959 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.716778, but must be greater than nondecision time = 0.720705 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.71136, but must be greater than nondecision time = 0.712275 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.71736, but must be greater than nondecision time = 0.726942 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.71736, but must be greater than nondecision time = 0.718645 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.71736, but must be greater than nondecision time = 0.729877 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.721537, but must be greater than nondecision time = 0.727929 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.71736, but must be greater than nondecision time = 0.718634 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.71136, but must be greater than nondecision time = 0.712048 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.70836, but must be greater than nondecision time = 0.710783 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.721537, but must be greater than nondecision time = 0.722646 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-Exception: wiener_lpdf: Random variable  = 0.840537, but must be greater than nondecision time = 1.48997 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 1.33036, but must be greater than nondecision time = 1.8714 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 1.33036, but must be greater than nondecision time = 1.48301 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.81236, but must be greater than nondecision time = 1.01152 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.741263, but must be greater than nondecision time = 0.999254 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 1.33036, but must be greater than nondecision time = 1.93093 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.806397, but must be greater than nondecision time = 13.1493 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.80017, but must be greater than nondecision time = 5.1709 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.81236, but must be greater than nondecision time = 0.998903 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.741263, but must be greater than nondecision time = 1.05236 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.81236, but must be greater than nondecision time = 0.951597 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.741263, but must be greater than nondecision time = 4.63356 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 1.33036, but must be greater than nondecision time = 1.60988 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.806397, but must be greater than nondecision time = 2.00583 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 1.33036, but must be greater than nondecision time = 2.84075 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 1.33036, but must be greater than nondecision time = 1.67014 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 1.33036, but must be greater than nondecision time = 32.1377 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 1.33036, but must be greater than nondecision time = 6.79935 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.81236, but must be greater than nondecision time = 0.889213 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Boundary separation[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Nondecision time[1] is inf, but must be positive finite! (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.723739, but must be greater than nondecision time = 0.72594 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.718739, but must be greater than nondecision time = 0.719673 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.723739, but must be greater than nondecision time = 0.729709 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.71136, but must be greater than nondecision time = 0.712427 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.71736, but must be greater than nondecision time = 0.725069 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.71136, but must be greater than nondecision time = 0.711943 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.70836, but must be greater than nondecision time = 0.710777 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.71736, but must be greater than nondecision time = 0.730292 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.71736, but must be greater than nondecision time = 0.726602 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.711263, but must be greater than nondecision time = 0.713484 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.70817, but must be greater than nondecision time = 0.711808 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.716778, but must be greater than nondecision time = 0.717128 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.721537, but must be greater than nondecision time = 0.722361 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.71736, but must be greater than nondecision time = 0.727236 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.71736, but must be greater than nondecision time = 0.720007 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.71736, but must be greater than nondecision time = 0.718668 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.71736, but must be greater than nondecision time = 0.729473 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.70836, but must be greater than nondecision time = 0.709662 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.716739, but must be greater than nondecision time = 0.716769 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.70817, but must be greater than nondecision time = 0.70841 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.71136, but must be greater than nondecision time = 0.715337 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.711408, but must be greater than nondecision time = 0.712941 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.71736, but must be greater than nondecision time = 0.728342 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.740397, but must be greater than nondecision time = 0.746084 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.70836, but must be greater than nondecision time = 0.710525 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.744198, but must be greater than nondecision time = 0.745622 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-        Exception: wiener_lpdf: Random variable  = 0.71136, but must be greater than nondecision time = 0.714987 (in &#39;/home/andrei/PycharmProjects/rlssm/rlssm/stan_models/DDM/hierDDM_bias.stan&#39;, line 86, column 1 to column 54)
-Consider re-running with show_console=True if the above output is unclear!
-</pre></div></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "79475bcc4073421e88d096c9718f0426"}</script></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<div class="highlight"><pre>
-
-Checks MCMC diagnostics:
-n_eff / iter looks reasonable for all parameters
-0 of 5000 iterations saturated the maximum tree depth of 10 (0.0%)
-E-BFMI indicated no pathological behavior
-0.0 of 5000 iterations ended with a divergence (0.0%)
-</pre></div></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "adf75ec1f0c54d54baa4ae254bc31b81"}</script></div>
 </div>
 <section id="get-Rhat">
 <h3>get Rhat<a class="headerlink" href="#get-Rhat" title="Permalink to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">rhat</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -993,7 +843,7 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1025,31 +875,31 @@ E-BFMI indicated no pathological behavior
     </tr>
     <tr>
       <th>mean</th>
-      <td>0.999899</td>
+      <td>0.999916</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>0.000225</td>
+      <td>0.000306</td>
     </tr>
     <tr>
       <th>min</th>
-      <td>0.999606</td>
+      <td>0.999508</td>
     </tr>
     <tr>
       <th>25%</th>
-      <td>0.999723</td>
+      <td>0.999701</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>0.999842</td>
+      <td>0.999828</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>0.999998</td>
+      <td>1.000100</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>1.003130</td>
+      <td>1.002040</td>
     </tr>
   </tbody>
 </table>
@@ -1059,7 +909,7 @@ E-BFMI indicated no pathological behavior
 <section id="calculate-wAIC">
 <h3>calculate wAIC<a class="headerlink" href="#calculate-wAIC" title="Permalink to this heading"></a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">waic</span>
@@ -1067,15 +917,15 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;lppd&#39;: -118.12441198167284,
- &#39;p_waic&#39;: 24.589047786623894,
- &#39;waic&#39;: 285.42691953659346,
- &#39;waic_se&#39;: 90.608211766535}
+{&#39;lppd&#39;: -174.3369425876112,
+ &#39;p_waic&#39;: 18.97106088333264,
+ &#39;waic&#39;: 386.6160069418877,
+ &#39;waic_se&#39;: 90.60004515163243}
 </pre></div></div>
 </div>
 </section>
@@ -1083,7 +933,7 @@ E-BFMI indicated no pathological behavior
 <section id="Posteriors">
 <h2>Posteriors<a class="headerlink" href="#Posteriors" title="Permalink to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -1091,7 +941,7 @@ E-BFMI indicated no pathological behavior
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1113,221 +963,221 @@ E-BFMI indicated no pathological behavior
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>transf_mu_drift</th>
-      <th>transf_mu_threshold</th>
-      <th>transf_mu_ndt</th>
-      <th>transf_mu_rel_sp</th>
-      <th>drift_sbj[1]</th>
-      <th>drift_sbj[2]</th>
-      <th>drift_sbj[3]</th>
-      <th>drift_sbj[4]</th>
-      <th>drift_sbj[5]</th>
-      <th>drift_sbj[6]</th>
+      <th>threshold_sbj[1]</th>
+      <th>threshold_sbj[2]</th>
+      <th>threshold_sbj[3]</th>
+      <th>threshold_sbj[4]</th>
+      <th>threshold_sbj[5]</th>
+      <th>threshold_sbj[6]</th>
+      <th>threshold_sbj[7]</th>
+      <th>threshold_sbj[8]</th>
+      <th>threshold_sbj[9]</th>
+      <th>threshold_sbj[10]</th>
       <th>...</th>
-      <th>rel_sp_sbj[1]</th>
-      <th>rel_sp_sbj[2]</th>
-      <th>rel_sp_sbj[3]</th>
-      <th>rel_sp_sbj[4]</th>
-      <th>rel_sp_sbj[5]</th>
-      <th>rel_sp_sbj[6]</th>
-      <th>rel_sp_sbj[7]</th>
-      <th>rel_sp_sbj[8]</th>
-      <th>rel_sp_sbj[9]</th>
-      <th>rel_sp_sbj[10]</th>
+      <th>ndt_sbj[1]</th>
+      <th>ndt_sbj[2]</th>
+      <th>ndt_sbj[3]</th>
+      <th>ndt_sbj[4]</th>
+      <th>ndt_sbj[5]</th>
+      <th>ndt_sbj[6]</th>
+      <th>ndt_sbj[7]</th>
+      <th>ndt_sbj[8]</th>
+      <th>ndt_sbj[9]</th>
+      <th>ndt_sbj[10]</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>count</th>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
       <td>...</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
-      <td>5000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
+      <td>4000.000000</td>
     </tr>
     <tr>
       <th>mean</th>
-      <td>0.589049</td>
-      <td>0.999804</td>
-      <td>0.694482</td>
-      <td>0.533768</td>
-      <td>0.592093</td>
-      <td>0.549548</td>
-      <td>0.634618</td>
-      <td>0.499611</td>
-      <td>0.593798</td>
-      <td>0.570988</td>
+      <td>1.022759</td>
+      <td>1.018713</td>
+      <td>1.071132</td>
+      <td>0.982048</td>
+      <td>0.930144</td>
+      <td>0.935707</td>
+      <td>1.203107</td>
+      <td>1.034275</td>
+      <td>1.036711</td>
+      <td>1.032244</td>
       <td>...</td>
-      <td>0.524106</td>
-      <td>0.522754</td>
-      <td>0.529269</td>
-      <td>0.527970</td>
-      <td>0.543342</td>
-      <td>0.533816</td>
-      <td>0.542101</td>
-      <td>0.534828</td>
-      <td>0.531394</td>
-      <td>0.548872</td>
+      <td>0.690977</td>
+      <td>0.688491</td>
+      <td>0.692492</td>
+      <td>0.689865</td>
+      <td>0.690251</td>
+      <td>0.692928</td>
+      <td>0.691174</td>
+      <td>0.690522</td>
+      <td>0.691567</td>
+      <td>0.693453</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>0.067046</td>
-      <td>0.025471</td>
-      <td>0.004456</td>
-      <td>0.010327</td>
-      <td>0.095989</td>
-      <td>0.093728</td>
-      <td>0.100758</td>
-      <td>0.119823</td>
-      <td>0.098199</td>
-      <td>0.096001</td>
+      <td>0.030045</td>
+      <td>0.030909</td>
+      <td>0.031569</td>
+      <td>0.029368</td>
+      <td>0.027376</td>
+      <td>0.028984</td>
+      <td>0.036440</td>
+      <td>0.029803</td>
+      <td>0.028988</td>
+      <td>0.030481</td>
       <td>...</td>
-      <td>0.015258</td>
-      <td>0.016027</td>
-      <td>0.014309</td>
-      <td>0.015027</td>
-      <td>0.016366</td>
-      <td>0.014529</td>
-      <td>0.015959</td>
-      <td>0.014501</td>
-      <td>0.014423</td>
-      <td>0.018479</td>
+      <td>0.002660</td>
+      <td>0.003356</td>
+      <td>0.003266</td>
+      <td>0.002800</td>
+      <td>0.002678</td>
+      <td>0.003050</td>
+      <td>0.003311</td>
+      <td>0.002780</td>
+      <td>0.002896</td>
+      <td>0.003498</td>
     </tr>
     <tr>
       <th>min</th>
-      <td>0.338118</td>
-      <td>0.875079</td>
-      <td>0.669527</td>
-      <td>0.474416</td>
-      <td>0.127374</td>
-      <td>0.117056</td>
-      <td>0.249590</td>
-      <td>-0.043133</td>
-      <td>0.144250</td>
-      <td>0.113549</td>
+      <td>0.919124</td>
+      <td>0.881666</td>
+      <td>0.954651</td>
+      <td>0.887830</td>
+      <td>0.849033</td>
+      <td>0.840513</td>
+      <td>1.066060</td>
+      <td>0.933550</td>
+      <td>0.926057</td>
+      <td>0.928768</td>
       <td>...</td>
-      <td>0.448062</td>
-      <td>0.428891</td>
-      <td>0.458273</td>
-      <td>0.456054</td>
-      <td>0.489001</td>
-      <td>0.471102</td>
-      <td>0.489480</td>
-      <td>0.466946</td>
-      <td>0.466145</td>
-      <td>0.499528</td>
+      <td>0.679488</td>
+      <td>0.666972</td>
+      <td>0.677319</td>
+      <td>0.672696</td>
+      <td>0.676422</td>
+      <td>0.681445</td>
+      <td>0.672121</td>
+      <td>0.675451</td>
+      <td>0.679971</td>
+      <td>0.682390</td>
     </tr>
     <tr>
       <th>25%</th>
-      <td>0.544705</td>
-      <td>0.983710</td>
-      <td>0.691748</td>
-      <td>0.527299</td>
-      <td>0.532889</td>
-      <td>0.494416</td>
-      <td>0.568221</td>
-      <td>0.431402</td>
-      <td>0.535588</td>
-      <td>0.513929</td>
+      <td>1.002065</td>
+      <td>0.998551</td>
+      <td>1.048843</td>
+      <td>0.961496</td>
+      <td>0.911299</td>
+      <td>0.916305</td>
+      <td>1.178795</td>
+      <td>1.014660</td>
+      <td>1.017308</td>
+      <td>1.012408</td>
       <td>...</td>
-      <td>0.515047</td>
-      <td>0.513145</td>
-      <td>0.520539</td>
-      <td>0.519217</td>
-      <td>0.532017</td>
-      <td>0.524863</td>
-      <td>0.531237</td>
-      <td>0.525973</td>
-      <td>0.523063</td>
-      <td>0.535513</td>
+      <td>0.689397</td>
+      <td>0.686666</td>
+      <td>0.690340</td>
+      <td>0.688298</td>
+      <td>0.688715</td>
+      <td>0.690874</td>
+      <td>0.689380</td>
+      <td>0.688976</td>
+      <td>0.689820</td>
+      <td>0.690989</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>0.589376</td>
-      <td>0.999062</td>
-      <td>0.694457</td>
-      <td>0.533629</td>
-      <td>0.590355</td>
-      <td>0.555326</td>
-      <td>0.626404</td>
-      <td>0.520010</td>
-      <td>0.592024</td>
-      <td>0.574528</td>
+      <td>1.023060</td>
+      <td>1.017810</td>
+      <td>1.071125</td>
+      <td>0.981486</td>
+      <td>0.929302</td>
+      <td>0.935411</td>
+      <td>1.202840</td>
+      <td>1.034090</td>
+      <td>1.036335</td>
+      <td>1.031730</td>
       <td>...</td>
-      <td>0.525327</td>
-      <td>0.524805</td>
-      <td>0.530150</td>
-      <td>0.529093</td>
-      <td>0.541301</td>
-      <td>0.533845</td>
-      <td>0.540534</td>
-      <td>0.534412</td>
-      <td>0.532201</td>
-      <td>0.546295</td>
+      <td>0.691080</td>
+      <td>0.689013</td>
+      <td>0.692206</td>
+      <td>0.690156</td>
+      <td>0.690510</td>
+      <td>0.692604</td>
+      <td>0.691183</td>
+      <td>0.690743</td>
+      <td>0.691507</td>
+      <td>0.692941</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>0.633768</td>
-      <td>1.015353</td>
-      <td>0.697127</td>
-      <td>0.540210</td>
-      <td>0.649512</td>
-      <td>0.613757</td>
-      <td>0.691086</td>
-      <td>0.584602</td>
-      <td>0.651433</td>
-      <td>0.632327</td>
+      <td>1.042393</td>
+      <td>1.037983</td>
+      <td>1.092190</td>
+      <td>1.001213</td>
+      <td>0.948337</td>
+      <td>0.954928</td>
+      <td>1.227215</td>
+      <td>1.053683</td>
+      <td>1.055883</td>
+      <td>1.052290</td>
       <td>...</td>
-      <td>0.534996</td>
-      <td>0.533912</td>
-      <td>0.538659</td>
-      <td>0.537750</td>
-      <td>0.553345</td>
-      <td>0.542641</td>
-      <td>0.551672</td>
-      <td>0.543394</td>
-      <td>0.540318</td>
-      <td>0.560275</td>
+      <td>0.692642</td>
+      <td>0.690846</td>
+      <td>0.694279</td>
+      <td>0.691798</td>
+      <td>0.692016</td>
+      <td>0.694870</td>
+      <td>0.693054</td>
+      <td>0.692287</td>
+      <td>0.693357</td>
+      <td>0.695524</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>0.911971</td>
-      <td>1.124670</td>
-      <td>0.715601</td>
-      <td>0.588685</td>
-      <td>0.960057</td>
-      <td>0.892719</td>
-      <td>1.143610</td>
-      <td>0.812977</td>
-      <td>1.074580</td>
-      <td>0.960479</td>
+      <td>1.139410</td>
+      <td>1.139710</td>
+      <td>1.183850</td>
+      <td>1.104020</td>
+      <td>1.044150</td>
+      <td>1.037650</td>
+      <td>1.346960</td>
+      <td>1.138380</td>
+      <td>1.137600</td>
+      <td>1.152760</td>
       <td>...</td>
-      <td>0.573821</td>
-      <td>0.573211</td>
-      <td>0.580618</td>
-      <td>0.582792</td>
-      <td>0.651745</td>
-      <td>0.594286</td>
-      <td>0.609741</td>
-      <td>0.592600</td>
-      <td>0.591705</td>
-      <td>0.650637</td>
+      <td>0.700987</td>
+      <td>0.696966</td>
+      <td>0.707877</td>
+      <td>0.700162</td>
+      <td>0.698433</td>
+      <td>0.704206</td>
+      <td>0.706131</td>
+      <td>0.699186</td>
+      <td>0.702947</td>
+      <td>0.707094</td>
     </tr>
   </tbody>
 </table>
@@ -1335,20 +1185,21 @@ E-BFMI indicated no pathological behavior
 </div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">context</span> <span class="o">=</span> <span class="s2">&quot;talk&quot;</span><span class="p">,</span>
-        <span class="n">style</span> <span class="o">=</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span>
-        <span class="n">palette</span> <span class="o">=</span> <span class="s2">&quot;husl&quot;</span><span class="p">,</span>
-        <span class="n">rc</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">:(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">8</span><span class="p">)})</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s2">&quot;talk&quot;</span><span class="p">,</span>
+        <span class="n">style</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
+        <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;husl&quot;</span><span class="p">,</span>
+        <span class="n">rc</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">8</span><span class="p">)})</span>
 </pre></div>
 </div>
 </div>
 <p>Here we plot the estimated posterior distributions against the generating parameters, to see whether the model parameters are recovering well:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">plot_posteriors</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">show_intervals</span><span class="o">=</span><span class="s1">&#39;HDI&#39;</span><span class="p">)</span>
@@ -1362,7 +1213,7 @@ E-BFMI indicated no pathological behavior
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_DDM_starting-point-bias_hierarchical_fitting_19_0.png" src="../_images/notebooks_DDM_starting-point-bias_hierarchical_fitting_19_0.png" />
+<img alt="../_images/notebooks_DDM_starting-point-bias_hierarchical_fitting_18_0.png" src="../_images/notebooks_DDM_starting-point-bias_hierarchical_fitting_18_0.png" />
 </div>
 </div>
 </section>

@@ -388,7 +388,7 @@ div.rendered_html tbody tr:hover {
 <section id="How-to-inspect-model-fit-results">
 <h1>How to inspect model fit results<a class="headerlink" href="#How-to-inspect-model-fit-results" title="Permalink to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rlssm.utility.utils</span> <span class="kn">import</span> <span class="n">load_model_results</span>
@@ -408,7 +408,7 @@ div.rendered_html tbody tr:hover {
 <h2>Posteriors<a class="headerlink" href="#Posteriors" title="Permalink to this heading"></a></h2>
 <p>The posterior samples are stored in <code class="docutils literal notranslate"><span class="pre">samples</span></code>:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">samples</span>
@@ -416,7 +416,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -439,40 +439,40 @@ div.rendered_html tbody tr:hover {
     <tr style="text-align: right;">
       <th></th>
       <th>transf_drift</th>
-      <th>transf_threshold</th>
       <th>transf_ndt</th>
+      <th>transf_threshold</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.717709</td>
-      <td>1.19665</td>
-      <td>0.252328</td>
+      <td>0.624687</td>
+      <td>0.228781</td>
+      <td>1.31002</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.862188</td>
-      <td>1.27886</td>
-      <td>0.240830</td>
+      <td>0.625416</td>
+      <td>0.226004</td>
+      <td>1.25276</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.677173</td>
-      <td>1.29392</td>
-      <td>0.245740</td>
+      <td>0.635599</td>
+      <td>0.226298</td>
+      <td>1.26460</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.845948</td>
-      <td>1.27007</td>
-      <td>0.242185</td>
+      <td>0.767183</td>
+      <td>0.223195</td>
+      <td>1.27625</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.630892</td>
-      <td>1.23442</td>
-      <td>0.242828</td>
+      <td>0.702878</td>
+      <td>0.226224</td>
+      <td>1.32400</td>
     </tr>
     <tr>
       <th>...</th>
@@ -482,33 +482,33 @@ div.rendered_html tbody tr:hover {
     </tr>
     <tr>
       <th>3995</th>
-      <td>0.623901</td>
-      <td>1.26809</td>
-      <td>0.245883</td>
+      <td>0.747466</td>
+      <td>0.229504</td>
+      <td>1.26245</td>
     </tr>
     <tr>
       <th>3996</th>
-      <td>1.032070</td>
-      <td>1.24095</td>
-      <td>0.249789</td>
+      <td>0.740973</td>
+      <td>0.233706</td>
+      <td>1.27269</td>
     </tr>
     <tr>
       <th>3997</th>
-      <td>0.817378</td>
-      <td>1.24481</td>
-      <td>0.250297</td>
+      <td>0.813081</td>
+      <td>0.232161</td>
+      <td>1.27020</td>
     </tr>
     <tr>
       <th>3998</th>
-      <td>0.612785</td>
-      <td>1.24213</td>
-      <td>0.248828</td>
+      <td>0.626135</td>
+      <td>0.233678</td>
+      <td>1.25335</td>
     </tr>
     <tr>
       <th>3999</th>
-      <td>0.589170</td>
-      <td>1.23884</td>
-      <td>0.247377</td>
+      <td>0.663176</td>
+      <td>0.236549</td>
+      <td>1.25483</td>
     </tr>
   </tbody>
 </table>
@@ -516,7 +516,7 @@ div.rendered_html tbody tr:hover {
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_rl</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -524,7 +524,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -546,221 +546,221 @@ div.rendered_html tbody tr:hover {
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>transf_mu_alpha</th>
-      <th>transf_mu_sensitivity</th>
-      <th>alpha_sbj[1]</th>
-      <th>alpha_sbj[2]</th>
-      <th>alpha_sbj[3]</th>
-      <th>alpha_sbj[4]</th>
-      <th>alpha_sbj[5]</th>
-      <th>alpha_sbj[6]</th>
-      <th>alpha_sbj[7]</th>
-      <th>alpha_sbj[8]</th>
+      <th>sensitivity_sbj[1]</th>
+      <th>sensitivity_sbj[2]</th>
+      <th>sensitivity_sbj[3]</th>
+      <th>sensitivity_sbj[4]</th>
+      <th>sensitivity_sbj[5]</th>
+      <th>sensitivity_sbj[6]</th>
+      <th>sensitivity_sbj[7]</th>
+      <th>sensitivity_sbj[8]</th>
+      <th>sensitivity_sbj[9]</th>
+      <th>sensitivity_sbj[10]</th>
       <th>...</th>
-      <th>sensitivity_sbj[18]</th>
-      <th>sensitivity_sbj[19]</th>
-      <th>sensitivity_sbj[20]</th>
-      <th>sensitivity_sbj[21]</th>
-      <th>sensitivity_sbj[22]</th>
-      <th>sensitivity_sbj[23]</th>
-      <th>sensitivity_sbj[24]</th>
-      <th>sensitivity_sbj[25]</th>
-      <th>sensitivity_sbj[26]</th>
-      <th>sensitivity_sbj[27]</th>
+      <th>alpha_sbj[18]</th>
+      <th>alpha_sbj[19]</th>
+      <th>alpha_sbj[20]</th>
+      <th>alpha_sbj[21]</th>
+      <th>alpha_sbj[22]</th>
+      <th>alpha_sbj[23]</th>
+      <th>alpha_sbj[24]</th>
+      <th>alpha_sbj[25]</th>
+      <th>alpha_sbj[26]</th>
+      <th>alpha_sbj[27]</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>count</th>
-      <td>3000.000000</td>
-      <td>3000.000000</td>
-      <td>3000.000000</td>
-      <td>3000.000000</td>
-      <td>3000.000000</td>
-      <td>3000.000000</td>
-      <td>3000.000000</td>
-      <td>3000.000000</td>
-      <td>3000.000000</td>
-      <td>3000.000000</td>
+      <td>2000.000000</td>
+      <td>2000.000000</td>
+      <td>2000.000000</td>
+      <td>2000.000000</td>
+      <td>2000.000000</td>
+      <td>2000.000000</td>
+      <td>2000.000000</td>
+      <td>2000.000000</td>
+      <td>2000.000000</td>
+      <td>2000.000000</td>
       <td>...</td>
-      <td>3000.000000</td>
-      <td>3000.000000</td>
-      <td>3000.000000</td>
-      <td>3000.000000</td>
-      <td>3000.000000</td>
-      <td>3000.000000</td>
-      <td>3000.000000</td>
-      <td>3000.000000</td>
-      <td>3000.000000</td>
-      <td>3000.000000</td>
+      <td>2000.000000</td>
+      <td>2000.000000</td>
+      <td>2000.000000</td>
+      <td>2000.000000</td>
+      <td>2000.000000</td>
+      <td>2000.000000</td>
+      <td>2000.000000</td>
+      <td>2000.000000</td>
+      <td>2000.000000</td>
+      <td>2000.000000</td>
     </tr>
     <tr>
       <th>mean</th>
-      <td>0.214249</td>
-      <td>0.457826</td>
-      <td>0.118764</td>
-      <td>0.040489</td>
-      <td>0.151461</td>
-      <td>0.127157</td>
-      <td>0.226088</td>
-      <td>0.172311</td>
-      <td>0.104653</td>
-      <td>0.277969</td>
+      <td>0.339849</td>
+      <td>0.364533</td>
+      <td>0.190238</td>
+      <td>0.285619</td>
+      <td>0.220674</td>
+      <td>0.343620</td>
+      <td>0.446074</td>
+      <td>0.212259</td>
+      <td>0.262786</td>
+      <td>0.399321</td>
       <td>...</td>
-      <td>0.185939</td>
-      <td>0.221454</td>
-      <td>0.346289</td>
-      <td>0.674229</td>
-      <td>0.588112</td>
-      <td>0.731539</td>
-      <td>0.379161</td>
-      <td>0.400781</td>
-      <td>0.202393</td>
-      <td>0.253733</td>
+      <td>0.090050</td>
+      <td>0.199066</td>
+      <td>0.162357</td>
+      <td>0.098040</td>
+      <td>0.132931</td>
+      <td>0.065796</td>
+      <td>0.167340</td>
+      <td>0.058865</td>
+      <td>0.044762</td>
+      <td>0.079488</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>0.025522</td>
-      <td>0.032404</td>
-      <td>0.049736</td>
-      <td>0.052076</td>
-      <td>0.068048</td>
-      <td>0.052428</td>
-      <td>0.080731</td>
-      <td>0.086851</td>
-      <td>0.033651</td>
-      <td>0.122217</td>
+      <td>0.069954</td>
+      <td>0.160575</td>
+      <td>0.036556</td>
+      <td>0.060759</td>
+      <td>0.034586</td>
+      <td>0.082084</td>
+      <td>0.083316</td>
+      <td>0.033923</td>
+      <td>0.033846</td>
+      <td>0.141355</td>
       <td>...</td>
-      <td>0.141403</td>
-      <td>0.037154</td>
-      <td>0.051928</td>
-      <td>0.131797</td>
-      <td>0.110670</td>
-      <td>0.151292</td>
-      <td>0.063514</td>
-      <td>0.142466</td>
-      <td>0.116487</td>
-      <td>0.061875</td>
+      <td>0.115876</td>
+      <td>0.091330</td>
+      <td>0.052897</td>
+      <td>0.028094</td>
+      <td>0.047145</td>
+      <td>0.021744</td>
+      <td>0.060112</td>
+      <td>0.037520</td>
+      <td>0.056357</td>
+      <td>0.035978</td>
     </tr>
     <tr>
       <th>min</th>
-      <td>0.142302</td>
-      <td>0.357274</td>
-      <td>0.013515</td>
-      <td>0.003605</td>
-      <td>0.006582</td>
-      <td>0.013048</td>
-      <td>0.030101</td>
-      <td>0.016365</td>
-      <td>0.028384</td>
-      <td>0.030795</td>
+      <td>0.196754</td>
+      <td>0.095116</td>
+      <td>0.119604</td>
+      <td>0.134919</td>
+      <td>0.138828</td>
+      <td>0.189317</td>
+      <td>0.228258</td>
+      <td>0.126466</td>
+      <td>0.167168</td>
+      <td>0.143001</td>
       <td>...</td>
-      <td>0.027643</td>
-      <td>0.127073</td>
-      <td>0.213504</td>
-      <td>0.341765</td>
-      <td>0.319400</td>
-      <td>0.344394</td>
-      <td>0.189188</td>
-      <td>0.174441</td>
-      <td>0.036081</td>
-      <td>0.124421</td>
+      <td>0.000553</td>
+      <td>0.016875</td>
+      <td>0.026814</td>
+      <td>0.030649</td>
+      <td>0.025752</td>
+      <td>0.022179</td>
+      <td>0.033862</td>
+      <td>0.005696</td>
+      <td>0.002407</td>
+      <td>0.016248</td>
     </tr>
     <tr>
       <th>25%</th>
-      <td>0.196320</td>
-      <td>0.435416</td>
-      <td>0.082543</td>
-      <td>0.018560</td>
-      <td>0.103149</td>
-      <td>0.088693</td>
-      <td>0.168907</td>
-      <td>0.105195</td>
-      <td>0.081160</td>
-      <td>0.181664</td>
+      <td>0.294921</td>
+      <td>0.245157</td>
+      <td>0.167763</td>
+      <td>0.247989</td>
+      <td>0.197696</td>
+      <td>0.289452</td>
+      <td>0.388789</td>
+      <td>0.190456</td>
+      <td>0.238244</td>
+      <td>0.295500</td>
       <td>...</td>
-      <td>0.075370</td>
-      <td>0.196641</td>
-      <td>0.309365</td>
-      <td>0.584314</td>
-      <td>0.513500</td>
-      <td>0.621587</td>
-      <td>0.334911</td>
-      <td>0.297599</td>
-      <td>0.115723</td>
-      <td>0.211779</td>
+      <td>0.008470</td>
+      <td>0.132509</td>
+      <td>0.126342</td>
+      <td>0.078639</td>
+      <td>0.098462</td>
+      <td>0.050291</td>
+      <td>0.125051</td>
+      <td>0.033508</td>
+      <td>0.014230</td>
+      <td>0.054447</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>0.213179</td>
-      <td>0.456558</td>
-      <td>0.112714</td>
-      <td>0.026869</td>
-      <td>0.142702</td>
-      <td>0.119975</td>
-      <td>0.221424</td>
-      <td>0.158769</td>
-      <td>0.099517</td>
-      <td>0.267643</td>
+      <td>0.327211</td>
+      <td>0.333742</td>
+      <td>0.183969</td>
+      <td>0.275916</td>
+      <td>0.217280</td>
+      <td>0.327081</td>
+      <td>0.435810</td>
+      <td>0.208340</td>
+      <td>0.260954</td>
+      <td>0.377563</td>
       <td>...</td>
-      <td>0.127223</td>
-      <td>0.217333</td>
-      <td>0.341615</td>
-      <td>0.657663</td>
-      <td>0.574439</td>
-      <td>0.712999</td>
-      <td>0.372571</td>
-      <td>0.371449</td>
-      <td>0.172813</td>
-      <td>0.242840</td>
+      <td>0.022957</td>
+      <td>0.183479</td>
+      <td>0.156974</td>
+      <td>0.094122</td>
+      <td>0.126364</td>
+      <td>0.062599</td>
+      <td>0.161722</td>
+      <td>0.048693</td>
+      <td>0.025113</td>
+      <td>0.073069</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>0.230834</td>
-      <td>0.479130</td>
-      <td>0.146820</td>
-      <td>0.042471</td>
-      <td>0.189205</td>
-      <td>0.157566</td>
-      <td>0.278585</td>
-      <td>0.224940</td>
-      <td>0.124438</td>
-      <td>0.360791</td>
+      <td>0.371227</td>
+      <td>0.451924</td>
+      <td>0.205734</td>
+      <td>0.311664</td>
+      <td>0.238244</td>
+      <td>0.380652</td>
+      <td>0.495043</td>
+      <td>0.229227</td>
+      <td>0.284772</td>
+      <td>0.468629</td>
       <td>...</td>
-      <td>0.268954</td>
-      <td>0.241431</td>
-      <td>0.375152</td>
-      <td>0.745119</td>
-      <td>0.649353</td>
-      <td>0.820376</td>
-      <td>0.414369</td>
-      <td>0.471044</td>
-      <td>0.257922</td>
-      <td>0.281974</td>
+      <td>0.152240</td>
+      <td>0.253000</td>
+      <td>0.192662</td>
+      <td>0.114150</td>
+      <td>0.161270</td>
+      <td>0.077312</td>
+      <td>0.202151</td>
+      <td>0.074053</td>
+      <td>0.051454</td>
+      <td>0.097206</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>0.307686</td>
-      <td>0.586162</td>
-      <td>0.373628</td>
-      <td>0.767424</td>
-      <td>0.483079</td>
-      <td>0.390912</td>
-      <td>0.624768</td>
-      <td>0.528733</td>
-      <td>0.264562</td>
-      <td>0.745650</td>
+      <td>0.833440</td>
+      <td>1.162270</td>
+      <td>0.542808</td>
+      <td>1.213840</td>
+      <td>0.486055</td>
+      <td>0.859148</td>
+      <td>0.894784</td>
+      <td>0.647509</td>
+      <td>0.378760</td>
+      <td>1.167760</td>
       <td>...</td>
-      <td>1.133140</td>
-      <td>0.627477</td>
-      <td>0.745796</td>
-      <td>1.292460</td>
-      <td>1.261130</td>
-      <td>1.429330</td>
-      <td>0.695992</td>
-      <td>1.393890</td>
-      <td>1.031570</td>
-      <td>0.680204</td>
+      <td>0.596992</td>
+      <td>0.612426</td>
+      <td>0.389304</td>
+      <td>0.252465</td>
+      <td>0.349883</td>
+      <td>0.196590</td>
+      <td>0.446356</td>
+      <td>0.435049</td>
+      <td>0.667668</td>
+      <td>0.306845</td>
     </tr>
   </tbody>
 </table>
@@ -769,7 +769,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>You can simply plot the model’s posteriors using <code class="docutils literal notranslate"><span class="pre">plot_posteriors</span></code>:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">plot_posteriors</span><span class="p">();</span>
@@ -785,7 +785,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>By default, 95% HDIs are shown, but you can also choose to have the posteriors without intervals or BCIs, and change the alpha level:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_rl</span><span class="o">.</span><span class="n">plot_posteriors</span><span class="p">(</span><span class="n">show_intervals</span><span class="o">=</span><span class="s1">&#39;BCI&#39;</span><span class="p">,</span> <span class="n">alpha_intervals</span><span class="o">=</span><span class="mf">.01</span><span class="p">);</span>
@@ -803,7 +803,7 @@ div.rendered_html tbody tr:hover {
 <h3>Trial-level<a class="headerlink" href="#Trial-level" title="Permalink to this heading"></a></h3>
 <p>Depending on the model specification, you can also extract certain trial-level parameters as numpy ordered dictionaries of n_samples X n_trials shape:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">trial_samples</span><span class="p">[</span><span class="s1">&#39;drift_t&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
@@ -811,7 +811,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -820,7 +820,7 @@ div.rendered_html tbody tr:hover {
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">trial_samples</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
@@ -828,7 +828,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -837,7 +837,7 @@ dict_keys([&#39;drift_t&#39;, &#39;threshold_t&#39;, &#39;ndt_t&#39;])
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_lba</span><span class="o">.</span><span class="n">trial_samples</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="c1"># for the LBA</span>
@@ -845,7 +845,7 @@ dict_keys([&#39;drift_t&#39;, &#39;threshold_t&#39;, &#39;ndt_t&#39;])
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -855,7 +855,7 @@ dict_keys([&#39;k_t&#39;, &#39;sp_trial_var_t&#39;, &#39;ndt_t&#39;, &#39;drift_
 </div>
 <p>In the case of a RL model fit on choices alone, you can extract the log probability of accuracy=1 for each trial:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_rl</span><span class="o">.</span><span class="n">trial_samples</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
@@ -863,7 +863,7 @@ dict_keys([&#39;k_t&#39;, &#39;sp_trial_var_t&#39;, &#39;ndt_t&#39;, &#39;drift_
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -872,7 +872,7 @@ dict_keys([&#39;log_p_t&#39;])
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_rl</span><span class="o">.</span><span class="n">trial_samples</span><span class="p">[</span><span class="s1">&#39;log_p_t&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
@@ -880,12 +880,12 @@ dict_keys([&#39;log_p_t&#39;])
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(3000, 6464)
+(2000, 6464)
 </pre></div></div>
 </div>
 </section>
@@ -894,7 +894,7 @@ dict_keys([&#39;log_p_t&#39;])
 <h2>Posterior predictives<a class="headerlink" href="#Posterior-predictives" title="Permalink to this heading"></a></h2>
 <p>With <code class="docutils literal notranslate"><span class="pre">get_posterior_predictives_df</span></code> you get posterior predictives as pandas DataFrames of <code class="docutils literal notranslate"><span class="pre">n_posterior_predictives</span></code> X <code class="docutils literal notranslate"><span class="pre">n_trials</span></code> shape:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pp</span> <span class="o">=</span> <span class="n">model_fit_rl</span><span class="o">.</span><span class="n">get_posterior_predictives_df</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
@@ -903,7 +903,7 @@ dict_keys([&#39;log_p_t&#39;])
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -983,82 +983,82 @@ dict_keys([&#39;log_p_t&#39;])
   <tbody>
     <tr>
       <th>1</th>
-      <td>1</td>
-      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
-      <td>0</td>
       <td>1</td>
       <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
       <td>...</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>2</th>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>0</td>
-      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>...</td>
-      <td>0</td>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
       <td>1</td>
-      <td>0</td>
+      <td>1</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
+      <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>3</th>
       <td>1</td>
       <td>1</td>
       <td>1</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>...</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
       <td>1</td>
       <td>1</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>1</td>
-      <td>0</td>
       <td>0</td>
       <td>1</td>
+      <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
@@ -1066,22 +1066,22 @@ dict_keys([&#39;log_p_t&#39;])
       <td>1</td>
       <td>1</td>
       <td>...</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
     </tr>
     <tr>
       <th>5</th>
       <td>1</td>
       <td>0</td>
-      <td>0</td>
+      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
@@ -1091,7 +1091,7 @@ dict_keys([&#39;log_p_t&#39;])
       <td>1</td>
       <td>...</td>
       <td>0</td>
-      <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
@@ -1132,30 +1132,30 @@ dict_keys([&#39;log_p_t&#39;])
       <td>0</td>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
       <td>0</td>
+      <td>0</td>
+      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>...</td>
+      <td>0</td>
+      <td>0</td>
       <td>1</td>
-      <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>0</td>
-      <td>1</td>
-      <td>1</td>
     </tr>
     <tr>
       <th>997</th>
       <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
       <td>1</td>
       <td>0</td>
       <td>0</td>
@@ -1164,25 +1164,25 @@ dict_keys([&#39;log_p_t&#39;])
       <td>...</td>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>1</td>
       <td>0</td>
       <td>1</td>
-      <td>1</td>
       <td>0</td>
-      <td>1</td>
     </tr>
     <tr>
       <th>998</th>
-      <td>1</td>
-      <td>1</td>
       <td>0</td>
-      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>0</td>
       <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>...</td>
@@ -1193,19 +1193,19 @@ dict_keys([&#39;log_p_t&#39;])
       <td>1</td>
       <td>1</td>
       <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>0</td>
-      <td>1</td>
-      <td>1</td>
     </tr>
     <tr>
       <th>999</th>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
@@ -1215,9 +1215,9 @@ dict_keys([&#39;log_p_t&#39;])
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
       <td>1</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>1</td>
       <td>1</td>
     </tr>
@@ -1230,16 +1230,16 @@ dict_keys([&#39;log_p_t&#39;])
       <td>0</td>
       <td>1</td>
       <td>0</td>
+      <td>0</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
+      <td>0</td>
       <td>...</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
-      <td>1</td>
       <td>0</td>
-      <td>1</td>
-      <td>1</td>
       <td>1</td>
       <td>1</td>
       <td>1</td>
@@ -1252,7 +1252,7 @@ dict_keys([&#39;log_p_t&#39;])
 </div>
 <p>For the DDM, you have additional parameters to tweak the DDM simulations, and you get a DataFrame with a hierarchical column index, for RTs and for accuracy:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pp</span> <span class="o">=</span> <span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">get_posterior_predictives_df</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">.001</span><span class="p">)</span>
@@ -1261,7 +1261,7 @@ dict_keys([&#39;log_p_t&#39;])
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1343,95 +1343,95 @@ dict_keys([&#39;log_p_t&#39;])
   <tbody>
     <tr>
       <th>1</th>
-      <td>0.579328</td>
-      <td>0.307328</td>
-      <td>0.442328</td>
-      <td>0.450328</td>
-      <td>0.685328</td>
-      <td>0.495328</td>
-      <td>0.562328</td>
-      <td>0.584328</td>
-      <td>0.328328</td>
-      <td>0.557328</td>
+      <td>0.873781</td>
+      <td>0.687781</td>
+      <td>0.491781</td>
+      <td>0.416781</td>
+      <td>1.377781</td>
+      <td>0.309781</td>
+      <td>0.592781</td>
+      <td>0.461781</td>
+      <td>0.301781</td>
+      <td>0.703781</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.589830</td>
-      <td>1.349830</td>
-      <td>1.107830</td>
-      <td>1.312830</td>
-      <td>1.418830</td>
-      <td>0.525830</td>
-      <td>0.492830</td>
-      <td>0.582830</td>
-      <td>0.702830</td>
-      <td>1.414830</td>
+      <td>0.905004</td>
+      <td>0.386004</td>
+      <td>0.492004</td>
+      <td>0.855004</td>
+      <td>0.361004</td>
+      <td>0.791004</td>
+      <td>0.654004</td>
+      <td>0.290004</td>
+      <td>1.991004</td>
+      <td>1.113004</td>
       <td>...</td>
-      <td>1.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>0.0</td>
       <td>1.0</td>
-      <td>0.0</td>
+      <td>1.0</td>
       <td>1.0</td>
       <td>0.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.335740</td>
-      <td>0.335740</td>
-      <td>0.408740</td>
-      <td>0.395740</td>
-      <td>0.406740</td>
-      <td>0.754740</td>
-      <td>0.323740</td>
-      <td>0.544740</td>
-      <td>0.672740</td>
-      <td>0.839740</td>
+      <td>0.469298</td>
+      <td>0.604298</td>
+      <td>0.854298</td>
+      <td>0.543298</td>
+      <td>0.842298</td>
+      <td>0.875298</td>
+      <td>0.323298</td>
+      <td>0.726298</td>
+      <td>1.038298</td>
+      <td>0.699298</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
       <td>0.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
       <td>0.0</td>
-      <td>1.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.469185</td>
-      <td>0.741185</td>
-      <td>0.410185</td>
-      <td>1.002185</td>
-      <td>0.442185</td>
-      <td>0.352185</td>
-      <td>1.940185</td>
-      <td>0.629185</td>
-      <td>0.828185</td>
-      <td>0.553185</td>
+      <td>0.374195</td>
+      <td>0.467195</td>
+      <td>0.424195</td>
+      <td>0.637195</td>
+      <td>0.311195</td>
+      <td>0.365195</td>
+      <td>0.630195</td>
+      <td>0.472195</td>
+      <td>0.631195</td>
+      <td>1.770195</td>
       <td>...</td>
       <td>1.0</td>
-      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
       <td>1.0</td>
       <td>0.0</td>
       <td>1.0</td>
@@ -1439,24 +1439,24 @@ dict_keys([&#39;log_p_t&#39;])
     </tr>
     <tr>
       <th>5</th>
-      <td>0.360828</td>
-      <td>0.579828</td>
-      <td>0.534828</td>
-      <td>0.453828</td>
-      <td>0.302828</td>
-      <td>0.440828</td>
-      <td>0.876828</td>
-      <td>0.754828</td>
-      <td>0.615828</td>
-      <td>0.396828</td>
+      <td>0.376224</td>
+      <td>0.533224</td>
+      <td>0.586224</td>
+      <td>0.309224</td>
+      <td>0.860224</td>
+      <td>0.838224</td>
+      <td>0.443224</td>
+      <td>0.754224</td>
+      <td>0.932224</td>
+      <td>0.584224</td>
       <td>...</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
       <td>0.0</td>
-      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1487,43 +1487,43 @@ dict_keys([&#39;log_p_t&#39;])
     </tr>
     <tr>
       <th>96</th>
-      <td>1.027233</td>
-      <td>0.620233</td>
-      <td>0.322233</td>
-      <td>0.319233</td>
-      <td>0.460233</td>
-      <td>1.063233</td>
-      <td>0.812233</td>
-      <td>0.473233</td>
-      <td>0.907233</td>
-      <td>0.532233</td>
+      <td>1.244331</td>
+      <td>0.485331</td>
+      <td>0.936331</td>
+      <td>0.904331</td>
+      <td>0.696331</td>
+      <td>0.469331</td>
+      <td>0.314331</td>
+      <td>0.883331</td>
+      <td>0.900331</td>
+      <td>0.355331</td>
       <td>...</td>
+      <td>1.0</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>1.0</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>1.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>97</th>
-      <td>0.294155</td>
-      <td>0.747155</td>
-      <td>0.590155</td>
-      <td>0.425155</td>
-      <td>0.395155</td>
-      <td>1.066155</td>
-      <td>0.401155</td>
-      <td>0.452155</td>
-      <td>0.465155</td>
-      <td>0.874155</td>
+      <td>0.490613</td>
+      <td>0.480613</td>
+      <td>0.282613</td>
+      <td>0.333613</td>
+      <td>1.939613</td>
+      <td>0.705613</td>
+      <td>0.382613</td>
+      <td>0.441613</td>
+      <td>0.334613</td>
+      <td>0.393613</td>
       <td>...</td>
       <td>1.0</td>
-      <td>1.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
@@ -1535,75 +1535,75 @@ dict_keys([&#39;log_p_t&#39;])
     </tr>
     <tr>
       <th>98</th>
-      <td>0.836374</td>
-      <td>0.749374</td>
-      <td>0.449374</td>
-      <td>0.784374</td>
-      <td>0.376374</td>
-      <td>0.500374</td>
-      <td>1.025374</td>
-      <td>0.384374</td>
-      <td>0.439374</td>
-      <td>0.302374</td>
+      <td>0.403750</td>
+      <td>1.478750</td>
+      <td>0.328750</td>
+      <td>0.439750</td>
+      <td>0.532750</td>
+      <td>0.336750</td>
+      <td>0.383750</td>
+      <td>0.627750</td>
+      <td>0.566750</td>
+      <td>0.485750</td>
       <td>...</td>
-      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>0.0</td>
       <td>1.0</td>
-      <td>0.0</td>
       <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>0.539820</td>
-      <td>1.072820</td>
-      <td>0.399820</td>
-      <td>0.315820</td>
-      <td>0.571820</td>
-      <td>0.310820</td>
-      <td>0.284820</td>
-      <td>0.737820</td>
-      <td>0.489820</td>
-      <td>0.400820</td>
+      <td>0.486085</td>
+      <td>0.601085</td>
+      <td>0.446085</td>
+      <td>0.390085</td>
+      <td>0.572085</td>
+      <td>0.258085</td>
+      <td>0.514085</td>
+      <td>0.356085</td>
+      <td>0.494085</td>
+      <td>0.411085</td>
       <td>...</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>100</th>
-      <td>0.364635</td>
-      <td>0.683635</td>
-      <td>0.843635</td>
-      <td>0.759635</td>
-      <td>0.339635</td>
-      <td>0.699635</td>
-      <td>0.623635</td>
-      <td>0.929635</td>
-      <td>0.564635</td>
-      <td>0.647635</td>
+      <td>0.386266</td>
+      <td>0.426266</td>
+      <td>0.397266</td>
+      <td>1.218266</td>
+      <td>0.561266</td>
+      <td>0.511266</td>
+      <td>0.929266</td>
+      <td>1.480266</td>
+      <td>0.595266</td>
+      <td>0.596266</td>
       <td>...</td>
       <td>0.0</td>
-      <td>1.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>0.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
     </tr>
   </tbody>
 </table>
@@ -1613,7 +1613,7 @@ dict_keys([&#39;log_p_t&#39;])
 <p>You can also have posterior predictive summaries with <code class="docutils literal notranslate"><span class="pre">get_posterior_predictives_summary</span></code>.</p>
 <p>Only mean accuracy for RL models fit on choices alone, and also mean RTs, skewness and quantiles for lower and upper boundaries for models fitted on RTs as well.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_rl</span><span class="o">.</span><span class="n">get_posterior_predictives_summary</span><span class="p">()</span>
@@ -1621,7 +1621,7 @@ dict_keys([&#39;log_p_t&#39;])
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1653,23 +1653,23 @@ dict_keys([&#39;log_p_t&#39;])
   <tbody>
     <tr>
       <th>1</th>
-      <td>0.797494</td>
+      <td>0.795019</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.799969</td>
+      <td>0.801052</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.794400</td>
+      <td>0.797184</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.808787</td>
+      <td>0.791615</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.797649</td>
+      <td>0.799969</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1677,23 +1677,23 @@ dict_keys([&#39;log_p_t&#39;])
     </tr>
     <tr>
       <th>496</th>
-      <td>0.801052</td>
+      <td>0.808942</td>
     </tr>
     <tr>
       <th>497</th>
-      <td>0.807550</td>
+      <td>0.806467</td>
     </tr>
     <tr>
       <th>498</th>
-      <td>0.802444</td>
+      <td>0.800124</td>
     </tr>
     <tr>
       <th>499</th>
-      <td>0.801825</td>
+      <td>0.794864</td>
     </tr>
     <tr>
       <th>500</th>
-      <td>0.800897</td>
+      <td>0.797494</td>
     </tr>
   </tbody>
 </table>
@@ -1701,7 +1701,7 @@ dict_keys([&#39;log_p_t&#39;])
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">get_posterior_predictives_summary</span><span class="p">()</span>
@@ -1709,7 +1709,7 @@ dict_keys([&#39;log_p_t&#39;])
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1765,83 +1765,83 @@ dict_keys([&#39;log_p_t&#39;])
   <tbody>
     <tr>
       <th>1</th>
-      <td>0.7000</td>
-      <td>0.603093</td>
-      <td>2.122648</td>
-      <td>0.367028</td>
-      <td>0.437728</td>
-      <td>0.542328</td>
-      <td>0.723928</td>
-      <td>1.095928</td>
-      <td>0.355328</td>
-      <td>0.434028</td>
-      <td>0.503828</td>
-      <td>0.604628</td>
-      <td>0.920528</td>
+      <td>0.6950</td>
+      <td>0.659221</td>
+      <td>1.950580</td>
+      <td>0.342181</td>
+      <td>0.451681</td>
+      <td>0.546281</td>
+      <td>0.768881</td>
+      <td>1.174981</td>
+      <td>0.346781</td>
+      <td>0.447281</td>
+      <td>0.560281</td>
+      <td>0.719981</td>
+      <td>1.096681</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.7725</td>
-      <td>0.611410</td>
-      <td>3.040186</td>
-      <td>0.346830</td>
-      <td>0.414830</td>
-      <td>0.525830</td>
-      <td>0.695830</td>
-      <td>0.968830</td>
-      <td>0.339830</td>
-      <td>0.420630</td>
-      <td>0.524830</td>
-      <td>0.653030</td>
-      <td>1.008830</td>
+      <td>0.6650</td>
+      <td>0.610764</td>
+      <td>1.442573</td>
+      <td>0.325404</td>
+      <td>0.410004</td>
+      <td>0.505004</td>
+      <td>0.671204</td>
+      <td>0.968104</td>
+      <td>0.326004</td>
+      <td>0.404504</td>
+      <td>0.533004</td>
+      <td>0.703504</td>
+      <td>1.022504</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.7275</td>
-      <td>0.686985</td>
-      <td>2.001093</td>
-      <td>0.368140</td>
-      <td>0.455540</td>
-      <td>0.558740</td>
-      <td>0.713740</td>
-      <td>1.022940</td>
-      <td>0.349740</td>
-      <td>0.460740</td>
-      <td>0.579740</td>
-      <td>0.781740</td>
-      <td>1.170740</td>
+      <td>0.7675</td>
+      <td>0.632673</td>
+      <td>1.970462</td>
+      <td>0.327698</td>
+      <td>0.425898</td>
+      <td>0.558298</td>
+      <td>0.720898</td>
+      <td>1.035498</td>
+      <td>0.328698</td>
+      <td>0.451898</td>
+      <td>0.547298</td>
+      <td>0.715298</td>
+      <td>0.967698</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.7075</td>
-      <td>0.623600</td>
-      <td>1.327933</td>
-      <td>0.373385</td>
-      <td>0.449985</td>
-      <td>0.557185</td>
-      <td>0.712385</td>
-      <td>1.133385</td>
-      <td>0.336185</td>
-      <td>0.413585</td>
-      <td>0.516185</td>
-      <td>0.682185</td>
-      <td>1.016585</td>
+      <td>0.7750</td>
+      <td>0.614867</td>
+      <td>1.862143</td>
+      <td>0.342095</td>
+      <td>0.444195</td>
+      <td>0.553195</td>
+      <td>0.647395</td>
+      <td>1.004795</td>
+      <td>0.334095</td>
+      <td>0.414195</td>
+      <td>0.514195</td>
+      <td>0.679595</td>
+      <td>1.010495</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.6600</td>
-      <td>0.616691</td>
-      <td>1.690637</td>
-      <td>0.350328</td>
-      <td>0.429828</td>
-      <td>0.549328</td>
-      <td>0.716328</td>
-      <td>1.036328</td>
-      <td>0.344828</td>
-      <td>0.430728</td>
-      <td>0.512828</td>
-      <td>0.662928</td>
-      <td>0.941228</td>
+      <td>0.7325</td>
+      <td>0.662094</td>
+      <td>2.412803</td>
+      <td>0.328424</td>
+      <td>0.427624</td>
+      <td>0.524224</td>
+      <td>0.670624</td>
+      <td>0.949424</td>
+      <td>0.348624</td>
+      <td>0.455224</td>
+      <td>0.557224</td>
+      <td>0.692224</td>
+      <td>1.154824</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1861,83 +1861,83 @@ dict_keys([&#39;log_p_t&#39;])
     </tr>
     <tr>
       <th>496</th>
-      <td>0.7500</td>
-      <td>0.633288</td>
-      <td>1.744174</td>
-      <td>0.360446</td>
-      <td>0.474046</td>
-      <td>0.550646</td>
-      <td>0.662546</td>
-      <td>0.990046</td>
-      <td>0.354346</td>
-      <td>0.440346</td>
-      <td>0.557646</td>
-      <td>0.689646</td>
-      <td>1.003046</td>
+      <td>0.7525</td>
+      <td>0.659754</td>
+      <td>1.792210</td>
+      <td>0.308849</td>
+      <td>0.410449</td>
+      <td>0.486449</td>
+      <td>0.759649</td>
+      <td>1.366649</td>
+      <td>0.350449</td>
+      <td>0.457449</td>
+      <td>0.574449</td>
+      <td>0.723449</td>
+      <td>1.024449</td>
     </tr>
     <tr>
       <th>497</th>
-      <td>0.7350</td>
-      <td>0.626251</td>
-      <td>1.708344</td>
-      <td>0.369431</td>
-      <td>0.459931</td>
-      <td>0.567431</td>
-      <td>0.734431</td>
-      <td>1.098431</td>
-      <td>0.364731</td>
-      <td>0.458231</td>
-      <td>0.525431</td>
-      <td>0.667831</td>
-      <td>1.014331</td>
+      <td>0.7275</td>
+      <td>0.685857</td>
+      <td>1.783357</td>
+      <td>0.353172</td>
+      <td>0.481772</td>
+      <td>0.564172</td>
+      <td>0.825772</td>
+      <td>1.197372</td>
+      <td>0.353172</td>
+      <td>0.463172</td>
+      <td>0.583172</td>
+      <td>0.764172</td>
+      <td>1.144172</td>
     </tr>
     <tr>
       <th>498</th>
-      <td>0.7525</td>
-      <td>0.650620</td>
-      <td>1.737055</td>
-      <td>0.377348</td>
-      <td>0.480748</td>
-      <td>0.591748</td>
-      <td>0.756348</td>
-      <td>1.205548</td>
-      <td>0.348748</td>
-      <td>0.424748</td>
-      <td>0.549748</td>
-      <td>0.690748</td>
-      <td>1.067748</td>
+      <td>0.7450</td>
+      <td>0.680626</td>
+      <td>1.898355</td>
+      <td>0.337911</td>
+      <td>0.453611</td>
+      <td>0.565611</td>
+      <td>0.788511</td>
+      <td>1.237111</td>
+      <td>0.348311</td>
+      <td>0.446711</td>
+      <td>0.573111</td>
+      <td>0.753311</td>
+      <td>1.161211</td>
     </tr>
     <tr>
       <th>499</th>
-      <td>0.7800</td>
-      <td>0.626368</td>
-      <td>1.493517</td>
-      <td>0.336625</td>
-      <td>0.459025</td>
-      <td>0.620725</td>
-      <td>0.765025</td>
-      <td>1.098525</td>
-      <td>0.355925</td>
-      <td>0.446725</td>
-      <td>0.545225</td>
-      <td>0.688525</td>
-      <td>0.942425</td>
+      <td>0.6325</td>
+      <td>0.623518</td>
+      <td>2.043904</td>
+      <td>0.341131</td>
+      <td>0.442331</td>
+      <td>0.541531</td>
+      <td>0.701931</td>
+      <td>0.952131</td>
+      <td>0.329531</td>
+      <td>0.410331</td>
+      <td>0.532531</td>
+      <td>0.693731</td>
+      <td>1.061731</td>
     </tr>
     <tr>
       <th>500</th>
-      <td>0.7625</td>
-      <td>0.637399</td>
-      <td>2.078619</td>
-      <td>0.344294</td>
-      <td>0.418894</td>
-      <td>0.540894</td>
-      <td>0.693094</td>
-      <td>0.855494</td>
-      <td>0.340894</td>
-      <td>0.428494</td>
-      <td>0.534894</td>
-      <td>0.693694</td>
-      <td>1.146094</td>
+      <td>0.7150</td>
+      <td>0.637039</td>
+      <td>1.942584</td>
+      <td>0.345599</td>
+      <td>0.429499</td>
+      <td>0.548499</td>
+      <td>0.642599</td>
+      <td>0.873699</td>
+      <td>0.344999</td>
+      <td>0.439499</td>
+      <td>0.550499</td>
+      <td>0.711999</td>
+      <td>1.086499</td>
     </tr>
   </tbody>
 </table>
@@ -1946,24 +1946,15 @@ dict_keys([&#39;log_p_t&#39;])
 </div>
 <p>You can also specify which quantiles you are interested in:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_lba</span><span class="o">.</span><span class="n">get_posterior_predictives_summary</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">quantiles</span><span class="o">=</span><span class="p">[</span><span class="mf">.1</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">.9</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/home/andrei/PycharmProjects/rlssm/rlssm/fit/fits_LBA.py:173: UserWarning: Cannot have more posterior predictive samples than posterior samples. Will continue with n_posterior_predictives=100
-  pp_rt, pp_acc = self.get_posterior_predictives(n_posterior_predictives, **kwargs)
-</pre></div></div>
-</div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -2011,63 +2002,63 @@ dict_keys([&#39;log_p_t&#39;])
   <tbody>
     <tr>
       <th>1</th>
-      <td>0.829167</td>
-      <td>1.753300</td>
-      <td>0.174493</td>
-      <td>1.523816</td>
-      <td>1.728478</td>
-      <td>2.286540</td>
-      <td>1.153288</td>
-      <td>1.708179</td>
-      <td>2.391702</td>
+      <td>0.865546</td>
+      <td>1.503017</td>
+      <td>-0.022723</td>
+      <td>1.497355</td>
+      <td>1.539443</td>
+      <td>1.611958</td>
+      <td>1.317700</td>
+      <td>1.497057</td>
+      <td>1.679515</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.925000</td>
-      <td>1.636785</td>
-      <td>0.121633</td>
-      <td>1.702577</td>
-      <td>1.903884</td>
-      <td>2.165853</td>
-      <td>1.127508</td>
-      <td>1.562667</td>
-      <td>2.160312</td>
+      <td>0.802521</td>
+      <td>1.482268</td>
+      <td>0.207850</td>
+      <td>1.410682</td>
+      <td>1.516611</td>
+      <td>1.713393</td>
+      <td>1.227206</td>
+      <td>1.450988</td>
+      <td>1.748205</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.775000</td>
-      <td>1.705099</td>
-      <td>0.228576</td>
-      <td>1.504233</td>
-      <td>1.821859</td>
-      <td>2.184460</td>
-      <td>1.044622</td>
-      <td>1.603953</td>
-      <td>2.409075</td>
+      <td>0.752101</td>
+      <td>1.453050</td>
+      <td>0.200321</td>
+      <td>1.316999</td>
+      <td>1.493360</td>
+      <td>1.722500</td>
+      <td>1.142782</td>
+      <td>1.393406</td>
+      <td>1.773245</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.866667</td>
-      <td>1.821112</td>
-      <td>-0.005845</td>
-      <td>1.582099</td>
-      <td>1.861148</td>
-      <td>2.415493</td>
-      <td>1.112720</td>
-      <td>1.827975</td>
-      <td>2.453325</td>
+      <td>0.726891</td>
+      <td>1.467530</td>
+      <td>0.185315</td>
+      <td>1.262656</td>
+      <td>1.465575</td>
+      <td>1.722948</td>
+      <td>1.075040</td>
+      <td>1.449333</td>
+      <td>1.880097</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.866667</td>
-      <td>1.735519</td>
-      <td>0.140312</td>
-      <td>1.443032</td>
-      <td>1.741435</td>
-      <td>2.307425</td>
-      <td>1.033040</td>
-      <td>1.722988</td>
-      <td>2.487626</td>
+      <td>0.983193</td>
+      <td>1.463748</td>
+      <td>0.119535</td>
+      <td>1.558720</td>
+      <td>1.577640</td>
+      <td>1.580694</td>
+      <td>1.347262</td>
+      <td>1.458113</td>
+      <td>1.580543</td>
     </tr>
     <tr>
       <th>...</th>
@@ -2083,63 +2074,63 @@ dict_keys([&#39;log_p_t&#39;])
     </tr>
     <tr>
       <th>96</th>
-      <td>0.854167</td>
-      <td>1.763710</td>
-      <td>0.150697</td>
-      <td>1.444318</td>
-      <td>1.808859</td>
-      <td>2.295962</td>
-      <td>1.106630</td>
-      <td>1.726433</td>
-      <td>2.449523</td>
+      <td>0.802521</td>
+      <td>1.389588</td>
+      <td>0.106364</td>
+      <td>1.249937</td>
+      <td>1.459542</td>
+      <td>1.598753</td>
+      <td>1.058776</td>
+      <td>1.367219</td>
+      <td>1.715357</td>
     </tr>
     <tr>
       <th>97</th>
-      <td>0.887500</td>
-      <td>1.723832</td>
-      <td>0.124932</td>
-      <td>1.529092</td>
-      <td>1.817219</td>
-      <td>2.078675</td>
-      <td>1.150373</td>
-      <td>1.674132</td>
-      <td>2.352047</td>
+      <td>0.575630</td>
+      <td>1.371771</td>
+      <td>0.550750</td>
+      <td>1.090424</td>
+      <td>1.318950</td>
+      <td>1.692849</td>
+      <td>1.044574</td>
+      <td>1.348189</td>
+      <td>1.855769</td>
     </tr>
     <tr>
       <th>98</th>
-      <td>0.937500</td>
-      <td>1.695637</td>
-      <td>0.030883</td>
-      <td>1.736310</td>
-      <td>1.914860</td>
-      <td>2.029197</td>
-      <td>1.125555</td>
-      <td>1.681367</td>
-      <td>2.250532</td>
+      <td>0.878151</td>
+      <td>1.432820</td>
+      <td>0.107643</td>
+      <td>1.418408</td>
+      <td>1.517654</td>
+      <td>1.596499</td>
+      <td>1.242809</td>
+      <td>1.412605</td>
+      <td>1.626983</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>0.908333</td>
-      <td>1.746476</td>
-      <td>-0.060062</td>
-      <td>1.705520</td>
-      <td>1.906129</td>
-      <td>2.156059</td>
-      <td>1.109492</td>
-      <td>1.750625</td>
-      <td>2.342846</td>
+      <td>0.726891</td>
+      <td>1.443787</td>
+      <td>0.073688</td>
+      <td>1.254460</td>
+      <td>1.481869</td>
+      <td>1.776201</td>
+      <td>1.071585</td>
+      <td>1.434670</td>
+      <td>1.803812</td>
     </tr>
     <tr>
       <th>100</th>
-      <td>0.875000</td>
-      <td>1.738689</td>
-      <td>0.194148</td>
-      <td>1.472822</td>
-      <td>1.774733</td>
-      <td>2.261526</td>
-      <td>1.101367</td>
-      <td>1.712212</td>
-      <td>2.406713</td>
+      <td>0.819328</td>
+      <td>1.451930</td>
+      <td>0.088089</td>
+      <td>1.353777</td>
+      <td>1.447670</td>
+      <td>1.620283</td>
+      <td>1.184140</td>
+      <td>1.430058</td>
+      <td>1.714080</td>
     </tr>
   </tbody>
 </table>
@@ -2148,7 +2139,7 @@ dict_keys([&#39;log_p_t&#39;])
 </div>
 <p>Finally, you can get summary for grouping variables (e.g., experimental conditions, trial blocks, etc.) in your data:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_lba</span><span class="o">.</span><span class="n">get_grouped_posterior_predictives_summary</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
@@ -2157,17 +2148,8 @@ dict_keys([&#39;log_p_t&#39;])
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/home/andrei/PycharmProjects/rlssm/rlssm/fit/fits_LBA.py:173: UserWarning: Cannot have more posterior predictive samples than posterior samples. Will continue with n_posterior_predictives=100
-  pp_rt, pp_acc = self.get_posterior_predictives(n_posterior_predictives, **kwargs)
-</pre></div></div>
-</div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -2218,63 +2200,63 @@ dict_keys([&#39;log_p_t&#39;])
     <tr>
       <th rowspan="5" valign="top">1</th>
       <th>1</th>
-      <td>0.8250</td>
-      <td>1.718735</td>
-      <td>0.172229</td>
-      <td>1.653732</td>
-      <td>1.338551</td>
-      <td>1.951279</td>
-      <td>1.632689</td>
-      <td>2.096885</td>
-      <td>1.984132</td>
+      <td>0.833333</td>
+      <td>1.508711</td>
+      <td>0.021785</td>
+      <td>1.535297</td>
+      <td>1.430379</td>
+      <td>1.549926</td>
+      <td>1.474647</td>
+      <td>1.579893</td>
+      <td>1.556533</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.9750</td>
-      <td>1.620113</td>
-      <td>0.171192</td>
-      <td>1.666122</td>
-      <td>1.321811</td>
-      <td>1.681589</td>
-      <td>1.570161</td>
-      <td>1.697056</td>
-      <td>1.896569</td>
+      <td>0.820513</td>
+      <td>1.476737</td>
+      <td>0.390176</td>
+      <td>1.458647</td>
+      <td>1.335498</td>
+      <td>1.471732</td>
+      <td>1.427239</td>
+      <td>1.586855</td>
+      <td>1.559105</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.8875</td>
-      <td>1.788441</td>
-      <td>0.289405</td>
-      <td>1.651215</td>
-      <td>1.468415</td>
-      <td>1.784749</td>
-      <td>1.665270</td>
-      <td>2.135992</td>
-      <td>2.033820</td>
+      <td>0.910256</td>
+      <td>1.494418</td>
+      <td>0.013134</td>
+      <td>1.477028</td>
+      <td>1.373930</td>
+      <td>1.572329</td>
+      <td>1.463729</td>
+      <td>1.627712</td>
+      <td>1.647589</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.9125</td>
-      <td>1.710564</td>
-      <td>0.297824</td>
-      <td>1.788257</td>
-      <td>1.335879</td>
-      <td>2.104282</td>
-      <td>1.582917</td>
-      <td>2.234939</td>
-      <td>1.989770</td>
+      <td>0.820513</td>
+      <td>1.479193</td>
+      <td>0.283464</td>
+      <td>1.352853</td>
+      <td>1.282285</td>
+      <td>1.407468</td>
+      <td>1.441528</td>
+      <td>1.540374</td>
+      <td>1.715972</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.9125</td>
-      <td>1.730842</td>
-      <td>0.078011</td>
-      <td>1.523436</td>
-      <td>1.442943</td>
-      <td>1.618799</td>
-      <td>1.715971</td>
-      <td>1.714907</td>
-      <td>2.049910</td>
+      <td>0.961538</td>
+      <td>1.465666</td>
+      <td>0.068359</td>
+      <td>1.562566</td>
+      <td>1.403977</td>
+      <td>1.563554</td>
+      <td>1.452731</td>
+      <td>1.571665</td>
+      <td>1.524112</td>
     </tr>
     <tr>
       <th>...</th>
@@ -2292,63 +2274,63 @@ dict_keys([&#39;log_p_t&#39;])
     <tr>
       <th rowspan="5" valign="top">3</th>
       <th>96</th>
-      <td>0.8250</td>
-      <td>1.754408</td>
-      <td>0.095044</td>
-      <td>1.527736</td>
-      <td>1.426556</td>
-      <td>1.705102</td>
-      <td>1.768600</td>
-      <td>1.802312</td>
-      <td>2.085204</td>
+      <td>0.775000</td>
+      <td>1.350429</td>
+      <td>0.253024</td>
+      <td>1.296836</td>
+      <td>1.170105</td>
+      <td>1.402674</td>
+      <td>1.317659</td>
+      <td>1.553225</td>
+      <td>1.453362</td>
     </tr>
     <tr>
       <th>97</th>
-      <td>0.8875</td>
-      <td>1.677931</td>
-      <td>0.135942</td>
-      <td>1.736514</td>
-      <td>1.395131</td>
-      <td>1.825153</td>
-      <td>1.614284</td>
-      <td>1.872564</td>
-      <td>1.876648</td>
+      <td>0.675000</td>
+      <td>1.361017</td>
+      <td>0.343404</td>
+      <td>1.193600</td>
+      <td>1.189726</td>
+      <td>1.250264</td>
+      <td>1.338865</td>
+      <td>1.467407</td>
+      <td>1.524034</td>
     </tr>
     <tr>
       <th>98</th>
-      <td>0.9500</td>
-      <td>1.635251</td>
-      <td>0.190669</td>
-      <td>1.848763</td>
-      <td>1.250129</td>
-      <td>1.890923</td>
-      <td>1.543695</td>
-      <td>1.944683</td>
-      <td>1.888064</td>
+      <td>0.912500</td>
+      <td>1.423218</td>
+      <td>0.143470</td>
+      <td>1.500225</td>
+      <td>1.337415</td>
+      <td>1.548262</td>
+      <td>1.393649</td>
+      <td>1.577230</td>
+      <td>1.489488</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>0.9500</td>
-      <td>1.825450</td>
-      <td>-0.134695</td>
-      <td>2.210354</td>
-      <td>1.502201</td>
-      <td>2.238145</td>
-      <td>1.774805</td>
-      <td>2.264940</td>
-      <td>2.163013</td>
+      <td>0.787500</td>
+      <td>1.435187</td>
+      <td>0.152147</td>
+      <td>1.339120</td>
+      <td>1.253501</td>
+      <td>1.514993</td>
+      <td>1.401620</td>
+      <td>1.679972</td>
+      <td>1.577356</td>
     </tr>
     <tr>
       <th>100</th>
-      <td>0.8375</td>
-      <td>1.721073</td>
-      <td>0.431813</td>
-      <td>1.589977</td>
-      <td>1.427311</td>
-      <td>1.625806</td>
-      <td>1.604059</td>
-      <td>1.875737</td>
-      <td>1.873138</td>
+      <td>0.825000</td>
+      <td>1.437230</td>
+      <td>0.337471</td>
+      <td>1.397306</td>
+      <td>1.298943</td>
+      <td>1.471934</td>
+      <td>1.379641</td>
+      <td>1.553757</td>
+      <td>1.536624</td>
     </tr>
   </tbody>
 </table>
@@ -2361,7 +2343,7 @@ dict_keys([&#39;log_p_t&#39;])
 <p>You can plot posterior predictives similarly, both <strong>ungrouped</strong> (across all trials) or <strong>grouped</strong> (across conditions, trial blocks, etc.plot_mean_posterior_predictives).</p>
 <p>For RT models, you have both <strong>mean plots</strong>, and <strong>quantile plots</strong>:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_ddm</span><span class="o">.</span><span class="n">plot_mean_posterior_predictives</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">200</span><span class="p">);</span>
@@ -2377,7 +2359,7 @@ dict_keys([&#39;log_p_t&#39;])
 </div>
 <p>Quantile plots have 2 main visualization options, “shades” and “lines”, and you can specify again which quantiles you want, which in tervals and alpha levels:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_lba</span><span class="o">.</span><span class="n">plot_quantiles_posterior_predictives</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">200</span><span class="p">);</span>
@@ -2385,13 +2367,12 @@ dict_keys([&#39;log_p_t&#39;])
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
 </div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/home/andrei/PycharmProjects/rlssm/rlssm/fit/fits_LBA.py:173: UserWarning: Cannot have more posterior predictive samples than posterior samples. Will continue with n_posterior_predictives=100
-  pp_rt, pp_acc = self.get_posterior_predictives(n_posterior_predictives, **kwargs)
-</pre></div></div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_inspect_model_33_0.png" src="../_images/notebooks_inspect_model_33_0.png" />
+</div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
@@ -2401,7 +2382,7 @@ dict_keys([&#39;log_p_t&#39;])
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_lba</span><span class="o">.</span><span class="n">plot_quantiles_posterior_predictives</span><span class="p">(</span><span class="n">n_posterior_predictives</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
@@ -2410,24 +2391,15 @@ dict_keys([&#39;log_p_t&#39;])
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/home/andrei/PycharmProjects/rlssm/rlssm/fit/fits_LBA.py:173: UserWarning: Cannot have more posterior predictive samples than posterior samples. Will continue with n_posterior_predictives=100
-  pp_rt, pp_acc = self.get_posterior_predictives(n_posterior_predictives, **kwargs)
-</pre></div></div>
-</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_inspect_model_34_1.png" src="../_images/notebooks_inspect_model_34_1.png" />
+<img alt="../_images/notebooks_inspect_model_34_0.png" src="../_images/notebooks_inspect_model_34_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_fit_lba</span><span class="o">.</span><span class="n">plot_quantiles_grouped_posterior_predictives</span><span class="p">(</span>
@@ -2446,7 +2418,7 @@ dict_keys([&#39;log_p_t&#39;])
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define new grouping variables:</span>
@@ -2468,7 +2440,7 @@ dict_keys([&#39;log_p_t&#39;])
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>

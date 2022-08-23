@@ -8,9 +8,10 @@ Welcome to rlssm's documentation
 
 `rlssm` is a Python package for fitting **reinforcement learning** (RL) models, **sequential sampling models** (DDM, RDM, LBA, ALBA, and ARDM), and **combinations of the two**, using **Bayesian parameter estimation**. 
 
-Parameter estimation is done at an individual or hierarchical level using `PyStan`_, the Python Interface to Stan. Stan performs Bayesian inference using the No-U-Turn sampler, a variant of Hamiltonian Monte Carlo.
+Parameter estimation is done at an individual or hierarchical level using `CmdPyStan`_, the Python interface to CmdStan, which provides access to the Stan compiler. Stan performs Bayesian inference using the No-U-Turn sampler, a variant of Hamiltonian Monte Carlo.
 
-.. _PyStan: https://pypi.org/project/pystan/
+.. _CmdPyStan: https://pypi.org/project/cmdstanpy/1.0.4/
+
 
 .. image:: _static/identicons.png
 
