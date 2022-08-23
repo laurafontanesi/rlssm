@@ -141,6 +141,20 @@
 <section id="quick-start">
 <h2>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this heading"></a></h2>
 <p>In order to install <strong>cmdstanpy</strong>, check the <a class="reference external" href="https://cmdstanpy.readthedocs.io/en/stable-0.9.65/getting_started.html">cmdstanpy documentation</a>.</p>
+<p>This block of code checks if the package and its dependencies are installed, displaying a success or fail message.</p>
+<p>..code-block:: &lt;python&gt;</p>
+<blockquote>
+<div><p>import rlssm
+model = rlssm.DDModel(hierarchical_levels=2)
+priors = model.priors
+print(priors)</p>
+<dl class="simple">
+<dt>if “mu_mu” in str(priors):</dt><dd><p>print(“Compiler test results: SUCCESS”)</p>
+</dd>
+<dt>else:</dt><dd><p>print(“Compiler test results: FAIL”)</p>
+</dd>
+</dl>
+</div></blockquote>
 </section>
 </section>
 
