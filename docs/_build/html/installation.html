@@ -141,20 +141,24 @@
 <section id="quick-start">
 <h2>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this heading"></a></h2>
 <p>In order to install <strong>cmdstanpy</strong>, check the <a class="reference external" href="https://cmdstanpy.readthedocs.io/en/stable-0.9.65/getting_started.html">cmdstanpy documentation</a>.</p>
-<p>This block of code checks if the package and its dependencies are installed, displaying a success or fail message.</p>
-<p>..code-block:: &lt;python&gt;</p>
-<blockquote>
-<div><p>import rlssm
-model = rlssm.DDModel(hierarchical_levels=2)
-priors = model.priors
-print(priors)</p>
-<dl class="simple">
-<dt>if “mu_mu” in str(priors):</dt><dd><p>print(“Compiler test results: SUCCESS”)</p>
-</dd>
-<dt>else:</dt><dd><p>print(“Compiler test results: FAIL”)</p>
-</dd>
-</dl>
-</div></blockquote>
+<p>This block of code checks if the package and its dependencies are installed.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rlssm.model.models_DDM</span> <span class="kn">import</span> <span class="n">DDModel</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">DDModel</span><span class="p">(</span><span class="n">hierarchical_levels</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">priors</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">priors</span>
+<span class="k">assert</span> <span class="n">model</span><span class="o">.</span><span class="n">priors</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;Priors of the model cannot be retrieved&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">priors</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As an alternative, run the compiler test by calling the function doing the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rlssm</span> <span class="kn">import</span> <span class="n">test_compiler</span>
+<span class="n">test_compiler</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If installed correctly, the output should be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;drift_priors&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;mu_mu&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;sd_mu&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;mu_sd&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd_sd&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span> <span class="s1">&#39;threshold_priors&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;mu_mu&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;sd_mu&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;mu_sd&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd_sd&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span> <span class="s1">&#39;ndt_priors&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;mu_mu&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;sd_mu&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;mu_sd&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd_sd&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}}</span>
+</pre></div>
+</div>
 </section>
 </section>
 
