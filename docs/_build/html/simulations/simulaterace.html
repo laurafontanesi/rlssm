@@ -132,76 +132,7 @@
 </div>
 <section id="in-numpy">
 <h2>In numpy<a class="headerlink" href="#in-numpy" title="Permalink to this heading"></a></h2>
-<span class="target" id="random-rdm-2a"></span><dl class="py function">
-<dt class="sig sig-object py" id="rlssm.random.random_RDM.random_rdm_2A">
-<span class="sig-prename descclassname"><span class="pre">rlssm.random.random_RDM.</span></span><span class="sig-name descname"><span class="pre">random_rdm_2A</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cor_drift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inc_drift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ndt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise_constant</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_rt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.random.random_RDM.random_rdm_2A" title="Permalink to this definition"></a></dt>
-<dd><p>Simulates behavior (rt and accuracy) according to the Racing Diffusion Model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>cor_drift</strong> (<em>numpy.ndarray</em>) – Drift-rate of the Racing Diffusion Model - correct trials.</p></li>
-<li><p><strong>inc_drift</strong> (<em>numpy.ndarray</em>) – Drift-rate of the Racing Diffusion Model - incorrect trials.</p></li>
-<li><p><strong>threshold</strong> (<em>numpy.ndarray</em>) – Shape is usually (n_samples, n_trials).
-Threshold of the diffusion decision model.</p></li>
-<li><p><strong>ndt</strong> (<em>numpy.ndarray</em>) – Shape is usually (n_samples, n_trials).
-Non decision time of the diffusion decision model, in seconds.</p></li>
-<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
-<li><p><strong>----------------</strong> – </p></li>
-<li><p><strong>noise_constant</strong> (<em>float</em><em>, </em><em>default 1</em>) – Scaling factor of the Racing Diffusion Model.
-If changed, drift and threshold would be scaled accordingly.
-Not to be changed in most applications.</p></li>
-<li><p><strong>dt</strong> (<em>float</em><em>, </em><em>default 0.001</em>) – Controls the time resolution of the Racing Diffusion Model. Default is 1 msec.
-Lower values of dt make the function more precise but much slower.</p></li>
-<li><p><strong>max_rt</strong> (<em>float</em><em>, </em><em>default 10</em>) – Controls the maximum rts that can be predicted.
-Making this higher might make the function a bit slower.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><strong>rt</strong> (<em>numpy.ndarray</em>) – Shape is the same as the input parameters.
-Contains simulated response times according to the Racing Diffusion Model.
-Every element corresponds to the set of parameters given as input with the same shape.</p></li>
-<li><p><strong>acc</strong> (<em>numpy.ndarray</em>) – Shape is the same as the input parameters.
-Contains simulated accuracy according to the Racing Diffusion Model.
-Every element corresponds to the set of parameters given as input with the same shape.</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<span class="target" id="random-lba-2a"></span><dl class="py function">
-<dt class="sig sig-object py" id="rlssm.random.random_LBA.random_lba_2A">
-<span class="sig-prename descclassname"><span class="pre">rlssm.random.random_LBA.</span></span><span class="sig-name descname"><span class="pre">random_lba_2A</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cor_drift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inc_drift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sp_trial_var</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ndt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_trial_var</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.random.random_LBA.random_lba_2A" title="Permalink to this definition"></a></dt>
-<dd><p>Simulates behavior (rt and accuracy) according to the Linear Ballistic Accumulator.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>cor_drift</strong> (<em>numpy.ndarray</em>) – Drift-rate of the Linear Ballistic Accumulator - correct responses. 1D array of floats.</p></li>
-<li><p><strong>inc_drift</strong> (<em>numpy.ndarray</em>) – Drift-rate of the Linear Ballistic Accumulator - incorrect responses. 1D array of floats.</p></li>
-<li><p><strong>sp_trial_var</strong> (<em>float</em>) – Starting point variability of the Linear Ballistic Accumulator. Also called A.</p></li>
-<li><p><strong>ndt</strong> (<em>float</em>) – Non-decision time of the Linear Ballistic Accumulator. Also called tau.</p></li>
-<li><p><strong>k</strong> (<em>float</em>) – Distance between starting point variability and threshold.</p></li>
-<li><p><strong>parameters</strong> (<em>Optional</em>) – </p></li>
-<li><p><strong>-------------------</strong> – </p></li>
-<li><p><strong>drift_trial_var</strong> (<em>numpy.ndarray</em><em>, </em><em>default None</em>) – The drift rate trial variability. 1D array of 0s and 1s.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><strong>rt</strong> (<em>numpy.ndarray</em>) – Shape is the same as the input parameters.
-Contains simulated response times according to the Linear Ballistic Accumulator.
-Every element corresponds to the set of parameters given as input with the same shape.</p></li>
-<li><p><strong>acc</strong> (<em>numpy.ndarray</em>) – Shape is the same as the input parameters.
-Contains simulated accuracy according to the Linear Ballistic Accumulator.
-Every element corresponds to the set of parameters given as input with the same shape.</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-</section>
+<span class="target" id="random-lba-2a"><span id="random-rdm-2a"></span></span></section>
 </section>
 
 

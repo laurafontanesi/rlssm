@@ -1,8 +1,6 @@
 ModelResults class for DDMs (or RLDDMs)
 =======================================
 
-.. currentmodule:: rlssm.fit.fits_DDM
-
 There is one class to inspect model fits of **DDM or combinations of RL and DDM (fitted on choices and response times)**: :ref:`DDModelResults <DDModelResults>`.
 
 The main functions of this class are:
@@ -19,18 +17,18 @@ All models
 ----------
 
 .. _ModelResults:
-.. autoclass:: ModelResults
+.. autoclass:: rlssm.fit.fits_DDM.ModelResults
     :members:
 
 Diffusion decision models
 -------------------------
 
 .. _DDModelResults:
-.. autoclass:: DDModelResults
+.. autoclass:: rlssm.fit.fits_DDM.DDModelResults
     :members:
 
-	:show-inheritance:
-	:inherited-members:
+    :show-inheritance:
+    :inherited-members:
 
 Reinforcement learning diffusion decision models
 ------------------------------------------------

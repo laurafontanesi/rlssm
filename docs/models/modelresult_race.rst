@@ -1,8 +1,6 @@
 ModelResults class for race (or RL+race) models
 ===============================================
 
-.. currentmodule:: rlssm.fit.fits_LBA
-
 The race models are of types **LBA, ALBA, RDM, ARDM**. There is one class to inspect model fits of **race models LBA and ALBA** (:ref:`LBAModelResults_2A <LBAModelResults_2A>`),
 and one for **race models RDM and ARDM** (:ref:`RDMModelResults_2A <RDMModelResults_2A>`).
 These classes also represent combinations of **RL and race models (fitted on choices and response times)**.

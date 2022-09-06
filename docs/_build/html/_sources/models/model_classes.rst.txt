@@ -1,8 +1,6 @@
 Model classes
 =============
 
-.. currentmodule:: rlssm
-
 These classes can be used to define different available models. Currently, 5 classes of models are implemented in `rlssm`:
 
 1. simple reinforcement learning models: :ref:`RLModel_2A <RLModel_2A>`
@@ -19,7 +17,7 @@ Reinforcement learning models (for 2 alternatives)
 --------------------------------------------------
 
 .. _RLModel_2A:
-.. autoclass:: RLModel_2A
+.. autoclass:: rlssm.model.models_RL.RLModel_2A
     :members:
 
     .. automethod:: __init__
@@ -28,7 +26,7 @@ Diffusion decision models
 -------------------------
 
 .. _DDModel:
-.. autoclass:: DDModel
+.. autoclass:: rlssm.model.models_DDM.DDModel
     :members:
 
     .. automethod:: __init__
@@ -37,7 +35,7 @@ Reinforcement learning diffusion decision models
 ------------------------------------------------
 
 .. _RLDDModel:
-.. autoclass:: RLDDModel
+.. autoclass:: rlssm.model.models_DDM.RLDDModel
     :members:
 
     .. automethod:: __init__
@@ -46,25 +44,25 @@ Race models (for 2 alternatives)
 --------------------------------
 
 .. _RDModel_2A:
-.. autoclass:: RDModel_2A
+.. autoclass:: rlssm.model.models_RDM.RDModel_2A
     :members:
 
     .. automethod:: __init__
 
 .. _LBAModel_2A:
-.. autoclass:: LBAModel_2A
+.. autoclass:: rlssm.model.models_LBA.LBAModel_2A
     :members:
 
     .. automethod:: __init__
 
 .. _ARDModel_2A:
-.. autoclass:: ARDModel_2A
+.. autoclass:: rlssm.model.models_ARDM.ARDModel_2A
     :members:
 
     .. automethod:: __init__
 
 .. _ALBAModel_2A:
-.. autoclass:: ALBAModel_2A
+.. autoclass:: rlssm.model.models_ALBA.ALBAModel_2A
     :members:
 
     .. automethod:: __init__
@@ -73,25 +71,25 @@ Reinforcement learning race models (for 2 alternatives)
 -------------------------------------------------------
 
 .. _RLRDModel_2A:
-.. autoclass:: RLRDModel_2A
+.. autoclass:: rlssm.model.models_RDM.RLRDModel_2A
     :members:
 
     .. automethod:: __init__
 
 .. _RLLBAModel_2A:
-.. autoclass:: RLLBAModel_2A
+.. autoclass:: rlssm.model.models_ALBA.RLLBAModel_2A
     :members:
 
     .. automethod:: __init__
 
 .. _RLARDModel_2A:
-.. autoclass:: RLARDModel_2A
+.. autoclass:: rlssm.model.models_ARDM.RLARDModel_2A
     :members:
 
     .. automethod:: __init__
 
 .. _RLALBAModel_2A:
-.. autoclass:: RLALBAModel_2A
+.. autoclass:: rlssm.model.models_ALBA.RLALBAModel_2A
     :members:
 
     .. automethod:: __init__

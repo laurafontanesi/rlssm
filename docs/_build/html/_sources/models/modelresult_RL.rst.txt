@@ -1,8 +1,6 @@
 ModelResults class for RL models
 ================================
 
-.. currentmodule:: rlssm.fit.fits_RL
-
 There is one class to inspect model fits of **RL models (fitted on choices alone)**: :ref:`RLModelResults_2A <RLModelResults_2A>`.
 
 The main functions of this class are:
@@ -19,14 +17,14 @@ All models
 ----------
 
 .. _ModelResults:
-.. autoclass:: ModelResults
+.. autoclass:: rlssm.fit.fits_RL.ModelResults
     :members:
 
 Reinforcement learning models
 -----------------------------
 
 .. _RLModelResults_2A:
-.. autoclass:: RLModelResults_2A 
+.. autoclass:: rlssm.fit.fits_RL.RLModelResults_2A
     :members:
 
     :show-inheritance:
