@@ -1,3 +1,5 @@
+.. currentmodule:: rlssm
+
 Simulate data with RL models, RLDDMs, and RL+race models
 ========================================================
 

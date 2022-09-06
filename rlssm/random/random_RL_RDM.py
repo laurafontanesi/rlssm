@@ -16,7 +16,7 @@ def simulate_rlrdm_2A(task_design,
                       nonlinear_mapping=False,
                       initial_value_learning=0,
                       **kwargs):
-    """Simulates behavior (rt and accuracy) according to the RL-RDM model.
+    """Simulates behavior (rt and accuracy) according to the RLRDM model.
 
     Parameters
     ----------
@@ -34,7 +34,7 @@ def simulate_rlrdm_2A(task_design,
         for positive and negative prediction error are used.
 
     gen_drift_scaling:
-        Drift-rate scaling of the RL-RDM model.
+        Drift-rate scaling of the RLRDM model.
 
     gen_threshold : float
         Threshold of the diffusion decision model.
@@ -43,9 +43,6 @@ def simulate_rlrdm_2A(task_design,
     gen_ndt : float
         Non decision time of the diffusion decision model, in seconds.
         Should be positive.
-
-    Optional Parameters
-    -------------------
 
     gen_slop : float, default None
         Slope of the drift-rate function of the RL-RDM model.
@@ -63,22 +60,17 @@ def simulate_rlrdm_2A(task_design,
     ----------------
 
     **kwargs : dict
-        Additional parameters to be passed to `random_lba_2A`.
+        Additional parameters to be passed further.
 
     Returns
     -------
 
     data : DataFrame
-        `pandas.DataFrame`, with n_trials rows.
-        Columns contain simulated response times and accuracy ["rt", "accuracy"],
-        as well as the generating parameters
-        (both for each trial and across-trials when there is across-trial variability).
 
     Examples
     --------
 
-        >>> data = simulate_rlrdm_2A(task_design=dm, gen_drift_scaling=.1,
-                                      gen_threshold=1, gen_ndt=.23, initial_value_learning=0)
+        >>> data = simulate_rlrdm_2A(task_design=dm, gen_drift_scaling=.1, gen_threshold=1, gen_ndt=.23, initial_value_learning=0)
         >>> print(data.head())
 
                                              trial trial_type  ...     rt  accuracy
@@ -224,16 +216,12 @@ def simulate_hier_rlrdm_2A(task_design,
     ----------------
 
     **kwargs : dict
-        Additional keyword arguments are passed.
+        Additional arguments to be passed further.
 
     Returns
     -------
 
     data : DataFrame
-        `pandas.DataFrame`, with n_trials rows.
-        Columns contain simulated response times and accuracy ["rt", "accuracy"],
-        as well as the generating parameters
-        (both for each trial and across-trials when there is across-trial variability).
     """
     data = task_design.copy()
     participants = pd.unique(data["participant"])

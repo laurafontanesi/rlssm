@@ -1,3 +1,5 @@
+.. currentmodule:: rlssm
+
 Simulate data with race models
 ==============================
 

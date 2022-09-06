@@ -123,8 +123,8 @@ class RDMModelResults_2A(ModelResults):
     def get_posterior_predictives_df(self, n_posterior_predictives=500, **kwargs):
         """Calculates posterior predictives of choices and response times.
 
-        Optional Parameters
-        -------------------
+        Parameters
+        ----------
 
         n_posterior_predictives : int, default 500
              Number of posterior samples to use for posterior predictives calculation.

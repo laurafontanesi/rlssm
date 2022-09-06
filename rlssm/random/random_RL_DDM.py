@@ -61,9 +61,6 @@ def simulate_rlddm_2A(task_design,
         Non decision time of the diffusion decision model, in seconds.
         Should be positive.
 
-    Optional Parameters
-    -------------------
-
     initial_value_learning : float, default 0
         The initial value for Q learning.
 
@@ -71,22 +68,17 @@ def simulate_rlddm_2A(task_design,
     ----------------
 
     **kwargs : dict
-        Additional arguments to `rlssm.random.random_ddm`.
+        Additional arguments to be passed further.
 
     Returns
     -------
 
     data : DataFrame
-        `pandas.DataFrame`, that is the task_design, plus:
-        'Q_cor', 'Q_inc', 'drift', 'alpha', 'drift_scaling',
-        'threshold', 'ndt', 'rt', and 'accuracy'.
 
     Examples
     --------
 
-        >>> data_non_hier = simulate_rlddm_2A(task_design=self.dm_2_non_hier_alpha, gen_alpha=[.1, .01],
-                                              gen_drift_scaling=.1, gen_threshold=1,
-                                              gen_ndt=.23, initial_value_learning=0)
+        >>> data_non_hier = simulate_rlddm_2A(task_design=self.dm_2_non_hier_alpha, gen_alpha=[.1, .01], gen_drift_scaling=.1, gen_threshold=1, gen_ndt=.23, initial_value_learning=0)
         >>> print(data_non_hier.head())
 
                                              trial trial_type  ...        rt  accuracy
@@ -187,9 +179,6 @@ def simulate_hier_rlddm_2A(task_design,
 
     task_design : DataFrame
         `pandas.DataFrame`, with n_trials_block*n_blocks rows.
-        Columns contain:
-        "f_cor", "f_inc", "trial_type", "cor_option", "inc_option",
-        "trial_block", "block_label", "participant".
 
     gen_mu_alpha : float or list of floats
         The generating group mean of the learning rate.
@@ -233,25 +222,17 @@ def simulate_hier_rlddm_2A(task_design,
     ----------------
 
     **kwargs : dict
-        Additional arguments to `rlssm.random.random_ddm`.
+        Additional arguments to be passed further.
 
     Returns
     -------
 
     data : DataFrame
-        `pandas.DataFrame`, that is the task_design, plus:
-        'Q_cor', 'Q_inc', 'drift', 'alpha', 'drift_scaling',
-        'threshold', 'ndt', 'rt', and 'accuracy'.
 
     Examples
     --------
 
-        >>> data_hier_2alpha = simulate_hier_rlddm_2A(task_design=dm_hier,
-                                                       gen_mu_alpha=[-.5, -1], gen_sd_alpha=[.1, .1],
-                                                       gen_mu_drift_scaling=.1, gen_sd_drift_scaling=.5,
-                                                       gen_mu_threshold=1, gen_sd_threshold=.1,
-                                                       gen_mu_ndt=.23, gen_sd_ndt=.05,
-                                                       initial_value_learning=20)
+        >>> data_hier_2alpha = simulate_hier_rlddm_2A(task_design=dm_hier, gen_mu_alpha=[-.5, -1], gen_sd_alpha=[.1, .1], gen_mu_drift_scaling=.1, gen_sd_drift_scaling=.5, gen_mu_threshold=1, gen_sd_threshold=.1, gen_mu_ndt=.23, gen_sd_ndt=.05, initial_value_learning=20)
         >>> print(data_hier_2alpha.head())
 
                                              trial trial_type  ...        rt  accuracy

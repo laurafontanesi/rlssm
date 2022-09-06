@@ -1,3 +1,5 @@
+.. currentmodule:: rlssm
+
 Model classes
 =============
 

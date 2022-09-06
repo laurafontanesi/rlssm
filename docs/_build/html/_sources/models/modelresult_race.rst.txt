@@ -1,3 +1,5 @@
+.. currentmodule:: rlssm
+
 ModelResults class for race (or RL+race) models
 ===============================================
 
