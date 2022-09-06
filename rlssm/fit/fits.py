@@ -211,17 +211,15 @@ class ModelResults(object):
         self.trial_samples = trial_samples
 
     def to_pickle(self, filename=None):
-        """Pickle the fitted model's results object to file.
+        """Pickle the fitted model's results object to file. This can be used to store the model's result and read
+        them and inspect them at a later stage, without having to refit the model.
 
-        This can be used to store the model's result
-        and read them and inspect them at a later stage,
-        without having to refit the model.
-
-        Optional Parameters
-        -------------------
+        Parameters
+        ----------
 
         filename : str, default None
             File path where the pickled object will be stored. If not specified, name determined by pickle package.
+
         """
 
         dir_path = os.getcwd()  # os.path.dirname(os.path.realpath(__file__))
@@ -241,13 +239,10 @@ class ModelResults(object):
                         alpha_intervals=.05,
                         intervals_kws=None,
                         **kwargs):
-        """Plots posterior predictives of the model's parameters.
-
-        If the model is hierarchical, then only the group parameters are plotted.
-        In particular, group means are plotted in the first row
-        and group standard deviations are plotted in the second row.
-        By default, 95 percent HDI are shown.
-        The kernel density estimation is calculated using scipy.stats.gaussian_kde.
+        """Plots posterior predictives of the model's parameters. If the model is hierarchical, then only the group
+        parameters are plotted. In particular, group means are plotted in the first row and group standard deviations
+        are plotted in the second row. By default, 95 percent HDI are shown.  The kernel density estimation is
+        calculated using scipy.stats.gaussian_kde.
 
         Parameters
         ----------

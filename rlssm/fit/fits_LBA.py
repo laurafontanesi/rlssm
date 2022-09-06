@@ -176,14 +176,12 @@ class LBAModelResults_2A(ModelResults):
                                           n_posterior_predictives=500,
                                           quantiles=None,
                                           **kwargs):
-        """Calculates summary of posterior predictives of choices and response times.
+        """Calculates summary of posterior predictives of choices and response times. The mean proportion of choices
+        (in this case coded as accuracy) is calculated for each posterior sample across all trials. Response times are
+        summarized using mean, skewness, and quantiles.
 
-        The mean proportion of choices (in this case coded as accuracy) is calculated
-        for each posterior sample across all trials.
-        Response times are summarized using mean, skewness, and quantiles.
-
-        Optional Parameters
-        -------------------
+        Parameters
+        ----------
 
         n_posterior_predictives : int, default 500
              Number of posterior samples to use for posterior predictives calculation.

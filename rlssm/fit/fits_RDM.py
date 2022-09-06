@@ -62,15 +62,10 @@ class RDMFittedModel_2A(FittedModel):
 
         samples = self.stan_model.draws_pd(vars=main_parameters) 
 
-        trial_samples = {'drift_cor_t': None,
-                         'drift_inc_t': None,
-                         'threshold_t': None, 
-                         'ndt_t': None}
-        
-        trial_samples['drift_cor_t'] = np.asarray(self.stan_model.draws_pd(vars=['drift_cor_t']))
-        trial_samples['drift_inc_t'] = np.asarray(self.stan_model.draws_pd(vars=['drift_inc_t']))
-        trial_samples['threshold_t'] = np.asarray(self.stan_model.draws_pd(vars=['threshold_t']))
-        trial_samples['ndt_t'] = np.asarray(self.stan_model.draws_pd(vars=['ndt_t']))
+        trial_samples = {'drift_cor_t': np.asarray(self.stan_model.draws_pd(vars=['drift_cor_t'])),
+                         'drift_inc_t': np.asarray(self.stan_model.draws_pd(vars=['drift_inc_t'])),
+                         'threshold_t': np.asarray(self.stan_model.draws_pd(vars=['threshold_t'])),
+                         'ndt_t': np.asarray(self.stan_model.draws_pd(vars=['ndt_t']))}
 
         res = RDMModelResults_2A(self.model_label,
                                  self.data_info,
@@ -169,14 +164,12 @@ class RDMModelResults_2A(ModelResults):
                                           n_posterior_predictives=500,
                                           quantiles=None,
                                           **kwargs):
-        """Calculates summary of posterior predictives of choices and response times.
+        """Calculates summary of posterior predictives of choices and response times. The mean proportion of choices
+        (in this case coded as accuracy) is calculated for each posterior sample across all trials. Response times
+        are summarized using mean, skewness, and quantiles.
 
-        The mean proportion of choices (in this case coded as accuracy) is calculated
-        for each posterior sample across all trials.
-        Response times are summarized using mean, skewness, and quantiles.
-
-        Optional Parameters
-        -------------------
+        Parameters
+        ----------
 
         n_posterior_predictives : int, default 500
              Number of posterior samples to use for posterior predictives calculation.
