@@ -138,12 +138,12 @@
 </ul>
 <section id="all-models">
 <h2>All models<a class="headerlink" href="#all-models" title="Permalink to this heading"></a></h2>
-<span class="target" id="modelresults-ddm"></span><dl class="py class">
-<dt class="sig sig-object py" id="rlssm.fit.fits_DDM.ModelResults">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rlssm.fit.fits_DDM.</span></span><span class="sig-name descname"><span class="pre">ModelResults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">priors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rhat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">waic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trial_samples</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fit.fits_DDM.ModelResults" title="Permalink to this definition"></a></dt>
+<dl class="py class">
+<dt class="sig sig-object py" id="rlssm.fit.fits.ModelResults">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rlssm.fit.fits.</span></span><span class="sig-name descname"><span class="pre">ModelResults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">priors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rhat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">waic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trial_samples</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fit.fits.ModelResults" title="Permalink to this definition"></a></dt>
 <dd><dl class="py method">
-<dt class="sig sig-object py" id="rlssm.fit.fits_DDM.ModelResults.plot_posteriors">
-<span class="sig-name descname"><span class="pre">plot_posteriors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gridsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clip</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_intervals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'HDI'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_intervals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intervals_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fit.fits_DDM.ModelResults.plot_posteriors" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="rlssm.fit.fits.ModelResults.plot_posteriors">
+<span class="sig-name descname"><span class="pre">plot_posteriors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gridsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clip</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_intervals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'HDI'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_intervals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intervals_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fit.fits.ModelResults.plot_posteriors" title="Permalink to this definition"></a></dt>
 <dd><p>Plots posterior predictives of the model’s parameters. If the model is hierarchical, then only the group
 parameters are plotted. In particular, group means are plotted in the first row and group standard deviations
 are plotted in the second row. By default, 95 percent HDI are shown.  The kernel density estimation is
@@ -175,8 +175,8 @@ By default, they are 50 percent transparent.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="rlssm.fit.fits_DDM.ModelResults.to_pickle">
-<span class="sig-name descname"><span class="pre">to_pickle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fit.fits_DDM.ModelResults.to_pickle" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="rlssm.fit.fits.ModelResults.to_pickle">
+<span class="sig-name descname"><span class="pre">to_pickle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.fit.fits.ModelResults.to_pickle" title="Permalink to this definition"></a></dt>
 <dd><p>Pickle the fitted model’s results object to file. This can be used to store the model’s result and read
 them and inspect them at a later stage, without having to refit the model.</p>
 <dl class="field-list simple">
@@ -219,8 +219,6 @@ for all combinations of levels of the reward and difficulty variables.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>grouping_vars</strong> (<em>list of strings</em>) – They should be existing grouping variables in the data.</p></li>
-<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
-<li><p><strong>-------------------</strong> – </p></li>
 <li><p><strong>n_posterior_predictives</strong> (<em>int</em>) – Number of posterior samples to use for posterior predictives calculation.
 If n_posterior_predictives is bigger than the posterior samples,
 then calculation will continue with the total number of posterior samples.</p></li>
@@ -336,8 +334,6 @@ with a different color per variable level.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>grouping_vars</strong> (<em>list of strings</em>) – They should be existing grouping variables in the data.
 The list should be of lenght 1 or 2.</p></li>
-<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
-<li><p><strong>-------------------</strong> – </p></li>
 <li><p><strong>n_posterior_predictives</strong> (<em>int</em>) – Number of posterior samples to use for posterior predictives calculation.
 If n_posterior_predictives is bigger than the posterior samples,
 then calculation will continue with the total number of posterior samples.</p></li>
@@ -398,8 +394,6 @@ The same is done for response times, and are plotted one next to each other.</p>
 <li><p><strong>n_posterior_predictives</strong> (<em>int</em>) – Number of posterior samples to use for posterior predictives calculation.
 If n_posterior_predictives is bigger than the posterior samples,
 then calculation will continue with the total number of posterior samples.</p></li>
-<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
-<li><p><strong>-------------------</strong> – </p></li>
 <li><p><strong>figsize</strong> (<em>tuple</em>) – figure size of the matplotlib figure</p></li>
 <li><p><strong>post_pred_kws</strong> (<em>dictionary</em>) – Additional parameters to get_posterior_predictives_summary.</p></li>
 <li><p><strong>**kwargs</strong> (<em>dict</em>) – Keyword arguments to be passed to the <cite>plotting.plot_mean_prediction</cite>.</p></li>
@@ -440,8 +434,6 @@ separately for correct/incorrect responses, and 1 grouping variable.</p>
 <li><p><strong>n_posterior_predictives</strong> (<em>int</em>) – Number of posterior samples to use for posterior predictives calculation.
 If n_posterior_predictives is bigger than the posterior samples,
 then calculation will continue with the total number of posterior samples.</p></li>
-<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
-<li><p><strong>-------------------</strong> – </p></li>
 <li><p><strong>grouping_var</strong> (<em>string</em>) – Should be an existing grouping variable in the data.</p></li>
 <li><p><strong>quantiles</strong> (<em>list of floats</em>) – Quantiles to summarize response times distributions
 (separately for correct/incorrect) with.</p></li>

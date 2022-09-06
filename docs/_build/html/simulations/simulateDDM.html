@@ -168,8 +168,6 @@ so the input value is the same (no bias still corresponds to .5).</p>
 Should be positive.</p></li>
 <li><p><strong>gen_ndt</strong> (<em>float</em>) – Non decision time of the diffusion decision model, in seconds.
 Should be positive.</p></li>
-<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
-<li><p><strong>-------------------</strong> – </p></li>
 <li><p><strong>gen_rel_sp</strong> (<em>float</em><em>, </em><em>default .5</em>) – Relative starting point of the diffusion decision model.
 Should be higher than 0 and smaller than 1.
 When is 0.5 (default), there is no bias.</p></li>
@@ -280,8 +278,6 @@ of the diffusion decision model.</p></li>
 of the diffusion decision model.</p></li>
 <li><p><strong>gen_sd_ndt</strong> (<em>float</em>) – Group-standard deviation of the non decision time
 of the diffusion decision model.</p></li>
-<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
-<li><p><strong>-------------------</strong> – </p></li>
 <li><p><strong>gen_mu_rel_sp</strong> (<em>float</em><em>, </em><em>default .5</em>) – Relative starting point of the diffusion decision model.
 When <cite>gen_sd_rel_sp</cite> is not specified, <cite>gen_mu_rel_sp</cite> is
 fixed across participants.
@@ -401,8 +397,6 @@ Drift-rate of the diffusion decision model.</p></li>
 Threshold of the diffusion decision model.</p></li>
 <li><p><strong>ndt</strong> (<em>numpy.ndarray</em>) – Shape is usually (n_samples, n_trials).
 Non decision time of the diffusion decision model, in seconds.</p></li>
-<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
-<li><p><strong>-------------------</strong> – </p></li>
 <li><p><strong>rel_sp</strong> (<em>numpy.ndarray</em><em> or </em><em>float</em><em>, </em><em>default .5</em>) – When is an array , shape is usually (n_samples, n_trials).
 Relative starting point of the diffusion decision model.</p></li>
 <li><p><strong>noise_constant</strong> (<em>float</em><em>, </em><em>default 1</em>) – Scaling factor of the diffusion decision model.
@@ -456,8 +450,6 @@ Drift-rate of the diffusion decision model.</p></li>
 Threshold of the diffusion decision model.</p></li>
 <li><p><strong>ndt</strong> (<em>numpy.ndarray</em><em> or </em><em>float</em>) – Shape is usually (n_samples, n_trials).
 Non decision time of the diffusion decision model, in seconds.</p></li>
-<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
-<li><p><strong>-------------------</strong> – </p></li>
 <li><p><strong>rel_sp</strong> (<em>numpy.ndarray</em><em> or </em><em>float</em><em>, </em><em>default .5</em>) – When is an array , shape is usually (n_samples, n_trials).
 Relative starting point of the diffusion decision model.</p></li>
 <li><p><strong>noise_constant</strong> (<em>float</em><em>, </em><em>default 1</em>) – Scaling factor of the diffusion decision model.

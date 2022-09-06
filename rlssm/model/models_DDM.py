@@ -28,12 +28,12 @@ class DDModel(Model):
 
         Parameters
         ----------
+
         hierarchical_levels : int
             Set to 1 for individual data and to 2 for grouped data.
 
         starting_point_bias : bool, default False
-            By default, there is no starting point bias.
-            If set to True, the starting point bias is estimated.
+            By default, there is no starting point bias. If set to True, the starting point bias is estimated.
 
         drift_variability : bool, default False
             By default, there is no drift-rate variability across trials.
@@ -41,24 +41,23 @@ class DDModel(Model):
 
         starting_point_variability : bool, default False
             By default, there is no starting point bias variability across trials.
-            If set to True, the standard deviation of the starting point bias across trials
-            is estimated.
+            If set to True, the standard deviation of the starting point bias across trials is estimated.
 
         drift_starting_point_correlation : bool, default False
             By default, the correlation between these 2 parameters is not estimated.
-            If set to True, the 2 parameters are assumed to come
-            from a multinormal distribution.
+            If set to True, the 2 parameters are assumed to come from a multinormal distribution.
             Only relevant when drift_variability and starting_point_variability are True.
 
         drift_starting_point_beta_correlation : bool, default False
-            If True, trial-by-trial drift-rate, rel_sp and an external
-            variable beta are assumed to come from a multinormal distribution.
-                 Only relevant when drift_variability and starting_point_variability are True.
+            If True, trial-by-trial drift-rate, rel_sp and an external variable beta
+            are assumed to come from a multinormal distribution.
+            Only relevant when drift_variability and starting_point_variability are True.
 
         drift_starting_point_regression : bool, default False
-            If True, two regression coefficients are estimated, for trial drift
-            and relative starting point, and an external variable beta.
+            If True, two regression coefficients are estimated, for trial drift and
+            relative starting point, and an external variable beta.
             Only relevant when drift_variability and starting_point_variability are True.
+
         """
         super().__init__(hierarchical_levels, "DDM")
 

@@ -18,7 +18,6 @@ The main functions of this class are:
 All models
 ----------
 
-.. _ModelResults:
 .. autoclass:: rlssm.fit.fits.ModelResults
     :members:
 

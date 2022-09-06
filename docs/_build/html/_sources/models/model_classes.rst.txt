@@ -79,7 +79,7 @@ Reinforcement learning race models (for 2 alternatives)
     .. automethod:: __init__
 
 .. _RLLBAModel_2A:
-.. autoclass:: rlssm.model.models_ALBA.RLLBAModel_2A
+.. autoclass:: rlssm.model.models_LBA.RLLBAModel_2A
     :members:
 
     .. automethod:: __init__

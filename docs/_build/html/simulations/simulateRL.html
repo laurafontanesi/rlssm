@@ -211,8 +211,6 @@ for positive and negative prediction error are used.</p></li>
 <li><p><strong>gen_sensitivity</strong> (<em>float</em>) – The generating sensitivity parameter for the soft_max choice rule.
 It should be a value higher than 0
 (the higher, the more sensitivity to value differences).</p></li>
-<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
-<li><p><strong>-------------------</strong> – </p></li>
 <li><p><strong>initial_value_learning</strong> (<em>float</em><em>, </em><em>default 0</em>) – The initial value for Q learning.</p></li>
 </ul>
 </dd>
@@ -287,8 +285,6 @@ for positive and negative prediction error are used.</p></li>
 for the soft_max choice rule.</p></li>
 <li><p><strong>gen_sd_sensitivity</strong> (<em>float</em>) – The generating group SD of the sensitivity parameter
 for the soft_max choice rule.</p></li>
-<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
-<li><p><strong>-------------------</strong> – </p></li>
 <li><p><strong>initial_value_learning</strong> (<em>float</em><em>, </em><em>default 0</em>) – The initial value for Q learning.</p></li>
 </ul>
 </dd>
@@ -326,148 +322,54 @@ for the soft_max choice rule.</p></li>
 <dt class="sig sig-object py" id="rlssm.random.random_RL_DDM.simulate_rlddm_2A">
 <span class="sig-prename descclassname"><span class="pre">rlssm.random.random_RL_DDM.</span></span><span class="sig-name descname"><span class="pre">simulate_rlddm_2A</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task_design</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_drift_scaling</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_ndt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_value_learning</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.random.random_RL_DDM.simulate_rlddm_2A" title="Permalink to this definition"></a></dt>
 <dd><p>Simulates behavior (rt and accuracy) according to a RLDDM model,</p>
-<p>where the learning component is the Q learning
-(delta learning rule) and the choice rule is the DDM.</p>
-<p>Simulates data for one participant.</p>
-<p>In this parametrization, it is assumed that 0 is the lower threshold,
-and the diffusion process starts halfway through the threshold value.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The number of options can be actaully higher than 2,
-but only 2 options (one correct, one incorrect) are presented
-in each trial.
-It is important that “trial_block” is set to 1 at the beginning
-of each learning session (when the Q values at resetted)
-and that the “block_label” is set to 1 at the beginning of the
-experiment for each participants.
-There is no special requirement for the participant number.</p>
-</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>task_design</strong> (<em>DataFrame</em>) – <cite>pandas.DataFrame</cite>, with n_trials_block*n_blocks rows.
-Columns contain:
-“f_cor”, “f_inc”, “trial_type”, “cor_option”, “inc_option”,
-“trial_block”, “block_label”, “participant”.</p></li>
-<li><p><strong>gen_alpha</strong> (<em>float</em><em> or </em><em>list of floats</em>) – The generating learning rate.
-It should be a value between 0 (no updating) and 1 (full updating).
-If a list of 2 values is provided then 2 separate learning rates
-for positive and negative prediction error are used.</p></li>
-<li><p><strong>gen_drift_scaling</strong> (<em>float</em>) – Drift-rate scaling of the RLDDM.</p></li>
-<li><p><strong>gen_threshold</strong> (<em>float</em>) – Threshold of the diffusion decision model.
-Should be positive.</p></li>
-<li><p><strong>gen_ndt</strong> (<em>float</em>) – Non decision time of the diffusion decision model, in seconds.
-Should be positive.</p></li>
-<li><p><strong>initial_value_learning</strong> (<em>float</em><em>, </em><em>default 0</em>) – The initial value for Q learning.</p></li>
-<li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional arguments to be passed further.</p></li>
+<li><p><strong>task_design</strong> (<em>pandas.DataFrame</em>) – A pandas DataFrame containing the task design.</p></li>
+<li><p><strong>gen_alpha</strong> (<em>float</em>) – The learning rate parameter.</p></li>
+<li><p><strong>gen_drift_scaling</strong> (<em>float</em>) – The drift scaling parameter.</p></li>
+<li><p><strong>gen_threshold</strong> (<em>float</em>) – The threshold parameter.</p></li>
+<li><p><strong>gen_ndt</strong> (<em>float</em>) – The non-decision time parameter.</p></li>
+<li><p><strong>initial_value_learning</strong> (<em>float</em><em>, </em><em>default: 0</em>) – The initial value of the learning parameter.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional keyword arguments to be further passed.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>data</strong></p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>DataFrame</p>
+<dd class="field-odd"><p>pandas.DataFrame</p>
 </dd>
 </dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data_non_hier</span> <span class="o">=</span> <span class="n">simulate_rlddm_2A</span><span class="p">(</span><span class="n">task_design</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dm_2_non_hier_alpha</span><span class="p">,</span> <span class="n">gen_alpha</span><span class="o">=</span><span class="p">[</span><span class="mf">.1</span><span class="p">,</span> <span class="mf">.01</span><span class="p">],</span> <span class="n">gen_drift_scaling</span><span class="o">=</span><span class="mf">.1</span><span class="p">,</span> <span class="n">gen_threshold</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">gen_ndt</span><span class="o">=</span><span class="mf">.23</span><span class="p">,</span> <span class="n">initial_value_learning</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">data_non_hier</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
-</pre></div>
-</div>
-<blockquote>
-<div><p>trial trial_type  …        rt  accuracy</p>
-</div></blockquote>
-<p>participant block_label trial_block                    …
-1           1           1                1        2-4  …  1.489023       1.0</p>
-<blockquote>
-<div><p>2                2        1-3  …  0.990023       1.0
-3                3        1-2  …  1.771023       0.0
-4                4        2-4  …  1.366023       1.0
-5                5        3-4  …  0.865023       1.0</p>
-</div></blockquote>
 </dd></dl>
 
 <span class="target" id="simulate-simulate-hier-rlddm-2a"></span><dl class="py function">
 <dt class="sig sig-object py" id="rlssm.random.random_RL_DDM.simulate_hier_rlddm_2A">
 <span class="sig-prename descclassname"><span class="pre">rlssm.random.random_RL_DDM.</span></span><span class="sig-name descname"><span class="pre">simulate_hier_rlddm_2A</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task_design</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_mu_alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_sd_alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_mu_drift_scaling</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_sd_drift_scaling</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_mu_threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_sd_threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_mu_ndt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_sd_ndt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_value_learning</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.random.random_RL_DDM.simulate_hier_rlddm_2A" title="Permalink to this definition"></a></dt>
-<dd><p>Simulates behavior (rt and accuracy) according to a RLDDM model,</p>
-<p>where the learning component is the Q learning
-(delta learning rule) and the choice rule is the DDM.</p>
-<p>Simulates hierarchical data for a group of participants.</p>
-<p>In this parametrization, it is assumed that 0 is the lower threshold,
-and the diffusion process starts halfway through the threshold value.</p>
-<p>The individual parameters have the following distributions:</p>
-<ul class="simple">
-<li><p>alpha ~ Phi(normal(gen_mu_alpha, gen_sd_alpha))</p></li>
-<li><p>drift_scaling ~ log(1 + exp(normal(gen_mu_drift, gen_sd_drift)))</p></li>
-<li><p>threshold ~ log(1 + exp(normal(gen_mu_threshold, gen_sd_threshold)))</p></li>
-<li><p>ndt ~ log(1 + exp(normal(gen_mu_ndt, gen_sd_ndt)))</p></li>
-</ul>
-<p>When 2 learning rates are estimated:</p>
-<ul class="simple">
-<li><p>alpha_pos ~ Phi(normal(gen_mu_alpha[0], gen_sd_alpha[1]))</p></li>
-<li><p>alpha_neg ~ Phi(normal(gen_mu_alpha[1], gen_sd_alpha[1]))</p></li>
-</ul>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The number of options can be actaully higher than 2,
-but only 2 options (one correct, one incorrect) are presented
-in each trial.
-It is important that “trial_block” is set to 1 at the beginning
-of each learning session (when the Q values at resetted)
-and that the “block_label” is set to 1 at the beginning of the
-experiment for each participants.
-There is no special requirement for the participant number.</p>
-</div>
+<dd><p>Simulates behavior (rt and accuracy) according to a RLDDM hierarchical model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>task_design</strong> (<em>DataFrame</em>) – <cite>pandas.DataFrame</cite>, with n_trials_block*n_blocks rows.</p></li>
-<li><p><strong>gen_mu_alpha</strong> (<em>float</em><em> or </em><em>list of floats</em>) – The generating group mean of the learning rate.
-If a list of 2 values is provided then 2 separate learning rates
-for positive and negative prediction error are used.</p></li>
-<li><p><strong>gen_sd_alpha</strong> (<em>float</em><em> or </em><em>list of floats</em>) – The generating group SD of the learning rate.
-If a list of 2 values is provided then 2 separate learning rates
-for positive and negative prediction error are used.</p></li>
-<li><p><strong>gen_mu_drift_scaling</strong> (<em>float</em>) – Group-mean of the drift-rate
-scaling of the RLDDM.</p></li>
-<li><p><strong>gen_sd_drift_scaling</strong> (<em>float</em>) – Group-standard deviation of the drift-rate
-scaling of the RLDDM.</p></li>
-<li><p><strong>gen_mu_threshold</strong> (<em>float</em>) – Group-mean of the threshold of the RLDDM.</p></li>
-<li><p><strong>gen_sd_threshold</strong> (<em>float</em>) – Group-standard deviation of the threshold
-of the RLDDM.</p></li>
-<li><p><strong>gen_mu_ndt</strong> (<em>float</em>) – Group-mean of the non decision time of the RLDDM.</p></li>
-<li><p><strong>gen_sd_ndt</strong> (<em>float</em>) – Group-standard deviation of the non decision time
-of the RLDDM.</p></li>
-<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
-<li><p><strong>-------------------</strong> – </p></li>
-<li><p><strong>initial_value_learning</strong> (<em>float</em><em>, </em><em>default 0</em>) – The initial value for Q learning.</p></li>
-<li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional arguments to be passed further.</p></li>
+<li><p><strong>task_design</strong> (<em>pandas.DataFrame</em>) – A pandas DataFrame containing the task design.</p></li>
+<li><p><strong>gen_mu_alpha</strong> (<em>float</em>) – The mean of the learning rate parameter.</p></li>
+<li><p><strong>gen_sd_alpha</strong> (<em>float</em>) – The standard deviation of the learning rate parameter.</p></li>
+<li><p><strong>gen_mu_drift_scaling</strong> (<em>float</em>) – The mean of the drift scaling parameter.</p></li>
+<li><p><strong>gen_sd_drift_scaling</strong> (<em>float</em>) – The standard deviation of the drift scaling parameter.</p></li>
+<li><p><strong>gen_mu_threshold</strong> (<em>float</em>) – The mean of the threshold parameter.</p></li>
+<li><p><strong>gen_sd_threshold</strong> (<em>float</em>) – The standard deviation of the threshold parameter.</p></li>
+<li><p><strong>gen_mu_ndt</strong> (<em>float</em>) – The mean of the non-decision time parameter.</p></li>
+<li><p><strong>gen_sd_ndt</strong> (<em>float</em>) – The standard deviation of the non-decision time parameter.</p></li>
+<li><p><strong>initial_value_learning</strong> (<em>float</em><em>, </em><em>default: 0</em>) – The initial value of the learning parameter.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional keyword arguments to be further passed.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>data</strong></p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>DataFrame</p>
+<dd class="field-odd"><p>pandas.DataFrame</p>
 </dd>
 </dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data_hier_2alpha</span> <span class="o">=</span> <span class="n">simulate_hier_rlddm_2A</span><span class="p">(</span><span class="n">task_design</span><span class="o">=</span><span class="n">dm_hier</span><span class="p">,</span> <span class="n">gen_mu_alpha</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">.5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">gen_sd_alpha</span><span class="o">=</span><span class="p">[</span><span class="mf">.1</span><span class="p">,</span> <span class="mf">.1</span><span class="p">],</span> <span class="n">gen_mu_drift_scaling</span><span class="o">=</span><span class="mf">.1</span><span class="p">,</span> <span class="n">gen_sd_drift_scaling</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">gen_mu_threshold</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">gen_sd_threshold</span><span class="o">=</span><span class="mf">.1</span><span class="p">,</span> <span class="n">gen_mu_ndt</span><span class="o">=</span><span class="mf">.23</span><span class="p">,</span> <span class="n">gen_sd_ndt</span><span class="o">=</span><span class="mf">.05</span><span class="p">,</span> <span class="n">initial_value_learning</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">data_hier_2alpha</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
-</pre></div>
-</div>
-<blockquote>
-<div><p>trial trial_type  …        rt  accuracy</p>
-</div></blockquote>
-<p>participant block_label trial_block                    …
-1           1           1                1        2-4  …  1.081138       0.0</p>
-<blockquote>
-<div><p>2                2        1-3  …  1.150138       1.0
-3                3        1-2  …  0.979138       0.0
-4                4        3-4  …  0.996138       0.0
-5                5        3-4  …  1.117138       1.0</p>
-</div></blockquote>
 </dd></dl>
 
 </section>
@@ -480,49 +382,25 @@ of the RLDDM.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>task_design</strong> (<em>DataFrame</em>) – <cite>pandas.DataFrame</cite>, with n_trials_block*n_blocks rows.
-Columns contain:
-“f_cor”, “f_inc”, “trial_type”, “cor_option”, “inc_option”,
-“trial_block”, “block_label”, “participant”.</p></li>
-<li><p><strong>gen_alpha</strong> (<em>float</em><em> or </em><em>list of floats</em>) – The generating learning rate.
-It should be a value between 0 (no updating) and 1 (full updating).
-If a list of 2 values is provided then 2 separate learning rates
-for positive and negative prediction error are used.</p></li>
-<li><p><strong>gen_drift_scaling</strong> – Drift-rate scaling of the RLRDM model.</p></li>
-<li><p><strong>gen_threshold</strong> (<em>float</em>) – Threshold of the diffusion decision model.
-Should be positive.</p></li>
-<li><p><strong>gen_ndt</strong> (<em>float</em>) – Non decision time of the diffusion decision model, in seconds.
-Should be positive.</p></li>
-<li><p><strong>gen_slop</strong> (<em>float</em><em>, </em><em>default None</em>) – Slope of the drift-rate function of the RL-RDM model.</p></li>
-<li><p><strong>gen_drift_asym</strong> (<em>float</em><em>, </em><em>default None</em>) – Asymmetry of the drift-rate function of the RL-RDM model.</p></li>
-<li><p><strong>nonlinear_mapping</strong> (<em>bool</em><em>, </em><em>default False</em>) – If True, the mapping from the prediction error to the drift-rate</p></li>
-<li><p><strong>initial_value_learning</strong> (<em>float</em><em>, </em><em>default 0</em>) – The initial value for Q learning.</p></li>
-<li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional parameters to be passed further.</p></li>
+<li><p><strong>task_design</strong> (<em>pandas.DataFrame</em>) – A pandas DataFrame containing the task design.</p></li>
+<li><p><strong>gen_alpha</strong> (<em>float</em>) – The learning rate parameter.</p></li>
+<li><p><strong>gen_ndt</strong> (<em>float</em>) – The non-decision time parameter.</p></li>
+<li><p><strong>gen_threshold</strong> (<em>float</em>) – The threshold parameter.</p></li>
+<li><p><strong>gen_drift_scaling</strong> (<em>float</em>) – The drift scaling parameter.</p></li>
+<li><p><strong>gen_slop</strong> (<em>float</em><em>, </em><em>default None</em>) – The slop parameter.</p></li>
+<li><p><strong>gen_drift_asym</strong> (<em>float</em><em>, </em><em>default None</em>) – The drift asymmetry parameter.</p></li>
+<li><p><strong>nonlinear_mapping</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to use a nonlinear mapping or not.</p></li>
+<li><p><strong>initial_value_learning</strong> (<em>float</em><em>, </em><em>default 0</em>) – The initial value of the learning parameter.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional keyword arguments to be further passed.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>data</strong></p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>DataFrame</p>
+<dd class="field-odd"><p>pandas.DataFrame</p>
 </dd>
 </dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">simulate_rlrdm_2A</span><span class="p">(</span><span class="n">task_design</span><span class="o">=</span><span class="n">dm</span><span class="p">,</span> <span class="n">gen_drift_scaling</span><span class="o">=</span><span class="mf">.1</span><span class="p">,</span> <span class="n">gen_threshold</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">gen_ndt</span><span class="o">=</span><span class="mf">.23</span><span class="p">,</span> <span class="n">initial_value_learning</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
-</pre></div>
-</div>
-<blockquote>
-<div><p>trial trial_type  …     rt  accuracy</p>
-</div></blockquote>
-<p>participant block_label trial_block                    …
-1           1           1                1        3-4  …  0.886       1.0</p>
-<blockquote>
-<div><p>2                2        1-3  …  2.376       1.0
-3                3        1-3  …  0.473       0.0
-4                4        1-2  …  0.630       0.0
-5                5        3-4  …  0.420       1.0</p>
-</div></blockquote>
 </dd></dl>
 
 <span class="target" id="simulate-hier-rlrdm-2a"></span><dl class="py function">
@@ -536,8 +414,6 @@ Should be positive.</p></li>
 Columns contain:
 “f_cor”, “f_inc”, “trial_type”, “cor_option”, “inc_option”,
 “trial_block”, “block_label”, “participant”.</p></li>
-<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
-<li><p><strong>-------------------</strong> – </p></li>
 <li><p><strong>gen_mu_alpha</strong> (<em>float</em><em> or </em><em>list of floats</em>) – The generating group mean of the learning rate.
 If a list of 2 values is provided then 2 separate learning rates
 for positive and negative prediction error are used.</p></li>
