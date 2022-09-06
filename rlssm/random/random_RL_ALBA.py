@@ -53,9 +53,6 @@ def simulate_rlalba_2A(task_design,
     gen_wd : float
         Difference weight: must be positive.
 
-    Optional Parameters
-    -------------------
-
     initial_value_learning : float, default 0
         The initial value for Q learning.
 
@@ -213,9 +210,6 @@ def simulate_hier_rlalba(task_design,
 
     gen_sd_wd : float or list of floats
         The SD of the Difference Weight parameter.
-
-    Optional parameters
-    -------------------
 
     initial_value_learning : float, default 0
         The initial value for Q learning.

@@ -162,9 +162,6 @@ class RLModel_2A(Model):
             The learning value in the following learning sessions is set to
             the average learned value in the previous learning session.
 
-        Optional Parameters
-        -------------------
-
         alpha_priors : dict, default None
             Priors for the learning rate parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.

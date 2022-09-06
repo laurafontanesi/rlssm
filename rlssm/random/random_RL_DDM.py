@@ -16,78 +16,38 @@ def simulate_rlddm_2A(task_design,
                       **kwargs):
     """Simulates behavior (rt and accuracy) according to a RLDDM model,
 
-    where the learning component is the Q learning
-    (delta learning rule) and the choice rule is the DDM.
-
-    Simulates data for one participant.
-
-    In this parametrization, it is assumed that 0 is the lower threshold,
-    and the diffusion process starts halfway through the threshold value.
-
-    Note
-    ----
-    The number of options can be actaully higher than 2,
-    but only 2 options (one correct, one incorrect) are presented
-    in each trial.
-    It is important that "trial_block" is set to 1 at the beginning
-    of each learning session (when the Q values at resetted)
-    and that the "block_label" is set to 1 at the beginning of the
-    experiment for each participants.
-    There is no special requirement for the participant number.
-
     Parameters
     ----------
 
-    task_design : DataFrame
-        `pandas.DataFrame`, with n_trials_block*n_blocks rows.
-        Columns contain:
-        "f_cor", "f_inc", "trial_type", "cor_option", "inc_option",
-        "trial_block", "block_label", "participant".
+    task_design : pandas.DataFrame
+        A pandas DataFrame containing the task design.
 
-    gen_alpha : float or list of floats
-        The generating learning rate.
-        It should be a value between 0 (no updating) and 1 (full updating).
-        If a list of 2 values is provided then 2 separate learning rates
-        for positive and negative prediction error are used.
+    gen_alpha : float
+        The learning rate parameter.
 
     gen_drift_scaling : float
-        Drift-rate scaling of the RLDDM.
+        The drift scaling parameter.
 
     gen_threshold : float
-        Threshold of the diffusion decision model.
-        Should be positive.
+        The threshold parameter.
 
     gen_ndt : float
-        Non decision time of the diffusion decision model, in seconds.
-        Should be positive.
+        The non-decision time parameter.
 
-    initial_value_learning : float, default 0
-        The initial value for Q learning.
+    initial_value_learning : float, default: 0
+        The initial value of the learning parameter.
 
     Other Parameters
     ----------------
 
     **kwargs : dict
-        Additional arguments to be passed further.
+        Additional keyword arguments to be further passed.
 
     Returns
     -------
 
-    data : DataFrame
+    data : pandas.DataFrame
 
-    Examples
-    --------
-
-        >>> data_non_hier = simulate_rlddm_2A(task_design=self.dm_2_non_hier_alpha, gen_alpha=[.1, .01], gen_drift_scaling=.1, gen_threshold=1, gen_ndt=.23, initial_value_learning=0)
-        >>> print(data_non_hier.head())
-
-                                             trial trial_type  ...        rt  accuracy
-        participant block_label trial_block                    ...
-        1           1           1                1        2-4  ...  1.489023       1.0
-                                2                2        1-3  ...  0.990023       1.0
-                                3                3        1-2  ...  1.771023       0.0
-                                4                4        2-4  ...  1.366023       1.0
-                                5                5        3-4  ...  0.865023       1.0
     """
     data = task_design.copy()
 
@@ -137,111 +97,52 @@ def simulate_hier_rlddm_2A(task_design,
                            gen_mu_ndt, gen_sd_ndt,
                            initial_value_learning=0,
                            **kwargs):
-    """Simulates behavior (rt and accuracy) according to a RLDDM model,
-
-    where the learning component is the Q learning
-    (delta learning rule) and the choice rule is the DDM.
-
-    Simulates hierarchical data for a group of participants.
-
-    In this parametrization, it is assumed that 0 is the lower threshold,
-    and the diffusion process starts halfway through the threshold value.
-
-    The individual parameters have the following distributions:
-
-    - alpha ~ Phi(normal(gen_mu_alpha, gen_sd_alpha))
-
-    - drift_scaling ~ log(1 + exp(normal(gen_mu_drift, gen_sd_drift)))
-
-    - threshold ~ log(1 + exp(normal(gen_mu_threshold, gen_sd_threshold)))
-
-    - ndt ~ log(1 + exp(normal(gen_mu_ndt, gen_sd_ndt)))
-
-    When 2 learning rates are estimated:
-
-    - alpha_pos ~ Phi(normal(gen_mu_alpha[0], gen_sd_alpha[1]))
-
-    - alpha_neg ~ Phi(normal(gen_mu_alpha[1], gen_sd_alpha[1]))
-
-    Note
-    ----
-    The number of options can be actaully higher than 2,
-    but only 2 options (one correct, one incorrect) are presented
-    in each trial.
-    It is important that "trial_block" is set to 1 at the beginning
-    of each learning session (when the Q values at resetted)
-    and that the "block_label" is set to 1 at the beginning of the
-    experiment for each participants.
-    There is no special requirement for the participant number.
+    """Simulates behavior (rt and accuracy) according to a RLDDM hierarchical model.
 
     Parameters
     ----------
 
-    task_design : DataFrame
-        `pandas.DataFrame`, with n_trials_block*n_blocks rows.
+    task_design : pandas.DataFrame
+        A pandas DataFrame containing the task design.
 
-    gen_mu_alpha : float or list of floats
-        The generating group mean of the learning rate.
-        If a list of 2 values is provided then 2 separate learning rates
-        for positive and negative prediction error are used.
+    gen_mu_alpha : float
+        The mean of the learning rate parameter.
 
-    gen_sd_alpha : float or list of floats
-        The generating group SD of the learning rate.
-        If a list of 2 values is provided then 2 separate learning rates
-        for positive and negative prediction error are used.
+    gen_sd_alpha : float
+        The standard deviation of the learning rate parameter.
 
     gen_mu_drift_scaling : float
-        Group-mean of the drift-rate
-        scaling of the RLDDM.
+        The mean of the drift scaling parameter.
 
-    gen_sd_drift_scaling: float
-        Group-standard deviation of the drift-rate
-        scaling of the RLDDM.
+    gen_sd_drift_scaling : float
+        The standard deviation of the drift scaling parameter.
 
     gen_mu_threshold : float
-        Group-mean of the threshold of the RLDDM.
+        The mean of the threshold parameter.
 
-    gen_sd_threshold: float
-        Group-standard deviation of the threshold
-        of the RLDDM.
+    gen_sd_threshold : float
+        The standard deviation of the threshold parameter.
 
     gen_mu_ndt : float
-        Group-mean of the non decision time of the RLDDM.
+        The mean of the non-decision time parameter.
 
     gen_sd_ndt : float
-        Group-standard deviation of the non decision time
-        of the RLDDM.
+        The standard deviation of the non-decision time parameter.
 
-    Optional Parameters
-    -------------------
-
-    initial_value_learning : float, default 0
-        The initial value for Q learning.
+    initial_value_learning : float, default: 0
+        The initial value of the learning parameter.
 
     Other Parameters
     ----------------
 
     **kwargs : dict
-        Additional arguments to be passed further.
+        Additional keyword arguments to be further passed.
 
     Returns
     -------
 
-    data : DataFrame
+    data : pandas.DataFrame
 
-    Examples
-    --------
-
-        >>> data_hier_2alpha = simulate_hier_rlddm_2A(task_design=dm_hier, gen_mu_alpha=[-.5, -1], gen_sd_alpha=[.1, .1], gen_mu_drift_scaling=.1, gen_sd_drift_scaling=.5, gen_mu_threshold=1, gen_sd_threshold=.1, gen_mu_ndt=.23, gen_sd_ndt=.05, initial_value_learning=20)
-        >>> print(data_hier_2alpha.head())
-
-                                             trial trial_type  ...        rt  accuracy
-        participant block_label trial_block                    ...
-        1           1           1                1        2-4  ...  1.081138       0.0
-                                2                2        1-3  ...  1.150138       1.0
-                                3                3        1-2  ...  0.979138       0.0
-                                4                4        3-4  ...  0.996138       0.0
-                                5                5        3-4  ...  1.117138       1.0
     """
     data = task_design.copy()
     participants = pd.unique(data["participant"])

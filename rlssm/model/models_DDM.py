@@ -6,13 +6,10 @@ from rlssm.fit.fits_DDM import DDMFittedModel
 
 
 class DDModel(Model):
-    """DDModel allows to specify a diffusion decision model.
-
-    When initializing the model, you should specify whether the model is hierarchical or not.
-    Additionally, you can specify the mechanisms that you wish to include or exclude.
-
-    The underlying stan model will be compiled if no previously compiled model is found.
-    After initializing the model, it can be fitted to a particular dataset using cmdstanpy.
+    """DDModel allows to specify a diffusion decision model. When initializing the model, you should specify whether
+    the model is hierarchical or not. Additionally, you can specify the mechanisms that you wish to include or
+    exclude. The underlying stan model will be compiled if no previously compiled model is found. After initializing
+    the model, it can be fitted to a particular dataset using cmdstanpy.
     """
 
     def __init__(self,
@@ -34,8 +31,6 @@ class DDModel(Model):
         hierarchical_levels : int
             Set to 1 for individual data and to 2 for grouped data.
 
-        Optional Parameters
-        -------------------
         starting_point_bias : bool, default False
             By default, there is no starting point bias.
             If set to True, the starting point bias is estimated.
@@ -214,9 +209,6 @@ class DDModel(Model):
             or drift_starting_point_regression are True, also include:
 
             - *beta*, the external variable to correlate/regress to drift and rel_sp.
-
-        Optional Parameters
-        -------------------
 
         drift_priors : dict, default None
             Priors for the drift-rate parameter.
@@ -444,9 +436,6 @@ class RLDDModel(Model):
         hierarchical_levels : int
              Set to 1 for individual data and to 2 for grouped data.
 
-        Optional Parameters
-        -------------------
-
         nonlinear_mapping : bool, default False
              By default, the mapping between value differences and drift-rate is linear.
              If set to True, a non-linear mapping function is estimated.
@@ -588,9 +577,6 @@ class RLDDModel(Model):
             The assumed value expectation in the first learning session.
             The learning value in the following learning sessions is set to
             the average learned value in the previous learning session.
-
-        Optional Parameters
-        ----------------
 
         alpha_priors : dict, default None
             Priors for the learning rate parameter.

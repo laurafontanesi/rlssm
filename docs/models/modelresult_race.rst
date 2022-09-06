@@ -3,8 +3,8 @@
 ModelResults class for race (or RL+race) models
 ===============================================
 
-The race models are of types **LBA, ALBA, RDM, ARDM**. There is one class to inspect model fits of **race models LBA and ALBA** (:ref:`LBAModelResults_2A <ModelResults_LBA>`),
-and one for **race models RDM and ARDM** (:ref:`RDMModelResults_2A <ModelResults_RDM>`).
+The race models are of types **LBA, ALBA, RDM, ARDM**. There is one class to inspect model fits of **race models LBA and ALBA** (:ref:`LBAModelResults_2A <LBAModelResults_2A>`),
+and one for **race models RDM and ARDM** (:ref:`RDMModelResults_2A <RDMModelResults_2A>`).
 These classes also represent combinations of **RL and race models (fitted on choices and response times)**.
 
 The main functions of these classes are:
@@ -20,12 +20,8 @@ The main functions of these classes are:
 All models
 ----------
 
-.. _ModelResults_LBA:
-.. autoclass:: rlssm.fit.fits_LBA.ModelResults
-    :members:
-
-.. _ModelResults_RDM:
-.. autoclass:: rlssm.fit.fits_RDM.ModelResults
+.. _ModelResults:
+.. autoclass:: rlssm.fit.fits.ModelResults
     :members:
 
 Race diffusion models LBA and RDM

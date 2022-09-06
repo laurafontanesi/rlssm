@@ -131,9 +131,6 @@ def _simulate_delta_rule_2A(task_design,
     initial_value_learning : float
         The initial value for Q learning.
 
-    Optional parameters
-    -------------------
-
     alpha_pos : float, default None
         If a value for both alpha_pos and alpha_neg is provided,
         separate learning rates are estimated

@@ -24,8 +24,6 @@ def random_lba_2A(cor_drift, inc_drift, sp_trial_var, ndt, k, drift_trial_var=No
     k : float
         Distance between starting point variability and threshold.
 
-    Optional parameters
-    -------------------
     drift_trial_var : numpy.ndarray, default None
         The drift rate trial variability. 1D array of 0s and 1s.
 
@@ -129,9 +127,6 @@ def simulate_lba_2A(n_trials,
 
     gen_k : float, list, or numpy.ndarray
         Distance between starting point variability and threshold.
-
-    Optional Parameters
-    -------------------
 
     gen_drift_trial_sd : float, default None
         Across trial variability in the drift-rate.
@@ -245,9 +240,6 @@ def simulate_hier_lba(n_trials, n_participants,
 
     gen_sd_ndt : float
         Group-standard deviation of the non-decision time of the linear ballistic accumulator.
-
-    Optional parameters
-    -------------------
 
     gen_mu_k : float, default .5
         Relative starting point of the linear ballistic accumulator.

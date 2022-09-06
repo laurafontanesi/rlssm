@@ -308,9 +308,6 @@ class DDModelResults(ModelResults):
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
 
-        Optional Parameters
-        -------------------
-
         figsize : tuple
             figure size of the matplotlib figure
 
@@ -468,9 +465,6 @@ class DDModelResults(ModelResults):
         grouping_vars :  list of strings
              They should be existing grouping variables in the data.
 
-        Optional Parameters
-        -------------------
-
         n_posterior_predictives : int
              Number of posterior samples to use for posterior predictives calculation.
              If n_posterior_predictives is bigger than the posterior samples,
@@ -579,9 +573,6 @@ class DDModelResults(ModelResults):
         grouping_vars :  list of strings
              They should be existing grouping variables in the data.
              The list should be of lenght 1 or 2.
-
-        Optional Parameters
-        -------------------
 
         n_posterior_predictives : int
              Number of posterior samples to use for posterior predictives calculation.
@@ -726,9 +717,6 @@ class DDModelResults(ModelResults):
              Number of posterior samples to use for posterior predictives calculation.
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
-
-        Optional Parameters
-        -------------------
 
         grouping_var:  string
              Should be an existing grouping variable in the data.

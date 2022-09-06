@@ -18,8 +18,8 @@ The main functions of this class are:
 All models
 ----------
 
-.. _ModelResults_RL:
-.. autoclass:: rlssm.fit.fits_RL.ModelResults
+.. _ModelResults:
+.. autoclass:: rlssm.fit.fits.ModelResults
     :members:
 
 Reinforcement learning models

@@ -22,9 +22,6 @@ def random_rdm_2A(cor_drift, inc_drift, threshold, ndt, noise_constant=1, dt=0.0
         Shape is usually (n_samples, n_trials).
         Non decision time of the diffusion decision model, in seconds.
 
-    Optional Parameters
-    ----------------
-
     noise_constant : float, default 1
         Scaling factor of the Racing Diffusion Model.
         If changed, drift and threshold would be scaled accordingly.
@@ -125,9 +122,6 @@ def simulate_rdm_2A(n_trials,
     gen_ndt : float
         Non decision time of the Racing Diffusion Model, in seconds.
         Should be positive.
-
-    Optional Parameters
-    -------------------
 
     participant_label : string or float, default 1
         What will appear in the participant column of the output data.

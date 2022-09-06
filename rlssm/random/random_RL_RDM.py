@@ -21,65 +21,43 @@ def simulate_rlrdm_2A(task_design,
     Parameters
     ----------
 
-    task_design : DataFrame
-        `pandas.DataFrame`, with n_trials_block*n_blocks rows.
-        Columns contain:
-        "f_cor", "f_inc", "trial_type", "cor_option", "inc_option",
-        "trial_block", "block_label", "participant".
+    task_design : pandas.DataFrame
+        A pandas DataFrame containing the task design.
 
-    gen_alpha : float or list of floats
-        The generating learning rate.
-        It should be a value between 0 (no updating) and 1 (full updating).
-        If a list of 2 values is provided then 2 separate learning rates
-        for positive and negative prediction error are used.
-
-    gen_drift_scaling:
-        Drift-rate scaling of the RLRDM model.
-
-    gen_threshold : float
-        Threshold of the diffusion decision model.
-        Should be positive.
+    gen_alpha : float
+        The learning rate parameter.
 
     gen_ndt : float
-        Non decision time of the diffusion decision model, in seconds.
-        Should be positive.
+        The non-decision time parameter.
+
+    gen_threshold : float
+        The threshold parameter.
+
+    gen_drift_scaling : float
+        The drift scaling parameter.
 
     gen_slop : float, default None
-        Slope of the drift-rate function of the RL-RDM model.
+        The slop parameter.
 
     gen_drift_asym : float, default None
-        Asymmetry of the drift-rate function of the RL-RDM model.
+        The drift asymmetry parameter.
 
     nonlinear_mapping : bool, default False
-        If True, the mapping from the prediction error to the drift-rate
+        Whether to use a nonlinear mapping or not.
 
     initial_value_learning : float, default 0
-        The initial value for Q learning.
+        The initial value of the learning parameter.
 
     Other Parameters
     ----------------
 
     **kwargs : dict
-        Additional parameters to be passed further.
+        Additional keyword arguments to be further passed.
 
     Returns
     -------
 
-    data : DataFrame
-
-    Examples
-    --------
-
-        >>> data = simulate_rlrdm_2A(task_design=dm, gen_drift_scaling=.1, gen_threshold=1, gen_ndt=.23, initial_value_learning=0)
-        >>> print(data.head())
-
-                                             trial trial_type  ...     rt  accuracy
-        participant block_label trial_block                    ...
-        1           1           1                1        3-4  ...  0.886       1.0
-                                2                2        1-3  ...  2.376       1.0
-                                3                3        1-3  ...  0.473       0.0
-                                4                4        1-2  ...  0.630       0.0
-                                5                5        3-4  ...  0.420       1.0
+    data : pandas.DataFrame
 
     """
     data = task_design.copy()
@@ -159,9 +137,6 @@ def simulate_hier_rlrdm_2A(task_design,
         "f_cor", "f_inc", "trial_type", "cor_option", "inc_option",
         "trial_block", "block_label", "participant".
 
-    Optional Parameters
-    -------------------
-
     gen_mu_alpha : float or list of floats
         The generating group mean of the learning rate.
         If a list of 2 values is provided then 2 separate learning rates
@@ -222,6 +197,7 @@ def simulate_hier_rlrdm_2A(task_design,
     -------
 
     data : DataFrame
+
     """
     data = task_design.copy()
     participants = pd.unique(data["participant"])

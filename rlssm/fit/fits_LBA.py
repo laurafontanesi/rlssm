@@ -265,9 +265,6 @@ class LBAModelResults_2A(ModelResults):
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
 
-        Optional Parameters
-        -------------------
-
         figsize : tuple, default (20, 8)
             figure size of the matplotlib figure
 
@@ -363,9 +360,6 @@ class LBAModelResults_2A(ModelResults):
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
 
-        Optional Parameters
-        -------------------
-
         quantiles : list of floats, default None
              Quantiles to summarize response times distributions
              (separately for correct/incorrect) with.
@@ -453,9 +447,6 @@ class LBAModelResults_2A(ModelResults):
 
         grouping_vars :  list of strings
              They should be existing grouping variables in the data.
-
-        Optional Parameters
-        -------------------
 
         n_posterior_predictives : int, default 500
              Number of posterior samples to use for posterior predictives calculation.
@@ -564,15 +555,12 @@ class LBAModelResults_2A(ModelResults):
 
         grouping_vars :  list of strings
              They should be existing grouping variables in the data.
-             The list should be of lenght 1 or 2.
+             The list should be of length 1 or 2.
 
         n_posterior_predictives : int
              Number of posterior samples to use for posterior predictives calculation.
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
-
-        Optional Parameters
-        -------------------
 
         figsize : tuple, default (20, 8)
             figure size of the matplotlib figure
@@ -715,9 +703,6 @@ class LBAModelResults_2A(ModelResults):
 
         grouping_var :  string
              Should be an existing grouping variable in the data.
-
-        Optional Parameters
-        -------------------
 
         quantiles : list of floats, default None
              Quantiles to summarize response times distributions

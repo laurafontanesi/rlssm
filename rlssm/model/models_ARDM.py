@@ -93,9 +93,6 @@ class ARDModel_2A(Model):
             - *participant*, the participant number.
               Should be integers starting from 1.
 
-        Optional Parameters
-        -------------------
-
         threshold_priors : dict, default None
             Priors for the threshold parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
@@ -357,9 +354,6 @@ class RLARDModel_2A(Model):
             The assumed value expectation in the first learning session.
             The learning value in the following learning sessions is set to
             the average learned value in the previous learning session.
-
-        Optional Parameters
-        -------------------
 
         threshold_priors : dict, optional
             Priors for the threshold parameter.

@@ -27,9 +27,6 @@ def plot_posterior(x,
     x : array-like
         Usually samples from a posterior distribution.
 
-    Optional Parameters
-    -------------------
-
     ax : matplotlib.axes.Axes, default None
         If provided, plot on this Axes.
         Default is set to current Axes.

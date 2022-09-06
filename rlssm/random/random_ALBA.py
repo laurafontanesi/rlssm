@@ -48,9 +48,6 @@ def simulate_alba_2A(gen_S_cor,
     gen_wd : float
         Difference weight: must be positive.
 
-    Optional Parameters
-    -------------------
-
     gen_drift_trial_sd : float, default None
         Across trial variability in the drift-rate. Should be positive.
 
@@ -177,9 +174,6 @@ def simulate_hier_alba(n_trials, n_participants,
 
     gen_sd_ndt : float
         Group-standard deviation of the non-decision time of the advantage linear ballistic accumulator.
-
-    Optional parameters
-    -------------------
 
     gen_mu_k : float, default .5
         Relative starting point of the linear ballistic accumulator.

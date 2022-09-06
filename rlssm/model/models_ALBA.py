@@ -100,9 +100,6 @@ class ALBAModel_2A(Model):
             - *participant*, the participant number.
               Should be integers starting from 1.
 
-        Optional Parameters
-        -------------------
-
         k_priors : dict, default None
             Priors for the k parameter.
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
@@ -385,9 +382,6 @@ class RLALBAModel_2A(Model):
             The assumed value expectation in the first learning session.
             The learning value in the following learning sessions is set to
             the average learned value in the previous learning session.
-
-        Optional Parameters
-        ----------------
 
         k_priors : dict, default None
             Priors for the k parameter.

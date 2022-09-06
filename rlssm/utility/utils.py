@@ -42,9 +42,6 @@ def bci(x, alpha=0.05):
     x : array-like
         An array containing MCMC samples.
 
-    Optional Parameters
-    -------------------
-
     alpha : float, default 0.05
         Desired probability of type I error.
 
@@ -103,16 +100,13 @@ def calc_min_interval(x, alpha):
 
 
 def hdi(x, alpha=0.05):
-    """Calculate highest posterior density (HPD).
+    """Calculate the highest posterior density (HPD).
 
     Parameters
     ----------
 
     x : array-like
         An array containing MCMC samples.
-
-    Optional Parameters
-    -------------------
 
     alpha : float, default 0.05
         Desired probability of type I error.

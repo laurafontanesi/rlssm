@@ -53,14 +53,15 @@ class RDMFittedModel_2A(FittedModel):
         if self.parameters_info['hierarchical_levels'] == 2:
             main_parameters = self.parameters_info['group_parameters_names_transf']
 
-            main_parameters = np.append(main_parameters, [p + '_sbj' for p in self.parameters_info['individual_parameters_names']])
+            main_parameters = np.append(main_parameters,
+                                        [p + '_sbj' for p in self.parameters_info['individual_parameters_names']])
 
             # for p in self.parameters_info['individual_parameters_names']:
             #     main_parameters = np.append(main_parameters, list_individual_variables(p, self.data_info['L']))
         else:
             main_parameters = self.parameters_info['parameters_names_transf']
 
-        samples = self.stan_model.draws_pd(vars=main_parameters) 
+        samples = self.stan_model.draws_pd(vars=main_parameters)
 
         trial_samples = {'drift_cor_t': np.asarray(self.stan_model.draws_pd(vars=['drift_cor_t'])),
                          'drift_inc_t': np.asarray(self.stan_model.draws_pd(vars=['drift_inc_t'])),
@@ -253,9 +254,6 @@ class RDMModelResults_2A(ModelResults):
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
 
-        Optional Parameters
-        -------------------
-
         figsize : tuple, default (20, 8)
             figure size of the matplotlib figure
 
@@ -267,39 +265,6 @@ class RDMModelResults_2A(ModelResults):
 
         **kwargs : dict
             Keyword arguments to be passed to the `plotting.plot_mean_prediction`.
-
-        show_data : bool
-            Whether to show a vertical line for the mean data. Set to False to not show it.
-
-        color : matplotlib color
-            Color for both the mean data and intervals.
-
-        ax : matplotlib axis, optional
-            If provided, plot on this axis.
-            Default is set to current Axes.
-
-        gridsize : int
-            Resolution of the kernel density estimation function, default 100.
-
-        clip : tuple
-            Range for the kernel density estimation function.
-            Default is min and max values of the distribution.
-
-        show_intervals : either "HDI", "BCI", or None
-            HDI is better when the distribution is not symmetrical.
-            If None, then no intervals are shown.
-
-        alpha_intervals : float
-            Alpha level for the intervals.
-            Default is 5 percent which gives 95 percent BCIs and HDIs.
-
-        intervals_kws : dictionary
-            Additional arguments for the matplotlib fill_between function
-            that shows shaded intervals.
-            By default, they are 50 percent transparent.
-
-        post_pred_kws : dictionary
-            Additional parameters to get_posterior_predictives_summary.
 
         Returns
         -------
@@ -350,9 +315,6 @@ class RDMModelResults_2A(ModelResults):
              Number of posterior samples to use for posterior predictives calculation.
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
-
-        Optional Parameters
-        -------------------
 
         quantiles : list of floats, default None
              Quantiles to summarize response times distributions (separately for correct/incorrect) with.
@@ -440,9 +402,6 @@ class RDMModelResults_2A(ModelResults):
 
         grouping_vars :  list of strings
              They should be existing grouping variables in the data.
-
-        Optional Parameters
-        -------------------
 
         n_posterior_predictives : int, default 500
              Number of posterior samples to use for posterior predictives calculation.
@@ -558,9 +517,6 @@ class RDMModelResults_2A(ModelResults):
              If n_posterior_predictives is bigger than the posterior samples,
              then calculation will continue with the total number of posterior samples.
 
-        Optional Parameters
-        -------------------
-
         figsize : tuple, default (20, 8)
             figure size of the matplotlib figure
 
@@ -572,51 +528,6 @@ class RDMModelResults_2A(ModelResults):
 
         **kwargs : dict
             Keyword arguments to be passed to the `plotting.plot_grouped_mean_prediction`.
-
-        x_order : list of strings
-            Order to plot the levels of the first grouping variable in,
-            otherwise the levels are inferred from the data objects.
-
-        hue_order : lists of strings
-            Order to plot the levels of the second grouping variable (when provided) in,
-            otherwise the levels are inferred from the data objects.
-
-        hue_labels : list of strings
-            Labels corresponding to hue_order in the legend.
-            Advised to specify hue_order when using this to avoid confusion.
-            Only makes sense when the second grouping variable is provided.
-
-        show_data : bool
-            Whether to show a vertical line for the mean data. Set to False to not show it.
-
-        show_intervals : either "HDI", "BCI", or None
-            HDI is better when the distribution is not symmetrical.
-            If None, then no intervals are shown.
-
-        alpha_intervals : float
-            Alpha level for the intervals.
-            Default is 5 percent which gives 95 percent BCIs and HDIs.
-
-        palette : palette name, list, or dict
-            Colors to use for the different levels of the second grouping variable (when provided).
-            Should be something that can be interpreted by color_palette(),
-            or a dictionary mapping hue levels to matplotlib colors.
-
-        color : matplotlib color
-            Color for both the mean data and intervals.
-            Only used when there is 1 grouping variable.
-
-        ax : matplotlib axis, optional
-            If provided, plot on this axis.
-            Default is set to current Axes.
-
-        intervals_kws : dictionary
-            Additional arguments for the matplotlib fill_between function
-            that shows shaded intervals.
-            By default, they are 50 percent transparent.
-
-         post_pred_kws : dictionary
-             Additional parameters to get_grouped_posterior_predictives_summary.
 
         Returns
         -------
@@ -703,9 +614,6 @@ class RDMModelResults_2A(ModelResults):
         grouping_var :  string
              Should be an existing grouping variable in the data.
 
-        Optional Parameters
-        -------------------
-
         quantiles : list of floats, default None
              Quantiles to summarize response times distributions
              (separately for correct/incorrect) with.
@@ -721,45 +629,6 @@ class RDMModelResults_2A(ModelResults):
 
         **kwargs : dict
             Keyword arguments to be passed to the `plotting.plot_grouped_quantiles_prediction`.
-
-        show_data : bool
-            Whether to show the quantiles of the data. Set to False to not show it.
-
-        show_intervals : either "HDI", "BCI", or None
-            HDI is better when the distribution is not symmetrical.
-            If None, then no intervals are shown.
-
-        alpha_intervals : float
-            Alpha level for the intervals.
-            Default is 5 percent which gives 95 percent BCIs and HDIs.
-
-        kind : either 'lines' or 'shades'
-            Two different styles to plot quantile distributions.
-
-        palette : palette name, list, or dict
-            Colors to use for the different levels of the second grouping variable (when provided).
-            Should be something that can be interpreted by color_palette(),
-            or a dictionary mapping hue levels to matplotlib colors.
-
-        hue_order : lists of strings
-            Order to plot the levels of the grouping variable in,
-            otherwise the levels are inferred from the data objects.
-
-        hue_labels : list of strings
-            Labels corresponding to hue_order in the legend.
-            Advised to specify hue_order when using this to avoid confusion.
-
-        jitter: float
-            Amount to jitter the grouping variable's levels for better visualization.
-
-        scatter_kws : dictionary
-            Additional plotting parameters to change how the data points are shown.
-
-        intervals_kws : dictionary
-            Additional plotting parameters to change how the quantile distributions are shown.
-
-        post_pred_kws : dictionary
-            Additional parameters to get_grouped_posterior_predictives_summary.
 
         Returns
         -------

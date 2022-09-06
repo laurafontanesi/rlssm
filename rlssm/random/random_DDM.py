@@ -34,9 +34,6 @@ def random_ddm(drift, threshold, ndt, rel_sp=.5, noise_constant=1, dt=0.001, max
         Shape is usually (n_samples, n_trials).
         Non decision time of the diffusion decision model, in seconds.
 
-    Optional Parameters
-    -------------------
-
     rel_sp : numpy.ndarray or float, default .5
         When is an array , shape is usually (n_samples, n_trials).
         Relative starting point of the diffusion decision model.
@@ -146,9 +143,6 @@ def random_ddm_vector(drift, threshold, ndt, rel_sp=.5, noise_constant=1, dt=0.0
     ndt : numpy.ndarray or float
         Shape is usually (n_samples, n_trials).
         Non decision time of the diffusion decision model, in seconds.
-
-    Optional Parameters
-    -------------------
 
     rel_sp : numpy.ndarray or float, default .5
         When is an array , shape is usually (n_samples, n_trials).
@@ -268,9 +262,6 @@ def simulate_ddm(n_trials,
     gen_ndt : float
         Non decision time of the diffusion decision model, in seconds.
         Should be positive.
-
-    Optional Parameters
-    -------------------
 
     gen_rel_sp : float, default .5
         Relative starting point of the diffusion decision model.
@@ -450,9 +441,6 @@ def simulate_hier_ddm(n_trials, n_participants,
     gen_sd_ndt : float
         Group-standard deviation of the non decision time
         of the diffusion decision model.
-
-    Optional Parameters
-    -------------------
 
     gen_mu_rel_sp : float, default .5
         Relative starting point of the diffusion decision model.

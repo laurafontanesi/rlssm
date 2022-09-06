@@ -117,8 +117,8 @@ class FittedModel(object):
         Calculates pWAIC1 and pWAIC2
         according to http://www.stat.columbia.edu/~gelman/research/published/waic_understand3.pdf
 
-        Optional Parameters
-        -------------------
+        Parameters
+        ----------
 
         pointwise : bool, default False
             By default, gives the averaged waic.
