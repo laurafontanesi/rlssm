@@ -1,7 +1,7 @@
 ModelResults class for DDMs (or RLDDMs)
 =======================================
 
-.. currentmodule:: rlssm.fits_DDM
+.. currentmodule:: rlssm.fit.fits_DDM
 
 There is one class to inspect model fits of **DDM or combinations of RL and DDM (fitted on choices and response times)**: :ref:`DDModelResults <DDModelResults>`.
 

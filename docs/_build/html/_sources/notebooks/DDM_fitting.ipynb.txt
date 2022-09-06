@@ -2,14 +2,15 @@
  "cells": [
   {
    "cell_type": "markdown",
+   "source": [
+    "# Fit the DDM on individual data"
+   ],
    "metadata": {
+    "collapsed": false,
     "pycharm": {
      "name": "#%% md\n"
     }
-   },
-   "source": [
-    "# Fit the DDM on individual data"
-   ]
+   }
   },
   {
    "cell_type": "markdown",

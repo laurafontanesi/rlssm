@@ -3,8 +3,7 @@ Model classes
 
 .. currentmodule:: rlssm
 
-These classes can be used to define different available models. 
-Curretly, 5 classes of models are implemented in `rlssm`: 
+These classes can be used to define different available models. Currently, 5 classes of models are implemented in `rlssm`:
 
 1. simple reinforcement learning models: :ref:`RLModel_2A <RLModel_2A>`
 2. diffusion decision models: :ref:`DDModel <DDModel>`

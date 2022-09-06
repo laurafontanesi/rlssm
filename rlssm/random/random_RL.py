@@ -184,7 +184,7 @@ def simulate_hier_rl_2A(task_design,
         'Q_cor', 'Q_inc', 'alpha', 'sensitivity',
         'p_cor', and 'accuracy'.
 
-        Examples
+    Examples
     --------
         >>> data_hier = simulate_hier_rl_2A(task_design=dm_hier, gen_mu_alpha=-.5, gen_sd_alpha=.1,
                                              gen_mu_sensitivity=.5, gen_sd_sensitivity=.1,

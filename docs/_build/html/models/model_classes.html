@@ -130,8 +130,7 @@
 </style>
 <section id="model-classes">
 <h1>Model classes<a class="headerlink" href="#model-classes" title="Permalink to this heading"></a></h1>
-<p>These classes can be used to define different available models.
-Curretly, 5 classes of models are implemented in <cite>rlssm</cite>:</p>
+<p>These classes can be used to define different available models. Currently, 5 classes of models are implemented in <cite>rlssm</cite>:</p>
 <ol class="arabic simple">
 <li><p>simple reinforcement learning models: <a class="reference internal" href="#rlmodel-2a"><span class="std std-ref">RLModel_2A</span></a></p></li>
 <li><p>diffusion decision models: <a class="reference internal" href="#ddmodel"><span class="std std-ref">DDModel</span></a></p></li>
@@ -153,7 +152,7 @@ Curretly, 5 classes of models are implemented in <cite>rlssm</cite>:</p>
 <p>When initializing the model, you should specify whether the model is hierarchical or not.
 Additionally, you can specify the mechanisms that you wish to include or exclude.</p>
 <p>The underlying stan model will be compiled if no previously compiled model is found.
-After initializing the model, it can be fitted to a particular dataset using pystan.</p>
+After initializing the model, it can be fitted to a particular dataset using cmdstanpy.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="rlssm.RLModel_2A.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hierarchical_levels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">increasing_sensitivity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separate_learning_rates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLModel_2A.__init__" title="Permalink to this definition"></a></dt>
@@ -177,61 +176,6 @@ for positive and negative prediction errors.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLModel_2A.model_label">
-<span class="sig-name descname"><span class="pre">model_label</span></span><a class="headerlink" href="#rlssm.RLModel_2A.model_label" title="Permalink to this definition"></a></dt>
-<dd><p>The label of the fully specified model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLModel_2A.n_parameters_individual">
-<span class="sig-name descname"><span class="pre">n_parameters_individual</span></span><a class="headerlink" href="#rlssm.RLModel_2A.n_parameters_individual" title="Permalink to this definition"></a></dt>
-<dd><p>The number of individual parameters of the fully specified model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLModel_2A.n_parameters_trial">
-<span class="sig-name descname"><span class="pre">n_parameters_trial</span></span><a class="headerlink" href="#rlssm.RLModel_2A.n_parameters_trial" title="Permalink to this definition"></a></dt>
-<dd><p>The number of parameters that are estimated at a trial level.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLModel_2A.stan_model_path">
-<span class="sig-name descname"><span class="pre">stan_model_path</span></span><a class="headerlink" href="#rlssm.RLModel_2A.stan_model_path" title="Permalink to this definition"></a></dt>
-<dd><p>The location of the stan model code.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLModel_2A.compiled_model">
-<span class="sig-name descname"><span class="pre">compiled_model</span></span><a class="headerlink" href="#rlssm.RLModel_2A.compiled_model" title="Permalink to this definition"></a></dt>
-<dd><p>The compiled stan model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pystan.StanModel</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py method">
@@ -259,6 +203,8 @@ Should be integers starting from 1.
 Set to 1 in case there is only one learning session.</p></li>
 <li><p><em>accuracy</em>, 0 if the incorrect option was chosen,
 1 if the correct option was chosen.</p></li>
+<li><p><em>feedback_type</em>, 0 if the complete feedback was presented,
+1 if the partial feedback was presented.</p></li>
 </ul>
 <p>If the model is hierarchical, also include:</p>
 <ul>
@@ -274,24 +220,26 @@ have been seen in a learning session.</p></li>
 <li><p><strong>initial_value_learning</strong> (<em>float</em>) – The assumed value expectation in the first learning session.
 The learning value in the following learning sessions is set to
 the average learned value in the previous learning session.</p></li>
-<li><p><strong>alpha_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the learning rate parameter.
+<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
+<li><p><strong>-------------------</strong> – </p></li>
+<li><p><strong>alpha_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the learning rate parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>sensitivity_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the sensitivity parameter.
+<li><p><strong>sensitivity_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the sensitivity parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>consistency_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the consistency parameter
+<li><p><strong>consistency_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the consistency parameter
 (only meaningful if increasing_sensitivity is True).
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>scaling_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the scaling parameter (only meaningful if increasing_sensitivity is True).
+<li><p><strong>scaling_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the scaling parameter (only meaningful if increasing_sensitivity is True).
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>alpha_pos_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the learning rate for the positive PE
+<li><p><strong>alpha_pos_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the learning rate for the positive PE
 (only meaningful if separate_learning_rates is True).
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>alpha_neg_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the learning rate for the negative PE
+<li><p><strong>alpha_neg_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the learning rate for the negative PE
 (only meaningful if separate_learning_rates is True).
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
@@ -299,12 +247,12 @@ In case it is a hierarchical model: Means and standard deviations of the hyper p
 (Gelman &amp; Rubin, 1992).</p></li>
 <li><p><strong>include_waic</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to calculate the widely applicable information criterion
 (WAIC; Watanabe, 2013).</p></li>
-<li><p><strong>pointwise_waic</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to also inclue the pointwise WAIC.
+<li><p><strong>pointwise_waic</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to also include the pointwise WAIC.
 Only relevant if include_waic is True.</p></li>
 <li><p><strong>include_last_values</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to extract the last values for each chain.</p></li>
 <li><p><strong>print_diagnostics</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to print mcmc diagnostics after fitting.
 It is advised to leave it to True and always check, on top of the r hat.</p></li>
-<li><p><strong>**kwargs</strong> – Additional arguments to pystan.StanModel.sampling().</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to <cite>StanModel.sampling</cite>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -328,7 +276,7 @@ It is advised to leave it to True and always check, on top of the r hat.</p></li
 <p>When initializing the model, you should specify whether the model is hierarchical or not.
 Additionally, you can specify the mechanisms that you wish to include or exclude.</p>
 <p>The underlying stan model will be compiled if no previously compiled model is found.
-After initializing the model, it can be fitted to a particular dataset using pystan.</p>
+After initializing the model, it can be fitted to a particular dataset using cmdstanpy.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="rlssm.DDModel.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hierarchical_levels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_point_bias</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_variability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_point_variability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_starting_point_correlation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_starting_point_beta_correlation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_starting_point_regression</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.DDModel.__init__" title="Permalink to this definition"></a></dt>
@@ -341,6 +289,8 @@ After initializing the model, it can be fitted to a particular dataset using pys
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>hierarchical_levels</strong> (<em>int</em>) – Set to 1 for individual data and to 2 for grouped data.</p></li>
+<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
+<li><p><strong>-------------------</strong> – </p></li>
 <li><p><strong>starting_point_bias</strong> (<em>bool</em><em>, </em><em>default False</em>) – By default, there is no starting point bias.
 If set to True, the starting point bias is estimated.</p></li>
 <li><p><strong>drift_variability</strong> (<em>bool</em><em>, </em><em>default False</em>) – By default, there is no drift-rate variability across trials.
@@ -364,66 +314,11 @@ Only relevant when drift_variability and starting_point_variability are True.</p
 </ul>
 </dd>
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.DDModel.model_label">
-<span class="sig-name descname"><span class="pre">model_label</span></span><a class="headerlink" href="#rlssm.DDModel.model_label" title="Permalink to this definition"></a></dt>
-<dd><p>The label of the fully specified model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.DDModel.n_parameters_individual">
-<span class="sig-name descname"><span class="pre">n_parameters_individual</span></span><a class="headerlink" href="#rlssm.DDModel.n_parameters_individual" title="Permalink to this definition"></a></dt>
-<dd><p>The number of individual parameters of the fully specified model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.DDModel.n_parameters_trial">
-<span class="sig-name descname"><span class="pre">n_parameters_trial</span></span><a class="headerlink" href="#rlssm.DDModel.n_parameters_trial" title="Permalink to this definition"></a></dt>
-<dd><p>The number of parameters that are estimated at a trial level.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.DDModel.stan_model_path">
-<span class="sig-name descname"><span class="pre">stan_model_path</span></span><a class="headerlink" href="#rlssm.DDModel.stan_model_path" title="Permalink to this definition"></a></dt>
-<dd><p>The location of the stan model code.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.DDModel.compiled_model">
-<span class="sig-name descname"><span class="pre">compiled_model</span></span><a class="headerlink" href="#rlssm.DDModel.compiled_model" title="Permalink to this definition"></a></dt>
-<dd><p>The compiled stan model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pystan.StanModel</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rlssm.DDModel.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ndt_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel_sp_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_point</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_trialmu_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_trialsd_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel_sp_trialmu_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel_sp_trialsd_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">corr_matrix_prior</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta_trialmu_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta_trialsd_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regression_coefficients_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_rhat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_waic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_last_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointwise_waic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_diagnostics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.DDModel.fit" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ndt_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel_sp_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_point</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_trial_mu_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_trial_sd_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel_sp_trial_mu_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel_sp_trial_sd_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">corr_matrix_prior</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta_trial_mu_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta_trial_sd_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regression_coefficients_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_rhat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_waic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_last_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointwise_waic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_diagnostics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.DDModel.fit" title="Permalink to this definition"></a></dt>
 <dd><p>Fits the specified diffusion decision model to data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -446,59 +341,61 @@ or drift_starting_point_regression are True, also include:</p>
 <li><p><em>beta</em>, the external variable to correlate/regress to drift and rel_sp.</p></li>
 </ul>
 </p></li>
-<li><p><strong>starting_point</strong> (<em>float</em><em>, </em><em>default .5</em>) – The relative starting point of the diffusion process.
-By default there is no bias, so the starting point is .5.
-Should be between 0 and 1.</p></li>
-<li><p><strong>drift_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the drift-rate parameter.
+<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
+<li><p><strong>-------------------</strong> – </p></li>
+<li><p><strong>drift_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the drift-rate parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>threshold_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the threshold parameter.
+<li><p><strong>threshold_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the threshold parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>ndt_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the non decision time parameter.
+<li><p><strong>ndt_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the non decision time parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>rel_sp_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the relative starting point parameter
+<li><p><strong>rel_sp_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the relative starting point parameter
 (only meaningful if starting_point_bias is True).
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>drift_trialmu_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the mean drift-rate across trials
+<li><p><strong>starting_point</strong> (<em>float</em><em>, </em><em>default .5</em>) – The relative starting point of the diffusion process.
+By default, there is no bias, so the starting point is .5.
+Should be between 0 and 1.</p></li>
+<li><p><strong>drift_trial_mu_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the mean drift-rate across trials
 (only meaningful if drift_variability is True).
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>drift_trialsd_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the standard deviation of the drift-rate across trials
+<li><p><strong>drift_trial_sd_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the standard deviation of the drift-rate across trials
 (only meaningful if drift_variability is True).
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>rel_sp_trialmu_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the standard deviation of the relative starting point across trials
+<li><p><strong>rel_sp_trial_mu_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the mean of the relative starting point across trials
 (only meaningful if starting_point_variability is True).
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>rel_sp_trialsd_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the standard deviation of the relative starting point across trials
+<li><p><strong>rel_sp_trial_sd_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the standard deviation of the relative starting point across trials
 (only meaningful if starting_point_variability is True).
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>corr_matrix_prior</strong> (<em>float</em><em>, </em><em>default to 1</em>) – Prior for the eta parameter of the LKJ prior of the correlation matrix
+<li><p><strong>corr_matrix_prior</strong> (<em>float</em><em>, </em><em>default 1</em>) – Prior for the eta parameter of the LKJ prior of the correlation matrix
 (only meaningful if drift_starting_point_correlation is True).</p></li>
-<li><p><strong>beta_trialmu_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the mean beta across trials
+<li><p><strong>beta_trial_mu_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the mean beta across trials
 (only meaningful if drift_starting_point_beta_correlation is True).
 Mean and standard deviation of the prior distr.</p></li>
-<li><p><strong>beta_trialsd_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the standard deviation of the beta across trials
+<li><p><strong>beta_trial_sd_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the standard deviation of the beta across trials
 (only meaningful if drift_starting_point_beta_correlation is True).
 Mean and standard deviation of the prior distr.</p></li>
-<li><p><strong>regression_coefficients_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the regression coefficients
+<li><p><strong>regression_coefficients_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the regression coefficients
 (only relevant if drift_starting_point_regression is True).
 Mean and standard deviation of the prior distr.</p></li>
 <li><p><strong>include_rhat</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to calculate the Gelman-Rubin convergence diagnostic r hat
 (Gelman &amp; Rubin, 1992).</p></li>
 <li><p><strong>include_waic</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to calculate the widely applicable information criterion
 (WAIC; Watanabe, 2013).</p></li>
-<li><p><strong>pointwise_waic</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to also inclue the pointwise WAIC.
+<li><p><strong>pointwise_waic</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to also include the pointwise WAIC.
 Only relevant if include_waic is True.</p></li>
 <li><p><strong>include_last_values</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to extract the last values for each chain.</p></li>
 <li><p><strong>print_diagnostics</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to print mcmc diagnostics after fitting.
 It is advised to leave it to True and always check, on top of the r hat.</p></li>
-<li><p><strong>**kwargs</strong> – Additional arguments to pystan.StanModel.sampling().</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to StanModel.sampling().</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -523,7 +420,7 @@ and diffusion decision models.</p>
 <p>When initializing the model, you should specify whether the model is hierarchical or not.
 Additionally, you can specify the mechanisms that you wish to include or exclude.</p>
 <p>The underlying stan model will be compiled if no previously compiled model is found.
-After initializing the model, it can be fitted to a particular dataset using pystan.</p>
+After initializing the model, it can be fitted to a particular dataset using cmdstanpy.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="rlssm.RLDDModel.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hierarchical_levels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nonlinear_mapping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separate_learning_rates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_modulation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLDDModel.__init__" title="Permalink to this definition"></a></dt>
@@ -537,6 +434,8 @@ However, more than two options can be presented in the same learning session.</p
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>hierarchical_levels</strong> (<em>int</em>) – Set to 1 for individual data and to 2 for grouped data.</p></li>
+<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
+<li><p><strong>-------------------</strong> – </p></li>
 <li><p><strong>nonlinear_mapping</strong> (<em>bool</em><em>, </em><em>default False</em>) – By default, the mapping between value differences and drift-rate is linear.
 If set to True, a non-linear mapping function is estimated.</p></li>
 <li><p><strong>separate_learning_rates</strong> (<em>bool</em><em>, </em><em>default False</em>) – By default, there is only one learning rate.
@@ -548,61 +447,6 @@ depending on the average value of the presented options.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLDDModel.model_label">
-<span class="sig-name descname"><span class="pre">model_label</span></span><a class="headerlink" href="#rlssm.RLDDModel.model_label" title="Permalink to this definition"></a></dt>
-<dd><p>The label of the fully specified model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLDDModel.n_parameters_individual">
-<span class="sig-name descname"><span class="pre">n_parameters_individual</span></span><a class="headerlink" href="#rlssm.RLDDModel.n_parameters_individual" title="Permalink to this definition"></a></dt>
-<dd><p>The number of individual parameters of the fully specified model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLDDModel.n_parameters_trial">
-<span class="sig-name descname"><span class="pre">n_parameters_trial</span></span><a class="headerlink" href="#rlssm.RLDDModel.n_parameters_trial" title="Permalink to this definition"></a></dt>
-<dd><p>The number of parameters that are estimated at a trial level.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLDDModel.stan_model_path">
-<span class="sig-name descname"><span class="pre">stan_model_path</span></span><a class="headerlink" href="#rlssm.RLDDModel.stan_model_path" title="Permalink to this definition"></a></dt>
-<dd><p>The location of the stan model code.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLDDModel.compiled_model">
-<span class="sig-name descname"><span class="pre">compiled_model</span></span><a class="headerlink" href="#rlssm.RLDDModel.compiled_model" title="Permalink to this definition"></a></dt>
-<dd><p>The compiled stan model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pystan.StanModel</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py method">
@@ -631,6 +475,8 @@ Set to 1 in case there is only one learning session.</p></li>
 <li><p><em>rt</em>, response times in seconds.</p></li>
 <li><p><em>accuracy</em>, 0 if the incorrect option was chosen,
 1 if the correct option was chosen.</p></li>
+<li><p><em>feedback_type</em>, 0 if the complete feedback was presented,
+1 if the partial feedback was presented.</p></li>
 </ul>
 <p>If the model is hierarchical, also include:</p>
 <ul>
@@ -642,29 +488,31 @@ Should be integers starting from 1.</p></li>
 <li><p><strong>initial_value_learning</strong> (<em>float</em>) – The assumed value expectation in the first learning session.
 The learning value in the following learning sessions is set to
 the average learned value in the previous learning session.</p></li>
-<li><p><strong>alpha_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the learning rate parameter.
+<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
+<li><p><strong>----------------</strong> – </p></li>
+<li><p><strong>alpha_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the learning rate parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>drift_scaling_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the drift scaling parameter.
+<li><p><strong>drift_scaling_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the drift scaling parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>threshold_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the threshold parameter.
+<li><p><strong>threshold_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the threshold parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>ndt_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the non decision time parameter.
+<li><p><strong>ndt_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the non decision time parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>drift_asymptote_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the drift-rate asymptote (only meaningful if nonlinear_mapping is True).
+<li><p><strong>drift_asymptote_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the drift-rate asymptote (only meaningful if nonlinear_mapping is True).
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>threshold_modulation_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the threshold coefficient (only meaningful if threshold_modulation is True).
+<li><p><strong>threshold_modulation_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the threshold coefficient (only meaningful if threshold_modulation is True).
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>alpha_pos_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the learning rate for the positive PE
+<li><p><strong>alpha_pos_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the learning rate for the positive PE
 (only meaningful if separate_learning_rates is True).
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>alpha_neg_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the learning rate for the negative PE
+<li><p><strong>alpha_neg_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the learning rate for the negative PE
 (only meaningful if separate_learning_rates is True).
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
@@ -672,12 +520,12 @@ In case it is a hierarchical model: Means and standard deviations of the hyper p
 (Gelman &amp; Rubin, 1992).</p></li>
 <li><p><strong>include_waic</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to calculate the widely applicable information criterion
 (WAIC; Watanabe, 2013).</p></li>
-<li><p><strong>pointwise_waic</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to also inclue the pointwise WAIC.
+<li><p><strong>pointwise_waic</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to also include the pointwise WAIC.
 Only relevant if include_waic is True.</p></li>
 <li><p><strong>include_last_values</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to extract the last values for each chain.</p></li>
 <li><p><strong>print_diagnostics</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to print mcmc diagnostics after fitting.
 It is advised to leave it to True and always check, on top of the r hat.</p></li>
-<li><p><strong>**kwargs</strong> – Additional arguments to pystan.StanModel.sampling().</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to StanModel.sampling().</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -700,7 +548,7 @@ It is advised to leave it to True and always check, on top of the r hat.</p></li
 <dd><p>RDModel_2A allows to specify a race diffusion model for 2 alternatives.</p>
 <p>When initializing the model, you should specify whether the model is hierarchical or not.</p>
 <p>The underlying stan model will be compiled if no previously compiled model is found.
-After initializing the model, it can be fitted to a particular dataset using pystan.</p>
+After initializing the model, it can be fitted to a particular dataset using cmdstanpy.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="rlssm.RDModel_2A.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hierarchical_levels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RDModel_2A.__init__" title="Permalink to this definition"></a></dt>
@@ -714,61 +562,6 @@ After initializing the model, it can be fitted to a particular dataset using pys
 <dd class="field-odd"><p><strong>hierarchical_levels</strong> (<em>int</em>) – Set to 1 for individual data and to 2 for grouped data.</p>
 </dd>
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RDModel_2A.model_label">
-<span class="sig-name descname"><span class="pre">model_label</span></span><a class="headerlink" href="#rlssm.RDModel_2A.model_label" title="Permalink to this definition"></a></dt>
-<dd><p>The label of the fully specified model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RDModel_2A.n_parameters_individual">
-<span class="sig-name descname"><span class="pre">n_parameters_individual</span></span><a class="headerlink" href="#rlssm.RDModel_2A.n_parameters_individual" title="Permalink to this definition"></a></dt>
-<dd><p>The number of individual parameters of the fully specified model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RDModel_2A.n_parameters_trial">
-<span class="sig-name descname"><span class="pre">n_parameters_trial</span></span><a class="headerlink" href="#rlssm.RDModel_2A.n_parameters_trial" title="Permalink to this definition"></a></dt>
-<dd><p>The number of parameters that are estimated at a trial level.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RDModel_2A.stan_model_path">
-<span class="sig-name descname"><span class="pre">stan_model_path</span></span><a class="headerlink" href="#rlssm.RDModel_2A.stan_model_path" title="Permalink to this definition"></a></dt>
-<dd><p>The location of the stan model code.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RDModel_2A.compiled_model">
-<span class="sig-name descname"><span class="pre">compiled_model</span></span><a class="headerlink" href="#rlssm.RDModel_2A.compiled_model" title="Permalink to this definition"></a></dt>
-<dd><p>The compiled stan model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pystan.StanModel</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py method">
@@ -791,35 +584,34 @@ After initializing the model, it can be fitted to a particular dataset using pys
 Should be integers starting from 1.</p></li>
 </ul>
 </p></li>
-<li><p><strong>starting_point</strong> (<em>float</em><em>, </em><em>default .5</em>) – The relative starting point of the diffusion process.
-By default there is no bias, so the starting point is .5.
-Should be between 0 and 1.</p></li>
-<li><p><strong>threshold_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the threshold parameter.
+<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
+<li><p><strong>-------------------</strong> – </p></li>
+<li><p><strong>threshold_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the threshold parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>ndt_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the non decision time parameter.
+<li><p><strong>ndt_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the non decision time parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>drift_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the drift-rate parameter.
+<li><p><strong>drift_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the drift-rate parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
 <li><p><strong>include_rhat</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to calculate the Gelman-Rubin convergence diagnostic r hat
 (Gelman &amp; Rubin, 1992).</p></li>
 <li><p><strong>include_waic</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to calculate the widely applicable information criterion
 (WAIC; Watanabe, 2013).</p></li>
-<li><p><strong>pointwise_waic</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to also inclue the pointwise WAIC.
+<li><p><strong>pointwise_waic</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to also include the pointwise WAIC.
 Only relevant if include_waic is True.</p></li>
 <li><p><strong>include_last_values</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to extract the last values for each chain.</p></li>
 <li><p><strong>print_diagnostics</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to print mcmc diagnostics after fitting.
 It is advised to leave it to True and always check, on top of the r hat.</p></li>
-<li><p><strong>**kwargs</strong> – Additional arguments to pystan.StanModel.sampling().</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to <cite>StanModel.sampling</cite>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>res</strong></p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>rlssm.fits.DDModelResults</p>
+<dd class="field-odd"><p>rlssm.fits.RDMModelResults</p>
 </dd>
 </dl>
 </dd></dl>
@@ -832,7 +624,7 @@ It is advised to leave it to True and always check, on top of the r hat.</p></li
 <dd><p>LBAModel_2A allows to specify a linear ballistic accumulator model for 2 alternatives.</p>
 <p>When initializing the model, you should specify whether the model is hierarchical or not.</p>
 <p>The underlying stan model will be compiled if no previously compiled model is found.
-After initializing the model, it can be fitted to a particular dataset using pystan.</p>
+After initializing the model, it can be fitted to a particular dataset using cmdstanpy.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="rlssm.LBAModel_2A.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hierarchical_levels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.LBAModel_2A.__init__" title="Permalink to this definition"></a></dt>
@@ -846,67 +638,12 @@ After initializing the model, it can be fitted to a particular dataset using pys
 <dd class="field-odd"><p><strong>hierarchical_levels</strong> (<em>int</em>) – Set to 1 for individual data and to 2 for grouped data.</p>
 </dd>
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.LBAModel_2A.model_label">
-<span class="sig-name descname"><span class="pre">model_label</span></span><a class="headerlink" href="#rlssm.LBAModel_2A.model_label" title="Permalink to this definition"></a></dt>
-<dd><p>The label of the fully specified model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.LBAModel_2A.n_parameters_individual">
-<span class="sig-name descname"><span class="pre">n_parameters_individual</span></span><a class="headerlink" href="#rlssm.LBAModel_2A.n_parameters_individual" title="Permalink to this definition"></a></dt>
-<dd><p>The number of individual parameters of the fully specified model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.LBAModel_2A.n_parameters_trial">
-<span class="sig-name descname"><span class="pre">n_parameters_trial</span></span><a class="headerlink" href="#rlssm.LBAModel_2A.n_parameters_trial" title="Permalink to this definition"></a></dt>
-<dd><p>The number of parameters that are estimated at a trial level.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.LBAModel_2A.stan_model_path">
-<span class="sig-name descname"><span class="pre">stan_model_path</span></span><a class="headerlink" href="#rlssm.LBAModel_2A.stan_model_path" title="Permalink to this definition"></a></dt>
-<dd><p>The location of the stan model code.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.LBAModel_2A.compiled_model">
-<span class="sig-name descname"><span class="pre">compiled_model</span></span><a class="headerlink" href="#rlssm.LBAModel_2A.compiled_model" title="Permalink to this definition"></a></dt>
-<dd><p>The compiled stan model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pystan.StanModel</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rlssm.LBAModel_2A.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_rhat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_waic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointwise_waic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_last_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_diagnostics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.LBAModel_2A.fit" title="Permalink to this definition"></a></dt>
-<dd><p>Fits the specified diffusion decision model to data.</p>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sp_trial_var_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ndt_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_variability_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_rhat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_waic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointwise_waic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_last_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_diagnostics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.LBAModel_2A.fit" title="Permalink to this definition"></a></dt>
+<dd><p>Fits the specified Linear Ballistic Accumulator to data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -923,38 +660,40 @@ After initializing the model, it can be fitted to a particular dataset using pys
 Should be integers starting from 1.</p></li>
 </ul>
 </p></li>
-<li><p><strong>starting_point</strong> (<em>float</em><em>, </em><em>default .5</em>) – The relative starting point of the diffusion process.
-By default there is no bias, so the starting point is .5.
-Should be between 0 and 1.</p></li>
-<li><p><strong>k_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the k parameter.
+<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
+<li><p><strong>-------------------</strong> – </p></li>
+<li><p><strong>k_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the k parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>A_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the A parameter.
+<li><p><strong>sp_trial_var_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the A parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>tau_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the non decision time parameter.
+<li><p><strong>ndt_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the non decision time parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>drift_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the drift-rate parameter.
+<li><p><strong>drift_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the drift-rate parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>drift_variability_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the drift-variability parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
 <li><p><strong>include_rhat</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to calculate the Gelman-Rubin convergence diagnostic r hat
 (Gelman &amp; Rubin, 1992).</p></li>
 <li><p><strong>include_waic</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to calculate the widely applicable information criterion
 (WAIC; Watanabe, 2013).</p></li>
-<li><p><strong>pointwise_waic</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to also inclue the pointwise WAIC.
+<li><p><strong>pointwise_waic</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to also include the pointwise WAIC.
 Only relevant if include_waic is True.</p></li>
 <li><p><strong>include_last_values</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to extract the last values for each chain.</p></li>
 <li><p><strong>print_diagnostics</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to print mcmc diagnostics after fitting.
 It is advised to leave it to True and always check, on top of the r hat.</p></li>
-<li><p><strong>**kwargs</strong> – Additional arguments to pystan.StanModel.sampling().</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to <cite>StanModel.sampling()</cite>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>res</strong></p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>rlssm.fits.DDModelResults</p>
+<dd class="field-odd"><p>rlssm.fits.LBAFittedModel_2A</p>
 </dd>
 </dl>
 </dd></dl>
@@ -967,7 +706,7 @@ It is advised to leave it to True and always check, on top of the r hat.</p></li
 <dd><p>ARDModel_2A allows to specify a advantage race diffusion model for 2 alternatives.</p>
 <p>When initializing the model, you should specify whether the model is hierarchical or not.</p>
 <p>The underlying stan model will be compiled if no previously compiled model is found.
-After initializing the model, it can be fitted to a particular dataset using pystan.</p>
+After initializing the model, it can be fitted to a particular dataset using cmdstanpy.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="rlssm.ARDModel_2A.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hierarchical_levels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.ARDModel_2A.__init__" title="Permalink to this definition"></a></dt>
@@ -981,61 +720,6 @@ After initializing the model, it can be fitted to a particular dataset using pys
 <dd class="field-odd"><p><strong>hierarchical_levels</strong> (<em>int</em>) – Set to 1 for individual data and to 2 for grouped data.</p>
 </dd>
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.ARDModel_2A.model_label">
-<span class="sig-name descname"><span class="pre">model_label</span></span><a class="headerlink" href="#rlssm.ARDModel_2A.model_label" title="Permalink to this definition"></a></dt>
-<dd><p>The label of the fully specified model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.ARDModel_2A.n_parameters_individual">
-<span class="sig-name descname"><span class="pre">n_parameters_individual</span></span><a class="headerlink" href="#rlssm.ARDModel_2A.n_parameters_individual" title="Permalink to this definition"></a></dt>
-<dd><p>The number of individual parameters of the fully specified model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.ARDModel_2A.n_parameters_trial">
-<span class="sig-name descname"><span class="pre">n_parameters_trial</span></span><a class="headerlink" href="#rlssm.ARDModel_2A.n_parameters_trial" title="Permalink to this definition"></a></dt>
-<dd><p>The number of parameters that are estimated at a trial level.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.ARDModel_2A.stan_model_path">
-<span class="sig-name descname"><span class="pre">stan_model_path</span></span><a class="headerlink" href="#rlssm.ARDModel_2A.stan_model_path" title="Permalink to this definition"></a></dt>
-<dd><p>The location of the stan model code.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.ARDModel_2A.compiled_model">
-<span class="sig-name descname"><span class="pre">compiled_model</span></span><a class="headerlink" href="#rlssm.ARDModel_2A.compiled_model" title="Permalink to this definition"></a></dt>
-<dd><p>The compiled stan model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pystan.StanModel</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py method">
@@ -1058,34 +742,33 @@ After initializing the model, it can be fitted to a particular dataset using pys
 Should be integers starting from 1.</p></li>
 </ul>
 </p></li>
-<li><p><strong>starting_point</strong> (<em>float</em><em>, </em><em>default .5</em>) – The relative starting point of the diffusion process.
-By default there is no bias, so the starting point is .5.
-Should be between 0 and 1.</p></li>
-<li><p><strong>threshold_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the threshold parameter.
+<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
+<li><p><strong>-------------------</strong> – </p></li>
+<li><p><strong>threshold_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the threshold parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>ndt_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the non decision time parameter.
+<li><p><strong>ndt_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the non decision time parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>v0_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the v0 parameter.
+<li><p><strong>v0_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the v0 parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>ws_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the ws parameter.
+<li><p><strong>ws_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the ws parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>wd_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the wd parameter.
+<li><p><strong>wd_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the wd parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
 <li><p><strong>include_rhat</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to calculate the Gelman-Rubin convergence diagnostic r hat
 (Gelman &amp; Rubin, 1992).</p></li>
 <li><p><strong>include_waic</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to calculate the widely applicable information criterion
 (WAIC; Watanabe, 2013).</p></li>
-<li><p><strong>pointwise_waic</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to also inclue the pointwise WAIC.
+<li><p><strong>pointwise_waic</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to also include the pointwise WAIC.
 Only relevant if include_waic is True.</p></li>
 <li><p><strong>include_last_values</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to extract the last values for each chain.</p></li>
 <li><p><strong>print_diagnostics</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to print mcmc diagnostics after fitting.
 It is advised to leave it to True and always check, on top of the r hat.</p></li>
-<li><p><strong>**kwargs</strong> – Additional arguments to pystan.StanModel.sampling().</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to StanModel.sampling().</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1105,7 +788,7 @@ It is advised to leave it to True and always check, on top of the r hat.</p></li
 <dd><p>ALBAModel_2A allows to specify a advantage linear ballistic accumulator model for 2 alternatives.</p>
 <p>When initializing the model, you should specify whether the model is hierarchical or not.</p>
 <p>The underlying stan model will be compiled if no previously compiled model is found.
-After initializing the model, it can be fitted to a particular dataset using pystan.</p>
+After initializing the model, it can be fitted to a particular dataset using cmdstanpy.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="rlssm.ALBAModel_2A.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hierarchical_levels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.ALBAModel_2A.__init__" title="Permalink to this definition"></a></dt>
@@ -1119,66 +802,11 @@ After initializing the model, it can be fitted to a particular dataset using pys
 <dd class="field-odd"><p><strong>hierarchical_levels</strong> (<em>int</em>) – Set to 1 for individual data and to 2 for grouped data.</p>
 </dd>
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.ALBAModel_2A.model_label">
-<span class="sig-name descname"><span class="pre">model_label</span></span><a class="headerlink" href="#rlssm.ALBAModel_2A.model_label" title="Permalink to this definition"></a></dt>
-<dd><p>The label of the fully specified model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.ALBAModel_2A.n_parameters_individual">
-<span class="sig-name descname"><span class="pre">n_parameters_individual</span></span><a class="headerlink" href="#rlssm.ALBAModel_2A.n_parameters_individual" title="Permalink to this definition"></a></dt>
-<dd><p>The number of individual parameters of the fully specified model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.ALBAModel_2A.n_parameters_trial">
-<span class="sig-name descname"><span class="pre">n_parameters_trial</span></span><a class="headerlink" href="#rlssm.ALBAModel_2A.n_parameters_trial" title="Permalink to this definition"></a></dt>
-<dd><p>The number of parameters that are estimated at a trial level.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.ALBAModel_2A.stan_model_path">
-<span class="sig-name descname"><span class="pre">stan_model_path</span></span><a class="headerlink" href="#rlssm.ALBAModel_2A.stan_model_path" title="Permalink to this definition"></a></dt>
-<dd><p>The location of the stan model code.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.ALBAModel_2A.compiled_model">
-<span class="sig-name descname"><span class="pre">compiled_model</span></span><a class="headerlink" href="#rlssm.ALBAModel_2A.compiled_model" title="Permalink to this definition"></a></dt>
-<dd><p>The compiled stan model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pystan.StanModel</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rlssm.ALBAModel_2A.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v0_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ws_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wd_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_rhat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_waic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointwise_waic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_last_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_diagnostics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.ALBAModel_2A.fit" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sp_trial_var_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ndt_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v0_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ws_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wd_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_variability_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_rhat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_waic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointwise_waic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_last_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_diagnostics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.ALBAModel_2A.fit" title="Permalink to this definition"></a></dt>
 <dd><p>Fits the specified diffusion decision model to data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1196,44 +824,46 @@ After initializing the model, it can be fitted to a particular dataset using pys
 Should be integers starting from 1.</p></li>
 </ul>
 </p></li>
-<li><p><strong>starting_point</strong> (<em>float</em><em>, </em><em>default .5</em>) – The relative starting point of the diffusion process.
-By default there is no bias, so the starting point is .5.
-Should be between 0 and 1.</p></li>
-<li><p><strong>k_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the k parameter.
+<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
+<li><p><strong>-------------------</strong> – </p></li>
+<li><p><strong>k_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the k parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>A_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the A parameter.
+<li><p><strong>sp_trial_var_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the A parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>tau_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the non decision time parameter.
+<li><p><strong>ndt_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the non decision time parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>v0_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the v0 parameter.
+<li><p><strong>v0_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the v0 parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>ws_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the ws parameter.
+<li><p><strong>ws_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the ws parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>wd_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the wd parameter.
+<li><p><strong>wd_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the wd parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>drift_variability_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the drift-variability parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
 <li><p><strong>include_rhat</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to calculate the Gelman-Rubin convergence diagnostic r hat
 (Gelman &amp; Rubin, 1992).</p></li>
 <li><p><strong>include_waic</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to calculate the widely applicable information criterion
 (WAIC; Watanabe, 2013).</p></li>
-<li><p><strong>pointwise_waic</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to also inclue the pointwise WAIC.
+<li><p><strong>pointwise_waic</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to also include the pointwise WAIC.
 Only relevant if include_waic is True.</p></li>
 <li><p><strong>include_last_values</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to extract the last values for each chain.</p></li>
 <li><p><strong>print_diagnostics</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to print mcmc diagnostics after fitting.
 It is advised to leave it to True and always check, on top of the r hat.</p></li>
-<li><p><strong>**kwargs</strong> – Additional arguments to pystan.StanModel.sampling().</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to StanModel.sampling().</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>res</strong></p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>rlssm.fits.DDModelResults</p>
+<dd class="field-odd"><p>rlssm.fits.LBAFittedModel_2A</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1251,7 +881,7 @@ and race diffusion decision models.</p>
 <p>When initializing the model, you should specify whether the model is hierarchical or not.
 Additionally, you can specify the mechanisms that you wish to include or exclude.</p>
 <p>The underlying stan model will be compiled if no previously compiled model is found.
-After initializing the model, it can be fitted to a particular dataset using pystan.</p>
+After initializing the model, it can be fitted to a particular dataset using cmdstanpy.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="rlssm.RLRDModel_2A.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hierarchical_levels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separate_learning_rates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nonlinear_mapping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLRDModel_2A.__init__" title="Permalink to this definition"></a></dt>
@@ -1273,66 +903,11 @@ If set to True, a non-linear mapping function is estimated.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLRDModel_2A.model_label">
-<span class="sig-name descname"><span class="pre">model_label</span></span><a class="headerlink" href="#rlssm.RLRDModel_2A.model_label" title="Permalink to this definition"></a></dt>
-<dd><p>The label of the fully specified model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLRDModel_2A.n_parameters_individual">
-<span class="sig-name descname"><span class="pre">n_parameters_individual</span></span><a class="headerlink" href="#rlssm.RLRDModel_2A.n_parameters_individual" title="Permalink to this definition"></a></dt>
-<dd><p>The number of individual parameters of the fully specified model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLRDModel_2A.n_parameters_trial">
-<span class="sig-name descname"><span class="pre">n_parameters_trial</span></span><a class="headerlink" href="#rlssm.RLRDModel_2A.n_parameters_trial" title="Permalink to this definition"></a></dt>
-<dd><p>The number of parameters that are estimated at a trial level.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLRDModel_2A.stan_model_path">
-<span class="sig-name descname"><span class="pre">stan_model_path</span></span><a class="headerlink" href="#rlssm.RLRDModel_2A.stan_model_path" title="Permalink to this definition"></a></dt>
-<dd><p>The location of the stan model code.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLRDModel_2A.compiled_model">
-<span class="sig-name descname"><span class="pre">compiled_model</span></span><a class="headerlink" href="#rlssm.RLRDModel_2A.compiled_model" title="Permalink to this definition"></a></dt>
-<dd><p>The compiled stan model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pystan.StanModel</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rlssm.RLRDModel_2A.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_value_learning</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_scaling_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ndt_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">utility_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_pos_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_neg_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_rhat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_waic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointwise_waic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_last_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_diagnostics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLRDModel_2A.fit" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_value_learning</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_pos_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_neg_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ndt_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slop_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_asymtot_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_scaling_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_rhat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_waic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointwise_waic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_last_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_diagnostics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLRDModel_2A.fit" title="Permalink to this definition"></a></dt>
 <dd><p>Fits the specified reinforcement learning diffusion decision model to data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1356,6 +931,8 @@ Set to 1 in case there is only one learning session.</p></li>
 <li><p><em>rt</em>, response times in seconds.</p></li>
 <li><p><em>accuracy</em>, 0 if the incorrect option was chosen,
 1 if the correct option was chosen.</p></li>
+<li><p><em>feedback_type</em>, 0 if the complete feedback was presented,
+1 if the partial feedback was presented.</p></li>
 </ul>
 <p>If the model is hierarchical, also include:</p>
 <ul>
@@ -1367,46 +944,51 @@ Should be integers starting from 1.</p></li>
 <li><p><strong>initial_value_learning</strong> (<em>float</em>) – The assumed value expectation in the first learning session.
 The learning value in the following learning sessions is set to
 the average learned value in the previous learning session.</p></li>
-<li><p><strong>alpha_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the learning rate parameter.
+<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
+<li><p><strong>----------------</strong> – </p></li>
+<li><p><strong>alpha_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the learning rate parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>drift_scaling_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the drift scaling parameter.
-In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
-In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>threshold_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the threshold parameter.
-In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
-In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>ndt_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the non decision time parameter.
-In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
-In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>utility_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the utility time parameter.
-In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
-In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>alpha_pos_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the learning rate for the positive PE
+<li><p><strong>alpha_pos_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the learning rate for the positive PE
 (only meaningful if separate_learning_rates is True).
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>alpha_neg_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the learning rate for the negative PE
+<li><p><strong>alpha_neg_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the learning rate for the negative PE
 (only meaningful if separate_learning_rates is True).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>ndt_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the non decision time parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>threshold_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the threshold parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>slop_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the utility time parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>drift_asymtot_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the utility time parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>drift_scaling_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the drift scaling parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
 <li><p><strong>include_rhat</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to calculate the Gelman-Rubin convergence diagnostic r hat
 (Gelman &amp; Rubin, 1992).</p></li>
 <li><p><strong>include_waic</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to calculate the widely applicable information criterion
 (WAIC; Watanabe, 2013).</p></li>
-<li><p><strong>pointwise_waic</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to also inclue the pointwise WAIC.
+<li><p><strong>pointwise_waic</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to also include the pointwise WAIC.
 Only relevant if include_waic is True.</p></li>
 <li><p><strong>include_last_values</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to extract the last values for each chain.</p></li>
 <li><p><strong>print_diagnostics</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to print mcmc diagnostics after fitting.
 It is advised to leave it to True and always check, on top of the r hat.</p></li>
-<li><p><strong>**kwargs</strong> – Additional arguments to pystan.StanModel.sampling().</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to <cite>StanModel.sampling</cite>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>res</strong></p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>rlssm.fits.DDModelResults</p>
+<dd class="field-odd"><p>rlssm.fits.RDMModelResults</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1421,7 +1003,7 @@ and linear ballistic accumulator models.</p>
 <p>When initializing the model, you should specify whether the model is hierarchical or not.
 Additionally, you can specify the mechanisms that you wish to include or exclude.</p>
 <p>The underlying stan model will be compiled if no previously compiled model is found.
-After initializing the model, it can be fitted to a particular dataset using pystan.</p>
+After initializing the model, it can be fitted to a particular dataset using cmdstanpy.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="rlssm.RLLBAModel_2A.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hierarchical_levels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separate_learning_rates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nonlinear_mapping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLLBAModel_2A.__init__" title="Permalink to this definition"></a></dt>
@@ -1443,66 +1025,11 @@ If set to True, a non-linear mapping function is estimated.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLLBAModel_2A.model_label">
-<span class="sig-name descname"><span class="pre">model_label</span></span><a class="headerlink" href="#rlssm.RLLBAModel_2A.model_label" title="Permalink to this definition"></a></dt>
-<dd><p>The label of the fully specified model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLLBAModel_2A.n_parameters_individual">
-<span class="sig-name descname"><span class="pre">n_parameters_individual</span></span><a class="headerlink" href="#rlssm.RLLBAModel_2A.n_parameters_individual" title="Permalink to this definition"></a></dt>
-<dd><p>The number of individual parameters of the fully specified model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLLBAModel_2A.n_parameters_trial">
-<span class="sig-name descname"><span class="pre">n_parameters_trial</span></span><a class="headerlink" href="#rlssm.RLLBAModel_2A.n_parameters_trial" title="Permalink to this definition"></a></dt>
-<dd><p>The number of parameters that are estimated at a trial level.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLLBAModel_2A.stan_model_path">
-<span class="sig-name descname"><span class="pre">stan_model_path</span></span><a class="headerlink" href="#rlssm.RLLBAModel_2A.stan_model_path" title="Permalink to this definition"></a></dt>
-<dd><p>The location of the stan model code.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLLBAModel_2A.compiled_model">
-<span class="sig-name descname"><span class="pre">compiled_model</span></span><a class="headerlink" href="#rlssm.RLLBAModel_2A.compiled_model" title="Permalink to this definition"></a></dt>
-<dd><p>The compiled stan model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pystan.StanModel</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rlssm.RLLBAModel_2A.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_value_learning</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">utility_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_scaling_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_pos_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_neg_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_rhat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_waic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointwise_waic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_last_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_diagnostics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLLBAModel_2A.fit" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_value_learning</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_pos_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_neg_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ndt_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sp_trial_var_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slop_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_asymtot_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_scaling_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_variability_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_rhat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_waic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointwise_waic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_last_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_diagnostics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLLBAModel_2A.fit" title="Permalink to this definition"></a></dt>
 <dd><p>Fits the specified reinforcement learning diffusion decision model to data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1526,6 +1053,8 @@ Set to 1 in case there is only one learning session.</p></li>
 <li><p><em>rt</em>, response times in seconds.</p></li>
 <li><p><em>accuracy</em>, 0 if the incorrect option was chosen,
 1 if the correct option was chosen.</p></li>
+<li><p><em>feedback_type</em>, 0 if the complete feedback was presented,
+1 if the partial feedback was presented.</p></li>
 </ul>
 <p>If the model is hierarchical, also include:</p>
 <ul>
@@ -1537,49 +1066,57 @@ Should be integers starting from 1.</p></li>
 <li><p><strong>initial_value_learning</strong> (<em>float</em>) – The assumed value expectation in the first learning session.
 The learning value in the following learning sessions is set to
 the average learned value in the previous learning session.</p></li>
-<li><p><strong>alpha_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the learning rate parameter.
+<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
+<li><p><strong>-------------------</strong> – </p></li>
+<li><p><strong>alpha_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the learning rate parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>drift_scaling_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the drift scaling parameter.
-In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
-In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>k_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the k parameter.
-In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
-In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>A_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the A parameter.
-In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
-In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>tau_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the tau parameter.
-In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
-In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>utility_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the utility time parameter.
-In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
-In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>alpha_pos_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the learning rate for the positive PE
+<li><p><strong>alpha_pos_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the learning rate for the positive PE
 (only meaningful if separate_learning_rates is True).
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>alpha_neg_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the learning rate for the negative PE
+<li><p><strong>alpha_neg_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the learning rate for the negative PE
 (only meaningful if separate_learning_rates is True).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>ndt_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the non-decision time (tau parameter).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>k_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the relative starting point (k parameter).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>sp_trial_var_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the sp_trial_var (A parameter).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>slop_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the slop parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>drift_asymtot_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the asymptotic drift rate parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>drift_scaling_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the drift scaling parameter.
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>drift_variability_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the drift-variability parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
 <li><p><strong>include_rhat</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to calculate the Gelman-Rubin convergence diagnostic r hat
 (Gelman &amp; Rubin, 1992).</p></li>
 <li><p><strong>include_waic</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to calculate the widely applicable information criterion
 (WAIC; Watanabe, 2013).</p></li>
-<li><p><strong>pointwise_waic</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to also inclue the pointwise WAIC.
+<li><p><strong>pointwise_waic</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to also include the pointwise WAIC.
 Only relevant if include_waic is True.</p></li>
 <li><p><strong>include_last_values</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to extract the last values for each chain.</p></li>
 <li><p><strong>print_diagnostics</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to print mcmc diagnostics after fitting.
 It is advised to leave it to True and always check, on top of the r hat.</p></li>
-<li><p><strong>**kwargs</strong> – Additional arguments to pystan.StanModel.sampling().</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to <cite>StanModel.sampling()</cite>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>res</strong></p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>rlssm.fits.DDModelResults</p>
+<dd class="field-odd"><p>rlssm.fits.LBAFittedModel_2A</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1594,7 +1131,7 @@ and advantage race diffusion decision models.</p>
 <p>When initializing the model, you should specify whether the model is hierarchical or not.
 Additionally, you can specify the mechanisms that you wish to include or exclude.</p>
 <p>The underlying stan model will be compiled if no previously compiled model is found.
-After initializing the model, it can be fitted to a particular dataset using pystan.</p>
+After initializing the model, it can be fitted to a particular dataset using cmdstanpy.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="rlssm.RLARDModel_2A.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hierarchical_levels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separate_learning_rates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLARDModel_2A.__init__" title="Permalink to this definition"></a></dt>
@@ -1614,61 +1151,6 @@ for positive and negative prediction errors.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLARDModel_2A.model_label">
-<span class="sig-name descname"><span class="pre">model_label</span></span><a class="headerlink" href="#rlssm.RLARDModel_2A.model_label" title="Permalink to this definition"></a></dt>
-<dd><p>The label of the fully specified model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLARDModel_2A.n_parameters_individual">
-<span class="sig-name descname"><span class="pre">n_parameters_individual</span></span><a class="headerlink" href="#rlssm.RLARDModel_2A.n_parameters_individual" title="Permalink to this definition"></a></dt>
-<dd><p>The number of individual parameters of the fully specified model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLARDModel_2A.n_parameters_trial">
-<span class="sig-name descname"><span class="pre">n_parameters_trial</span></span><a class="headerlink" href="#rlssm.RLARDModel_2A.n_parameters_trial" title="Permalink to this definition"></a></dt>
-<dd><p>The number of parameters that are estimated at a trial level.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLARDModel_2A.stan_model_path">
-<span class="sig-name descname"><span class="pre">stan_model_path</span></span><a class="headerlink" href="#rlssm.RLARDModel_2A.stan_model_path" title="Permalink to this definition"></a></dt>
-<dd><p>The location of the stan model code.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLARDModel_2A.compiled_model">
-<span class="sig-name descname"><span class="pre">compiled_model</span></span><a class="headerlink" href="#rlssm.RLARDModel_2A.compiled_model" title="Permalink to this definition"></a></dt>
-<dd><p>The compiled stan model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pystan.StanModel</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py method">
@@ -1697,6 +1179,8 @@ Set to 1 in case there is only one learning session.</p></li>
 <li><p><em>rt</em>, response times in seconds.</p></li>
 <li><p><em>accuracy</em>, 0 if the incorrect option was chosen,
 1 if the correct option was chosen.</p></li>
+<li><p><em>feedback_type</em>, 0 if the complete feedback was presented,
+1 if the partial feedback was presented.</p></li>
 </ul>
 <p>If the model is hierarchical, also include:</p>
 <ul>
@@ -1708,6 +1192,8 @@ Should be integers starting from 1.</p></li>
 <li><p><strong>initial_value_learning</strong> (<em>float</em>) – The assumed value expectation in the first learning session.
 The learning value in the following learning sessions is set to
 the average learned value in the previous learning session.</p></li>
+<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
+<li><p><strong>-------------------</strong> – </p></li>
 <li><p><strong>threshold_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the threshold parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
@@ -1738,12 +1224,12 @@ In case it is a hierarchical model: Means and standard deviations of the hyper p
 (Gelman &amp; Rubin, 1992).</p></li>
 <li><p><strong>include_waic</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to calculate the widely applicable information criterion
 (WAIC; Watanabe, 2013).</p></li>
-<li><p><strong>pointwise_waic</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to also inclue the pointwise WAIC.
+<li><p><strong>pointwise_waic</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to also include the pointwise WAIC.
 Only relevant if include_waic is True.</p></li>
 <li><p><strong>include_last_values</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to extract the last values for each chain.</p></li>
 <li><p><strong>print_diagnostics</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to print mcmc diagnostics after fitting.
 It is advised to leave it to True and always check, on top of the r hat.</p></li>
-<li><p><strong>**kwargs</strong> – Additional arguments to pystan.StanModel.sampling().</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to StanModel.sampling().</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1765,7 +1251,7 @@ and advantage linear ballistic accumulator models.</p>
 <p>When initializing the model, you should specify whether the model is hierarchical or not.
 Additionally, you can specify the mechanisms that you wish to include or exclude.</p>
 <p>The underlying stan model will be compiled if no previously compiled model is found.
-After initializing the model, it can be fitted to a particular dataset using pystan.</p>
+After initializing the model, it can be fitted to a particular dataset using cmdstanpy.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="rlssm.RLALBAModel_2A.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hierarchical_levels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separate_learning_rates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLALBAModel_2A.__init__" title="Permalink to this definition"></a></dt>
@@ -1785,66 +1271,11 @@ for positive and negative prediction errors.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLALBAModel_2A.model_label">
-<span class="sig-name descname"><span class="pre">model_label</span></span><a class="headerlink" href="#rlssm.RLALBAModel_2A.model_label" title="Permalink to this definition"></a></dt>
-<dd><p>The label of the fully specified model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLALBAModel_2A.n_parameters_individual">
-<span class="sig-name descname"><span class="pre">n_parameters_individual</span></span><a class="headerlink" href="#rlssm.RLALBAModel_2A.n_parameters_individual" title="Permalink to this definition"></a></dt>
-<dd><p>The number of individual parameters of the fully specified model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLALBAModel_2A.n_parameters_trial">
-<span class="sig-name descname"><span class="pre">n_parameters_trial</span></span><a class="headerlink" href="#rlssm.RLALBAModel_2A.n_parameters_trial" title="Permalink to this definition"></a></dt>
-<dd><p>The number of parameters that are estimated at a trial level.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLALBAModel_2A.stan_model_path">
-<span class="sig-name descname"><span class="pre">stan_model_path</span></span><a class="headerlink" href="#rlssm.RLALBAModel_2A.stan_model_path" title="Permalink to this definition"></a></dt>
-<dd><p>The location of the stan model code.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="rlssm.RLALBAModel_2A.compiled_model">
-<span class="sig-name descname"><span class="pre">compiled_model</span></span><a class="headerlink" href="#rlssm.RLALBAModel_2A.compiled_model" title="Permalink to this definition"></a></dt>
-<dd><p>The compiled stan model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pystan.StanModel</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rlssm.RLALBAModel_2A.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_value_learning</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v0_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ws_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wd_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_pos_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_neg_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_rhat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_waic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointwise_waic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_last_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_diagnostics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLALBAModel_2A.fit" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_value_learning</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sp_trial_var_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ndt_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v0_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ws_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wd_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_pos_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_neg_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_variability_priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_rhat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_waic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointwise_waic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_last_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_diagnostics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.RLALBAModel_2A.fit" title="Permalink to this definition"></a></dt>
 <dd><p>Fits the specified reinforcement learning diffusion decision model to data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1868,6 +1299,8 @@ Set to 1 in case there is only one learning session.</p></li>
 <li><p><em>rt</em>, response times in seconds.</p></li>
 <li><p><em>accuracy</em>, 0 if the incorrect option was chosen,
 1 if the correct option was chosen.</p></li>
+<li><p><em>feedback_type</em>, 0 if the complete feedback was presented,
+1 if the partial feedback was presented.</p></li>
 </ul>
 <p>If the model is hierarchical, also include:</p>
 <ul>
@@ -1879,45 +1312,50 @@ Should be integers starting from 1.</p></li>
 <li><p><strong>initial_value_learning</strong> (<em>float</em>) – The assumed value expectation in the first learning session.
 The learning value in the following learning sessions is set to
 the average learned value in the previous learning session.</p></li>
-<li><p><strong>k_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the k parameter.
+<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
+<li><p><strong>----------------</strong> – </p></li>
+<li><p><strong>k_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the k parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>A_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the A parameter.
+<li><p><strong>sp_trial_var_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the A parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>tau_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the tau parameter.
+<li><p><strong>ndt_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the tau parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>alpha_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the learning rate parameter.
+<li><p><strong>alpha_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the learning rate parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>v0_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the v0 parameter.
+<li><p><strong>v0_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the v0 parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>ws_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the ws parameter.
+<li><p><strong>ws_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the ws parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>wd_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the wd parameter.
+<li><p><strong>wd_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the wd parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>alpha_pos_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the learning rate for the positive PE
+<li><p><strong>alpha_pos_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the learning rate for the positive PE
 (only meaningful if separate_learning_rates is True).
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
-<li><p><strong>alpha_neg_priors</strong> (<em>dict</em><em>, </em><em>optional</em>) – Priors for the learning rate for the negative PE
+<li><p><strong>alpha_neg_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the learning rate for the negative PE
 (only meaningful if separate_learning_rates is True).
+In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
+In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
+<li><p><strong>drift_variability_priors</strong> (<em>dict</em><em>, </em><em>default None</em>) – Priors for the drift-variability parameter.
 In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
 In case it is a hierarchical model: Means and standard deviations of the hyper priors.</p></li>
 <li><p><strong>include_rhat</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to calculate the Gelman-Rubin convergence diagnostic r hat
 (Gelman &amp; Rubin, 1992).</p></li>
 <li><p><strong>include_waic</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to calculate the widely applicable information criterion
 (WAIC; Watanabe, 2013).</p></li>
-<li><p><strong>pointwise_waic</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to also inclue the pointwise WAIC.
+<li><p><strong>pointwise_waic</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to also include the pointwise WAIC.
 Only relevant if include_waic is True.</p></li>
 <li><p><strong>include_last_values</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to extract the last values for each chain.</p></li>
 <li><p><strong>print_diagnostics</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to print mcmc diagnostics after fitting.
 It is advised to leave it to True and always check, on top of the r hat.</p></li>
-<li><p><strong>**kwargs</strong> – Additional arguments to pystan.StanModel.sampling().</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to StanModel.sampling().</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

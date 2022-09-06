@@ -249,7 +249,7 @@ class ModelResults(object):
         By default, 95 percent HDI are shown.
         The kernel density estimation is calculated using scipy.stats.gaussian_kde.
 
-        Optional Parameters
+        Parameters
         ----------
 
         gridsize : int, default 100

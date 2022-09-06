@@ -1,7 +1,7 @@
 Simulate data with the DDM
 ==========================
 
-.. currentmodule:: rlssm.random
+.. currentmodule:: rlssm.random.random_DDM
 
 These functions can be used to simulate data of a single participant or of a group of participants, given a set of parameter values.
 
@@ -13,16 +13,16 @@ In pandas
 ---------
 
 .. _simulate_ddm:
-.. autofunction:: simulate_ddm
+.. autofunction:: rlssm.random.random_DDM.simulate_ddm
 
 .. _simulate_hier_ddm:
-.. autofunction:: simulate_hier_ddm
+.. autofunction:: rlssm.random.random_DDM.simulate_hier_ddm
 
 In numpy
 --------
 
 .. _random_ddm:
-.. autofunction:: random_ddm
+.. autofunction:: rlssm.random.random_DDM.random_ddm
 
 .. _random_ddm_vector:
-.. autofunction:: random_ddm_vector
+.. autofunction:: rlssm.random.random_DDM.random_ddm_vector

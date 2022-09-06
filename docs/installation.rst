@@ -41,4 +41,5 @@ As an alternative, run the compiler test by calling the function doing the follo
 
 If installed correctly, the output should be:
 ::
+
     {'drift_priors': {'mu_mu': 1, 'sd_mu': 5, 'mu_sd': 0, 'sd_sd': 5}, 'threshold_priors': {'mu_mu': 1, 'sd_mu': 3, 'mu_sd': 0, 'sd_sd': 3}, 'ndt_priors': {'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1}}

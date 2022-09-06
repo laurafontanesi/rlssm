@@ -84,12 +84,9 @@ def simulate_rlddm_2A(task_design,
     Examples
     --------
 
-        >>> data_non_hier = simulate_hier_rlddm_2A(task_design=dm_non_hier,
-                                                    gen_mu_alpha=-.5, gen_sd_alpha=.1,
-                                                    gen_mu_drift_scaling=.1, gen_sd_drift_scaling=.5,
-                                                    gen_mu_threshold=1, gen_sd_threshold=.1,
-                                                    gen_mu_ndt=.23, gen_sd_ndt=.05,
-                                                    initial_value_learning=20)
+        >>> data_non_hier = simulate_rlddm_2A(task_design=self.dm_2_non_hier_alpha, gen_alpha=[.1, .01],
+                                              gen_drift_scaling=.1, gen_threshold=1,
+                                              gen_ndt=.23, initial_value_learning=0)
         >>> print(data_non_hier.head())
 
                                              trial trial_type  ...        rt  accuracy

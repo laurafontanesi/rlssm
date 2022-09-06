@@ -133,8 +133,8 @@
 <section id="in-pandas">
 <h2>In pandas<a class="headerlink" href="#in-pandas" title="Permalink to this heading"></a></h2>
 <span class="target" id="simulate-ddm"></span><dl class="py function">
-<dt class="sig sig-object py" id="rlssm.random.simulate_ddm">
-<span class="sig-prename descclassname"><span class="pre">rlssm.random.</span></span><span class="sig-name descname"><span class="pre">simulate_ddm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_trials</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_drift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_ndt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_rel_sp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">participant_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_drift_trialsd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_rel_sp_trialsd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.random.simulate_ddm" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="rlssm.random.random_DDM.simulate_ddm">
+<span class="sig-prename descclassname"><span class="pre">rlssm.random.random_DDM.</span></span><span class="sig-name descname"><span class="pre">simulate_ddm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_trials</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_drift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_ndt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_rel_sp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">participant_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_drift_trial_sd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_rel_sp_trial_sd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.random.random_DDM.simulate_ddm" title="Permalink to this definition"></a></dt>
 <dd><p>Simulates behavior (rt and accuracy) according to the diffusion decision model.</p>
 <p>This function is to simulate data for, for example, parameter recovery.</p>
 <p>Simulates data for one participant.</p>
@@ -142,19 +142,19 @@
 and, when <cite>rel_sp</cite> = .5, the diffusion process starts halfway through the threshold value.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When <cite>gen_drift_trialsd</cite> is not specified, there is no across-trial variability
+<p>When <cite>gen_drift_trial_sd</cite> is not specified, there is no across-trial variability
 in the drift-rate.</p>
-<p>Instead, when <cite>gen_drift_trialsd</cite> is specified, the trial-by-trial drift-rate
+<p>Instead, when <cite>gen_drift_trial_sd</cite> is specified, the trial-by-trial drift-rate
 has the following distribution:</p>
 <ul class="simple">
-<li><p>drift ~ normal(gen_drift, gen_drift_trialsd).</p></li>
+<li><p>drift ~ normal(gen_drift, gen_drift_trial_sd).</p></li>
 </ul>
-<p>Similarly, when <cite>gen_rel_sp_trialsd</cite> is not specified, there is no across-trial
+<p>Similarly, when <cite>gen_rel_sp_trial_sd</cite> is not specified, there is no across-trial
 variability starting point.</p>
-<p>Instead, when <cite>gen_rel_sp_trialsd</cite> is specified, the trial-by-trial relative
+<p>Instead, when <cite>gen_rel_sp_trial_sd</cite> is specified, the trial-by-trial relative
 starting point has the following distribution:</p>
 <ul class="simple">
-<li><p>rel_sp ~ Phi(normal(rel_sp, gen_rel_sp_trialsd)).</p></li>
+<li><p>rel_sp ~ Phi(normal(rel_sp, gen_rel_sp_trial_sd)).</p></li>
 </ul>
 <p>In this case, <cite>gen_rel_sp</cite> is first trasformed to the -Inf/+Inf scale,
 so the input value is the same (no bias still corresponds to .5).</p>
@@ -168,15 +168,17 @@ so the input value is the same (no bias still corresponds to .5).</p>
 Should be positive.</p></li>
 <li><p><strong>gen_ndt</strong> (<em>float</em>) – Non decision time of the diffusion decision model, in seconds.
 Should be positive.</p></li>
+<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
+<li><p><strong>-------------------</strong> – </p></li>
 <li><p><strong>gen_rel_sp</strong> (<em>float</em><em>, </em><em>default .5</em>) – Relative starting point of the diffusion decision model.
 Should be higher than 0 and smaller than 1.
 When is 0.5 (default), there is no bias.</p></li>
-<li><p><strong>gen_drift_trialsd</strong> (<em>float</em><em>, </em><em>optional</em>) – Across trial variability in the drift-rate.
-Should be positive.</p></li>
-<li><p><strong>gen_rel_sp_trialsd</strong> (<em>float</em><em>, </em><em>optional</em>) – Across trial variability in the realtive starting point.
-Should be positive.</p></li>
 <li><p><strong>participant_label</strong> (<em>string</em><em> or </em><em>float</em><em>, </em><em>default 1</em>) – What will appear in the participant column of the output data.</p></li>
-<li><p><strong>**kwargs</strong> – Additional arguments to rlssm.random.random_ddm().</p></li>
+<li><p><strong>gen_drift_trial_sd</strong> (<em>float</em><em>, </em><em>default None</em>) – Across trial variability in the drift-rate.
+Should be positive.</p></li>
+<li><p><strong>gen_rel_sp_trial_sd</strong> (<em>float</em><em>, </em><em>default None</em>) – Across trial variability in the realtive starting point.
+Should be positive.</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to <cite>rlssm.random.random_ddm</cite>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -194,36 +196,36 @@ as well as the generating parameters
 <p>Relative starting point is set towards the upper bound (higher than .5),
 so in this case there will be more accurate and fast decisions:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rlssm.random</span> <span class="kn">import</span> <span class="n">simulate_ddm</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="n">simulate_ddm</span><span class="p">(</span><span class="n">n_trials</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">data1</span> <span class="o">=</span> <span class="n">simulate_ddm</span><span class="p">(</span><span class="n">n_trials</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
                         <span class="n">gen_drift</span><span class="o">=</span><span class="mf">.8</span><span class="p">,</span>
                         <span class="n">gen_threshold</span><span class="o">=</span><span class="mf">1.3</span><span class="p">,</span>
                         <span class="n">gen_ndt</span><span class="o">=</span><span class="mf">.23</span><span class="p">,</span>
                         <span class="n">gen_rel_sp</span><span class="o">=</span><span class="mf">.6</span><span class="p">)</span>
 
-<span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
-        <span class="n">participant</span>  <span class="n">drift</span>  <span class="n">rel_sp</span>  <span class="n">threshold</span>   <span class="n">ndt</span>     <span class="n">rt</span>  <span class="n">accuracy</span>
-<span class="n">trial</span>
-<span class="mi">1</span>                <span class="mi">1</span>    <span class="mf">0.8</span>     <span class="mf">0.6</span>        <span class="mf">1.3</span>  <span class="mf">0.23</span>  <span class="mf">0.344</span>       <span class="mf">1.0</span>
-<span class="mi">2</span>                <span class="mi">1</span>    <span class="mf">0.8</span>     <span class="mf">0.6</span>        <span class="mf">1.3</span>  <span class="mf">0.23</span>  <span class="mf">0.376</span>       <span class="mf">0.0</span>
-<span class="mi">3</span>                <span class="mi">1</span>    <span class="mf">0.8</span>     <span class="mf">0.6</span>        <span class="mf">1.3</span>  <span class="mf">0.23</span>  <span class="mf">0.390</span>       <span class="mf">1.0</span>
-<span class="mi">4</span>                <span class="mi">1</span>    <span class="mf">0.8</span>     <span class="mf">0.6</span>        <span class="mf">1.3</span>  <span class="mf">0.23</span>  <span class="mf">0.434</span>       <span class="mf">0.0</span>
-<span class="mi">5</span>                <span class="mi">1</span>    <span class="mf">0.8</span>     <span class="mf">0.6</span>        <span class="mf">1.3</span>  <span class="mf">0.23</span>  <span class="mf">0.520</span>       <span class="mf">1.0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">data1</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+                   <span class="n">drift</span>  <span class="n">rel_sp</span>  <span class="n">threshold</span>   <span class="n">ndt</span>     <span class="n">rt</span>  <span class="n">accuracy</span>
+<span class="n">participant</span> <span class="n">trial</span>
+<span class="mi">1</span>           <span class="mi">1</span>        <span class="mf">0.8</span>     <span class="mf">0.6</span>        <span class="mf">1.3</span>  <span class="mf">0.23</span>  <span class="mf">0.854</span>       <span class="mf">1.0</span>
+            <span class="mi">2</span>        <span class="mf">0.8</span>     <span class="mf">0.6</span>        <span class="mf">1.3</span>  <span class="mf">0.23</span>  <span class="mf">0.276</span>       <span class="mf">1.0</span>
+            <span class="mi">3</span>        <span class="mf">0.8</span>     <span class="mf">0.6</span>        <span class="mf">1.3</span>  <span class="mf">0.23</span>  <span class="mf">0.261</span>       <span class="mf">1.0</span>
+            <span class="mi">4</span>        <span class="mf">0.8</span>     <span class="mf">0.6</span>        <span class="mf">1.3</span>  <span class="mf">0.23</span>  <span class="mf">0.286</span>       <span class="mf">1.0</span>
+            <span class="mi">5</span>        <span class="mf">0.8</span>     <span class="mf">0.6</span>        <span class="mf">1.3</span>  <span class="mf">0.23</span>  <span class="mf">2.173</span>       <span class="mf">1.0</span>
 </pre></div>
 </div>
 <p>To have trial number as a column:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">())</span>
-<span class="go">    trial  participant  drift  rel_sp  threshold   ndt     rt  accuracy</span>
-<span class="go">0        1            1    0.8     0.6        1.3  0.23  0.344       1.0</span>
-<span class="go">1        2            1    0.8     0.6        1.3  0.23  0.376       0.0</span>
-<span class="go">2        3            1    0.8     0.6        1.3  0.23  0.390       1.0</span>
-<span class="go">3        4            1    0.8     0.6        1.3  0.23  0.434       0.0</span>
-<span class="go">4        5            1    0.8     0.6        1.3  0.23  0.520       1.0</span>
-<span class="go">..     ...          ...    ...     ...        ...   ...    ...       ...</span>
-<span class="go">995    996            1    0.8     0.6        1.3  0.23  0.423       1.0</span>
-<span class="go">996    997            1    0.8     0.6        1.3  0.23  0.956       1.0</span>
-<span class="go">997    998            1    0.8     0.6        1.3  0.23  0.347       1.0</span>
-<span class="go">998    999            1    0.8     0.6        1.3  0.23  0.414       1.0</span>
-<span class="go">999   1000            1    0.8     0.6        1.3  0.23  0.401       1.0</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">data1</span><span class="o">.</span><span class="n">reset_index</span><span class="p">())</span>
+<span class="go">     participant  trial  drift  rel_sp  threshold   ndt     rt  accuracy</span>
+<span class="go">0              1      1    0.8     0.6        1.3  0.23  0.349       1.0</span>
+<span class="go">1              1      2    0.8     0.6        1.3  0.23  0.299       1.0</span>
+<span class="go">2              1      3    0.8     0.6        1.3  0.23  0.660       0.0</span>
+<span class="go">3              1      4    0.8     0.6        1.3  0.23  0.507       1.0</span>
+<span class="go">4              1      5    0.8     0.6        1.3  0.23  0.844       0.0</span>
+<span class="go">..           ...    ...    ...     ...        ...   ...    ...       ...</span>
+<span class="go">995            1    996    0.8     0.6        1.3  0.23  0.451       1.0</span>
+<span class="go">996            1    997    0.8     0.6        1.3  0.23  1.054       1.0</span>
+<span class="go">997            1    998    0.8     0.6        1.3  0.23  0.324       1.0</span>
+<span class="go">998            1    999    0.8     0.6        1.3  0.23  0.292       1.0</span>
+<span class="go">999            1   1000    0.8     0.6        1.3  0.23  0.522       0.0</span>
 
 <span class="go">[1000 rows x 8 columns]</span>
 </pre></div>
@@ -231,8 +233,8 @@ so in this case there will be more accurate and fast decisions:</p>
 </dd></dl>
 
 <span class="target" id="simulate-hier-ddm"></span><dl class="py function">
-<dt class="sig sig-object py" id="rlssm.random.simulate_hier_ddm">
-<span class="sig-prename descclassname"><span class="pre">rlssm.random.</span></span><span class="sig-name descname"><span class="pre">simulate_hier_ddm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_trials</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_participants</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_mu_drift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_sd_drift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_mu_threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_sd_threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_mu_ndt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_sd_ndt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_mu_rel_sp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_sd_rel_sp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.random.simulate_hier_ddm" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="rlssm.random.random_DDM.simulate_hier_ddm">
+<span class="sig-prename descclassname"><span class="pre">rlssm.random.random_DDM.</span></span><span class="sig-name descname"><span class="pre">simulate_hier_ddm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_trials</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_participants</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_mu_drift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_sd_drift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_mu_threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_sd_threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_mu_ndt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_sd_ndt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_mu_rel_sp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_sd_rel_sp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_drift_trial_sd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.random.random_DDM.simulate_hier_ddm" title="Permalink to this definition"></a></dt>
 <dd><p>Simulates behavior (rt and accuracy) according to the diffusion decision model.</p>
 <p>This function is to simulate data for, for example, parameter recovery.</p>
 <p>Simulates hierarchical data for a group of participants.</p>
@@ -246,12 +248,19 @@ and, when <cite>rel_sp</cite> = .5, the diffusion process starts halfway through
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When <cite>gen_sd_rel_sp</cite> is not specified, the relative starting point
-is assumed to be fixed across participants at <cite>gen_mu_rel_sp</cite>.</p>
-<p>Instead, when <cite>gen_sd_rel_sp</cite> is specified, the starting point
+<p>When <cite>gen_drift_trial_sd</cite> is not specified, there is no across-trial variability
+in the drift-rate.</p>
+<p>Instead, when <cite>gen_drift_trial_sd</cite> is specified, the trial-by-trial drift-rate
 has the following distribution:</p>
 <ul class="simple">
-<li><p>rel_sp ~ Phi(normal(gen_mu_rel_sp, gen_sd_rel_sp))</p></li>
+<li><p>drift ~ normal(gen_drift, gen_drift_trial_sd).</p></li>
+</ul>
+<p>When <cite>gen_rel_sp_trial_sd</cite> is not specified, there is no across-trial
+variability starting point.</p>
+<p>Instead, when <cite>gen_rel_sp_trial_sd</cite> is specified, the trial-by-trial relative
+starting point has the following distribution:</p>
+<ul class="simple">
+<li><p>rel_sp ~ Phi(normal(rel_sp, gen_rel_sp_trial_sd)).</p></li>
 </ul>
 </div>
 <dl class="field-list simple">
@@ -271,15 +280,27 @@ of the diffusion decision model.</p></li>
 of the diffusion decision model.</p></li>
 <li><p><strong>gen_sd_ndt</strong> (<em>float</em>) – Group-standard deviation of the non decision time
 of the diffusion decision model.</p></li>
+<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
+<li><p><strong>-------------------</strong> – </p></li>
 <li><p><strong>gen_mu_rel_sp</strong> (<em>float</em><em>, </em><em>default .5</em>) – Relative starting point of the diffusion decision model.
 When <cite>gen_sd_rel_sp</cite> is not specified, <cite>gen_mu_rel_sp</cite> is
 fixed across participants.
 When <cite>gen_sd_rel_sp</cite> is specified, <cite>gen_mu_rel_sp</cite> is the
 group-mean of the starting point.</p></li>
-<li><p><strong>gen_sd_rel_sp</strong> (<em>float</em><em>, </em><em>optional</em>) – Group-standard deviation of the relative starting point
-of the diffusion decision model.</p></li>
-<li><p><strong>**kwargs</strong> – Additional arguments to <cite>rlssm.random.random_ddm()</cite>.</p></li>
 </ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>gen_sd_rel_sp<span class="classifier">float, default None</span></dt><dd><p>Across trial variability in the drift-rate.
+Should be positive.</p>
+</dd>
+<dt>gen_drift_trial_sd<span class="classifier">float, default None</span></dt><dd><p>Across trial variability in the realtive starting point.
+Should be positive.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Additional arguments to <cite>rlssm.random.random_ddm</cite>.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>data</strong> – <cite>pandas.DataFrame</cite>, with n_trials*n_participants rows.
@@ -358,8 +379,8 @@ more accurate and fast decisions:</p>
 <section id="in-numpy">
 <h2>In numpy<a class="headerlink" href="#in-numpy" title="Permalink to this heading"></a></h2>
 <span class="target" id="random-ddm"></span><dl class="py function">
-<dt class="sig sig-object py" id="rlssm.random.random_ddm">
-<span class="sig-prename descclassname"><span class="pre">rlssm.random.</span></span><span class="sig-name descname"><span class="pre">random_ddm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">drift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ndt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel_sp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise_constant</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_rt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.random.random_ddm" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="rlssm.random.random_DDM.random_ddm">
+<span class="sig-prename descclassname"><span class="pre">rlssm.random.random_DDM.</span></span><span class="sig-name descname"><span class="pre">random_ddm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">drift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ndt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel_sp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise_constant</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_rt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.random.random_DDM.random_ddm" title="Permalink to this definition"></a></dt>
 <dd><p>Simulates behavior (rt and accuracy) according to the diffusion decision model.</p>
 <p>In this parametrization, it is assumed that 0 is the lower threshold,
 and, when rel_sp=1/2, the diffusion process starts halfway through the threshold value.</p>
@@ -380,15 +401,17 @@ Drift-rate of the diffusion decision model.</p></li>
 Threshold of the diffusion decision model.</p></li>
 <li><p><strong>ndt</strong> (<em>numpy.ndarray</em>) – Shape is usually (n_samples, n_trials).
 Non decision time of the diffusion decision model, in seconds.</p></li>
+<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
+<li><p><strong>-------------------</strong> – </p></li>
 <li><p><strong>rel_sp</strong> (<em>numpy.ndarray</em><em> or </em><em>float</em><em>, </em><em>default .5</em>) – When is an array , shape is usually (n_samples, n_trials).
 Relative starting point of the diffusion decision model.</p></li>
 <li><p><strong>noise_constant</strong> (<em>float</em><em>, </em><em>default 1</em>) – Scaling factor of the diffusion decision model.
 If changed, drift and threshold would be scaled accordingly.
 Not to be changed in most applications.</p></li>
-<li><p><strong>max_rt</strong> (<em>float</em><em>, </em><em>default 10</em>) – Controls the maximum rts that can be predicted.
-Making this higher might make the function a bit slower.</p></li>
 <li><p><strong>dt</strong> (<em>float</em><em>, </em><em>default 0.001</em>) – Controls the time resolution of the diffusion decision model. Default is 1 msec.
 Lower values of dt make the function more precise but much slower.</p></li>
+<li><p><strong>max_rt</strong> (<em>float</em><em>, </em><em>default 10</em>) – Controls the maximum rts that can be predicted.
+Making this higher might make the function a bit slower.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -406,8 +429,8 @@ Every element corresponds to the set of parameters given as input with the same 
 </dd></dl>
 
 <span class="target" id="random-ddm-vector"></span><dl class="py function">
-<dt class="sig sig-object py" id="rlssm.random.random_ddm_vector">
-<span class="sig-prename descclassname"><span class="pre">rlssm.random.</span></span><span class="sig-name descname"><span class="pre">random_ddm_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">drift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ndt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel_sp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise_constant</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rt_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.random.random_ddm_vector" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="rlssm.random.random_DDM.random_ddm_vector">
+<span class="sig-prename descclassname"><span class="pre">rlssm.random.random_DDM.</span></span><span class="sig-name descname"><span class="pre">random_ddm_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">drift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ndt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel_sp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise_constant</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rt_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rlssm.random.random_DDM.random_ddm_vector" title="Permalink to this definition"></a></dt>
 <dd><p>Simulates behavior (rt and accuracy) according to the diffusion decision model.</p>
 <p>In this parametrization, it is assumed that 0 is the lower threshold,
 and, when rel_sp=1/2, the diffusion process starts halfway through the threshold value.</p>
@@ -433,15 +456,17 @@ Drift-rate of the diffusion decision model.</p></li>
 Threshold of the diffusion decision model.</p></li>
 <li><p><strong>ndt</strong> (<em>numpy.ndarray</em><em> or </em><em>float</em>) – Shape is usually (n_samples, n_trials).
 Non decision time of the diffusion decision model, in seconds.</p></li>
+<li><p><strong>Parameters</strong> (<em>Optional</em>) – </p></li>
+<li><p><strong>-------------------</strong> – </p></li>
 <li><p><strong>rel_sp</strong> (<em>numpy.ndarray</em><em> or </em><em>float</em><em>, </em><em>default .5</em>) – When is an array , shape is usually (n_samples, n_trials).
 Relative starting point of the diffusion decision model.</p></li>
 <li><p><strong>noise_constant</strong> (<em>float</em><em>, </em><em>default 1</em>) – Scaling factor of the diffusion decision model.
 If changed, drift and threshold would be scaled accordingly.
 Not to be changed in most applications.</p></li>
-<li><p><strong>max_rt</strong> (<em>float</em><em>, </em><em>default 10</em>) – Controls the maximum rts that can be predicted.
-Making this higher might make the function a bit slower.</p></li>
 <li><p><strong>dt</strong> (<em>float</em><em>, </em><em>default 0.001</em>) – Controls the time resolution of the diffusion decision model. Default is 1 msec.
 Lower values of dt make the function more precise but much slower.</p></li>
+<li><p><strong>rt_max</strong> (<em>float</em><em>, </em><em>default 10</em>) – Controls the maximum rts that can be predicted.
+Making this higher might make the function a bit slower.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

@@ -1,11 +1,13 @@
 ModelResults class for race (or RL+race) models
 ===============================================
 
-.. currentmodule:: rlssm.fits_race
+.. currentmodule:: rlssm.fit.fits_LBA
 
-There is one class to inspect model fits of **race models (RDM, LBA, ARDM, and ALBA) or combinations of RL and race models (fitted on choices and response times)**: :ref:`raceModelResults_2A <raceModelResults_2A>`.
+The race models are of types **LBA, ALBA, RDM, ARDM**. There is one class to inspect model fits of **race models LBA and ALBA** (:ref:`LBAModelResults_2A <LBAModelResults_2A>`),
+and one for **race models RDM and ARDM** (:ref:`RDMModelResults_2A <RDMModelResults_2A>`).
+These classes also represent combinations of **RL and race models (fitted on choices and response times)**.
 
-The main functions of this class are:
+The main functions of these classes are:
 
 * To assess the model's **convergence** and **mcmc diagnostics**, to make sure that the sampling was successful. This step is crucial and should be preferably done first.
 
@@ -18,21 +20,32 @@ The main functions of this class are:
 All models
 ----------
 
-.. _ModelResults:
-.. autoclass:: ModelResults
+.. _LBAModelResults:
+.. autoclass:: rlssm.fit.fits_LBA.ModelResults
     :members:
 
-Race diffusion models (RDM, LBA, ARDM, and ALBA)
+.. _RDMModelResults:
+.. autoclass:: rlssm.fit.fits_RDM.ModelResults
+    :members:
+
+Race diffusion models LBA and RDM
 ------------------------------------------------
 
-.. _raceModelResults_2A:
-.. autoclass:: raceModelResults_2A
+.. _LBAModelResults_2A:
+.. autoclass:: rlssm.fit.fits_LBA.LBAModelResults_2A
     :members:
 
-	:show-inheritance:
-	:inherited-members:
+    :show-inheritance:
+    :inherited-members:
+
+.. _RDMModelResults_2A:
+.. autoclass:: rlssm.fit.fits_RDM.RDMModelResults_2A
+    :members:
+
+    :show-inheritance:
+    :inherited-members:
 
 Reinforcement learning race diffusion models (RLRDM, RLLBA, RLARDM, and RLALBA)
 -------------------------------------------------------------------------------
 
-See :ref:`raceModelResults_2A <raceModelResults_2A>`.
+See :ref:`LBAModelResults_2A <LBAModelResults_2A>` and :ref:`RDMModelResults_2A <RDMModelResults_2A>`.
