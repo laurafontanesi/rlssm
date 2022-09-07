@@ -22,6 +22,7 @@ All models
 
 .. _ModelResults:
 .. autoclass:: rlssm.fit.fits.ModelResults
+    :noindex:
     :members:
 
 Race diffusion models LBA and RDM

@@ -22,16 +22,16 @@ def simulate_rlddm_2A(task_design,
     task_design : pandas.DataFrame
         A pandas DataFrame containing the task design.
 
-    gen_alpha : float
+    gen_alpha : float, listx
         The learning rate parameter.
 
-    gen_drift_scaling : float
+    gen_drift_scaling : float, listx
         The drift scaling parameter.
 
-    gen_threshold : float
+    gen_threshold : float, listx
         The threshold parameter.
 
-    gen_ndt : float
+    gen_ndt : float, listx
         The non-decision time parameter.
 
     initial_value_learning : float, default: 0
@@ -105,28 +105,28 @@ def simulate_hier_rlddm_2A(task_design,
     task_design : pandas.DataFrame
         A pandas DataFrame containing the task design.
 
-    gen_mu_alpha : float
+    gen_mu_alpha : list, float, int
         The mean of the learning rate parameter.
 
-    gen_sd_alpha : float
+    gen_sd_alpha : list, float, int
         The standard deviation of the learning rate parameter.
 
-    gen_mu_drift_scaling : float
+    gen_mu_drift_scaling : list, float, int
         The mean of the drift scaling parameter.
 
-    gen_sd_drift_scaling : float
+    gen_sd_drift_scaling : list, float, int
         The standard deviation of the drift scaling parameter.
 
-    gen_mu_threshold : float
+    gen_mu_threshold : list, float, int
         The mean of the threshold parameter.
 
-    gen_sd_threshold : float
+    gen_sd_threshold : list, float, int
         The standard deviation of the threshold parameter.
 
-    gen_mu_ndt : float
+    gen_mu_ndt : list, float, int
         The mean of the non-decision time parameter.
 
-    gen_sd_ndt : float
+    gen_sd_ndt : list, float, int
         The standard deviation of the non-decision time parameter.
 
     initial_value_learning : float, default: 0

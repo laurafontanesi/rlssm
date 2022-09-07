@@ -254,7 +254,7 @@ def simulate_hier_rlrdm_2A(task_design,
         if gen_mu_slop == None or gen_sd_slop == None or gen_mu_drift_asym == None or gen_sd_drift_asym == None:
             raise ValueError("The gen_mu_slop and gen_mu_drift_asym can not be None with nonlinear_mapping mechanism! ")
 
-    # if nonlinear_mapping:
+    # # if nonlinear_mapping:
     #     data['cor_drift'] = (gen_drift_scaling + gen_drift_asym * (data['Q_mean_t'] - data['Q_min'])) / (
     #             1 + np.exp(gen_slop * (data['Q_mean_t'] + data['Q_max_t'] - 2 * data['Q_cor'])))
     #     data['inc_drift'] = (gen_drift_scaling + gen_drift_asym * (data['Q_mean_t'] - data['Q_min'])) / (
