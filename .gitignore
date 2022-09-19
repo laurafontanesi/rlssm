@@ -6,7 +6,7 @@ dist/
 build/
 .idea
 
-# pystan cashed models
+# stan cashed models
 /pkl_files
 cached*.pkl
 *.pkl
