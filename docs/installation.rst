@@ -9,10 +9,13 @@ Make sure you have the dependencies installed first.
 
 Dependencies
 ------------
-- cmdstanpy=1.0.4
+- cmdstanpy>=1.0.4
+- numpy
 - pandas
-- scipy
 - seaborn
+- scipy
+- matplotlib
+- setuptools
 
 Quick start
 -----------------------------

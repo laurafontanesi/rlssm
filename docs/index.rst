@@ -56,6 +56,12 @@ Parameter estimation is done at an individual or hierarchical level using `CmdPy
    simulations/simulaterace
    simulations/simulateRL
 
+.. toctree::
+   :maxdepth: 1
+   :caption: Updates over time:
+
+   changelist
+
 Index
 =====
 

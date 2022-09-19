@@ -17,7 +17,7 @@ pip install rlssm
 Make sure you have the dependencies installed first.
 
 ### Dependencies
-- cmdstanpy
+- cmdstanpy>=1.0.4
 - numpy
 - pandas
 - seaborn
