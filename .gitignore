@@ -6,6 +6,9 @@ dist/
 build/
 .idea
 
+# Docs related
+docs/_build/
+
 # stan cashed models
 /pkl_files
 cached*.pkl
