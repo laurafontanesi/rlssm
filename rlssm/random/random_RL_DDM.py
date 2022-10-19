@@ -12,6 +12,8 @@ def simulate_rlddm_2A(task_design,
                       gen_drift_scaling,
                       gen_threshold,
                       gen_ndt,
+                      gen_drift_asymptote=None,
+                      gen_threshold_modulation=None,
                       initial_value_learning=0,
                       **kwargs):
     """Simulates behavior (rt and accuracy) according to a RLDDM model,
@@ -33,6 +35,12 @@ def simulate_rlddm_2A(task_design,
 
     gen_ndt : float, listx
         The non-decision time parameter.
+
+    gen_drift_asymptote : float, listx, default: None
+        The drift asymptote parameter.
+
+    gen_threshold_modulation : float, listx, default: None
+        The threshold modulation parameter.
 
     initial_value_learning : float, default: 0
         The initial value of the learning parameter.
@@ -77,9 +85,23 @@ def simulate_rlddm_2A(task_design,
         raise TypeError("The gen_alpha should be either a list or a float/int.")
 
     data['drift_scaling'] = gen_drift_scaling
-    data['threshold'] = gen_threshold
     data['ndt'] = gen_ndt
-    data['drift'] = gen_drift_scaling * (data['Q_cor'] - data['Q_inc'])
+
+    if gen_threshold_modulation == None:
+        data['threshold'] = gen_threshold
+    else:
+        Q_mean = (data['Q_cor'] + data['Q_inc'])/2
+        data['threshold_fix'] = gen_threshold
+        data['threshold_modulation'] = gen_threshold_modulation
+        data['threshold'] = np.log(1 + np.exp(gen_threshold + gen_threshold_modulation*Q_mean))
+        
+    
+    if gen_drift_asymptote == None:
+        data['drift'] = gen_drift_scaling * (data['Q_cor'] - data['Q_inc'])
+    else:
+        data['drift_asymptote'] = gen_drift_asymptote
+        z = gen_drift_scaling * (data['Q_cor'] - data['Q_inc'])
+        data['drift'] = (gen_drift_asymptote)/(1+np.exp(-z)) - gen_drift_asymptote/2
 
     # simulate responses
     rt, acc = random_ddm(data['drift'], data['threshold'], data['ndt'], .5, **kwargs)
