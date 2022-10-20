@@ -200,7 +200,8 @@ class ARDModel_2A(Model):
                                          self.n_parameters_individual,
                                          self.n_parameters_trial,
                                          print_diagnostics,
-                                         self.priors)
+                                         self.priors,
+                                         False)
 
         res = fitted_model.extract_results(include_rhat,
                                            include_waic,
@@ -492,7 +493,8 @@ class RLARDModel_2A(Model):
                                          self.n_parameters_individual,
                                          self.n_parameters_trial,
                                          print_diagnostics,
-                                         self.priors)
+                                         self.priors,
+                                         False)
 
         res = fitted_model.extract_results(include_rhat,
                                            include_waic,

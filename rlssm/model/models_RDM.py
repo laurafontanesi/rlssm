@@ -15,7 +15,7 @@ class RDModel_2A(Model):
 
     """
 
-    def __init__(self, hierarchical_levels):
+    def __init__(self, hierarchical_levels, starting_point_variability=False,):
         """Initialize a RDModel_2A object.
 
         Note
@@ -29,6 +29,7 @@ class RDModel_2A(Model):
             Set to 1 for individual data and to 2 for grouped data.
         """
         super().__init__(hierarchical_levels, "RDM_2A")
+        self.starting_point_variability = starting_point_variability
 
         # Define the model parameters
         self.n_parameters_individual = 4  # non-decision time, drift_cor, drift_inc, threshold
@@ -36,20 +37,26 @@ class RDModel_2A(Model):
 
         # Define default priors
         if self.hierarchical_levels == 1:
-            self.priors = dict(
-                drift_priors={'mu': 1, 'sd': 5},
-                threshold_priors={'mu': 0, 'sd': 5},
-                ndt_priors={'mu': 0, 'sd': 5}
-            )
+            self.priors = dict(ndt_priors={'mu': 0, 'sd': 5},
+                               drift_priors={'mu': 1, 'sd': 5},
+                               threshold_priors={'mu': 0, 'sd': 5},
+                               sp_trial_var_priors={'mu': 0.3, 'sd': 1})
         else:
             self.priors = dict(
+                ndt_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
                 drift_priors={'mu_mu': 1, 'sd_mu': 5, 'mu_sd': 0, 'sd_sd': 5},
                 threshold_priors={'mu_mu': 1, 'sd_mu': 3, 'mu_sd': 0, 'sd_sd': 3},
-                ndt_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                sp_trial_var_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1}
             )
 
         # Set up model label and priors for mechanisms
-
+        if self.starting_point_variability:
+            self.model_label += '_spvar'
+            self.n_parameters_individual += 1
+            self.n_parameters_trial += 1
+        else:
+            self.priors.pop('sp_trial_var_priors', None)
+        
         # Set the stan model path
         self._set_model_path()
 
@@ -149,23 +156,12 @@ class RDModel_2A(Model):
         if self.hierarchical_levels == 1:
             data_dict = {'N': N,
                          'rt': data['rt'].values,
-                         'accuracy': data['accuracy_rescale'].values.astype(int),
-                         'threshold_priors': [threshold_priors['mu'], threshold_priors['sd']],
-                         'ndt_priors': [ndt_priors['mu'], ndt_priors['sd']],
-                         'drift_priors': [drift_priors['mu'], drift_priors['sd']]
-                         }
+                         'accuracy': data['accuracy_rescale'].values.astype(int)}
             keys_priors = ["mu", "sd"]
         else:
             data_dict = {'N': N,
                          'rt': data['rt'].values,
-                         'accuracy': data['accuracy_rescale'].values.astype(int),
-                         'threshold_priors': [threshold_priors['mu_mu'], threshold_priors['sd_mu'],
-                                              threshold_priors['mu_sd'], threshold_priors['sd_sd']],
-                         'ndt_priors': [ndt_priors['mu_mu'], ndt_priors['sd_mu'], ndt_priors['mu_sd'],
-                                        ndt_priors['sd_sd']],
-                         'drift_priors': [drift_priors['mu_mu'], drift_priors['sd_mu'], drift_priors['mu_sd'],
-                                          drift_priors['sd_sd']]
-                         }
+                         'accuracy': data['accuracy_rescale'].values.astype(int)}
             keys_priors = ["mu_mu", "sd_mu", "mu_sd", "sd_sd"]
             L = len(pd.unique(data.participant))  # n subjects (levels)
             data_dict.update({'L': L,
@@ -190,7 +186,8 @@ class RDModel_2A(Model):
                                          self.n_parameters_individual,
                                          self.n_parameters_trial,
                                          print_diagnostics,
-                                         self.priors)
+                                         self.priors,
+                                         self.starting_point_variability)
 
         res = fitted_model.extract_results(include_rhat,
                                            include_waic,
@@ -499,7 +496,8 @@ class RLRDModel_2A(Model):
                                          self.n_parameters_individual,
                                          self.n_parameters_trial,
                                          print_diagnostics,
-                                         self.priors)
+                                         self.priors,
+                                         False)
 
         res = fitted_model.extract_results(include_rhat,
                                            include_waic,

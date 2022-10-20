@@ -2,7 +2,13 @@ import numpy as np
 import pandas as pd
 
 
-def random_rdm_2A(cor_drift, inc_drift, threshold, ndt, noise_constant=1, dt=0.001, max_rt=10):
+def random_rdm_2A(cor_drift, 
+                  inc_drift, 
+                  threshold, 
+                  ndt, 
+                  spvar=None,
+                  starting_point_variability=False,
+                  noise_constant=1, dt=0.001, max_rt=10):
     """ Simulates behavior (rt and accuracy) according to the Racing Diffusion Model.
 
     Parameters
@@ -58,8 +64,14 @@ def random_rdm_2A(cor_drift, inc_drift, threshold, ndt, noise_constant=1, dt=0.0
 
     max_tsteps = max_rt / dt
 
-    x_cor = np.zeros(shape)
-    x_inc = np.zeros(shape)
+
+    if starting_point_variability:
+        sp = np.random.uniform(0, spvar)
+        x_cor = sp.copy()
+        x_inc = sp.copy()
+    else:
+        x_cor = np.zeros(shape)
+        x_inc = np.zeros(shape)
 
     tstep = 0
     ongoing = np.array(np.ones(shape), dtype=bool)
