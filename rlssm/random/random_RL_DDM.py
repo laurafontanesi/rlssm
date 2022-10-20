@@ -153,6 +153,18 @@ def simulate_hier_rlddm_2A(task_design,
     gen_sd_ndt : list, float, int
         The standard deviation of the non-decision time parameter.
 
+    gen_mu_drift_asymptote : list, float, int, default: None
+        The mean of the drift asymptote parameter.
+
+    gen_sd_drift_asymptote : list, float, int, default: None
+        The standard deviation of the drift asymptote parameter.
+
+    gen_mu_threshold_modulation : list, float, int, default: None
+        The mean of the threshold modulation parameter.
+
+    gen_sd_threshold_modulation : list, float, int, default: None
+        The standard deviation of the threshold modulation parameter.
+
     initial_value_learning : float, default: 0
         The initial value of the learning parameter.
 
