@@ -208,13 +208,29 @@ def simulate_hier_rlrdm_2A(task_design,
     if type(gen_mu_alpha) != type(gen_sd_alpha):
         raise TypeError("gen_mu_alpha and gen_sd_alpha should be of the same type.")
 
+    if nonlinear_mapping:
+        if gen_mu_slop == None or gen_sd_slop == None or gen_mu_drift_asym == None or gen_sd_drift_asym == None:
+            raise ValueError("The gen_mu_slop and gen_mu_drift_asym can not be None with nonlinear_mapping mechanism! ")
+
+    parameters_dic = {'drift_scaling': np.log(1 + np.exp(np.random.normal(gen_mu_drift_scaling, 
+                                                                          gen_sd_drift_scaling, 
+                                                                          n_participants))),
+                       'threshold': np.log(1 + np.exp(np.random.normal(gen_mu_threshold, 
+                                                                       gen_sd_threshold, 
+                                                                       n_participants))),
+                       'ndt': np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants)))}
+
+    if nonlinear_mapping:
+        parameters_dic['drift_asym'] = np.log(1 + np.exp(np.random.normal(gen_mu_drift_asym, 
+                                                                          gen_sd_drift_asym, 
+                                                                          n_participants)))
+        parameters_dic['slop'] = np.log(1 + np.exp(np.random.normal(gen_mu_slop, 
+                                                                    gen_sd_slop, 
+                                                                    n_participants)))
+    
     if (type(gen_mu_alpha) == float) | (type(gen_mu_alpha) == int):
-        parameters = pd.DataFrame(
-            {'alpha': stats.norm.cdf(np.random.normal(gen_mu_alpha, gen_sd_alpha, n_participants)),
-             'drift_scaling': np.log(
-                 1 + np.exp(np.random.normal(gen_mu_drift_scaling, gen_sd_drift_scaling, n_participants))),
-             'threshold': np.log(1 + np.exp(np.random.normal(gen_mu_threshold, gen_sd_threshold, n_participants))),
-             'ndt': np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants)))}, index=participants)
+        parameters_dic['alpha'] = stats.norm.cdf(np.random.normal(gen_mu_alpha, gen_sd_alpha, n_participants))
+        parameters = pd.DataFrame(parameters_dic, index=participants)
 
         data = pd.concat([data.set_index('participant'),
                           parameters], axis=1, ignore_index=False).reset_index().rename(
@@ -227,14 +243,10 @@ def simulate_hier_rlrdm_2A(task_design,
         if len(gen_mu_alpha) != len(gen_sd_alpha):
             raise ValueError("gen_mu_alpha and gen_sd_alpha should be of the same length.")
         if len(gen_mu_alpha) == 2:
-            parameters = pd.DataFrame(
-                {'alpha_pos': stats.norm.cdf(np.random.normal(gen_mu_alpha[0], gen_sd_alpha[0], n_participants)),
-                 'alpha_neg': stats.norm.cdf(np.random.normal(gen_mu_alpha[1], gen_sd_alpha[1], n_participants)),
-                 'drift_scaling': np.log(
-                     1 + np.exp(np.random.normal(gen_mu_drift_scaling, gen_sd_drift_scaling, n_participants))),
-                 'threshold': np.log(1 + np.exp(np.random.normal(gen_mu_threshold, gen_sd_threshold, n_participants))),
-                 'ndt': np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants)))},
-                index=participants)
+            parameters_dic['alpha_pos'] = stats.norm.cdf(np.random.normal(gen_mu_alpha[0], gen_sd_alpha[0], n_participants))
+            parameters_dic['alpha_neg'] = stats.norm.cdf(np.random.normal(gen_mu_alpha[1], gen_sd_alpha[1], n_participants))
+            
+            parameters = pd.DataFrame(parameters_dic, index=participants)
             data = pd.concat([data.set_index('participant'), parameters], axis=1,
                              ignore_index=False).reset_index().rename(columns={'index': 'participant'})
             data = pd.concat([data, _simulate_delta_rule_2A(task_design=task_design,
@@ -251,17 +263,13 @@ def simulate_hier_rlrdm_2A(task_design,
         raise TypeError("The gen_alpha should be either a list or a float/int.")
 
     if nonlinear_mapping:
-        if gen_mu_slop == None or gen_sd_slop == None or gen_mu_drift_asym == None or gen_sd_drift_asym == None:
-            raise ValueError("The gen_mu_slop and gen_mu_drift_asym can not be None with nonlinear_mapping mechanism! ")
-
-    # # if nonlinear_mapping:
-    #     data['cor_drift'] = (gen_drift_scaling + gen_drift_asym * (data['Q_mean_t'] - data['Q_min'])) / (
-    #             1 + np.exp(gen_slop * (data['Q_mean_t'] + data['Q_max_t'] - 2 * data['Q_cor'])))
-    #     data['inc_drift'] = (gen_drift_scaling + gen_drift_asym * (data['Q_mean_t'] - data['Q_min'])) / (
-    #             1 + np.exp(gen_slop * (data['Q_mean_t'] + data['Q_max_t'] - 2 * data['Q_inc'])))
-    # else:
-    #     data['cor_drift'] = gen_drift_scaling * (data['Q_cor'])
-    #     data['inc_drift'] = gen_drift_scaling * (data['Q_inc'])
+        data['cor_drift'] = (data['drift_scaling'] + data['drift_asym'] * (data['Q_mean_t'] - data['Q_min'])) / (
+                1 + np.exp(data['slop'] * (data['Q_mean_t'] + data['Q_max_t'] - 2 * data['Q_cor'])))
+        data['inc_drift'] = (data['drift_scaling'] + data['drift_asym'] * (data['Q_mean_t'] - data['Q_min'])) / (
+                1 + np.exp(data['slop'] * (data['Q_mean_t'] + data['Q_max_t'] - 2 * data['Q_inc'])))
+    else:
+        data['cor_drift'] = data['drift_scaling'] * (data['Q_cor'])
+        data['inc_drift'] = data['drift_scaling'] * (data['Q_inc'])
 
     # simulate responses
     rt, acc = random_rdm_2A(data['cor_drift'],
