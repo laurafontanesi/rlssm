@@ -21,7 +21,8 @@ class RDMFittedModel_2A(FittedModel):
                  n_parameters_individual,
                  n_parameters_trial,
                  print_diagnostics,
-                 priors):
+                 priors,
+                 starting_point_variability):
         self.family = family
         super().__init__(stan_model,
                          data,
@@ -32,6 +33,7 @@ class RDMFittedModel_2A(FittedModel):
                          n_parameters_trial,
                          print_diagnostics,
                          priors)
+        self.starting_point_variability = starting_point_variability
 
     def extract_results(self, include_rhat, include_waic, pointwise_waic, include_last_values):
         if include_rhat:
@@ -62,11 +64,17 @@ class RDMFittedModel_2A(FittedModel):
             main_parameters = self.parameters_info['parameters_names_transf']
 
         samples = self.stan_model.draws_pd(vars=main_parameters)
-
-        trial_samples = {'drift_cor_t': np.asarray(self.stan_model.draws_pd(vars=['drift_cor_t'])),
-                         'drift_inc_t': np.asarray(self.stan_model.draws_pd(vars=['drift_inc_t'])),
-                         'threshold_t': np.asarray(self.stan_model.draws_pd(vars=['threshold_t'])),
-                         'ndt_t': np.asarray(self.stan_model.draws_pd(vars=['ndt_t']))}
+        if self.starting_point_variability:
+            trial_samples = {'drift_cor_t': np.asarray(self.stan_model.draws_pd(vars=['drift_cor_t'])),
+                            'drift_inc_t': np.asarray(self.stan_model.draws_pd(vars=['drift_inc_t'])),
+                            'threshold_t': np.asarray(self.stan_model.draws_pd(vars=['threshold_t'])),
+                            'ndt_t': np.asarray(self.stan_model.draws_pd(vars=['ndt_t'])),
+                            'sp_trial_var_t':np.asarray(self.stan_model.draws_pd(vars=['sp_trial_var_t']))}
+        else:
+            trial_samples = {'drift_cor_t': np.asarray(self.stan_model.draws_pd(vars=['drift_cor_t'])),
+                            'drift_inc_t': np.asarray(self.stan_model.draws_pd(vars=['drift_inc_t'])),
+                            'threshold_t': np.asarray(self.stan_model.draws_pd(vars=['threshold_t'])),
+                            'ndt_t': np.asarray(self.stan_model.draws_pd(vars=['ndt_t']))}
 
         res = RDMModelResults_2A(self.model_label,
                                  self.data_info,
@@ -77,7 +85,8 @@ class RDMFittedModel_2A(FittedModel):
                                  last_values,
                                  samples,
                                  trial_samples,
-                                 self.family)
+                                 self.family,
+                                 self.starting_point_variability)
         return res
 
 
@@ -92,7 +101,8 @@ class RDMModelResults_2A(ModelResults):
                  last_values,
                  samples,
                  trial_samples,
-                 family):
+                 family,
+                 starting_point_variability):
         self.family = family
         super().__init__(model_label,
                          data_info,
@@ -103,6 +113,7 @@ class RDMModelResults_2A(ModelResults):
                          last_values,
                          samples,
                          trial_samples)
+        self.starting_point_variability = starting_point_variability
 
     def get_posterior_predictives(self, n_posterior_predictives=500, **kwargs):
         if n_posterior_predictives > self.parameters_info['n_posterior_samples']:
@@ -117,7 +128,11 @@ class RDMModelResults_2A(ModelResults):
 
         threshold_t = self.trial_samples['threshold_t'][:n_posterior_predictives, :]
         ndt_t = self.trial_samples['ndt_t'][:n_posterior_predictives, :]
-        pp_rt, pp_acc = random_rdm_2A(drift_cor_t, drift_inc_t, threshold_t, ndt_t, **kwargs)
+        if self.starting_point_variability:
+            spvar_t = self.trial_samples['sp_trial_var_t'][:n_posterior_predictives, :]
+            pp_rt, pp_acc = random_rdm_2A(drift_cor_t, drift_inc_t, threshold_t, ndt_t, spvar_t, True, **kwargs)
+        else:
+            pp_rt, pp_acc = random_rdm_2A(drift_cor_t, drift_inc_t, threshold_t, ndt_t, **kwargs)
 
         return pp_rt, pp_acc
 

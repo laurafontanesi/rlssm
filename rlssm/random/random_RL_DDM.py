@@ -12,6 +12,8 @@ def simulate_rlddm_2A(task_design,
                       gen_drift_scaling,
                       gen_threshold,
                       gen_ndt,
+                      gen_drift_asymptote=None,
+                      gen_threshold_modulation=None,
                       initial_value_learning=0,
                       **kwargs):
     """Simulates behavior (rt and accuracy) according to a RLDDM model,
@@ -33,6 +35,12 @@ def simulate_rlddm_2A(task_design,
 
     gen_ndt : float, listx
         The non-decision time parameter.
+
+    gen_drift_asymptote : float, listx, default: None
+        The drift asymptote parameter.
+
+    gen_threshold_modulation : float, listx, default: None
+        The threshold modulation parameter.
 
     initial_value_learning : float, default: 0
         The initial value of the learning parameter.
@@ -77,9 +85,23 @@ def simulate_rlddm_2A(task_design,
         raise TypeError("The gen_alpha should be either a list or a float/int.")
 
     data['drift_scaling'] = gen_drift_scaling
-    data['threshold'] = gen_threshold
     data['ndt'] = gen_ndt
-    data['drift'] = gen_drift_scaling * (data['Q_cor'] - data['Q_inc'])
+
+    if gen_threshold_modulation == None:
+        data['threshold'] = gen_threshold
+    else:
+        Q_mean = (data['Q_cor'] + data['Q_inc'])/2
+        data['threshold_fix'] = gen_threshold
+        data['threshold_modulation'] = gen_threshold_modulation
+        data['threshold'] = np.log(1 + np.exp(gen_threshold + gen_threshold_modulation*Q_mean))
+        
+    
+    if gen_drift_asymptote == None:
+        data['drift'] = gen_drift_scaling * (data['Q_cor'] - data['Q_inc'])
+    else:
+        data['drift_asymptote'] = gen_drift_asymptote
+        z = gen_drift_scaling * (data['Q_cor'] - data['Q_inc'])
+        data['drift'] = (gen_drift_asymptote)/(1+np.exp(-z)) - gen_drift_asymptote/2
 
     # simulate responses
     rt, acc = random_ddm(data['drift'], data['threshold'], data['ndt'], .5, **kwargs)
@@ -95,6 +117,8 @@ def simulate_hier_rlddm_2A(task_design,
                            gen_mu_drift_scaling, gen_sd_drift_scaling,
                            gen_mu_threshold, gen_sd_threshold,
                            gen_mu_ndt, gen_sd_ndt,
+                           gen_mu_drift_asymptote=None, gen_sd_drift_asymptote=None,
+                           gen_mu_threshold_modulation=None, gen_sd_threshold_modulation=None,
                            initial_value_learning=0,
                            **kwargs):
     """Simulates behavior (rt and accuracy) according to a RLDDM hierarchical model.
@@ -129,6 +153,18 @@ def simulate_hier_rlddm_2A(task_design,
     gen_sd_ndt : list, float, int
         The standard deviation of the non-decision time parameter.
 
+    gen_mu_drift_asymptote : list, float, int, default: None
+        The mean of the drift asymptote parameter.
+
+    gen_sd_drift_asymptote : list, float, int, default: None
+        The standard deviation of the drift asymptote parameter.
+
+    gen_mu_threshold_modulation : list, float, int, default: None
+        The mean of the threshold modulation parameter.
+
+    gen_sd_threshold_modulation : list, float, int, default: None
+        The standard deviation of the threshold modulation parameter.
+
     initial_value_learning : float, default: 0
         The initial value of the learning parameter.
 
@@ -153,42 +189,44 @@ def simulate_hier_rlddm_2A(task_design,
     if type(gen_mu_alpha) != type(gen_sd_alpha):
         raise TypeError("gen_mu_alpha and gen_sd_alpha should be of the same type.")
 
+    parameters_dic = {'drift_scaling': np.log(1 + np.exp(np.random.normal(gen_mu_drift_scaling, gen_sd_drift_scaling, n_participants))),
+                      'ndt': np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants)))}
+    
+    if gen_mu_drift_asymptote != None and gen_sd_drift_asymptote != None:
+        parameters_dic['drift_asymptote'] = np.log(1 + np.exp(np.random.normal(gen_mu_drift_asymptote, gen_sd_drift_asymptote, n_participants)))
+    
+    if gen_mu_threshold_modulation != None and gen_sd_threshold_modulation != None:
+        parameters_dic['threshold_fix'] = np.log(1 + np.exp(np.random.normal(gen_mu_threshold,
+                                                                             gen_sd_threshold,
+                                                                             n_participants)))
+        parameters_dic['threshold_modulation'] = np.log(1 + np.exp(np.random.normal(gen_mu_threshold_modulation, 
+                                                                                    gen_sd_threshold_modulation,
+                                                                                    n_participants)))
+    else:
+        parameters_dic['threshold'] = np.log(1 + np.exp(np.random.normal(gen_mu_threshold, gen_sd_threshold, n_participants)))
+    
     if (type(gen_mu_alpha) == float) | (type(gen_mu_alpha) == int):
-        parameters = pd.DataFrame(
-            {'alpha': stats.norm.cdf(np.random.normal(gen_mu_alpha, gen_sd_alpha, n_participants)),
-             'drift_scaling': np.log(
-                 1 + np.exp(np.random.normal(gen_mu_drift_scaling, gen_sd_drift_scaling, n_participants))),
-             'threshold': np.log(1 + np.exp(np.random.normal(gen_mu_threshold, gen_sd_threshold, n_participants))),
-             'ndt': np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants)))},
-            index=participants)
-        data = pd.concat([data.set_index('participant'), parameters], axis=1, ignore_index=False).reset_index().rename(
-            columns={'index': 'participant'})
+        parameters_dic['alpha'] = stats.norm.cdf(np.random.normal(gen_mu_alpha, gen_sd_alpha, n_participants))
+        parameters = pd.DataFrame(parameters_dic, index=participants)
+        data = pd.concat([data.set_index('participant'), parameters], axis=1, 
+                         ignore_index=False).reset_index().rename(columns={'index': 'participant'})
         data = pd.concat([data, _simulate_delta_rule_2A(task_design,
                                                         parameters.alpha.values,
-                                                        initial_value_learning)],
-                         axis=1)
-
+                                                        initial_value_learning)], axis=1)
     elif type(gen_mu_alpha) is list:
         if len(gen_mu_alpha) != len(gen_sd_alpha):
             raise ValueError("gen_mu_alpha and gen_sd_alpha should be of the same length.")
         if len(gen_mu_alpha) == 2:
-            parameters = pd.DataFrame(
-                {'alpha_pos': stats.norm.cdf(np.random.normal(gen_mu_alpha[0], gen_sd_alpha[0], n_participants)),
-                 'alpha_neg': stats.norm.cdf(np.random.normal(gen_mu_alpha[1], gen_sd_alpha[1], n_participants)),
-                 'drift_scaling': np.log(
-                     1 + np.exp(np.random.normal(gen_mu_drift_scaling, gen_sd_drift_scaling, n_participants))),
-                 'threshold': np.log(1 + np.exp(np.random.normal(gen_mu_threshold, gen_sd_threshold, n_participants))),
-                 'ndt': np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants)))},
-                index=participants)
+            parameters_dic['alpha_pos'] = stats.norm.cdf(np.random.normal(gen_mu_alpha[0], gen_sd_alpha[0], n_participants))
+            parameters_dic['alpha_neg'] = stats.norm.cdf(np.random.normal(gen_mu_alpha[1], gen_sd_alpha[1], n_participants))
+            parameters = pd.DataFrame(parameters_dic, index=participants)
             data = pd.concat([data.set_index('participant'), parameters], axis=1,
                              ignore_index=False).reset_index().rename(columns={'index': 'participant'})
             data = pd.concat([data, _simulate_delta_rule_2A(task_design=task_design,
                                                             alpha=None,
                                                             initial_value_learning=initial_value_learning,
                                                             alpha_pos=parameters.alpha_pos.values,
-                                                            alpha_neg=parameters.alpha_neg.values)],
-                             axis=1)
-
+                                                            alpha_neg=parameters.alpha_neg.values)], axis=1)
         elif len(gen_mu_alpha) == 3:
             pass  # implement here Stefano's learning rule
         else:
@@ -196,7 +234,16 @@ def simulate_hier_rlddm_2A(task_design,
     else:
         raise TypeError("The gen_alpha should be either a list or a float/int.")
 
-    data['drift'] = data['drift_scaling'] * (data['Q_cor'] - data['Q_inc'])
+
+    if gen_mu_drift_asymptote == None or gen_sd_drift_asymptote == None:
+        data['drift'] = data['drift_scaling'] * (data['Q_cor'] - data['Q_inc'])
+    else:
+        z = data['drift_scaling'] * (data['Q_cor'] - data['Q_inc'])
+        data['drift'] = data['drift_asymptote']/(1+np.exp(-z)) - data['drift_asymptote']/2
+
+    if gen_mu_threshold_modulation != None and gen_sd_threshold_modulation != None:
+        Q_mean = (data['Q_cor'] + data['Q_inc'])/2
+        data['threshold'] = np.log(1 + np.exp(data['threshold_fix'] + data['threshold_modulation']*Q_mean))
 
     # simulate responses
     rt, acc = random_ddm(data['drift'], data['threshold'], data['ndt'], .5, **kwargs)

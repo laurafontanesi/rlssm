@@ -15,5 +15,35 @@ cached*.pkl
 *.pkl
 
 # ignore the stan cached files (hpp and with no extension); only allow .stan files
-rlssm/stan_models/**/*
-!rlssm/stan_models/**/*.stan
+rlssm/stan_models/ALBA_2A/*
+!rlssm/stan_models/ALBA_2A/*.stan
+
+rlssm/stan_models/ARDM_2A/*
+!rlssm/stan_models/ARDM_2A/*.stan
+
+rlssm/stan_models/DDM/*
+!rlssm/stan_models/DDM/*.stan
+
+rlssm/stan_models/LBA_2A/*
+!rlssm/stan_models/LBA_2A/*.stan
+
+rlssm/stan_models/RDM_2A/*
+!rlssm/stan_models/RDM_2A/*.stan
+
+rlssm/stan_models/RL_2A/*
+!rlssm/stan_models/RL_2A/*.stan
+
+rlssm/stan_models/RLALBA_2A/*
+!rlssm/stan_models/RLALBA_2A/*.stan
+
+rlssm/stan_models/RLARDM_2A/*
+!rlssm/stan_models/RLARDM_2A/*.stan
+
+rlssm/stan_models/RLDDM/*
+!rlssm/stan_models/RLDDM/*.stan
+
+rlssm/stan_models/RLLBA_2A/*
+!rlssm/stan_models/RLLBA_2A/*.stan
+
+rlssm/stan_models/RLRDM_2A/*
+!rlssm/stan_models/RLRDM_2A/*.stan

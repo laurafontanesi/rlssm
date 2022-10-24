@@ -2,36 +2,46 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-from rlssm.random.random_RDM import random_rdm_2A
+from rlssm.random.random_LBA import random_lba_2A
 from rlssm.random.random_common import _simulate_delta_rule_2A
 
-
-def simulate_rlrdm_2A(task_design,
-                      gen_alpha,
-                      gen_ndt,
-                      gen_threshold,
-                      gen_drift_scaling,
-                      gen_slop=None,
-                      gen_drift_asym=None,
-                      nonlinear_mapping=False,
-                      initial_value_learning=0,
-                      **kwargs):
-    """Simulates behavior (rt and accuracy) according to the RLRDM model.
+def simulate_rllba_2A(task_design,
+                       gen_alpha,
+                       gen_sp_trial_var,
+                       gen_ndt,
+                       gen_k,
+                       gen_drift_scaling,
+                       gen_slop=None,
+                       gen_drift_asym=None,
+                       gen_drift_trial_var=None,
+                       nonlinear_mapping=False,
+                       initial_value_learning=0,
+                       **kwargs):
+    """Simulates behavior (rt and accuracy) according to the RL-LBA model.
 
     Parameters
     ----------
 
-    task_design : pandas.DataFrame
-        A pandas DataFrame containing the task design.
+    task_design : DataFrame
+        `pandas.DataFrame`, with n_trials_block*n_blocks rows.
+        Columns contain:
+        "f_cor", "f_inc", "trial_type", "cor_option", "inc_option",
+        "trial_block", "block_label", "participant".
 
-    gen_alpha : float
-        The learning rate parameter.
+    gen_alpha : float or list of floats
+        The generating learning rate.
+        It should be a value between 0 (no updating) and 1 (full updating).
+        If a list of 2 values is provided then 2 separate learning rates
+        for positive and negative prediction error are used.
+
+    gen_sp_trial_var : float
+        sp_trial_var of the rlalba model. Should be positive.
 
     gen_ndt : float
-        The non-decision time parameter.
+        Non decision time of the rlalba model, in seconds. Should be positive.
 
-    gen_threshold : float
-        The threshold parameter.
+    gen_k : float, list, or numpy.ndarray
+        Distance between starting point variability and threshold.
 
     gen_drift_scaling : float
         The drift scaling parameter.
@@ -46,20 +56,25 @@ def simulate_rlrdm_2A(task_design,
         Whether to use a nonlinear mapping or not.
 
     initial_value_learning : float, default 0
-        The initial value of the learning parameter.
+        The initial value for Q learning.
 
     Other Parameters
     ----------------
 
     **kwargs : dict
-        Additional keyword arguments to be further passed.
+        Additional parameters to be passed to `random_lba_2A`.
 
     Returns
     -------
 
-    data : pandas.DataFrame
-
+    data : DataFrame
+        `pandas.DataFrame`, with n_trials rows.
+        Columns contain simulated response times and accuracy ["rt", "accuracy"],
+        as well as the generating parameters
+        (both for each trial and across-trials when there is across-trial variability).
+    
     """
+
     data = task_design.copy()
 
     if (type(gen_alpha) == float) | (type(gen_alpha) == int):
@@ -91,9 +106,11 @@ def simulate_rlrdm_2A(task_design,
         if gen_slop == None or gen_drift_asym == None:
             raise ValueError("The gen_slop and gen_drift_asym can not get \'None\' with nonlinear_mapping mechanism! ")
 
-    data['threshold'] = gen_threshold
+    data['k'] = gen_k
     data['ndt'] = gen_ndt
+    data['sp_trial_var'] = gen_sp_trial_var
     data['drift_scaling'] = gen_drift_scaling
+    data['drift_trial_var'] = gen_drift_trial_var
 
     if nonlinear_mapping:
         data['cor_drift'] = (gen_drift_scaling + gen_drift_asym * (data['Q_mean_t'] - data['Q_min'])) / (
@@ -104,29 +121,34 @@ def simulate_rlrdm_2A(task_design,
         data['cor_drift'] = gen_drift_scaling * (data['Q_cor'])
         data['inc_drift'] = gen_drift_scaling * (data['Q_inc'])
 
-        # simulate responses
-    rt, acc = random_rdm_2A(data['cor_drift'],
+    rt, acc = random_lba_2A(data['cor_drift'],
                             data['inc_drift'],
-                            data['threshold'],
-                            data['ndt'], **kwargs)
+                            data['sp_trial_var'], 
+                            data['ndt'], 
+                            data['k'], 
+                            data['drift_trial_var'], **kwargs)
+
     data['rt'] = rt
     data['accuracy'] = acc
 
     data = data.set_index(['participant', 'block_label', 'trial_block'])
+
     return data
 
 
-def simulate_hier_rlrdm_2A(task_design,
-                           gen_mu_alpha, gen_sd_alpha,
-                           gen_mu_ndt, gen_sd_ndt,
-                           gen_mu_threshold, gen_sd_threshold,
-                           gen_mu_drift_scaling, gen_sd_drift_scaling,
-                           gen_mu_slop=None, gen_sd_slop=None,
-                           gen_mu_drift_asym=None, gen_sd_drift_asym=None,
-                           nonlinear_mapping=False,
-                           initial_value_learning=0,
-                           **kwargs):
-    """Simulates behavior (rt and accuracy) according to the RL-RDM hierarchical model.
+def simulate_hier_rlalba(task_design,
+                         gen_mu_alpha, gen_sd_alpha,
+                         gen_mu_sp_trial_var, gen_sd_sp_trial_var,
+                         gen_mu_ndt, gen_sd_ndt,
+                         gen_mu_k, gen_sd_k,
+                         gen_mu_drift_trial_var, gen_sd_drift_trial_var,
+                         gen_mu_drift_scaling, gen_sd_drift_scaling,
+                         gen_mu_slop=None, gen_sd_slop=None,
+                         gen_mu_drift_asym=None, gen_sd_drift_asym=None,
+                         nonlinear_mapping=False,
+                         initial_value_learning=0,
+                         **kwargs):
+    """Simulate behavior (rt and accuracy) according to a hierarchical RL-ALBA model.
 
     Parameters
     ----------
@@ -147,63 +169,71 @@ def simulate_hier_rlrdm_2A(task_design,
         If a list of 2 values is provided then 2 separate learning rates
         for positive and negative prediction error are used.
 
-    gen_mu_drift_scaling : float
-        Group-mean of the drift-rate
-        scaling of the RLRDM.
+    gen_mu_sp_trial_var : float
+        Group-mean of sp_trial_var parameter.
 
-    gen_sd_drift_scaling: float
-        Group-standard deviation of the drift-rate
-        scaling of the RLRDM.
-
-    gen_mu_threshold : float
-        Group-mean of the threshold of the RLRDM.
-
-    gen_sd_threshold: float
-        Group-standard deviation of the threshold
-        of the RLRDM.
+    gen_sd_sp_trial_var : float
+        Group-standard deviation of the sp_trial_var parameter.
 
     gen_mu_ndt : float
-        Group-mean of the non decision time of the RLRDM.
+        Group-mean of non-decision time parameter.
 
     gen_sd_ndt : float
-        Group-standard deviation of the non decision time
-        of the RLRDM.
+        Group-standard deviation of the non-decision time parameter.
+
+    gen_mu_k : float
+        Group-mean of of the distance between starting point variability and threshold.
+
+    gen_sd_k : float
+        Group-standard deviation of the distance between starting point variability and threshold.
+
+    gen_mu_drift_trial_var : float
+        Group-mean of across trial variability in the drift-rate.
+        Should be positive.
+
+    gen_sd_drift_trial_var : float
+        Group-standard deviation of across trial variability in the drift-rate.
+        Should be positive.
 
     gen_mu_slop : float
-        Group-mean of the slop of the RLRDM.
+        Group-mean of the slop of the drift-rate.
 
     gen_sd_slop : float
-        Group-standard deviation of the slop of the RLRDM.
+        Group-standard deviation of the slop of the drift-reate.
 
     gen_mu_drift_asym : float
-        Group-mean of the drift asym of the RLRDM.
+        Group-mean of the drift asym of the drift-rate.
 
     gen_sd_drift_asym : float
-        Group-standard deviation of the drift asym of the RLRDM.
+        Group-standard deviation of the drift asym of the drift-rate.
 
-    nonlinear_mapping : bool
+    nonlinear_mapping : bool, default False
         Whether to use the nonlinear mapping mechanism.
 
     initial_value_learning : float, default 0
-        The initial value of the learning rate.
+        The initial value for Q learning.
 
-    Other Parameters
+    Other parameters
     ----------------
 
     **kwargs : dict
-        Additional arguments to be passed further.
+        Additional parameters to be passed to `random_lba_2A`.
 
     Returns
     -------
 
     data : DataFrame
+        `pandas.DataFrame`, with n_trials*n_participants rows.
+        Columns contain simulated response times and accuracy ["rt", "accuracy"],
+        as well as the generating parameters (at the participant level).
 
     """
     data = task_design.copy()
     participants = pd.unique(data["participant"])
     n_participants = len(participants)
+
     if n_participants < 2:
-        raise ValueError("You only have one participant. Use simulate_rlrdm_2A instead.")
+        raise ValueError("You only have one participant. Use simulate_rl_2A instead.")
 
     if type(gen_mu_alpha) != type(gen_sd_alpha):
         raise TypeError("gen_mu_alpha and gen_sd_alpha should be of the same type.")
@@ -215,11 +245,15 @@ def simulate_hier_rlrdm_2A(task_design,
     parameters_dic = {'drift_scaling': np.log(1 + np.exp(np.random.normal(gen_mu_drift_scaling, 
                                                                           gen_sd_drift_scaling, 
                                                                           n_participants))),
-                       'threshold': np.log(1 + np.exp(np.random.normal(gen_mu_threshold, 
-                                                                       gen_sd_threshold, 
-                                                                       n_participants))),
-                       'ndt': np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants)))}
-
+                       'sp_trial_var': np.log(1 + np.exp(np.random.normal(gen_mu_sp_trial_var, 
+                                                                          gen_sd_sp_trial_var, 
+                                                                          n_participants))),
+                       'ndt': np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants))),
+                       'k': np.log(1 + np.exp(np.random.normal(gen_mu_k, gen_sd_k, n_participants))),
+                       'drift_trial_var': np.log(1+np.exp(np.random.normal(gen_mu_drift_trial_var,
+                                                                           gen_sd_drift_trial_var,
+                                                                           n_participants)))}
+    
     if nonlinear_mapping:
         parameters_dic['drift_asym'] = np.log(1 + np.exp(np.random.normal(gen_mu_drift_asym, 
                                                                           gen_sd_drift_asym, 
@@ -227,7 +261,7 @@ def simulate_hier_rlrdm_2A(task_design,
         parameters_dic['slop'] = np.log(1 + np.exp(np.random.normal(gen_mu_slop, 
                                                                     gen_sd_slop, 
                                                                     n_participants)))
-    
+                                                                    
     if (type(gen_mu_alpha) == float) | (type(gen_mu_alpha) == int):
         parameters_dic['alpha'] = stats.norm.cdf(np.random.normal(gen_mu_alpha, gen_sd_alpha, n_participants))
         parameters = pd.DataFrame(parameters_dic, index=participants)
@@ -271,13 +305,16 @@ def simulate_hier_rlrdm_2A(task_design,
         data['cor_drift'] = data['drift_scaling'] * (data['Q_cor'])
         data['inc_drift'] = data['drift_scaling'] * (data['Q_inc'])
 
-    # simulate responses
-    rt, acc = random_rdm_2A(data['cor_drift'],
-                            data['inc_drift'],
-                            data['threshold'],
-                            data['ndt'], **kwargs)
+    rt, acc = random_lba_2A(data['cor_drift'], 
+                            data['inc_drift'], 
+                            data['sp_trial_var'],
+                            data['ndt'], 
+                            data['k'],
+                            data['drift_trial_var'], **kwargs)
+
     data['rt'] = rt
     data['accuracy'] = acc
 
     data = data.set_index(['participant', 'block_label', 'trial_block'])
+
     return data
