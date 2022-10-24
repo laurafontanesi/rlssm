@@ -24,22 +24,22 @@ def simulate_rlddm_2A(task_design,
     task_design : pandas.DataFrame
         A pandas DataFrame containing the task design.
 
-    gen_alpha : float, listx
+    gen_alpha : float, list
         The learning rate parameter.
 
-    gen_drift_scaling : float, listx
+    gen_drift_scaling : float, list
         The drift scaling parameter.
 
-    gen_threshold : float, listx
+    gen_threshold : float, list
         The threshold parameter.
 
-    gen_ndt : float, listx
+    gen_ndt : float, list
         The non-decision time parameter.
 
-    gen_drift_asymptote : float, listx, default: None
+    gen_drift_asymptote : float, list, default: None
         The drift asymptote parameter.
 
-    gen_threshold_modulation : float, listx, default: None
+    gen_threshold_modulation : float, list, default: None
         The threshold modulation parameter.
 
     initial_value_learning : float, default: 0

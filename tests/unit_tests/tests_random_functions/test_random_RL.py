@@ -1,5 +1,4 @@
 import unittest
-
 import numpy as np
 
 from rlssm.random.random_RL import simulate_rl_2A, simulate_hier_rl_2A
