@@ -7,7 +7,7 @@ failedFiles = set()
 
 
 def run_tests(ignore_hier_tests=False):
-    test_dir = './tests_random_functions'
+    test_dir = '.'
     discovered_tests = unittest.defaultTestLoader.discover(test_dir)
     print(f"Running tests in {test_dir}; : Number of test discovered: {discovered_tests.countTestCases()}")
     print(f"Ignoring hierarchical version of all tests: {ignore_hier_tests}")
@@ -34,9 +34,10 @@ def run_tests(ignore_hier_tests=False):
                 failedFiles.add(tests.__str__())
 
 
-start_total_time = time.time()
-run_tests(ignore_hier_tests=True)
-print(f"Finished running the tests in {(time.time() - start_total_time):.2f} sec. See summary below...")
-print(f"\tPASSING tests: {len(passedTests)} ({passedTests})")
-print(f"\tFAILING/ERRONEOUS tests: {len(failedTests)} ({failedTests})")
-print(f"\tFailed running tests in files: {failedFiles}")
+if __name__ == '__main__':
+    start_total_time = time.time()
+    run_tests(ignore_hier_tests=True)
+    print(f"Finished running the tests in {(time.time() - start_total_time):.2f} sec. See summary below...")
+    print(f"\tPASSING tests: {len(passedTests)} ({passedTests})")
+    print(f"\tFAILING/ERRONEOUS tests: {len(failedTests)} ({failedTests})")
+    print(f"\tFailed running tests in files: {failedFiles}")

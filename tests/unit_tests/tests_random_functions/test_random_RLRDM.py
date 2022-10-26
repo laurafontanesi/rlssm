@@ -26,7 +26,7 @@ class TestRandomRLRDM(unittest.TestCase):
     def test_random_RLRDM_hier(self):
         self.dm_hier = generate_task_design_fontanesi(n_trials_block=80,
                                                       n_blocks=3,
-                                                      n_participants=1,
+                                                      n_participants=30,
                                                       trial_types=['1-2', '1-3', '2-4', '3-4'],
                                                       mean_options=[34, 38, 50, 54],
                                                       sd_options=[5, 5, 5, 5])
