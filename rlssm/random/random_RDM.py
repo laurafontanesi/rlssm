@@ -66,9 +66,8 @@ def random_rdm_2A(cor_drift,
 
 
     if starting_point_variability:
-        sp = np.random.uniform(0, spvar)
-        x_cor = sp.copy()
-        x_inc = sp.copy()
+        x_cor = np.random.uniform(0, spvar)
+        x_inc = np.random.uniform(0, spvar)
     else:
         x_cor = np.zeros(shape)
         x_inc = np.zeros(shape)
