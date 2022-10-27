@@ -5,18 +5,19 @@ from scipy import stats
 from rlssm.random.random_LBA import random_lba_2A
 from rlssm.random.random_common import _simulate_delta_rule_2A
 
+
 def simulate_rllba_2A(task_design,
-                       gen_alpha,
-                       gen_sp_trial_var,
-                       gen_ndt,
-                       gen_k,
-                       gen_drift_scaling,
-                       gen_slop=None,
-                       gen_drift_asym=None,
-                       gen_drift_trial_var=None,
-                       nonlinear_mapping=False,
-                       initial_value_learning=0,
-                       **kwargs):
+                      gen_alpha,
+                      gen_sp_trial_var,
+                      gen_ndt,
+                      gen_k,
+                      gen_drift_scaling,
+                      gen_slop=None,
+                      gen_drift_asym=None,
+                      gen_drift_trial_var=None,
+                      nonlinear_mapping=False,
+                      initial_value_learning=0,
+                      **kwargs):
     """Simulates behavior (rt and accuracy) according to the RL-LBA model.
 
     Parameters
@@ -123,9 +124,9 @@ def simulate_rllba_2A(task_design,
 
     rt, acc = random_lba_2A(data['cor_drift'],
                             data['inc_drift'],
-                            data['sp_trial_var'], 
-                            data['ndt'], 
-                            data['k'], 
+                            data['sp_trial_var'],
+                            data['ndt'],
+                            data['k'],
                             data['drift_trial_var'], **kwargs)
 
     data['rt'] = rt
@@ -136,18 +137,18 @@ def simulate_rllba_2A(task_design,
     return data
 
 
-def simulate_hier_rlalba(task_design,
-                         gen_mu_alpha, gen_sd_alpha,
-                         gen_mu_sp_trial_var, gen_sd_sp_trial_var,
-                         gen_mu_ndt, gen_sd_ndt,
-                         gen_mu_k, gen_sd_k,
-                         gen_mu_drift_trial_var, gen_sd_drift_trial_var,
-                         gen_mu_drift_scaling, gen_sd_drift_scaling,
-                         gen_mu_slop=None, gen_sd_slop=None,
-                         gen_mu_drift_asym=None, gen_sd_drift_asym=None,
-                         nonlinear_mapping=False,
-                         initial_value_learning=0,
-                         **kwargs):
+def simulate_hier_rllba(task_design,
+                        gen_mu_alpha, gen_sd_alpha,
+                        gen_mu_sp_trial_var, gen_sd_sp_trial_var,
+                        gen_mu_ndt, gen_sd_ndt,
+                        gen_mu_k, gen_sd_k,
+                        gen_mu_drift_trial_var, gen_sd_drift_trial_var,
+                        gen_mu_drift_scaling, gen_sd_drift_scaling,
+                        gen_mu_slop=None, gen_sd_slop=None,
+                        gen_mu_drift_asym=None, gen_sd_drift_asym=None,
+                        nonlinear_mapping=False,
+                        initial_value_learning=0,
+                        **kwargs):
     """Simulate behavior (rt and accuracy) according to a hierarchical RL-ALBA model.
 
     Parameters
@@ -242,26 +243,26 @@ def simulate_hier_rlalba(task_design,
         if gen_mu_slop == None or gen_sd_slop == None or gen_mu_drift_asym == None or gen_sd_drift_asym == None:
             raise ValueError("The gen_mu_slop and gen_mu_drift_asym can not be None with nonlinear_mapping mechanism! ")
 
-    parameters_dic = {'drift_scaling': np.log(1 + np.exp(np.random.normal(gen_mu_drift_scaling, 
-                                                                          gen_sd_drift_scaling, 
+    parameters_dic = {'drift_scaling': np.log(1 + np.exp(np.random.normal(gen_mu_drift_scaling,
+                                                                          gen_sd_drift_scaling,
                                                                           n_participants))),
-                       'sp_trial_var': np.log(1 + np.exp(np.random.normal(gen_mu_sp_trial_var, 
-                                                                          gen_sd_sp_trial_var, 
-                                                                          n_participants))),
-                       'ndt': np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants))),
-                       'k': np.log(1 + np.exp(np.random.normal(gen_mu_k, gen_sd_k, n_participants))),
-                       'drift_trial_var': np.log(1+np.exp(np.random.normal(gen_mu_drift_trial_var,
-                                                                           gen_sd_drift_trial_var,
-                                                                           n_participants)))}
-    
+                      'sp_trial_var': np.log(1 + np.exp(np.random.normal(gen_mu_sp_trial_var,
+                                                                         gen_sd_sp_trial_var,
+                                                                         n_participants))),
+                      'ndt': np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants))),
+                      'k': np.log(1 + np.exp(np.random.normal(gen_mu_k, gen_sd_k, n_participants))),
+                      'drift_trial_var': np.log(1 + np.exp(np.random.normal(gen_mu_drift_trial_var,
+                                                                            gen_sd_drift_trial_var,
+                                                                            n_participants)))}
+
     if nonlinear_mapping:
-        parameters_dic['drift_asym'] = np.log(1 + np.exp(np.random.normal(gen_mu_drift_asym, 
-                                                                          gen_sd_drift_asym, 
+        parameters_dic['drift_asym'] = np.log(1 + np.exp(np.random.normal(gen_mu_drift_asym,
+                                                                          gen_sd_drift_asym,
                                                                           n_participants)))
-        parameters_dic['slop'] = np.log(1 + np.exp(np.random.normal(gen_mu_slop, 
-                                                                    gen_sd_slop, 
+        parameters_dic['slop'] = np.log(1 + np.exp(np.random.normal(gen_mu_slop,
+                                                                    gen_sd_slop,
                                                                     n_participants)))
-                                                                    
+
     if (type(gen_mu_alpha) == float) | (type(gen_mu_alpha) == int):
         parameters_dic['alpha'] = stats.norm.cdf(np.random.normal(gen_mu_alpha, gen_sd_alpha, n_participants))
         parameters = pd.DataFrame(parameters_dic, index=participants)
@@ -277,9 +278,11 @@ def simulate_hier_rlalba(task_design,
         if len(gen_mu_alpha) != len(gen_sd_alpha):
             raise ValueError("gen_mu_alpha and gen_sd_alpha should be of the same length.")
         if len(gen_mu_alpha) == 2:
-            parameters_dic['alpha_pos'] = stats.norm.cdf(np.random.normal(gen_mu_alpha[0], gen_sd_alpha[0], n_participants))
-            parameters_dic['alpha_neg'] = stats.norm.cdf(np.random.normal(gen_mu_alpha[1], gen_sd_alpha[1], n_participants))
-            
+            parameters_dic['alpha_pos'] = stats.norm.cdf(
+                np.random.normal(gen_mu_alpha[0], gen_sd_alpha[0], n_participants))
+            parameters_dic['alpha_neg'] = stats.norm.cdf(
+                np.random.normal(gen_mu_alpha[1], gen_sd_alpha[1], n_participants))
+
             parameters = pd.DataFrame(parameters_dic, index=participants)
             data = pd.concat([data.set_index('participant'), parameters], axis=1,
                              ignore_index=False).reset_index().rename(columns={'index': 'participant'})
@@ -305,10 +308,10 @@ def simulate_hier_rlalba(task_design,
         data['cor_drift'] = data['drift_scaling'] * (data['Q_cor'])
         data['inc_drift'] = data['drift_scaling'] * (data['Q_inc'])
 
-    rt, acc = random_lba_2A(data['cor_drift'], 
-                            data['inc_drift'], 
+    rt, acc = random_lba_2A(data['cor_drift'],
+                            data['inc_drift'],
                             data['sp_trial_var'],
-                            data['ndt'], 
+                            data['ndt'],
                             data['k'],
                             data['drift_trial_var'], **kwargs)
 

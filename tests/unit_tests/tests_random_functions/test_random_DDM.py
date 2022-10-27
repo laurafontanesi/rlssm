@@ -1,5 +1,4 @@
 import unittest
-
 import numpy as np
 
 from rlssm.random.random_DDM import simulate_ddm, simulate_hier_ddm

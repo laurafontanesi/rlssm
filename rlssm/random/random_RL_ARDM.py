@@ -52,7 +52,7 @@ def simulate_rlardm_2A(task_design,
     initial_value_learning : float, default 0
         The initial value for Q learning.
 
-    gen_drift_trial_sd : float, default None
+    gen_drift_trial_sd : default None
         Across trial variability in the drift-rate. Should be positive.
 
     Other Parameters
@@ -207,7 +207,7 @@ def simulate_hier_rlardm(task_design,
     initial_value_learning : float, default 0
         The initial value for Q learning.
 
-    gen_drift_trial_sd : float, default None
+    gen_drift_trial_sd : default None
         Across trial variability in the drift-rate.
         Should be positive.
 
