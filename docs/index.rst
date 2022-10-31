@@ -22,6 +22,7 @@ Parameter estimation is done at an individual or hierarchical level using `CmdPy
    installation
    references
    credits
+   contact
 
 .. toctree::
    :maxdepth: 2

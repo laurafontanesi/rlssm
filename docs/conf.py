@@ -1,3 +1,5 @@
+import rlssm.version
+
 # Configuration file for the Sphinx documentation builder.
 #
 # This file only contains a selection of the most common options. For a full
@@ -18,11 +20,12 @@
 # -- Project information -----------------------------------------------------
 
 project = 'rlssm'
-copyright = '2021, Laura Fontanesi'
+copyright = '2022, Laura Fontanesi'
 author = 'Laura Fontanesi'
+# authors = "Laura Fontanesi, Amir Hosein Hadian Rasanan, Andrei Birgovan and Pr. Dr. Jörg Rieskamp"
 
 # The full version, including alpha/beta/rc tags
-release = '0.1.dev'
+release = __version__ = rlssm.version.__version__
 
 # -- General configuration ---------------------------------------------------
 
