@@ -15,18 +15,25 @@ def random_rdm_2A(cor_drift,
     ----------
 
     cor_drift : numpy.ndarray
-        Drift-rate of the Racing Diffusion Model - correct trials.
+        Drift-rate of the Racing Diffusion Model - correct option.
 
     inc_drift : numpy.ndarray
-        Drift-rate of the Racing Diffusion Model - incorrect trials.
+        Drift-rate of the Racing Diffusion Model - incorrect option.
 
     threshold : numpy.ndarray
         Shape is usually (n_samples, n_trials).
-        Threshold of the diffusion decision model.
+        Threshold parameter.
 
     ndt : numpy.ndarray
         Shape is usually (n_samples, n_trials).
-        Non decision time of the diffusion decision model, in seconds.
+        Non decision time parameter, in seconds.
+
+    spvar : numpy.ndarray, default None
+        Shape is usually (n_samples, n_trials).
+        Starting point variability paramter, in seconds.
+
+    starting_point_variability : bool, defauld False
+        Determines whether there starting point variability or not.
 
     noise_constant : float, default 1
         Scaling factor of the Racing Diffusion Model.
@@ -66,9 +73,8 @@ def random_rdm_2A(cor_drift,
 
 
     if starting_point_variability:
-        sp = np.random.uniform(0, spvar)
-        x_cor = sp.copy()
-        x_inc = sp.copy()
+        x_cor = np.random.uniform(0, spvar)
+        x_inc = np.random.uniform(0, spvar)
     else:
         x_cor = np.zeros(shape)
         x_inc = np.zeros(shape)
@@ -107,6 +113,7 @@ def simulate_rdm_2A(n_trials,
                     gen_inc_drift,
                     gen_threshold,
                     gen_ndt,
+                    gen_spvar=None,
                     participant_label=1,
                     **kwargs):
     """Simulates behavior (rt and accuracy) according to the Racing Diffusion Model.
@@ -152,25 +159,6 @@ def simulate_rdm_2A(n_trials,
         Columns contain simulated response times and accuracy ["rt", "accuracy"],
         as well as the generating parameters
         (both for each trial and across-trials when there is across-trial variability).
-
-    Examples
-    --------
-
-        >>> data1 = simulate_rdm_2A(n_trials=1000,
-                                    gen_cor_drift=.6,
-                                    gen_inc_drift=.5,
-                                    gen_threshold=1.4,
-                                    gen_ndt=.23)
-        >>> print(data.head())
-
-                                   cor_drift  inc_drift  threshold   ndt      rt  accuracy
-        participant trial
-        1           1            0.6        0.5        1.4  0.23   1.056       0.0
-                    2            0.6        0.5        1.4  0.23   1.812       1.0
-                    3            0.6        0.5        1.4  0.23   1.204       1.0
-                    4            0.6        0.5        1.4  0.23   5.283       1.0
-                    5            0.6        0.5        1.4  0.23   0.713       1.0
-
     """
     # return a pandas dataframe with the following columns:
     # index: participant + trial, cor_drift, inc_drift, threshold, ndt, rt, accuracy
@@ -181,12 +169,21 @@ def simulate_rdm_2A(n_trials,
 
     data['threshold'] = gen_threshold
     data['ndt'] = gen_ndt
-
-    rt, acc = random_rdm_2A(data['cor_drift'],
-                            data['inc_drift'],
-                            data['threshold'],
-                            data['ndt'],
-                            **kwargs)
+    if gen_spvar is None:
+        rt, acc = random_rdm_2A(data['cor_drift'],
+                                data['inc_drift'],
+                                data['threshold'],
+                                data['ndt'],
+                                **kwargs)
+    else:
+        data['spvar'] = gen_spvar
+        rt, acc = random_rdm_2A(data['cor_drift'],
+                                data['inc_drift'],
+                                data['threshold'],
+                                data['ndt'],
+                                spvar=data['spvar'],
+                                starting_point_variability=True,
+                                **kwargs)
 
     data['rt'] = rt
     data['accuracy'] = acc
@@ -202,6 +199,7 @@ def simulate_hier_rdm(n_trials, n_participants,
                       gen_mu_drift_inc, gen_sd_drift_inc,
                       gen_mu_threshold, gen_sd_threshold,
                       gen_mu_ndt, gen_sd_ndt,
+                      gen_mu_spvar=None, gen_sd_spvar=None,
                       **kwargs):
     """Simulates behavior (rt and accuracy) according to the Racing Difussion Model.
 
@@ -238,6 +236,12 @@ def simulate_hier_rdm(n_trials, n_participants,
     gen_sd_ndt : float
         Group-standard deviation of the non-decision time of the RDM.
 
+    gen_mu_spvar : float
+        Group-mean of the starting point variability parameter.
+
+    gen_sd_spvar : float
+        Group-standard deviation of starting point variability parameter.
+
     Other Parameters
     ----------------
 
@@ -251,27 +255,6 @@ def simulate_hier_rdm(n_trials, n_participants,
         `pandas.DataFrame`, with n_trials*n_participants rows.
         Columns contain simulated response times and accuracy ["rt", "accuracy"],
         as well as the generating parameters (at the participant level).
-
-    Example
-    -------
-    Simulate data for 30 participants with 100 trials each.
-
-        >>> hier_data = simulate_hier_rdm(n_trials=100,
-                                      n_participants=30,
-                                      gen_mu_drift=1,
-                                      gen_sd_drift=.5,
-                                      gen_mu_threshold=1,
-                                      gen_sd_threshold=.1,
-                                      gen_mu_ndt=.23,
-                                      gen_sd_ndt=.1)
-        >>> print(hier_data.head())
-                            cor_drift  inc_drift  threshold  ndt        rt  accuracy
-        participant trial
-        1           1       0.703100   1.557855   1.281720  0.684340  1.160340  0.0
-                    1       0.703100   1.557855   1.281720  0.684340  0.986340  0.0
-                    1       0.703100   1.557855   1.281720  0.684340  1.838340  1.0
-                    1       0.703100   1.557855   1.281720  0.684340  1.083340  0.0
-                    1       0.703100   1.557855   1.281720  0.684340  2.045340  1.0
     """
     data = pd.DataFrame([])
 
@@ -281,17 +264,29 @@ def simulate_hier_rdm(n_trials, n_participants,
     threshold_sbj = np.log(1 + np.exp(np.random.normal(gen_mu_threshold, gen_sd_threshold, n_participants)))
     ndt_sbj = np.log(1 + np.exp(np.random.normal(gen_mu_ndt, gen_sd_ndt, n_participants)))
 
+    
     data['participant'] = np.repeat(np.arange(n_participants) + 1, n_trials)
     data['cor_drift'] = np.repeat(cor_drift_sbj, n_trials)
     data['inc_drift'] = np.repeat(inc_drift_sbj, n_trials)
     data['threshold'] = np.repeat(threshold_sbj, n_trials)
     data['ndt'] = np.repeat(ndt_sbj, n_trials)
-
-    rt, acc = random_rdm_2A(data['cor_drift'],
-                            data['inc_drift'],
-                            data['threshold'],
-                            data['ndt'],
-                            **kwargs)
+    
+    if gen_mu_spvar is None or gen_sd_spvar is None:
+        rt, acc = random_rdm_2A(data['cor_drift'],
+                                data['inc_drift'],
+                                data['threshold'],
+                                data['ndt'],
+                                **kwargs)
+    else:
+        spvar_sbj = np.log(1 + np.exp(np.random.normal(gen_mu_spvar, gen_sd_spvar, n_participants)))
+        data['spvar'] = np.repeat(spvar_sbj, n_trials)
+        rt, acc = random_rdm_2A(data['cor_drift'],
+                                data['inc_drift'],
+                                data['threshold'],
+                                data['ndt'],
+                                spvar=data['spvar'],
+                                starting_point_variability=True,
+                                **kwargs)
 
     data['rt'] = rt
     data['accuracy'] = acc

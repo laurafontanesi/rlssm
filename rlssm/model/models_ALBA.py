@@ -32,7 +32,7 @@ class ALBAModel_2A(Model):
         super().__init__(hierarchical_levels, "ALBA_2A")
 
         # Define the model parameters
-        self.n_parameters_individual = 6  # k, sp_trial_var, ndt, v0, ws, wd
+        self.n_parameters_individual = 7  # k, sp_trial_var, ndt, v0, ws, wd, drift_var
         self.n_parameters_trial = 0
 
         # Define default priors
