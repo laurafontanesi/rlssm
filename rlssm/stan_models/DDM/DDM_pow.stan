@@ -9,11 +9,13 @@ data {
 	vector[2] ndt_priors;							// mean and sd of the prior
 	real<lower=0, upper=1> starting_point;			// starting point diffusion model not to estimate
 }
+
 parameters {
 	real drift;
 	real threshold;
 	real ndt;
 }
+
 transformed parameters {
 	real drift_ll[N];								// trial-by-trial drift rate for likelihood (incorporates accuracy)
 	real drift_t[N];								// trial-by-trial drift rate for predictions
