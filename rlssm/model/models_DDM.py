@@ -421,7 +421,9 @@ class RLDDModel(Model):
                  hierarchical_levels,
                  nonlinear_mapping=False,
                  separate_learning_rates=False,
-                 threshold_modulation=False):
+                 threshold_modulation=False,
+                 mapping_type=None,
+                 modulation_type=None):
         """Initialize a RLDDModel object.
 
         Note
@@ -448,6 +450,14 @@ class RLDDModel(Model):
              By default, the threshold is independent on the presented options.
              If set to True, the threshold can decrease or increase
              depending on the average value of the presented options.
+
+        mapping_type : str, default None
+             Set 'sigmoid' for the nonlinear mapping function that is introduced in Fontanesi et al. (2019).
+             Set 'power' for the nonlinear mapping function that is introduced in Pedersen et al. (2017).
+
+        modulation_type : str, default None
+             Set 'exponential' for the threshold modulation that is introduced in Fontanesi et al. (2019).
+             Set 'power' for the threshold modulation that is introduced in Pedersen et al. (2017).
         """
         super().__init__(hierarchical_levels, "RLDDM")
 
@@ -455,6 +465,7 @@ class RLDDModel(Model):
         self.nonlinear_mapping = nonlinear_mapping
         self.separate_learning_rates = separate_learning_rates
         self.threshold_modulation = threshold_modulation
+        self.mapping_type = mapping_type
 
         self.n_parameters_individual = 4
         self.n_parameters_trial = 0
@@ -469,7 +480,9 @@ class RLDDModel(Model):
                 drift_asymptote_priors={'mu': 1, 'sd': 50},
                 threshold_priors={'mu': 1, 'sd': 5},
                 threshold_modulation_priors={'mu': 0, 'sd': 10},
-                ndt_priors={'mu': 1, 'sd': 1}
+                ndt_priors={'mu': 1, 'sd': 1},
+                drift_power_priors={'mu': 0, 'sd': 0.5},
+                threshold_power_priors={'mu': 0, 'sd': 0.5}
             )
         else:
             self.priors = dict(
@@ -480,14 +493,22 @@ class RLDDModel(Model):
                 drift_asymptote_priors={'mu_mu': 1, 'sd_mu': 30, 'mu_sd': 0, 'sd_sd': 30},
                 threshold_priors={'mu_mu': 1, 'sd_mu': 3, 'mu_sd': 0, 'sd_sd': 3},
                 threshold_modulation_priors={'mu_mu': 0, 'sd_mu': 10, 'mu_sd': 0, 'sd_sd': 10},
-                ndt_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1}
+                ndt_priors={'mu_mu': 1, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
+                drift_power_priors={'mu_mu': 0, 'sd_mu': 0.5, 'mu_sd': 0.5, 'sd_sd': 0.5},
+                threshold_power_priors={'mu_mu': 0, 'sd_mu': 0.5, 'mu_sd': 0.5, 'sd_sd': 0.5}
             )
 
         if self.nonlinear_mapping:
-            self.model_label += '_nonlin'
+            if mapping_type == 'sigmoid':
+                self.model_label += '_nonlin'
+                self.priors.pop('drift_power_priors', None)
+            elif mapping_type == 'power':
+                self.model_label += '_driftpow'
+                self.priors.pop('drift_asymptote_priors', None)
             self.n_parameters_individual += 1
         else:
             self.priors.pop('drift_asymptote_priors', None)
+            self.priors.pop('drift_power_priors', None)
 
         if self.separate_learning_rates:
             self.model_label += '_2lr'
@@ -498,10 +519,16 @@ class RLDDModel(Model):
             self.priors.pop('alpha_neg_priors', None)
 
         if self.threshold_modulation:
-            self.model_label += '_thrmod'
+            if modulation_type == 'exponential':
+                self.model_label += '_thrmod'
+                self.priors.pop('threshold_power_priors', None)
+            elif modulation_type == 'power':
+                self.model_label += '_thrpow'
+                self.priors.pop('threshold_modulation_priors', None)
             self.n_parameters_individual += 1
         else:
             self.priors.pop('threshold_modulation_priors', None)
+            self.priors.pop('threshold_power_priors', None)
 
         # Set the stan model path
         self._set_model_path()
