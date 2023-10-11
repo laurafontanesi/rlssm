@@ -24,11 +24,11 @@ functions {
                if(t > 0){
                   if(RT[i,2] == 1){
                     pdf = race_pdf(t, b[i], drift_cor[i]);
-                    cdf = 1 - race_cdf(t, b[i], drift_inc[i]);
+                    cdf = 1 - race_cdf(t| b[i], drift_inc[i]);
                   }
                   else{
                     pdf = race_pdf(t, b[i], drift_inc[i]);
-                    cdf = 1 - race_cdf(t, b[i], drift_cor[i]);
+                    cdf = 1 - race_cdf(t| b[i], drift_cor[i]);
                   }
                   prob[i] = pdf*cdf;
 
@@ -47,30 +47,30 @@ functions {
 
 data{
   int<lower=1> N;               // number of data items
-	int<lower=1> L;								// number of participants
+  int<lower=1> L;								// number of participants
   int<lower=1> K;               // number of total options
-  int<lower=1, upper=L> participant[N];			// level (participant)
+  array[N] int<lower=1, upper=L> participant;			// level (participant)
 
   real initial_value;
 
-  int<lower=1> block_label[N];					// block label
-  int<lower=1> trial_block[N];					// trial within block
+  array[N] int<lower=1> block_label;					// block label
+  array[N] int<lower=1> trial_block;					// trial within block
 
   vector[N] f_cor;								// feedback correct option
-	vector[N] f_inc;								// feedback incorrect option
+  vector[N] f_inc;								// feedback incorrect option
 
 
-  int<lower=1, upper=K> cor_option[N];			// correct option
-	int<lower=1, upper=K> inc_option[N];			// incorrect option
-  int<lower=1, upper=2> accuracy[N];				// accuracy (1->cor, 2->inc)
+  array[N] int<lower=1, upper=K> cor_option;			// correct option
+  array[N] int<lower=1, upper=K> inc_option;			// incorrect option
+  array[N] int<lower=1, upper=2> accuracy;				// accuracy (1->cor, 2->inc)
 
-  real<lower=0> rt[N];							// reaction time
-  int<lower=0, upper=1> feedback_type[N]; // feedback_type = 0 -> full feedback, feedback_type = 1 -> partial feedback
+  array[N] real<lower=0> rt;							// reaction time
+  array[N] int<lower=0, upper=1> feedback_type; // feedback_type = 0 -> full feedback, feedback_type = 1 -> partial feedback
 
   vector[4] alpha_priors;             // mean and sd of the prior for alpha
-	vector[4] drift_scaling_priors;			// mean and sd of the prior for scaling
-	vector[4] threshold_priors;					// mean and sd of the prior for threshold
-	vector[4] ndt_priors;							  // mean and sd of the prior for non-decision time
+  vector[4] drift_scaling_priors;			// mean and sd of the prior for scaling
+  vector[4] threshold_priors;					// mean and sd of the prior for threshold
+  vector[4] ndt_priors;							  // mean and sd of the prior for non-decision time
 }
 
 transformed data {
@@ -96,17 +96,17 @@ parameters {
 	real<lower=0> sd_threshold;
 	real<lower=0> sd_ndt;
 
-	real z_alpha[L];
-	real z_drift_scaling[L];
-	real z_threshold[L];
-	real z_ndt[L];
+	array[L] real z_alpha;
+	array[L] real z_drift_scaling;
+	array[L] real z_threshold;
+	array[L] real z_ndt;
 }
 
 transformed parameters {
   vector<lower=0> [N] drift_cor_t;				// trial-by-trial drift rate for predictions
   vector<lower=0> [N] drift_inc_t;				// trial-by-trial drift rate for predictions
-	vector<lower=0> [N] threshold_t;				// trial-by-trial threshold
-	vector<lower=0> [N] ndt_t;							// trial-by-trial ndt
+  vector<lower=0> [N] threshold_t;				// trial-by-trial threshold
+  vector<lower=0> [N] ndt_t;							// trial-by-trial ndt
 
 	vector[K] Q;									// Q state values
 
@@ -115,10 +115,10 @@ transformed parameters {
 	real PE_cor;									// predicion error correct option
 	real PE_inc;									// predicion error incorrect option
 
-	real<lower=0, upper=1> alpha_sbj[L];
-	real<lower=0> drift_scaling_sbj[L];
-	real<lower=0> threshold_sbj[L];
-	real<lower=0> ndt_sbj[L];
+	array[L] real<lower=0, upper=1> alpha_sbj;
+	array[L] real<lower=0> drift_scaling_sbj;
+	array[L] real<lower=0> threshold_sbj;
+	array[L] real<lower=0> ndt_sbj;
 
 	real transf_mu_alpha;
 	real transf_mu_drift_scaling;
@@ -147,14 +147,11 @@ transformed parameters {
 			}
 		}
 
-
-		// Q_mean_pres[n] = (Q[cor_option[n]] + Q[inc_option[n]])/2;
-
 		PE_cor = f_cor[n] - Q[cor_option[n]];
 		PE_inc = f_inc[n] - Q[inc_option[n]];
 
 		drift_cor_t[n] = Q[cor_option[n]] * drift_scaling_sbj[participant[n]];
-    drift_inc_t[n] = Q[inc_option[n]] * drift_scaling_sbj[participant[n]];
+    	drift_inc_t[n] = Q[inc_option[n]] * drift_scaling_sbj[participant[n]];
 
 		threshold_t[n] = threshold_sbj[participant[n]];
 		ndt_t[n] = ndt_sbj[participant[n]];

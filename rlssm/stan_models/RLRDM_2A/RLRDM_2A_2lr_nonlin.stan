@@ -24,11 +24,11 @@ functions {
                if(t > 0){
                   if(RT[i,2] == 1){
                     pdf = race_pdf(t, b[i], drift_cor[i]);
-                    cdf = 1 - race_cdf(t, b[i], drift_inc[i]);
+                    cdf = 1 - race_cdf(t| b[i], drift_inc[i]);
                   }
                   else{
                     pdf = race_pdf(t, b[i], drift_inc[i]);
-                    cdf = 1 - race_cdf(t, b[i], drift_cor[i]);
+                    cdf = 1 - race_cdf(t| b[i], drift_cor[i]);
                   }
                   prob[i] = pdf*cdf;
 
@@ -49,26 +49,26 @@ data{
   int<lower=1> N;               // number of data items
   int<lower=1> K;               // number of options
   real initial_value;
-  int<lower=1> block_label[N];          // block label
-  int<lower=1> trial_block[N];          // trial within block
+  array[N] int<lower=1> block_label;          // block label
+  array[N] int<lower=1> trial_block;          // trial within block
 
   vector[N] f_cor;                // feedback correct option
   vector[N] f_inc;                // feedback incorrect option
 
 
-  int<lower=1, upper=K> cor_option[N];      // correct option
-  int<lower=1, upper=K> inc_option[N];      // incorrect option
-  int<lower=1, upper=2> accuracy[N];        // accuracy (1->cor, 2->inc)
-  int<lower=0, upper=1> feedback_type[N]; // feedback_type = 0 -> full feedback, feedback_type = 1 -> partial feedback
+  array[N] int<lower=1, upper=K> cor_option;      // correct option
+  array[N] int<lower=1, upper=K> inc_option;      // incorrect option
+  array[N] int<lower=1, upper=2> accuracy;        // accuracy (1->cor, 2->inc)
+  array[N] int<lower=0, upper=1> feedback_type;   // feedback_type = 0 -> full feedback, feedback_type = 1 -> partial feedback
 
-  real<lower=0> rt[N];              // reaction time
+  array[N] real<lower=0> rt;                      // reaction time
 
   vector[2] alpha_pos_priors;           // mean and sd of the alpha_pos prior
   vector[2] alpha_neg_priors;           // mean and sd of the alpha_neg prior
-  vector[2] ndt_priors;               // mean and sd of the prior for non-decision time
-  vector[2] threshold_priors;         // mean and sd of the prior for threshold
+  vector[2] ndt_priors;                 // mean and sd of the prior for non-decision time
+  vector[2] threshold_priors;           // mean and sd of the prior for threshold
   vector[2] slop_priors;
-  vector[2] drift_asym_priors;      // mean and sd of the prior for asymtot modulation
+  vector[2] drift_asym_priors;        // mean and sd of the prior for asymtot modulation
   vector[2] drift_scaling_priors;     // mean and sd of the prior for scaling
   
 }
@@ -88,7 +88,7 @@ transformed data {
 parameters {
   real alpha_pos;
   real alpha_neg;
-  real ndt;       // non-decision time
+  real ndt;             // non-decision time
   real threshold;       // threshold
   real slop;
   real drift_asym;
@@ -124,8 +124,6 @@ transformed parameters {
   transf_slop = log(1 + exp(slop));
   transf_drift_asym = log(1 + exp(drift_asym));
   transf_drift_scaling = log(1 + exp(drift_scaling));
-
-
 
   for (n in 1:N){
     if (trial_block[n] == 1){

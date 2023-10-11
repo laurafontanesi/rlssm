@@ -24,11 +24,11 @@ functions {
                if(t > 0){
                   if(RT[i,2] == 1){
                     pdf = race_pdf(t, b[i], drift_cor[i]);
-                    cdf = 1 - race_cdf(t, b[i], drift_inc[i]);
+                    cdf = 1 - race_cdf(t| b[i], drift_inc[i]);
                   }
                   else{
                     pdf = race_pdf(t, b[i], drift_inc[i]);
-                    cdf = 1 - race_cdf(t, b[i], drift_cor[i]);
+                    cdf = 1 - race_cdf(t| b[i], drift_cor[i]);
                   }
                   prob[i] = pdf*cdf;
 
@@ -49,23 +49,23 @@ data{
   int<lower=1> N;               // number of data items
 	int<lower=1> L;								// number of participants
   int<lower=1> K;               // number of total options
-  int<lower=1, upper=L> participant[N];			// level (participant)
+  array[N] int<lower=1, upper=L> participant;			// level (participant)
 
   real initial_value;
 
-  int<lower=1> block_label[N];					// block label
-  int<lower=1> trial_block[N];					// trial within block
+  array[N] int<lower=1> block_label;					// block label
+  array[N] int<lower=1> trial_block;					// trial within block
 
   vector[N] f_cor;								// feedback correct option
 	vector[N] f_inc;								// feedback incorrect option
 
 
-  int<lower=1, upper=K> cor_option[N];			// correct option
-	int<lower=1, upper=K> inc_option[N];			// incorrect option
-  int<lower=1, upper=2> accuracy[N];				// accuracy (1->cor, 2->inc)
+  array[N] int<lower=1, upper=K> cor_option;			// correct option
+	array[N] int<lower=1, upper=K> inc_option;			// incorrect option
+  array[N] int<lower=1, upper=2> accuracy;				// accuracy (1->cor, 2->inc)
 
-  real<lower=0> rt[N];							// reaction time
-  int<lower=0, upper=1> feedback_type[N]; // feedback_type = 0 -> full feedback, feedback_type = 1 -> partial feedback
+  array[N] real<lower=0> rt;							// reaction time
+  array[N] int<lower=0, upper=1> feedback_type; // feedback_type = 0 -> full feedback, feedback_type = 1 -> partial feedback
 
   vector[4] alpha_pos_priors;						// mean and sd of the mu_alpha_pos prior and sd_alpha_pos prior
 	vector[4] alpha_neg_priors;						// mean and sd of the mu_alpha_neg prior and sd_alpha_neg prior
@@ -99,11 +99,11 @@ parameters {
 	real<lower=0> sd_threshold;
 	real<lower=0> sd_ndt;
 
-  real z_alpha_pos[L];
-	real z_alpha_neg[L];
-	real z_drift_scaling[L];
-	real z_threshold[L];
-	real z_ndt[L];
+  array[L] real z_alpha_pos;
+	array[L] real z_alpha_neg;
+	array[L] real z_drift_scaling;
+	array[L] real z_threshold;
+	array[L] real z_ndt;
 }
 
 transformed parameters {
@@ -118,11 +118,11 @@ transformed parameters {
 	real PE_cor;									// predicion error correct option
 	real PE_inc;									// predicion error incorrect option
 
-  real<lower=0, upper=1> alpha_pos_sbj[L];
-	real<lower=0, upper=1> alpha_neg_sbj[L];
-	real<lower=0> drift_scaling_sbj[L];
-	real<lower=0> threshold_sbj[L];
-	real<lower=0> ndt_sbj[L];
+  array[L] real<lower=0, upper=1> alpha_pos_sbj;
+	array[L] real<lower=0, upper=1> alpha_neg_sbj;
+	array[L] real<lower=0> drift_scaling_sbj;
+	array[L] real<lower=0> threshold_sbj;
+	array[L] real<lower=0> ndt_sbj;
 
   real transf_mu_alpha_pos;
 	real transf_mu_alpha_neg;
