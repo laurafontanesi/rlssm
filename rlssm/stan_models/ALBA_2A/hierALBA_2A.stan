@@ -64,11 +64,11 @@ functions{
 
                     if(RT[i,2] == 1){
                       pdf = lba_pdf(t, b, sp_trial_var[i], drift_cor[i], s[i]);
-                      cdf = 1-lba_cdf(t, b, sp_trial_var[i], drift_inc[i], s[i]);
+                      cdf = 1-lba_cdf(t| b, sp_trial_var[i], drift_inc[i], s[i]);
                     }
                     else{
                       pdf = lba_pdf(t, b, sp_trial_var[i], drift_inc[i], s[i]);
-                      cdf = 1-lba_cdf(t, b, sp_trial_var[i], drift_cor[i], s[i]);
+                      cdf = 1-lba_cdf(t| b, sp_trial_var[i], drift_cor[i], s[i]);
                     }
                     prob_neg = Phi(-drift_cor[i]/s[i]) * Phi(-drift_inc[i]/s[i]);
                     prob[i] = pdf*cdf;
@@ -90,10 +90,10 @@ data {
   int<lower=1> N;									// number of data items
   int<lower=1> L;									// number of levels
 
-  int<lower=1, upper=L> participant[N];			// level (participant)
+  array[N] int<lower=1, upper=L> participant;	  // level (participant)
 
-  int<lower=1,upper=2> accuracy[N];				// 1-> correct, 2->incorrect
-  real<lower=0> rt[N];							// rt
+  array[N] int<lower=1,upper=2> accuracy;				// 1-> correct, 2->incorrect
+  array[N] real<lower=0> rt;							      // rt
 
   vector[N] S_cor;								// subjective perception of correct option
   vector[N] S_inc;								// subjective perception of incorrect option
@@ -133,13 +133,13 @@ parameters {
   real<lower=0> sd_wd;
   real<lower=0> sd_drift_variability;
 
-  real z_k[L];
-  real z_sp_trial_var[L];
-  real z_ndt[L];
-  real z_v0[L];
-  real z_ws[L];
-  real z_wd[L];
-  real z_drift_variability[L];
+  array[L] real z_k;
+  array[L] real z_sp_trial_var;
+  array[L] real z_ndt;
+  array[L] real z_v0;
+  array[L] real z_ws;
+  array[L] real z_wd;
+  array[L] real z_drift_variability;
 }
 
 transformed parameters {
@@ -150,13 +150,13 @@ transformed parameters {
 	vector<lower=0> [N] drift_inc_t;				// trial-by-trial drift rate for predictions
   vector<lower=0> [N] drift_variability_t;
   
-  real<lower=0> k_sbj[L];
-	real<lower=0> sp_trial_var_sbj[L];
-	real<lower=0> ndt_sbj[L];
-  real<lower=0> v0_sbj[L];
-	real<lower=0> ws_sbj[L];
-  real<lower=0> wd_sbj[L];
-  real<lower=0> drift_variability_sbj[L];
+  array[L] real<lower=0> k_sbj;
+	array[L] real<lower=0> sp_trial_var_sbj;
+	array[L] real<lower=0> ndt_sbj;
+  array[L] real<lower=0> v0_sbj;
+	array[L] real<lower=0> ws_sbj;
+  array[L] real<lower=0> wd_sbj;
+  array[L] real<lower=0> drift_variability_sbj;
 
   real<lower=0> transf_mu_k;
   real<lower=0> transf_mu_sp_trial_var;
