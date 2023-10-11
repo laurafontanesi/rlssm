@@ -49,11 +49,11 @@ functions {
                if(t > 0){
                   if(RT[i,2] == 1){
                     pdf = race_pdf(t, b[i], drift_cor[i], sp_trial_var[i]);
-                    cdf = 1 - race_cdf(t, b[i], drift_inc[i], sp_trial_var[i]);
+                    cdf = 1 - race_cdf(t| b[i], drift_inc[i], sp_trial_var[i]);
                   }
                   else{
                     pdf = race_pdf(t, b[i], drift_inc[i], sp_trial_var[i]);
-                    cdf = 1 - race_cdf(t, b[i], drift_cor[i], sp_trial_var[i]);
+                    cdf = 1 - race_cdf(t| b[i], drift_cor[i], sp_trial_var[i]);
                   }
                   prob[i] = pdf*cdf;
 
@@ -74,10 +74,10 @@ functions {
 data {
 	int<lower=1> N;									// number of data items
 	int<lower=1> L;									// number of levels
-	int<lower=1, upper=L> participant[N];			// level (participant)
+	array[N] int<lower=1, upper=L> participant;		// level (participant)
 
-	int<lower=1,upper=2> accuracy[N];				// 1-> correct, 2->incorrect
-	real<lower=0> rt[N];							// rt
+	array[N] int<lower=1,upper=2> accuracy;			// 1-> correct, 2->incorrect
+	array[N] real<lower=0> rt;						// rt
 
 	vector[4] drift_priors;							// mean and sd of the group mean and of the group sd hyper-priors
 	vector[4] threshold_priors;						// mean and sd of the group mean and of the group sd hyper-priors
@@ -107,25 +107,25 @@ parameters {
 	real<lower=0> sd_drift_inc;
     real<lower=0> sd_sp_trial_var;
 
-	real z_ndt[L];
-	real z_threshold[L];
-	real z_drift_cor[L];
-	real z_drift_inc[L];
-    real z_sp_trial_var[L];
+	array[L] real z_ndt;
+	array[L] real z_threshold;
+	array[L] real z_drift_cor;
+	array[L] real z_drift_inc;
+    array[L] real z_sp_trial_var;
 }
 
 transformed parameters {
-    vector<lower=0>[N] ndt_t;						// trial-by-trial ndt
+    vector<lower=0>[N] ndt_t;					// trial-by-trial ndt
 	vector<lower=0>[N] drift_cor_t;				// trial-by-trial drift rate for predictions
 	vector<lower=0>[N] drift_inc_t;				// trial-by-trial drift rate for predictions
 	vector<lower=0>[N] threshold_t;				// trial-by-trial threshold
-	vector<lower=0> [N] sp_trial_var_t;
+	vector<lower=0>[N] sp_trial_var_t;
 
-    real<lower=0> ndt_sbj[L];
-	real<lower=0> drift_cor_sbj[L];
-	real<lower=0> drift_inc_sbj[L];
-	real<lower=0> threshold_sbj[L];
-    real<lower=0> sp_trial_var_sbj[L];
+    array[L] real<lower=0> ndt_sbj;
+	array[L] real<lower=0> drift_cor_sbj;
+	array[L] real<lower=0> drift_inc_sbj;
+	array[L] real<lower=0> threshold_sbj;
+    array[L] real<lower=0> sp_trial_var_sbj;
 
     real<lower=0> transf_mu_ndt;
 	real<lower=0> transf_mu_drift_cor;

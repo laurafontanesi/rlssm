@@ -24,11 +24,11 @@ functions {
                if(t > 0){
                   if(RT[i,2] == 1){
                     pdf = race_pdf(t, b[i], drift_cor[i]);
-                    cdf = 1 - race_cdf(t, b[i], drift_inc[i]);
+                    cdf = 1 - race_cdf(t| b[i], drift_inc[i]);
                   }
                   else{
                     pdf = race_pdf(t, b[i], drift_inc[i]);
-                    cdf = 1 - race_cdf(t, b[i], drift_cor[i]);
+                    cdf = 1 - race_cdf(t| b[i], drift_cor[i]);
                   }
                   prob[i] = pdf*cdf;
 
@@ -48,8 +48,8 @@ functions {
 data {
 	int<lower=1> N;									// number of data items
 
-	int<lower=1,upper=2> accuracy[N];				// 1-> correct, 2->incorrect
-	real<lower=0> rt[N];							// rt
+	array[N] int<lower=1,upper=2> accuracy;			// 1-> correct, 2->incorrect
+	array[N] real<lower=0> rt;						// rt
 
 	vector[2] drift_priors;							// mean and sd of the prior
 	vector[2] threshold_priors;						// mean and sd of the prior
