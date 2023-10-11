@@ -1,14 +1,14 @@
 data {
 	int<lower=1> N;									// number of data items
 	int<lower=1> K;									// number of options
-	int<lower=1> trial_block[N];					// trial within block
+	array[N] int<lower=1> trial_block;				// trial within block
 	vector[N] f_cor;								// feedback correct option
 	vector[N] f_inc;								// feedback incorrect option
-	int<lower=1, upper=K> cor_option[N];			// correct option
-	int<lower=1, upper=K> inc_option[N];			// incorrect option
-	int<lower=1> block_label[N];					// block label
-	int<lower=-1,upper=1> accuracy[N];				// accuracy (0, 1)
-	int<lower=0, upper=1> feedback_type[N]; // feedback_type = 0 -> full feedback, feedback_type = 1 -> partial feedback
+	array[N] int<lower=1, upper=K> cor_option;		// correct option
+	array[N] int<lower=1, upper=K> inc_option;		// incorrect option
+	array[N] int<lower=1> block_label;				// block label
+	array[N] int<lower=-1,upper=1> accuracy;		// accuracy (0, 1)
+	array[N] int<lower=0, upper=1> feedback_type; 	// feedback_type = 0 -> full feedback, feedback_type = 1 -> partial feedback
 	real initial_value;								// intial value for learning in the first block
 	vector[2] alpha_priors;							// mean and sd of the alpha prior
 	vector[2] sensitivity_priors;					// mean and sd of the sensitivity prior
@@ -22,7 +22,7 @@ parameters {
 	real sensitivity;
 }
 transformed parameters {
-	real log_p_t[N];								// trial-by-trial probability
+	array[N] real log_p_t;								// trial-by-trial probability
 	vector[K] Q;									// Q state values
 
 	real PE_cor;
