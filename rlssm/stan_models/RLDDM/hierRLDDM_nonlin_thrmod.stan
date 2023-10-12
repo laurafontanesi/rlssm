@@ -2,17 +2,17 @@ data {
 	int<lower=1> N;									// number of data items
 	int<lower=1> K;									// number of options
 	int<lower=1> L;									// number of levels
-	int<lower=1, upper=L> participant[N];			// level (participant)
-	int<lower=1> trial_block[N];					// trial within block
+	array[N] int<lower=1, upper=L> participant;			// level (participant)
+	array[N] int<lower=1> trial_block;					// trial within block
 	vector[N] f_cor;								// feedback correct option
 	vector[N] f_inc;								// feedback incorrect option
-	int<lower=1, upper=K> cor_option[N];			// correct option
-	int<lower=1, upper=K> inc_option[N];			// incorrect option
-	int<lower=1> block_label[N];					// block label
+	array[N] int<lower=1, upper=K> cor_option;			// correct option
+	array[N] int<lower=1, upper=K> inc_option;			// incorrect option
+	array[N] int<lower=1> block_label;					// block label
 
-	int<lower=-1,upper=1> accuracy[N];				// accuracy (-1, 1)
-	real<lower=0> rt[N];							// rt
-	int<lower=0, upper=1> feedback_type[N]; // feedback_type = 0 -> full feedback, feedback_type = 1 -> partial feedback
+	array[N] int<lower=-1,upper=1> accuracy;				// accuracy (-1, 1)
+	array[N] real<lower=0> rt;							// rt
+	array[N] int<lower=0, upper=1> feedback_type; // feedback_type = 0 -> full feedback, feedback_type = 1 -> partial feedback
 
 	real initial_value;								// intial value for learning in the first block
 
@@ -43,33 +43,33 @@ parameters {
 	real<lower=0> sd_threshold_modulation;
 	real<lower=0> sd_ndt;
 
-	real z_alpha[L];
-	real z_drift_scaling[L];
-	real z_drift_asymptote[L];
-	real z_threshold[L];
-	real z_threshold_modulation[L];
-	real z_ndt[L];
+	array[L] real z_alpha;
+	array[L] real z_drift_scaling;
+	array[L] real z_drift_asymptote;
+	array[L] real z_threshold;
+	array[L] real z_threshold_modulation;
+	array[L] real z_ndt;
 }
 transformed parameters {
-	real drift_ll[N];								// trial-by-trial drift rate for likelihood (incorporates accuracy)
-	real drift_t[N];								// trial-by-trial drift rate for predictions
-	real<lower=0> threshold_t[N];					// trial-by-trial threshold   
-	real<lower=0> ndt_t[N];							// trial-by-trial ndt
+	array[N] real drift_ll;								// trial-by-trial drift rate for likelihood (incorporates accuracy)
+	array[N] real drift_t;								// trial-by-trial drift rate for predictions
+	array[N] real<lower=0> threshold_t;					// trial-by-trial threshold   
+	array[N] real<lower=0> ndt_t;							// trial-by-trial ndt
 
 	vector[K] Q;									// Q state values
 
 	real Q_mean;									// mean across all options
-	real Q_mean_pres[N];							// mean Q presented options
-	real delta_Q[N];								// Qcor - Qinc
+	array[N] real Q_mean_pres;							// mean Q presented options
+	array[N] real delta_Q;								// Qcor - Qinc
 	real PE_cor;									// predicion error correct option
 	real PE_inc;									// predicion error incorrect option
 
-	real<lower=0, upper=1> alpha_sbj[L];
-	real<lower=0> drift_scaling_sbj[L];
-	real<lower=0> drift_asymptote_sbj[L];
-	real threshold_sbj[L];
-	real threshold_modulation_sbj[L];
-	real<lower=0> ndt_sbj[L];
+	array[L] real<lower=0, upper=1> alpha_sbj;
+	array[L] real<lower=0> drift_scaling_sbj;
+	array[L] real<lower=0> drift_asymptote_sbj;
+	array[L] real threshold_sbj;
+	array[L] real threshold_modulation_sbj;
+	array[L] real<lower=0> ndt_sbj;
 
 	real transf_mu_alpha;
 	real transf_mu_drift_scaling;
