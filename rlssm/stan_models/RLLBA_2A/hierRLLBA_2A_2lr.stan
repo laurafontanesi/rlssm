@@ -63,11 +63,11 @@ functions{
 
                     if(RT[i,2] == 1){
                       pdf = lba_pdf(t, b, sp_trial_var[i], drift_cor[i], s[i]);
-                      cdf = 1-lba_cdf(t, b, sp_trial_var[i], drift_inc[i], s[i]);
+                      cdf = 1-lba_cdf(t| b, sp_trial_var[i], drift_inc[i], s[i]);
                     }
                     else{
                       pdf = lba_pdf(t, b, sp_trial_var[i], drift_inc[i], s[i]);
-                      cdf = 1-lba_cdf(t, b, sp_trial_var[i], drift_cor[i], s[i]);
+                      cdf = 1-lba_cdf(t| b, sp_trial_var[i], drift_cor[i], s[i]);
                     }
                     prob_neg = Phi(-drift_cor[i]/s[i]) * Phi(-drift_inc[i]/s[i]);
                     prob[i] = pdf*cdf;
@@ -90,29 +90,29 @@ data {
   int<lower=1> L;								// number of participants
   int<lower=1> K;               // number of options
 
-  int<lower=1, upper=L> participant[N];			// level (participant)
+  array[N] int<lower=1, upper=L> participant;			// level (participant)
 
   real initial_value;
 
-  int<lower=1> block_label[N];					// block label
-  int<lower=1> trial_block[N];					// trial within block
+  array[N] int<lower=1> block_label;					// block label
+  array[N] int<lower=1> trial_block;					// trial within block
 
   vector[N] f_cor;								// feedback correct option
 	vector[N] f_inc;								// feedback incorrect option
 
-  int<lower=1, upper=K> cor_option[N];			// correct option
-	int<lower=1, upper=K> inc_option[N];			// incorrect option
+  array[N] int<lower=1, upper=K> cor_option;			// correct option
+	array[N] int<lower=1, upper=K> inc_option;			// incorrect option
 
-	int<lower=1,upper=2> accuracy[N];				// 1-> correct, 2->incorrect
-	real<lower=0> rt[N];							// rt
-     int<lower=0, upper=1> feedback_type[N]; // feedback_type = 0 -> full feedback, feedback_type = 1 -> partial feedback
+	int<lower=1,upper=2> accuracy;				        // 1-> correct, 2->incorrect
+	array[N] real<lower=0> rt;							      // rt
+  array[N] int<lower=0, upper=1> feedback_type; // feedback_type = 0 -> full feedback, feedback_type = 1 -> partial feedback
 
   vector[4] k_priors;
 	vector[4] sp_trial_var_priors;
   vector[4] ndt_priors;
   vector[4] alpha_pos_priors;						// mean and sd of the mu_alpha_pos prior and sd_alpha_pos prior
 	vector[4] alpha_neg_priors;						// mean and sd of the mu_alpha_neg prior and sd_alpha_neg prior
-  vector[4] drift_scaling_priors;			// mean and sd of the prior for scaling
+  vector[4] drift_scaling_priors;			  // mean and sd of the prior for scaling
   vector[4] drift_variability_priors;
 }
 
@@ -145,13 +145,13 @@ parameters {
   real<lower=0> sd_drift_scaling;    // scaling
   real<lower=0> sd_drift_variability;
 
-  real z_k[L];
-  real z_sp_trial_var[L];
-  real z_ndt[L];
-  real z_alpha_pos[L];
-  real z_alpha_neg[L];
-  real z_drift_scaling[L];    // scaling
-  real z_drift_variability[L];
+  array[L] real z_k;
+  array[L] real z_sp_trial_var;
+  array[L] real z_ndt;
+  array[L] real z_alpha_pos;
+  array[L] real z_alpha_neg;
+  array[L] real z_drift_scaling;    // scaling
+  array[L] real z_drift_variability;
 }
 
 transformed parameters {
@@ -168,13 +168,13 @@ transformed parameters {
 
   real Q_mean;
 
-  real<lower=0> k_sbj[L];
-	real<lower=0> sp_trial_var_sbj[L];
-  real<lower=0> ndt_sbj[L];
-  real<lower=0, upper=1> alpha_pos_sbj[L];
-	real<lower=0, upper=1> alpha_neg_sbj[L];
-	real<lower=0> drift_scaling_sbj[L];
-  real<lower=0> drift_variability_sbj[L];
+  array[L] real<lower=0> k_sbj;
+	array[L] real<lower=0> sp_trial_var_sbj;
+  array[L] real<lower=0> ndt_sbj;
+  array[L] real<lower=0, upper=1> alpha_pos_sbj;
+	array[L] real<lower=0, upper=1> alpha_neg_sbj;
+	array[L] real<lower=0> drift_scaling_sbj;
+  array[L] real<lower=0> drift_variability_sbj;
 
   real<lower=0> transf_mu_k;
   real<lower=0> transf_mu_sp_trial_var;
