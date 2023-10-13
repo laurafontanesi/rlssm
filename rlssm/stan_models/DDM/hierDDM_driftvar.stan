@@ -54,7 +54,7 @@ transformed parameters {
 	for (l in 1:L) {
 		drift_trial_mu_sbj[l] = mu_drift_trial_mu + z_drift_trial_mu[l]*sd_drift_trial_mu;
 		drift_trial_sd_sbj[l] = log(1 + exp(mu_drift_trial_sd + z_drift_trial_sd[l]*sd_drift_trial_sd));
-		threshold_sbj[l] = log(1 + exp(mu_threhsold + z_threshold[l]*sd_threshold));
+		threshold_sbj[l] = log(1 + exp(mu_threshold + z_threshold[l]*sd_threshold));
 		ndt_sbj[l] = log(1 + exp(mu_ndt + z_ndt[l]*sd_ndt));
 	}
 

@@ -15,7 +15,7 @@ parameters {
 	real threshold;
 	real ndt;
 	real<lower=0> drift_trial_sd;
-	array[N] real z_drift_trial[N];
+	array[N] real z_drift_trial;
 }
 transformed parameters {
 	array[N] real drift_ll;								// trial-by-trial drift rate for likelihood (incorporates accuracy)

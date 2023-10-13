@@ -13,9 +13,9 @@ functions{
           b_A_tv_ts = (b - A - t*v)/(t*s);
           b_tv_ts = (b - t*v)/(t*s);
           term_1 = v*Phi(b_A_tv_ts);
-          term_2 = s*exp(normal_log(b_A_tv_ts,0,1));
+          term_2 = s*exp(normal_lpdf(b_A_tv_ts| 0, 1));
           term_3 = v*Phi(b_tv_ts);
-          term_4 = s*exp(normal_log(b_tv_ts,0,1));
+          term_4 = s*exp(normal_lpdf(b_tv_ts| 0, 1));
           pdf = (1/A)*(-term_1 + term_2 + term_3 - term_4);
 
           return pdf;
@@ -38,8 +38,8 @@ functions{
           ts = t*s;
           term_1 = b_A_tv/A * Phi(b_A_tv/ts);
           term_2 = b_tv/A   * Phi(b_tv/ts);
-          term_3 = ts/A * exp(normal_log(b_A_tv/ts,0,1));
-          term_4 = ts/A * exp(normal_log(b_tv/ts,0,1));
+          term_3 = ts/A * exp(normal_lpdf(b_A_tv/ts| 0, 1));
+          term_4 = ts/A * exp(normal_lpdf(b_tv/ts| 0, 1));
           cdf = 1 + term_1 - term_2 + term_3 - term_4;
 
           return cdf;
@@ -154,7 +154,7 @@ transformed parameters {
 
   real Q_mean;
   real Q_min;
-  real Q_mean_pres[N];              // mean Q presented options
+  array[N] real Q_mean_pres;              // mean Q presented options
 
   real<lower=0, upper=1> transf_alpha_pos;
   real<lower=0, upper=1> transf_alpha_neg;

@@ -7,10 +7,10 @@ data {
 	int<lower=1> C_sp;								// number of conditions for starting point
 	array[N] int<lower=1, upper=L> participant;		// level (participant)
 
-	row_vector[C] x_drift[N];						// matrix[N, C] predictor matrix drift rate
-	row_vector[C] x_threshold[N];					// matrix[N, C] predictor matrix threshold
-	row_vector[C] x_ndt[N];							// matrix[N, C] predictor matrix ndt
-	row_vector[C] x_sp[N];							// matrix[N, C] predictor matrix starting point
+	row_vector[C_drift] x_drift[N];						// matrix[N, C] predictor matrix drift rate
+	row_vector[C_threshold] x_threshold[N];				// matrix[N, C] predictor matrix threshold
+	row_vector[C_ndt] x_ndt[N];							// matrix[N, C] predictor matrix ndt
+	row_vector[C_sp] x_sp[N];							// matrix[N, C] predictor matrix starting point
 
 	array[N] int<lower=-1,upper=1> accuracy;		// accuracy (-1, 1)
 	array[N] real<lower=0> rt;						// rt

@@ -19,8 +19,8 @@ parameters {
 	real rel_sp_trial_mu;
 	real<lower=0> drift_trial_sd;
 	real<lower=0> rel_sp_trial_sd;
-	array[N] real z_drift_trial[N];
-	array[N] real z_rel_sp_trial[N];
+	array[N] real z_drift_trial;
+	array[N] real z_rel_sp_trial;
 }
 transformed parameters {
 	array[N] real drift_ll;								// trial-by-trial drift rate for likelihood (incorporates accuracy)

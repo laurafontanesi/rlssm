@@ -119,7 +119,7 @@ transformed parameters {
 	vector[K] Q;									// Q state values
 
 	real Q_mean;									// mean across all options
-	real Q_mean_pres[N];							// mean Q presented options
+	array[N] real Q_mean_pres;							// mean Q presented options
 	real PE_cor;									// predicion error correct option
 	real PE_inc;									// predicion error incorrect option
 

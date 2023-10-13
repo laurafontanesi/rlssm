@@ -107,7 +107,7 @@ transformed parameters {
 
   real Q_mean;
   real Q_min;
-  real Q_mean_pres[N];              // mean Q presented options
+  array[N] real Q_mean_pres;              // mean Q presented options
 
   real transf_alpha_pos;
   real transf_alpha_neg;

@@ -129,7 +129,7 @@ transformed parameters {
   real Q_max_t;
   real PE_cor;                  // predicion error correct option
   real PE_inc;                  // predicion error incorrect option
-  real Q_mean_pres[N];
+  array[N] real Q_mean_pres;
 
   array[L] real<lower=0, upper=1> alpha_pos_sbj;
   array[L] real<lower=0, upper=1> alpha_neg_sbj;

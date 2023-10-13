@@ -13,9 +13,9 @@ functions{
     b_A_tv_ts = (b - A - t*v)/(t*s);
     b_tv_ts = (b - t*v)/(t*s);
     term_1 = v*Phi(b_A_tv_ts);
-    term_2 = s*exp(normal_log(b_A_tv_ts,0,1));
+    term_2 = s*exp(normal_lpdf(b_A_tv_ts| 0, 1));
     term_3 = v*Phi(b_tv_ts);
-    term_4 = s*exp(normal_log(b_tv_ts,0,1));
+    term_4 = s*exp(normal_lpdf(b_tv_ts| 0, 1));
     pdf = (1/A)*(-term_1 + term_2 + term_3 - term_4);
 
     return pdf;
@@ -38,8 +38,8 @@ functions{
     ts = t*s;
     term_1 = b_A_tv/A * Phi(b_A_tv/ts);
     term_2 = b_tv/A   * Phi(b_tv/ts);
-    term_3 = ts/A * exp(normal_log(b_A_tv/ts,0,1));
-    term_4 = ts/A * exp(normal_log(b_tv/ts,0,1));
+    term_3 = ts/A * exp(normal_lpdf(b_A_tv/ts| 0, 1));
+    term_4 = ts/A * exp(normal_lpdf(b_tv/ts| 0, 1));
     cdf = 1 + term_1 - term_2 + term_3 - term_4;
 
     return cdf;
@@ -103,7 +103,7 @@ data {
   array[N] int<lower=1, upper=K> cor_option;			// correct option
 	array[N] int<lower=1, upper=K> inc_option;			// incorrect option
 
-	int<lower=1,upper=2> accuracy;				        // 1-> correct, 2->incorrect
+	array[N] int<lower=1,upper=2> accuracy;				        // 1-> correct, 2->incorrect
 	array[N] real<lower=0> rt;							      // rt
   array[N] int<lower=0, upper=1> feedback_type; // feedback_type = 0 -> full feedback, feedback_type = 1 -> partial feedback
 
