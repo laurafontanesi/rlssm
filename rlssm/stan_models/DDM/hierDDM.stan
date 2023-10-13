@@ -1,10 +1,10 @@
 data {
 	int<lower=1> N;									// number of data items
 	int<lower=1> L;									// number of levels
-	int<lower=1, upper=L> participant[N];			// level (participant)
+	array[N] int<lower=1, upper=L> participant;			// level (participant)
 
-	int<lower=-1,upper=1> accuracy[N];				// accuracy (-1, 1)
-	real<lower=0> rt[N];							// rt
+	array[N] int<lower=-1,upper=1> accuracy;			// accuracy (-1, 1)
+	array[N] real<lower=0> rt;							// rt
 
 	vector[4] drift_priors;							// mean and sd of the mu_ prior and sd_ prior
 	vector[4] threshold_priors;						// mean and sd of the mu_ prior and sd_ prior
@@ -20,19 +20,19 @@ parameters {
 	real<lower=0> sd_threshold;
 	real<lower=0> sd_ndt;
 
-	real z_drift[L];
-	real z_threshold[L];
-	real z_ndt[L];
+	array[L] real z_drift;
+	array[L] real z_threshold;
+	array[L] real z_ndt;
 }
 transformed parameters {
-	real drift_ll[N];								// trial-by-trial drift rate for likelihood (incorporates accuracy)
-	real drift_t[N];								// trial-by-trial drift rate for predictions
-	real<lower=0> threshold_t[N];					// trial-by-trial threshold
-	real<lower=0> ndt_t[N];							// trial-by-trial ndt
+	array[N] real drift_ll;								// trial-by-trial drift rate for likelihood (incorporates accuracy)
+	array[N] real drift_t;								// trial-by-trial drift rate for predictions
+	array[N] real<lower=0> threshold_t;					// trial-by-trial threshold
+	array[N] real<lower=0> ndt_t;							// trial-by-trial ndt
 
-	real drift_sbj[L];
-	real<lower=0> threshold_sbj[L];
-	real<lower=0> ndt_sbj[L];
+	array[L] real drift_sbj;
+	array[L] real<lower=0> threshold_sbj;
+	array[L] real<lower=0> ndt_sbj;
 
 	real transf_mu_drift;
 	real transf_mu_threshold;

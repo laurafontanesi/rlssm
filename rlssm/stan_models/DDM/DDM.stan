@@ -1,8 +1,8 @@
 data {
 	int<lower=1> N;									// number of data items
 
-	int<lower=-1,upper=1> accuracy[N];				// accuracy (-1, 1)
-	real<lower=0> rt[N];							// rt
+	array[N] int<lower=-1,upper=1> accuracy;		// accuracy (-1, 1)
+	array[N] real<lower=0> rt;						// rt
 
 	vector[2] drift_priors;							// mean and sd of the prior
 	vector[2] threshold_priors;						// mean and sd of the prior
@@ -15,10 +15,10 @@ parameters {
 	real ndt;
 }
 transformed parameters {
-	real drift_ll[N];								// trial-by-trial drift rate for likelihood (incorporates accuracy)
-	real drift_t[N];								// trial-by-trial drift rate for predictions
-	real<lower=0> threshold_t[N];					// trial-by-trial threshold
-	real<lower=0> ndt_t[N];							// trial-by-trial ndt
+	array[N] real drift_ll;							// trial-by-trial drift rate for likelihood (incorporates accuracy)
+	array[N] real drift_t;							// trial-by-trial drift rate for predictions
+	array[N] real<lower=0> threshold_t;				// trial-by-trial threshold
+	array[N] real<lower=0> ndt_t;					// trial-by-trial ndt
 
 	real transf_drift;
 	real transf_threshold;

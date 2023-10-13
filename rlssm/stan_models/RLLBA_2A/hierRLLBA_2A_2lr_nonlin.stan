@@ -13,9 +13,9 @@ functions{
           b_A_tv_ts = (b - A - t*v)/(t*s);
           b_tv_ts = (b - t*v)/(t*s);
           term_1 = v*Phi(b_A_tv_ts);
-          term_2 = s*exp(normal_log(b_A_tv_ts,0,1));
+          term_2 = s*exp(normal_lpdf(b_A_tv_ts| 0, 1));
           term_3 = v*Phi(b_tv_ts);
-          term_4 = s*exp(normal_log(b_tv_ts,0,1));
+          term_4 = s*exp(normal_lpdf(b_tv_ts| 0, 1));
           pdf = (1/A)*(-term_1 + term_2 + term_3 - term_4);
 
           return pdf;
@@ -38,8 +38,8 @@ functions{
           ts = t*s;
           term_1 = b_A_tv/A * Phi(b_A_tv/ts);
           term_2 = b_tv/A   * Phi(b_tv/ts);
-          term_3 = ts/A * exp(normal_log(b_A_tv/ts,0,1));
-          term_4 = ts/A * exp(normal_log(b_tv/ts,0,1));
+          term_3 = ts/A * exp(normal_lpdf(b_A_tv/ts| 0, 1));
+          term_4 = ts/A * exp(normal_lpdf(b_tv/ts| 0, 1));
           cdf = 1 + term_1 - term_2 + term_3 - term_4;
 
           return cdf;
@@ -64,11 +64,11 @@ functions{
 
                     if(RT[i,2] == 1){
                       pdf = lba_pdf(t, b, sp_trial_var[i], drift_cor[i], s[i]);
-                      cdf = 1-lba_cdf(t, b, sp_trial_var[i], drift_inc[i], s[i]);
+                      cdf = 1-lba_cdf(t| b, sp_trial_var[i], drift_inc[i], s[i]);
                     }
                     else{
                       pdf = lba_pdf(t, b, sp_trial_var[i], drift_inc[i], s[i]);
-                      cdf = 1-lba_cdf(t, b, sp_trial_var[i], drift_cor[i], s[i]);
+                      cdf = 1-lba_cdf(t| b, sp_trial_var[i], drift_cor[i], s[i]);
                     }
                     prob_neg = Phi(-drift_cor[i]/s[i]) * Phi(-drift_inc[i]/s[i]);
                     prob[i] = pdf*cdf;
@@ -87,27 +87,27 @@ functions{
 }
 
 data {
-  int<lower=1> N;                 // number of data items
+  int<lower=1> N;               // number of data items
   int<lower=1> L;               // number of participants
   int<lower=1> K;               // number of options
 
-  int<lower=1, upper=L> participant[N];     // level (participant)
+  array[N] int<lower=1, upper=L> participant;     // level (participant)
 
   real initial_value;
 
-  int<lower=1> block_label[N];          // block label
-  int<lower=1> trial_block[N];          // trial within block
+  array[N] int<lower=1> block_label;          // block label
+  array[N] int<lower=1> trial_block;          // trial within block
 
   vector[N] f_cor;                // feedback correct option
   vector[N] f_inc;                // feedback incorrect option
 
-  int<lower=1, upper=K> cor_option[N];      // correct option
-  int<lower=1, upper=K> inc_option[N];      // incorrect option
+  array[N] int<lower=1, upper=K> cor_option;      // correct option
+  array[N] int<lower=1, upper=K> inc_option;      // incorrect option
 
-  int<lower=1,upper=2> accuracy[N];       // 1-> correct, 2->incorrect
-  int<lower=0, upper=1> feedback_type[N]; // feedback_type = 0 -> full feedback, feedback_type = 1 -> partial feedback
+  array[N] int<lower=1,upper=2> accuracy;       // 1-> correct, 2->incorrect
+  array[N] int<lower=0, upper=1> feedback_type; // feedback_type = 0 -> full feedback, feedback_type = 1 -> partial feedback
 
-  real<lower=0> rt[N];              // rt
+  array[N] real<lower=0> rt;            // rt
 
   vector[4] alpha_pos_priors;           // mean and sd of the mu_alpha_pos prior and sd_alpha_pos prior
   vector[4] alpha_neg_priors;           // mean and sd of the mu_alpha_neg prior and sd_alpha_neg prior
@@ -153,15 +153,15 @@ parameters {
   real<lower=0> sd_drift_scaling;    // scaling
   real<lower=0> sd_drift_variability;
 
-  real z_alpha_pos[L];
-  real z_alpha_neg[L];
-  real z_k[L];
-  real z_ndt[L];
-  real z_sp_trial_var[L];
-  real z_slop[L];
-  real z_drift_asym[L];
-  real z_drift_scaling[L];    // scaling
-  real z_drift_variability[L];    // scaling
+  array[L] real z_alpha_pos;
+  array[L] real z_alpha_neg;
+  array[L] real z_k;
+  array[L] real z_ndt;
+  array[L] real z_sp_trial_var;
+  array[L] real z_slop;
+  array[L] real z_drift_asym;
+  array[L] real z_drift_scaling;    // scaling
+  array[L] real z_drift_variability;    // scaling
 }
 
 transformed parameters {
@@ -178,17 +178,17 @@ transformed parameters {
 
   real Q_mean;
   real Q_min;
-  real Q_mean_pres[N];
+  array[N] real Q_mean_pres;
 
-  real<lower=0, upper=1> alpha_pos_sbj[L];
-  real<lower=0, upper=1> alpha_neg_sbj[L];
-  real<lower=0> k_sbj[L];
-  real<lower=0> ndt_sbj[L];
-  real<lower=0> sp_trial_var_sbj[L];
-  real<lower=0> slop_sbj[L];
-  real<lower=0> drift_asym_sbj[L];
-  real<lower=0> drift_scaling_sbj[L];
-  real<lower=0> drift_variability_sbj[L];
+  array[L] real<lower=0, upper=1> alpha_pos_sbj;
+  array[L] real<lower=0, upper=1> alpha_neg_sbj;
+  array[L] real<lower=0> k_sbj;
+  array[L] real<lower=0> ndt_sbj;
+  array[L] real<lower=0> sp_trial_var_sbj;
+  array[L] real<lower=0> slop_sbj;
+  array[L] real<lower=0> drift_asym_sbj;
+  array[L] real<lower=0> drift_scaling_sbj;
+  array[L] real<lower=0> drift_variability_sbj;
 
   real<lower=0, upper=1> transf_mu_alpha_pos;
   real<lower=0, upper=1> transf_mu_alpha_neg;

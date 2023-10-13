@@ -5,15 +5,15 @@ data {
 	int<lower=1> C_threshold;						// number of conditions for threshold
 	int<lower=1> C_ndt;								// number of conditions for ndt
 	int<lower=1> C_sp;								// number of conditions for starting point
-	int<lower=1, upper=L> participant[N];			// level (participant)
+	array[N] int<lower=1, upper=L> participant;		// level (participant)
 
-	row_vector[C] x_drift[N];						// matrix[N, C] predictor matrix drift rate
-	row_vector[C] x_threshold[N];					// matrix[N, C] predictor matrix threshold
-	row_vector[C] x_ndt[N];							// matrix[N, C] predictor matrix ndt
-	row_vector[C] x_sp[N];							// matrix[N, C] predictor matrix starting point
+	row_vector[C_drift] x_drift[N];						// matrix[N, C] predictor matrix drift rate
+	row_vector[C_threshold] x_threshold[N];				// matrix[N, C] predictor matrix threshold
+	row_vector[C_ndt] x_ndt[N];							// matrix[N, C] predictor matrix ndt
+	row_vector[C_sp] x_sp[N];							// matrix[N, C] predictor matrix starting point
 
-	int<lower=-1,upper=1> accuracy[N];				// accuracy (-1, 1)
-	real<lower=0> rt[N];							// rt
+	array[N] int<lower=-1,upper=1> accuracy;		// accuracy (-1, 1)
+	array[N] real<lower=0> rt;						// rt
 
 	vector[4] drift_priors;							// mean and sd of the mu_ prior and sd_ prior
 	vector[4] threshold_priors;						// mean and sd of the mu_ prior and sd_ prior
@@ -24,35 +24,35 @@ parameters {
 	real drift_intercept;
 	real threshold_intercept;
 	real ndt_intercept;
-	real drift_coeff[K];
-	real threshold_coeff[K];
-	real ndt_coeff[K];
+	array[K] real drift_coeff;
+	array[K] real threshold_coeff;
+	array[K] real ndt_coeff;
 
 	real<lower=0> sd_drift_intercept;
 	real<lower=0> sd_threshold_intercept;
 	real<lower=0> sd_ndt_intercept;
 
-	real<lower=0> sd_drift_coeff[K];
-	real<lower=0> sd_threshold_coeff[K];
-	real<lower=0> sd_ndt_coeff[K];
+	array[K] real<lower=0> sd_drift_coeff;
+	array[K] real<lower=0> sd_threshold_coeff;
+	array[K] real<lower=0> sd_ndt_coeff;
 
-	real z_drift_intercept[L];
-	real z_threshold_intercept[L];
-	real z_ndt_intercept[L];
+	array[L] real z_drift_intercept;
+	array[L] real z_threshold_intercept;
+	array[L] real z_ndt_intercept;
 
 	vector[K] z_drift_coeff[L];
 	vector[K] z_threshold_coeff[L];
 	vector[K] z_ndt_coeff[L];
 }
 transformed parameters {
-	real drift_t[N];								// trial-by-trial drift-rate for likelihood (incorporates accuracy)
-	real drift_p[N];								// trial-by-trial drift-rate for predictions
-	real<lower=0> thr_t[N];							// trial-by-trial threshold
-	real<lower=0> ndt_t[N];							// trial-by-trial ndt
+	array[N] real drift_t;								// trial-by-trial drift-rate for likelihood (incorporates accuracy)
+	array[N] real drift_p;								// trial-by-trial drift-rate for predictions
+	array[N] real<lower=0> thr_t;						// trial-by-trial threshold
+	array[N] real<lower=0> ndt_t;						// trial-by-trial ndt
 
-	real drift_intercept_sbj[L];
-	real threshold_intercept_sbj[L];
-	real ndt_intercept_sbj[L];
+	array[L] real drift_intercept_sbj;
+	array[L] real threshold_intercept_sbj;
+	array[L] real ndt_intercept_sbj;
 	vector[K] drift_coeff_sbj[L];
 	vector[K] threshold_coeff_sbj[L];
 	vector[K] ndt_coeff_sbj[L];

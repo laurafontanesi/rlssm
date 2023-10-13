@@ -24,11 +24,11 @@ functions {
                if(t > 0){
                   if(RT[i,2] == 1){
                     pdf = race_pdf(t, b[i], drift_cor[i]);
-                    cdf = 1 - race_cdf(t, b[i], drift_inc[i]);
+                    cdf = 1 - race_cdf(t| b[i], drift_inc[i]);
                   }
                   else{
                     pdf = race_pdf(t, b[i], drift_inc[i]);
-                    cdf = 1 - race_cdf(t, b[i], drift_cor[i]);
+                    cdf = 1 - race_cdf(t| b[i], drift_cor[i]);
                   }
                   prob[i] = pdf*cdf;
 
@@ -48,10 +48,10 @@ functions {
 data {
 	int<lower=1> N;									// number of data items
 	int<lower=1> L;									// number of levels
-	int<lower=1, upper=L> participant[N];			// level (participant)
+	array[N] int<lower=1, upper=L> participant;		// level (participant)
 
-	int<lower=1,upper=2> accuracy[N];				// 1-> correct, 2->incorrect
-	real<lower=0> rt[N];							// rt
+	array[N] int<lower=1,upper=2> accuracy;			// 1-> correct, 2->incorrect
+	array[N] real<lower=0> rt;						// rt
 
 	vector[4] drift_priors;							// mean and sd of the group mean and of the group sd hyper-priors
 	vector[4] threshold_priors;						// mean and sd of the group mean and of the group sd hyper-priors
@@ -78,10 +78,10 @@ parameters {
 	real<lower=0> sd_drift_cor;
 	real<lower=0> sd_drift_inc;
 
-	real z_ndt[L];
-	real z_threshold[L];
-	real z_drift_cor[L];
-	real z_drift_inc[L];
+	array[L] real z_ndt;
+	array[L] real z_threshold;
+	array[L] real z_drift_cor;
+	array[L] real z_drift_inc;
 }
 
 transformed parameters {
@@ -90,10 +90,10 @@ transformed parameters {
 	vector<lower=0>[N] threshold_t;				// trial-by-trial threshold
 	vector<lower=0>[N] ndt_t;						// trial-by-trial ndt
 
-	real<lower=0> drift_cor_sbj[L];
-	real<lower=0> drift_inc_sbj[L];
-	real<lower=0> threshold_sbj[L];
-	real<lower=0> ndt_sbj[L];
+	array[L] real<lower=0> drift_cor_sbj;
+	array[L] real<lower=0> drift_inc_sbj;
+	array[L] real<lower=0> threshold_sbj;
+	array[L] real<lower=0> ndt_sbj;
 
 	real<lower=0> transf_mu_drift_cor;
 	real<lower=0> transf_mu_drift_inc;

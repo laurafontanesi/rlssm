@@ -13,9 +13,9 @@ functions{
           b_A_tv_ts = (b - A - t*v)/(t*s);
           b_tv_ts = (b - t*v)/(t*s);
           term_1 = v*Phi(b_A_tv_ts);
-          term_2 = s*exp(normal_log(b_A_tv_ts,0,1));
+          term_2 = s*exp(normal_lpdf(b_A_tv_ts| 0, 1));
           term_3 = v*Phi(b_tv_ts);
-          term_4 = s*exp(normal_log(b_tv_ts,0,1));
+          term_4 = s*exp(normal_lpdf(b_tv_ts| 0, 1));
           pdf = (1/A)*(-term_1 + term_2 + term_3 - term_4);
 
           return pdf;
@@ -38,8 +38,8 @@ functions{
           ts = t*s;
           term_1 = b_A_tv/A * Phi(b_A_tv/ts);
           term_2 = b_tv/A   * Phi(b_tv/ts);
-          term_3 = ts/A * exp(normal_log(b_A_tv/ts,0,1));
-          term_4 = ts/A * exp(normal_log(b_tv/ts,0,1));
+          term_3 = ts/A * exp(normal_lpdf(b_A_tv/ts| 0, 1));
+          term_4 = ts/A * exp(normal_lpdf(b_tv/ts| 0, 1));
           cdf = 1 + term_1 - term_2 + term_3 - term_4;
 
           return cdf;
@@ -64,11 +64,11 @@ functions{
 
                     if(RT[i,2] == 1){
                       pdf = lba_pdf(t, b, sp_trial_var[i], drift_cor[i], s[i]);
-                      cdf = 1-lba_cdf(t, b, sp_trial_var[i], drift_inc[i], s[i]);
+                      cdf = 1-lba_cdf(t| b, sp_trial_var[i], drift_inc[i], s[i]);
                     }
                     else{
                       pdf = lba_pdf(t, b, sp_trial_var[i], drift_inc[i], s[i]);
-                      cdf = 1-lba_cdf(t, b, sp_trial_var[i], drift_cor[i], s[i]);
+                      cdf = 1-lba_cdf(t| b, sp_trial_var[i], drift_cor[i], s[i]);
                     }
                     prob_neg = Phi(-drift_cor[i]/s[i]) * Phi(-drift_inc[i]/s[i]);
                     prob[i] = pdf*cdf;
@@ -89,8 +89,8 @@ functions{
 data {
      int<lower=1> N;									// number of data items
 
-	int<lower=1,upper=2> accuracy[N];				// 1-> correct, 2->incorrect
-	real<lower=0> rt[N];							// rt
+	array[N] int<lower=1,upper=2> accuracy;				// 1-> correct, 2->incorrect
+	array[N] real<lower=0> rt;							// rt
 
      vector[2] k_priors;
 	vector[2] sp_trial_var_priors;

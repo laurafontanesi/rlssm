@@ -1,11 +1,11 @@
 data {
 	int<lower=1> N;									// number of data items
 	int<lower=1> L;									// number of levels
-	int<lower=1, upper=L> participant[N];			// level (participant)
+	array[N] int<lower=1, upper=L> participant;			// level (participant)
 
-	int<lower=-1,upper=1> accuracy[N];				// accuracy (-1, 1)
-	int<lower=0,upper=1> accuracy_flipped[N];		// flipped accuracy (1, 0)
-	real<lower=0> rt[N];							// rt
+	array[N] int<lower=-1,upper=1> accuracy;			// accuracy (-1, 1)
+	array[N] int<lower=0,upper=1> accuracy_flipped;		// flipped accuracy (1, 0)
+	array[N] real<lower=0> rt;							// rt
 
 	vector[4] drift_priors;							// mean and sd of the prior
 	vector[4] threshold_priors;						// mean and sd of the prior
@@ -23,23 +23,23 @@ parameters {
 	real<lower=0> sd_ndt;
 	real<lower=0> sd_rel_sp;
 
-	real z_drift[L];
-	real z_threshold[L];
-	real z_ndt[L];
-	real z_rel_sp[L];
+	array[L] real z_drift;
+	array[L] real z_threshold;
+	array[L] real z_ndt;
+	array[L] real z_rel_sp;
 }
 transformed parameters {
-	real drift_ll[N];								// trial-by-trial drift rate for likelihood (incorporates accuracy)
-	real drift_t[N];								// trial-by-trial drift rate for predictions
-	real<lower=0> threshold_t[N];					// trial-by-trial threshold
-	real<lower=0> ndt_t[N];							// trial-by-trial ndt
-	real<lower=0, upper=1> rel_sp_ll[N];			// trial-by-trial relative starting point for likelihood (incorporates accuracy)
-	real<lower=0, upper=1> rel_sp_t[N];				// trial-by-trial relative starting point
+	array[N] real drift_ll;								// trial-by-trial drift rate for likelihood (incorporates accuracy)
+	array[N] real drift_t;								// trial-by-trial drift rate for predictions
+	array[N] real<lower=0> threshold_t;					// trial-by-trial threshold
+	array[N] real<lower=0> ndt_t;						// trial-by-trial ndt
+	array[N] real<lower=0, upper=1> rel_sp_ll;			// trial-by-trial relative starting point for likelihood (incorporates accuracy)
+	array[N] real<lower=0, upper=1> rel_sp_t;			// trial-by-trial relative starting point
 
-	real drift_sbj[L];
-	real<lower=0> threshold_sbj[L];
-	real<lower=0> ndt_sbj[L];
-	real<lower=0, upper=1> rel_sp_sbj[L];
+	array[L] real drift_sbj;
+	array[L] real<lower=0> threshold_sbj;
+	array[L] real<lower=0> ndt_sbj;
+	array[L] real<lower=0, upper=1> rel_sp_sbj;
 
 	real transf_mu_drift;
 	real transf_mu_threshold;
