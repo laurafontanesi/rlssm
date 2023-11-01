@@ -24,10 +24,7 @@ class DDMFittedModel(FittedModel):
                  priors,
                  starting_point_bias,
                  drift_variability,
-                 starting_point_variability,
-                 drift_starting_point_correlation,
-                 drift_starting_point_beta_correlation,
-                 drift_starting_point_regression):
+                 starting_point_variability):
         super().__init__(stan_model,
                          data,
                          hierarchical_levels,
@@ -40,9 +37,6 @@ class DDMFittedModel(FittedModel):
         self.starting_point_bias = starting_point_bias
         self.drift_variability = drift_variability
         self.starting_point_variability = starting_point_variability
-        self.drift_starting_point_correlation = drift_starting_point_correlation
-        self.drift_starting_point_beta_correlation = drift_starting_point_beta_correlation
-        self.drift_starting_point_regression = drift_starting_point_regression
 
     def extract_results(self, include_rhat, include_waic, pointwise_waic, include_last_values):
         if include_rhat:

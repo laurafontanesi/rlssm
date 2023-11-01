@@ -16,10 +16,7 @@ class DDModel(Model):
                  hierarchical_levels,
                  starting_point_bias=False,
                  drift_variability=False,
-                 starting_point_variability=False,
-                 drift_starting_point_correlation=False,
-                 drift_starting_point_beta_correlation=False,
-                 drift_starting_point_regression=False):
+                 starting_point_variability=False):
         """Initialize a DDModel object.
 
         Note
@@ -42,22 +39,6 @@ class DDModel(Model):
         starting_point_variability : bool, default False
             By default, there is no starting point bias variability across trials.
             If set to True, the standard deviation of the starting point bias across trials is estimated.
-
-        drift_starting_point_correlation : bool, default False
-            By default, the correlation between these 2 parameters is not estimated.
-            If set to True, the 2 parameters are assumed to come from a multinormal distribution.
-            Only relevant when drift_variability and starting_point_variability are True.
-
-        drift_starting_point_beta_correlation : bool, default False
-            If True, trial-by-trial drift-rate, rel_sp and an external variable beta
-            are assumed to come from a multinormal distribution.
-            Only relevant when drift_variability and starting_point_variability are True.
-
-        drift_starting_point_regression : bool, default False
-            If True, two regression coefficients are estimated, for trial drift and
-            relative starting point, and an external variable beta.
-            Only relevant when drift_variability and starting_point_variability are True.
-
         """
         super().__init__(hierarchical_levels, "DDM")
 
@@ -65,9 +46,6 @@ class DDModel(Model):
         self.starting_point_bias = starting_point_bias
         self.drift_variability = drift_variability
         self.starting_point_variability = starting_point_variability
-        self.drift_starting_point_correlation = drift_starting_point_correlation
-        self.drift_starting_point_beta_correlation = drift_starting_point_beta_correlation
-        self.drift_starting_point_regression = drift_starting_point_regression
 
         self.n_parameters_individual = 3
         self.n_parameters_trial = 0
@@ -82,12 +60,7 @@ class DDModel(Model):
                 drift_trial_mu_priors={'mu': 1, 'sd': 5},
                 drift_trial_sd_priors={'mu': 0, 'sd': 5},
                 rel_sp_trial_mu_priors={'mu': 0, 'sd': .8},
-                rel_sp_trial_sd_priors={'mu': 0, 'sd': .5},
-                beta_trial_mu_priors={'mu': 0, 'sd': 10},
-                beta_trial_sd_priors={'mu': 0, 'sd': 10},
-                regression_coefficients_priors={'mu': 0, 'sd': 5},
-                corr_matrix_prior=1
-            )
+                rel_sp_trial_sd_priors={'mu': 0, 'sd': .5})
         else:
             self.priors = dict(
                 drift_priors={'mu_mu': 1, 'sd_mu': 5, 'mu_sd': 0, 'sd_sd': 5},
@@ -97,12 +70,7 @@ class DDModel(Model):
                 drift_trial_mu_priors={'mu_mu': 1, 'sd_mu': 5, 'mu_sd': 0, 'sd_sd': 5},
                 drift_trial_sd_priors={'mu': 0, 'sd': 3},
                 rel_sp_trial_mu_priors={'mu_mu': 0, 'sd_mu': 1, 'mu_sd': 0, 'sd_sd': 1},
-                rel_sp_trial_sd_priors={'mu': 0, 'sd': 3},
-                beta_trial_mu_priors={'mu': 0, 'sd': 10},
-                beta_trial_sd_priors={'mu': 0, 'sd': 10},
-                regression_coefficients_priors={'mu': 0, 'sd': 5},
-                corr_matrix_prior=1
-            )
+                rel_sp_trial_sd_priors={'mu': 0, 'sd': 3})
 
         # Set up model label and priors for mechanisms
         if self.starting_point_bias:
@@ -131,32 +99,6 @@ class DDModel(Model):
             self.priors.pop('rel_sp_trial_mu_priors', None)
             self.priors.pop('rel_sp_trial_sd_priors', None)
 
-        # for nDDM or hDDM
-        if self.drift_starting_point_correlation and not self.drift_starting_point_beta_correlation:
-            self.model_label += '_corr'
-            # add the corr coefficient
-            self.n_parameters_individual += 1
-            self.priors.pop('beta_trial_mu_priors', None)
-            self.priors.pop('beta_trial_sd_priors', None)
-            self.priors.pop('regression_coefficients_priors', None)
-        elif self.drift_starting_point_beta_correlation:
-            self.model_label += '_corr_beta'
-            # add 3 correlation coefficients, plus mean and sd of the beta variable
-            self.n_parameters_individual += 5
-            self.priors.pop('regression_coefficients_priors', None)
-        elif self.drift_starting_point_regression:
-            self.model_label += '_beta'
-            # add 2 correlation coefficients
-            self.n_parameters_individual += 2
-            self.priors.pop('beta_trial_mu_priors', None)
-            self.priors.pop('beta_trial_sd_priors', None)
-            self.priors.pop('corr_matrix_prior', None)
-        else:
-            self.priors.pop('beta_trial_mu_priors', None)
-            self.priors.pop('beta_trial_sd_priors', None)
-            self.priors.pop('regression_coefficients_priors', None)
-            self.priors.pop('corr_matrix_prior', None)
-
         # Set the stan model path
         self._set_model_path()
 
@@ -174,10 +116,6 @@ class DDModel(Model):
             drift_trial_sd_priors=None,
             rel_sp_trial_mu_priors=None,
             rel_sp_trial_sd_priors=None,
-            corr_matrix_prior=None,
-            beta_trial_mu_priors=None,
-            beta_trial_sd_priors=None,
-            regression_coefficients_priors=None,
             include_rhat=True,
             include_waic=True,
             include_last_values=True,
@@ -203,11 +141,6 @@ class DDModel(Model):
 
             - *participant*, the participant number.
               Should be integers starting from 1.
-
-            When either drift_starting_point_correlation, drift_starting_point_beta_correlation,
-            or drift_starting_point_regression are True, also include:
-
-            - *beta*, the external variable to correlate/regress to drift and rel_sp.
 
         drift_priors : dict, default None
             Priors for the drift-rate parameter.
@@ -258,25 +191,6 @@ class DDModel(Model):
             (only meaningful if starting_point_variability is True).
             In case it is not a hierarchical model: Mean and standard deviation of the prior distr.
             In case it is a hierarchical model: Means and standard deviations of the hyper priors.
-
-        corr_matrix_prior : float, default 1
-            Prior for the eta parameter of the LKJ prior of the correlation matrix
-            (only meaningful if drift_starting_point_correlation is True).
-
-        beta_trial_mu_priors : dict, default None
-            Priors for the mean beta across trials
-            (only meaningful if drift_starting_point_beta_correlation is True).
-            Mean and standard deviation of the prior distr.
-
-        beta_trial_sd_priors : dict, default None
-            Priors for the standard deviation of the beta across trials
-            (only meaningful if drift_starting_point_beta_correlation is True).
-            Mean and standard deviation of the prior distr.
-
-        regression_coefficients_priors : dict, default None
-            Priors for the regression coefficients
-            (only relevant if drift_starting_point_regression is True).
-            Mean and standard deviation of the prior distr.
 
         include_rhat : bool, default True
             Whether to calculate the Gelman-Rubin convergence diagnostic r hat
@@ -333,14 +247,6 @@ class DDModel(Model):
             self.priors['rel_sp_trial_mu_priors'] = rel_sp_trial_mu_priors
         if rel_sp_trial_sd_priors is not None:
             self.priors['rel_sp_trial_sd_priors'] = rel_sp_trial_sd_priors
-        if beta_trial_mu_priors is not None:
-            self.priors['beta_trial_mu_priors'] = beta_trial_mu_priors
-        if beta_trial_sd_priors is not None:
-            self.priors['beta_trial_sd_priors'] = beta_trial_sd_priors
-        if regression_coefficients_priors is not None:
-            self.priors['regression_coefficients_priors'] = regression_coefficients_priors
-        if corr_matrix_prior is not None:
-            self.priors['corr_matrix_prior'] = corr_matrix_prior
 
         data_dict = {'N': N,
                      'rt': data['rt'].values,
@@ -363,15 +269,6 @@ class DDModel(Model):
         elif self.starting_point_variability:
             data_dict.update({'accuracy_flipped': data['accuracy_flipped'].values.astype(int)})
 
-        # for nDDM or hDDM
-        if self.drift_starting_point_correlation and not self.drift_starting_point_beta_correlation:
-            data_dict.update({'n_cor_par': 2})
-        elif self.drift_starting_point_beta_correlation:
-            data_dict.update({'n_cor_par': 3,
-                              'beta': data['beta'].values})
-        elif self.drift_starting_point_regression:
-            data_dict.update({'beta': data['beta'].values})
-
         # Add priors:
         print("Fitting the model using the priors:")
         for par in self.priors.keys():
@@ -392,10 +289,7 @@ class DDModel(Model):
                                       self.priors,
                                       self.starting_point_bias,
                                       self.drift_variability,
-                                      self.starting_point_variability,
-                                      self.drift_starting_point_correlation,
-                                      self.drift_starting_point_beta_correlation,
-                                      self.drift_starting_point_regression)
+                                      self.starting_point_variability)
 
         res = fitted_model.extract_results(include_rhat,
                                            include_waic,
