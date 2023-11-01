@@ -4,12 +4,12 @@ import numpy as np
 import pandas as pd
 
 
-def generate_task_design_fontanesi(n_trials_block,
-                                   n_blocks,
-                                   n_participants,
-                                   trial_types,
-                                   mean_options,
-                                   sd_options):
+def generate_task_design_2armed_bandit(n_trials_block,
+                                       n_blocks,
+                                       n_participants,
+                                       trial_types,
+                                       mean_options,
+                                       sd_options):
     """Generates the RL_2A stimuli as in the 2019 Fontanesi et al.'s paper.
 
     Note
